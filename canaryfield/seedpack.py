@@ -5,11 +5,12 @@ tools in the line can consume the same seed definitions without importing
 this package. The format field carries the pack format version and every
 entry carries the seed id, name, defect class, and description.
 
-Three formats are written history. Format canaryfield-seeds/1 carries
+Four formats are written history. Format canaryfield-seeds/1 carries
 the original twelve seeds, format canaryfield-seeds/2 carries the
-registry of sixteen, and format canaryfield-seeds/3 carries the
-registry of twenty. Writing a pack always writes the current format.
-The loader accepts all three formats and holds each one to the entry
+registry of sixteen, format canaryfield-seeds/3 carries the
+registry of twenty, and format canaryfield-seeds/4 carries the
+registry of twenty four. Writing a pack always writes the current format.
+The loader accepts all four formats and holds each one to the entry
 count its own version carries, so a pack whose count disagrees with
 its declared version is refused. The loader also holds each version to the
 registry it names, refusing a pack whose ids are not exactly the ids of
@@ -24,14 +25,16 @@ from pathlib import Path
 
 from .seeds import SEEDS
 
-SEED_PACK_FORMAT = "canaryfield-seeds/3"
+SEED_PACK_FORMAT = "canaryfield-seeds/4"
+SEED_PACK_FORMAT_V3 = "canaryfield-seeds/3"
 SEED_PACK_FORMAT_V2 = "canaryfield-seeds/2"
 SEED_PACK_FORMAT_V1 = "canaryfield-seeds/1"
 
 PACK_ENTRY_COUNTS = {
     SEED_PACK_FORMAT_V1: 12,
     SEED_PACK_FORMAT_V2: 16,
-    SEED_PACK_FORMAT: 20,
+    SEED_PACK_FORMAT_V3: 20,
+    SEED_PACK_FORMAT: 24,
 }
 
 PACK_REGISTRIES = {

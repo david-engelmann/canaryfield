@@ -28,7 +28,11 @@ seed-16  widened exception handler    sample.py     waved-through   waved-throug
 seed-17  swapped dictionary entry     none          not-applicable  not-applicable
 seed-18  inverted truth test          none          not-applicable  not-applicable
 seed-19  reassigned loop variable     none          not-applicable  not-applicable
+seed-20  swapped call argument order  sample.py     caught          waved-through
+seed-21  altered string literal       sample.py     caught          waved-through
+seed-22  dropped numeric negation     none          not-applicable  not-applicable
+seed-23  swapped loop control         none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 11  waved-through 3  not-applicable 6  gate-broken 0
-  compile  caught 0  waved-through 14  not-applicable 6  gate-broken 0
+  tests  caught 13  waved-through 3  not-applicable 8  gate-broken 0
+  compile  caught 0  waved-through 16  not-applicable 8  gate-broken 0

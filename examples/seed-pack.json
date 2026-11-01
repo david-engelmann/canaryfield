@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/3",
+  "format": "canaryfield-seeds/4",
   "seeds": [
     {
       "id": "seed-00",
@@ -120,6 +120,30 @@
       "name": "reassigned loop variable",
       "defect_class": "wrong variable",
       "description": "Points a for loop at a different name already bound in the same scope so the loop writes into the wrong variable"
+    },
+    {
+      "id": "seed-20",
+      "name": "swapped call argument order",
+      "defect_class": "wrong input",
+      "description": "Swaps the first two positional arguments of a call so each value reaches the wrong parameter"
+    },
+    {
+      "id": "seed-21",
+      "name": "altered string literal",
+      "defect_class": "wrong text",
+      "description": "Changes the first character of a string literal so the text the code compares or returns is no longer the text it wrote"
+    },
+    {
+      "id": "seed-22",
+      "name": "dropped numeric negation",
+      "defect_class": "wrong sign",
+      "description": "Removes a unary minus so a value carries the opposite sign from the one the code wrote"
+    },
+    {
+      "id": "seed-23",
+      "name": "swapped loop control",
+      "defect_class": "wrong flow",
+      "description": "Turns a break inside a loop into a continue so the loop runs on instead of ending"
     }
   ]
 }
