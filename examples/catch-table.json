@@ -377,13 +377,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-27"
+    },
+    {
+      "defect_class": "wrong error",
+      "gates": {
+        "tests": "caught"
+      },
+      "name": "swapped raised error",
+      "planted_exits": {
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-28"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "slice stop shifted by one",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-29"
+    },
+    {
+      "defect_class": "wrong default",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "shifted numeric default",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-30"
+    },
+    {
+      "defect_class": "wrong attribute",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped sibling attribute",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-31"
     }
   ],
   "summary": {
     "tests": {
-      "caught": 13,
+      "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 12,
+      "not-applicable": 15,
       "waved-through": 3
     }
   },

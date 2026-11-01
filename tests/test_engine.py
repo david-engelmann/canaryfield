@@ -60,19 +60,19 @@ def test_gate_runs_on_clean_and_planted_copies(main_run):
         planted += 1
         assert row["planted_file"] == "sample.py"
         assert row["planted_exits"]["tests"] is not None
-    assert planted == 16
+    assert planted == 17
 
 
 def test_catch_table_shape_and_statuses(main_run):
     _target, result = main_run
-    assert len(result["rows"]) == 28
+    assert len(result["rows"]) == 32
     allowed = {CAUGHT, WAVED, NOT_APPLICABLE, GATE_BROKEN}
     for row in result["rows"]:
         assert set(row["gates"].values()) <= allowed
     summary = result["summary"]["tests"]
-    assert summary[CAUGHT] == 13
+    assert summary[CAUGHT] == 14
     assert summary[WAVED] == 3
-    assert summary[NOT_APPLICABLE] == 12
+    assert summary[NOT_APPLICABLE] == 15
     assert summary[GATE_BROKEN] == 0
 
 
@@ -83,7 +83,7 @@ def test_report_renders_text_and_json_with_the_same_facts(main_run):
     assert "canaryfield catch table" in text
     assert "seed-07" in text and WAVED in text
     assert '"seed-07"' in rendered_json and WAVED in rendered_json
-    assert result["summary"]["tests"][CAUGHT] == 13
+    assert result["summary"]["tests"][CAUGHT] == 14
 
 
 def test_target_tree_is_byte_identical_after_a_run(tmp_path):
@@ -114,4 +114,4 @@ def test_gate_failing_on_clean_copy_is_broken(tmp_path):
         expected = GATE_BROKEN if row["planted_file"] else NOT_APPLICABLE
         assert row["gates"]["broken"] == expected
     assert result["summary"]["broken"][CAUGHT] == 0
-    assert result["summary"]["broken"][GATE_BROKEN] == 16
+    assert result["summary"]["broken"][GATE_BROKEN] == 17

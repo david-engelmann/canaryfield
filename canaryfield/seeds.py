@@ -326,16 +326,62 @@ def _apply_dropped_await(tree):
 _BROAD_HANDLER_NAMES = ("Exception", "BaseException")
 
 
-def _handler_type_names(handler_type):
+def _handler_type_name_list(handler_type):
     if isinstance(handler_type, ast.Name):
-        return {handler_type.id}
+        return [handler_type.id]
     if isinstance(handler_type, ast.Tuple):
-        return {
+        return [
             member.id
             for member in handler_type.elts
             if isinstance(member, ast.Name)
-        }
-    return set()
+        ]
+    return []
+
+
+def _handler_type_names(handler_type):
+    return set(_handler_type_name_list(handler_type))
+
+
+def _raise_type_name(node):
+    if (
+        isinstance(node, ast.Raise)
+        and isinstance(node.exc, ast.Call)
+        and isinstance(node.exc.func, ast.Name)
+        and node.exc.func.id[:1].isupper()
+    ):
+        return node.exc.func.id
+    return None
+
+
+def _module_exception_names(tree):
+    names = []
+    for node in _sorted_nodes(tree):
+        if isinstance(node, ast.ExceptHandler) and node.type is not None:
+            found = _handler_type_name_list(node.type)
+        elif _raise_type_name(node) is not None:
+            found = [_raise_type_name(node)]
+        else:
+            continue
+        for name in found:
+            if name not in names:
+                names.append(name)
+    return names
+
+
+def _apply_swapped_raised_error(tree):
+    names = _module_exception_names(tree)
+    targets = []
+    for node in _sorted_nodes(tree):
+        if _raise_type_name(node) is None:
+            continue
+        raised = node.exc.func.id
+        for name in names:
+            if name != raised:
+                targets.append((node.exc.func, name))
+                break
+    for func, replacement in targets:
+        func.id = replacement
+    return bool(targets)
 
 
 def _apply_widened_exception_handler(tree):
@@ -714,6 +760,122 @@ def _apply_swapped_keyword_argument_values(tree):
     return bool(targets)
 
 
+def _apply_slice_stop_shift(tree):
+    targets = [
+        node.upper
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Slice) and _is_int_constant(node.upper)
+    ]
+    for target in targets:
+        target.value = target.value + 1
+    return bool(targets)
+
+
+def _apply_shifted_numeric_default(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            for default in (*node.args.defaults, *node.args.kw_defaults):
+                if _is_int_constant(default):
+                    targets.append(default)
+    for target in targets:
+        target.value = target.value + 1
+    return bool(targets)
+
+
+_NESTED_SCOPE_TYPES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
+
+
+def _scope_parameter_names(scope):
+    if not isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+        return set()
+    arguments = scope.args
+    names = {argument.arg for argument in (*arguments.posonlyargs, *arguments.args)}
+    if arguments.vararg is not None:
+        names.add(arguments.vararg.arg)
+    names.update(argument.arg for argument in arguments.kwonlyargs)
+    if arguments.kwarg is not None:
+        names.add(arguments.kwarg.arg)
+    return names
+
+
+def _collect_sibling_attribute_swaps(tree):
+    records = []
+
+    def new_record(scope):
+        record = {
+            "parameters": _scope_parameter_names(scope),
+            "stores": {},
+            "loads": [],
+        }
+        records.append(record)
+        return record
+
+    def header_children(node):
+        children = list(node.decorator_list) if not isinstance(node, ast.Lambda) else []
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            children.append(node.args)
+            if node.returns is not None:
+                children.append(node.returns)
+            return children, list(node.body)
+        if isinstance(node, ast.ClassDef):
+            children.extend(node.bases)
+            children.extend(node.keywords)
+            return children, list(node.body)
+        return [node.args], [node.body]
+
+    def visit(node, record):
+        if isinstance(node, _NESTED_SCOPE_TYPES):
+            headers, body = header_children(node)
+            for child in headers:
+                visit(child, record)
+            record = new_record(node)
+            for child in body:
+                visit(child, record)
+            return
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Store):
+            record["stores"][node.id] = record["stores"].get(node.id, 0) + 1
+        if (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.ctx, ast.Load)
+            and isinstance(node.value, ast.Name)
+        ):
+            record["loads"].append(node)
+        for child in ast.iter_child_nodes(node):
+            visit(child, record)
+
+    visit(tree, new_record(tree))
+    targets = []
+    for record in records:
+        loads_by_base = {}
+        for load in record["loads"]:
+            loads_by_base.setdefault(load.value.id, []).append(load)
+        for base, loads in loads_by_base.items():
+            store_count = record["stores"].get(base, 0)
+            if base in record["parameters"]:
+                if store_count != 0:
+                    continue
+            elif store_count != 1:
+                continue
+            distinct = []
+            for load in sorted(loads, key=lambda node: (node.lineno, node.col_offset)):
+                if load.attr not in distinct:
+                    distinct.append(load.attr)
+            if len(distinct) < 2:
+                continue
+            targets.extend(
+                (load, distinct[1]) for load in loads if load.attr == distinct[0]
+            )
+    return targets
+
+
+def _apply_swapped_sibling_attribute(tree):
+    targets = _collect_sibling_attribute_swaps(tree)
+    for load, replacement in targets:
+        load.attr = replacement
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -752,6 +914,10 @@ SEEDS = [
     Seed("seed-25", "identity test replaced by equality", "wrong predicate", _apply_identity_comparison_as_equality, "Replaces an identity comparison with an equality comparison so the test asks sameness of value instead of sameness of object"),
     Seed("seed-26", "subscript index shifted by one", "boundary error", _apply_subscript_index_shift, "Raises the constant index of a subscript by one so the code reads the element beside the one it named"),
     Seed("seed-27", "swapped keyword argument values", "wrong input", _apply_swapped_keyword_argument_values, "Swaps the values of the first two keyword arguments of a call so each value binds to the wrong parameter"),
+    Seed("seed-28", "swapped raised error", "wrong error", _apply_swapped_raised_error, "Swaps the exception type a raise throws for the first other exception type the module names so the error a caller handles is never the one that arrives"),
+    Seed("seed-29", "slice stop shifted by one", "boundary error", _apply_slice_stop_shift, "Raises the stop of a slice by one so the code takes one element more than the slice it wrote"),
+    Seed("seed-30", "shifted numeric default", "wrong default", _apply_shifted_numeric_default, "Raises a numeric argument default by one so a call that leaves the argument out runs with a value the code never wrote"),
+    Seed("seed-31", "swapped sibling attribute", "wrong attribute", _apply_swapped_sibling_attribute, "Reads the second attribute a scope loads off one object in place of the first so the value comes from a different part of the object than the code named"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}

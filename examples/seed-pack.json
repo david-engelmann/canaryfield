@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/5",
+  "format": "canaryfield-seeds/6",
   "seeds": [
     {
       "id": "seed-00",
@@ -168,6 +168,30 @@
       "name": "swapped keyword argument values",
       "defect_class": "wrong input",
       "description": "Swaps the values of the first two keyword arguments of a call so each value binds to the wrong parameter"
+    },
+    {
+      "id": "seed-28",
+      "name": "swapped raised error",
+      "defect_class": "wrong error",
+      "description": "Swaps the exception type a raise throws for the first other exception type the module names so the error a caller handles is never the one that arrives"
+    },
+    {
+      "id": "seed-29",
+      "name": "slice stop shifted by one",
+      "defect_class": "boundary error",
+      "description": "Raises the stop of a slice by one so the code takes one element more than the slice it wrote"
+    },
+    {
+      "id": "seed-30",
+      "name": "shifted numeric default",
+      "defect_class": "wrong default",
+      "description": "Raises a numeric argument default by one so a call that leaves the argument out runs with a value the code never wrote"
+    },
+    {
+      "id": "seed-31",
+      "name": "swapped sibling attribute",
+      "defect_class": "wrong attribute",
+      "description": "Reads the second attribute a scope loads off one object in place of the first so the value comes from a different part of the object than the code named"
     }
   ]
 }
