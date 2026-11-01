@@ -5,11 +5,11 @@ from canaryfield.seeds import SEEDS, SEEDS_BY_ID
 from fixture_project import SAMPLE_SOURCE
 
 
-def test_registry_has_thirty_six_unique_seeds():
-    assert len(SEEDS) == 36
+def test_registry_has_forty_unique_seeds():
+    assert len(SEEDS) == 40
     ids = [seed.id for seed in SEEDS]
-    assert len(set(ids)) == 36
-    assert ids == [f"seed-{index:02d}" for index in range(36)]
+    assert len(set(ids)) == 40
+    assert ids == [f"seed-{index:02d}" for index in range(40)]
 
 
 def test_seed_zero_is_the_stale_version_string():
@@ -46,7 +46,10 @@ def test_main_fixture_applies_the_seeds_it_covers():
     # no numeric default, no attribute load, no call carrying
     # keyword arguments, no broad exception handler, no finally
     # block, no decorator, and no definition carrying a second
-    # argument default.
+    # argument default. The slice 12 seeds carry their own
+    # fixtures in test_slice12.py, because this fixture holds no
+    # try statement a dropped handler could plant on, no yield,
+    # and no class definition.
     applied = []
     for seed in SEEDS:
         tree = ast.parse(SAMPLE_SOURCE)

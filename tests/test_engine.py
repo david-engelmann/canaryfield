@@ -65,14 +65,14 @@ def test_gate_runs_on_clean_and_planted_copies(main_run):
 
 def test_catch_table_shape_and_statuses(main_run):
     _target, result = main_run
-    assert len(result["rows"]) == 36
+    assert len(result["rows"]) == 40
     allowed = {CAUGHT, WAVED, NOT_APPLICABLE, GATE_BROKEN}
     for row in result["rows"]:
         assert set(row["gates"].values()) <= allowed
     summary = result["summary"]["tests"]
     assert summary[CAUGHT] == 14
     assert summary[WAVED] == 3
-    assert summary[NOT_APPLICABLE] == 19
+    assert summary[NOT_APPLICABLE] == 23
     assert summary[GATE_BROKEN] == 0
 
 

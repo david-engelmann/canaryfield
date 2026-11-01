@@ -469,13 +469,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-35"
+    },
+    {
+      "defect_class": "missing recovery",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-36"
+    },
+    {
+      "defect_class": "missing production",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped yield",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-37"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-38"
+    },
+    {
+      "defect_class": "missing inheritance",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-39"
     }
   ],
   "summary": {
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 19,
+      "not-applicable": 23,
       "waved-through": 3
     }
   },

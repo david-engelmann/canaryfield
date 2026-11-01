@@ -96,7 +96,7 @@ def test_git_mode_survives_a_gate_that_writes_a_tracked_file(tmp_path):
         plant_mode="git-branches",
         timeout=60,
     )
-    assert len(result["rows"]) == 36
+    assert len(result["rows"]) == 40
     assert result["target_unchanged"] is True
 
 
@@ -157,7 +157,7 @@ def test_seed_pack_rejects_an_extra_seed(tmp_path):
         extra["id"] = "seed-99"
         data["seeds"].append(extra)
 
-    with pytest.raises(ValueError, match="carries 37"):
+    with pytest.raises(ValueError, match="carries 41"):
         load_seed_pack(_pack_with(tmp_path, mutate))
 
 

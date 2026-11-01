@@ -43,6 +43,10 @@ seed-32  narrowed exception handler             none          not-applicable
 seed-33  swapped parameter defaults             none          not-applicable
 seed-34  dropped finally body                   none          not-applicable
 seed-35  dropped decorator                      none          not-applicable
+seed-36  dropped exception handler              none          not-applicable
+seed-37  dropped yield                          none          not-applicable
+seed-38  dropped condition term                 none          not-applicable
+seed-39  dropped base class                     none          not-applicable
 
 summary per gate
-  tests  caught 14  waved-through 3  not-applicable 19  gate-broken 0
+  tests  caught 14  waved-through 3  not-applicable 23  gate-broken 0
