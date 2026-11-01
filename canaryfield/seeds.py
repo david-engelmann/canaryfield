@@ -5,6 +5,12 @@ look for the code shape it needs inside a parsed module and how to change
 that shape. When the shape is absent the seed reports that it does not
 apply, and the caller records not applicable for that target.
 
+One call to a seed apply function plants at every match in the tree it is
+given. The matches are collected from the tree as parsed, before any
+change is made, and each matched node is planted exactly once, so a
+planting never creates a new match for itself inside the same call and a
+planted shape that would itself match is never planted a second time.
+
 Transforms only ever run on scratch copies. Nothing in this module writes
 to a file.
 """
@@ -28,6 +34,7 @@ def _is_int_constant(node):
 
 
 def _apply_stale_version(tree):
+    targets = []
     for node in _sorted_nodes(tree):
         value = None
         if isinstance(node, ast.Assign) and isinstance(node.value, ast.Constant):
@@ -45,17 +52,21 @@ def _apply_stale_version(tree):
             ):
                 value = node.value
         if value is not None and isinstance(value.value, str):
-            value.value = "9.9.9"
-            return True
-    return False
+            targets.append(value)
+    for value in targets:
+        value.value = "9.9.9"
+    return bool(targets)
 
 
 def _apply_dropped_return(tree):
-    for node in _sorted_nodes(tree):
-        if isinstance(node, ast.Return) and node.value is not None:
-            node.value = None
-            return True
-    return False
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Return) and node.value is not None
+    ]
+    for node in targets:
+        node.value = None
+    return bool(targets)
 
 
 _COMPARISON_FLIPS = {
@@ -73,110 +84,164 @@ _COMPARISON_FLIPS = {
 
 
 def _apply_inverted_comparison(tree):
+    targets = []
     for node in _sorted_nodes(tree):
         if isinstance(node, ast.Compare) and node.ops:
             flipped = _COMPARISON_FLIPS.get(type(node.ops[0]))
             if flipped is not None:
-                node.ops[0] = flipped()
-                return True
-    return False
+                targets.append((node, flipped))
+    for node, flipped in targets:
+        node.ops[0] = flipped()
+    return bool(targets)
 
 
 def _apply_off_by_one(tree):
+    targets = []
+    seen = set()
     for node in _sorted_nodes(tree):
         if isinstance(node, (ast.Return, ast.Compare)):
             for inner in ast.walk(node):
-                if _is_int_constant(inner):
-                    inner.value = inner.value + 1
-                    return True
-    return False
+                if _is_int_constant(inner) and id(inner) not in seen:
+                    seen.add(id(inner))
+                    targets.append(inner)
+    for target in targets:
+        target.value = target.value + 1
+    return bool(targets)
 
 
 def _apply_swallowed_exception(tree):
+    targets = []
     for node in _sorted_nodes(tree):
         if isinstance(node, ast.ExceptHandler):
             if len(node.body) == 1 and isinstance(node.body[0], ast.Pass):
-                return False
-            node.body = [ast.Pass()]
-            return True
-    return False
+                continue
+            targets.append(node)
+    for node in targets:
+        node.body = [ast.Pass()]
+    return bool(targets)
 
 
 def _apply_inverted_boolean(tree):
-    for node in _sorted_nodes(tree):
-        if isinstance(node, ast.Constant) and isinstance(node.value, bool):
-            node.value = not node.value
-            return True
-    return False
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Constant) and isinstance(node.value, bool)
+    ]
+    for node in targets:
+        node.value = not node.value
+    return bool(targets)
 
 
 def _apply_swapped_arithmetic(tree):
     swaps = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.Add}
-    for node in _sorted_nodes(tree):
-        if isinstance(node, ast.BinOp) and type(node.op) in swaps:
-            node.op = swaps[type(node.op)]()
-            return True
-    return False
+    targets = [
+        (node, swaps[type(node.op)])
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.BinOp) and type(node.op) in swaps
+    ]
+    for node, replacement in targets:
+        node.op = replacement()
+    return bool(targets)
 
 
 def _apply_dropped_call_argument(tree):
-    for node in _sorted_nodes(tree):
-        if isinstance(node, ast.Call) and len(node.args) >= 2:
-            node.args = node.args[:-1]
-            return True
-    return False
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Call) and len(node.args) >= 2
+    ]
+    for node in targets:
+        node.args = node.args[:-1]
+    return bool(targets)
 
 
 def _apply_negated_condition(tree):
-    for node in _sorted_nodes(tree):
-        if isinstance(node, ast.If):
-            node.test = ast.UnaryOp(op=ast.Not(), operand=node.test)
-            return True
-    return False
+    targets = [
+        node for node in _sorted_nodes(tree) if isinstance(node, ast.If)
+    ]
+    for node in targets:
+        node.test = ast.UnaryOp(op=ast.Not(), operand=node.test)
+    return bool(targets)
 
 
 def _apply_removed_element(tree):
+    targets = []
     for node in _sorted_nodes(tree):
         if isinstance(node, ast.Dict) and node.keys:
+            targets.append(node)
+        elif isinstance(node, ast.List) and node.elts:
+            targets.append(node)
+    for node in targets:
+        if isinstance(node, ast.Dict):
             node.keys = node.keys[1:]
             node.values = node.values[1:]
-            return True
-        if isinstance(node, ast.List) and node.elts:
+        else:
             node.elts = node.elts[1:]
-            return True
-    return False
+    return bool(targets)
 
 
 def _apply_range_bound_shift(tree):
-    for node in _sorted_nodes(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
         if (
             isinstance(node, ast.Call)
             and isinstance(node.func, ast.Name)
             and node.func.id == "range"
             and node.args
+        )
+    ]
+    for node in targets:
+        last = node.args[-1]
+        node.args[-1] = ast.BinOp(left=last, op=ast.Add(), right=ast.Constant(value=1))
+    return bool(targets)
+
+
+def _own_returns(node):
+    """The return statements that belong to one function body.
+
+    The walk descends through the statements of the body and
+    stops at any nested function or class, because a return
+    inside one of those belongs to that nested scope and is
+    judged against its own parameter list when the walk of the
+    whole tree reaches it.
+    """
+    found = []
+    stack = list(node.body)
+    while stack:
+        current = stack.pop()
+        if isinstance(
+            current,
+            (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda),
         ):
-            last = node.args[-1]
-            node.args[-1] = ast.BinOp(left=last, op=ast.Add(), right=ast.Constant(value=1))
-            return True
-    return False
+            continue
+        if isinstance(current, ast.Return):
+            found.append(current)
+        stack.extend(ast.iter_child_nodes(current))
+    return found
 
 
 def _apply_wrong_variable_returned(tree):
+    targets = []
+    planted = set()
     for node in _sorted_nodes(tree):
-        if isinstance(node, ast.FunctionDef):
-            params = [arg.arg for arg in node.args.args]
-            if len(params) < 2:
-                continue
-            for inner in _sorted_nodes(node):
-                if (
-                    isinstance(inner, ast.Return)
-                    and isinstance(inner.value, ast.Name)
-                    and inner.value.id in params
-                ):
-                    index = params.index(inner.value.id)
-                    inner.value.id = params[(index + 1) % len(params)]
-                    return True
-    return False
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        params = [arg.arg for arg in node.args.args]
+        if len(params) < 2:
+            continue
+        for inner in _own_returns(node):
+            if (
+                isinstance(inner.value, ast.Name)
+                and inner.value.id in params
+                and id(inner) not in planted
+            ):
+                planted.add(id(inner))
+                index = params.index(inner.value.id)
+                targets.append((inner, params[(index + 1) % len(params)]))
+    for inner, name in targets:
+        inner.value.id = name
+    return bool(targets)
 
 
 @dataclass(frozen=True)
