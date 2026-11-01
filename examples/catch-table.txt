@@ -23,6 +23,10 @@ seed-12  swapped operand order        sample.py     caught
 seed-13  dropped else branch          none          not-applicable
 seed-14  swapped boolean operator     none          not-applicable
 seed-15  dropped await                none          not-applicable
+seed-16  widened exception handler    sample.py     waved-through
+seed-17  swapped dictionary entry     none          not-applicable
+seed-18  inverted truth test          none          not-applicable
+seed-19  reassigned loop variable     none          not-applicable
 
 summary per gate
-  tests  caught 11  waved-through 2  not-applicable 3  gate-broken 0
+  tests  caught 11  waved-through 3  not-applicable 6  gate-broken 0

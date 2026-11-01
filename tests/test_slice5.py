@@ -316,10 +316,10 @@ def test_version_one_pack_still_loads_the_original_twelve(tmp_path):
 def test_a_pack_whose_count_disagrees_with_its_version_is_refused(
     tmp_path,
 ):
-    sixteen_under_v1 = seed_pack_data()
-    sixteen_under_v1["format"] = "canaryfield-seeds/1"
+    current_under_v1 = seed_pack_data()
+    current_under_v1["format"] = "canaryfield-seeds/1"
     with pytest.raises(ValueError, match="carries 12"):
-        load_seed_pack(_pack_file(tmp_path, sixteen_under_v1))
+        load_seed_pack(_pack_file(tmp_path, current_under_v1))
     twelve_under_v2 = _version_one_data()
     twelve_under_v2["format"] = "canaryfield-seeds/2"
     with pytest.raises(ValueError, match="carries 16"):

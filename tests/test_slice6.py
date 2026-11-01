@@ -39,6 +39,13 @@ def _version_one_data():
     }
 
 
+def _version_two_data():
+    return {
+        "format": "canaryfield-seeds/2",
+        "seeds": [_entry(seed) for seed in SEEDS[:16]],
+    }
+
+
 def test_a_version_one_pack_carrying_a_grown_registry_id_is_refused(
     tmp_path,
 ):
@@ -56,7 +63,7 @@ def test_a_version_one_pack_with_an_invented_id_is_refused(tmp_path):
 
 
 def test_a_version_two_pack_with_an_invented_id_is_refused(tmp_path):
-    data = seed_pack_data()
+    data = _version_two_data()
     data["seeds"][15]["id"] = "seed-99"
     with pytest.raises(ValueError, match="ids do not match"):
         load_seed_pack(_pack_file(tmp_path, data))
@@ -66,7 +73,7 @@ def test_pack_entry_order_does_not_matter_for_acceptance(tmp_path):
     data = seed_pack_data()
     data["seeds"] = list(reversed(data["seeds"]))
     entries = load_seed_pack(_pack_file(tmp_path, data))
-    assert len(entries) == 16
+    assert len(entries) == 20
     assert {entry["id"] for entry in entries} == {
         seed.id for seed in SEEDS
     }
@@ -104,7 +111,7 @@ def test_a_pack_entry_description_is_prose_and_is_not_verified(tmp_path):
         "A reworded description of the same planted defect"
     )
     entries = load_seed_pack(_pack_file(tmp_path, data))
-    assert len(entries) == 16
+    assert len(entries) == 20
     assert entries[5]["description"] == (
         "A reworded description of the same planted defect"
     )

@@ -320,6 +320,182 @@ def _apply_dropped_await(tree):
     return bool(targets)
 
 
+_BROAD_HANDLER_NAMES = ("Exception", "BaseException")
+
+
+def _handler_type_names(handler_type):
+    if isinstance(handler_type, ast.Name):
+        return {handler_type.id}
+    if isinstance(handler_type, ast.Tuple):
+        return {
+            member.id
+            for member in handler_type.elts
+            if isinstance(member, ast.Name)
+        }
+    return set()
+
+
+def _apply_widened_exception_handler(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if not isinstance(node, ast.ExceptHandler):
+            continue
+        if node.type is None:
+            continue
+        if _handler_type_names(node.type) & set(_BROAD_HANDLER_NAMES):
+            continue
+        targets.append(node)
+    for node in targets:
+        node.type = ast.Name(id="Exception", ctx=ast.Load())
+    return bool(targets)
+
+
+def _apply_swapped_dictionary_entry(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Dict)
+        and any(key is not None for key in node.keys)
+    ]
+    for node in targets:
+        pairs = [
+            (key, value) if key is None else (value, key)
+            for key, value in zip(node.keys, node.values)
+        ]
+        node.keys = [key for key, _value in pairs]
+        node.values = [value for _key, value in pairs]
+    return bool(targets)
+
+
+def _is_negation(node):
+    return isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.Not)
+
+
+def _apply_inverted_truth_test(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if isinstance(node, ast.While):
+            targets.append(node)
+        elif isinstance(node, (ast.If, ast.IfExp)) and _is_negation(
+            node.test
+        ):
+            targets.append(node)
+    for node in targets:
+        if _is_negation(node.test):
+            node.test = node.test.operand
+        else:
+            node.test = ast.UnaryOp(op=ast.Not(), operand=node.test)
+    return bool(targets)
+
+
+_COMPREHENSIONS = (
+    ast.ListComp,
+    ast.SetComp,
+    ast.DictComp,
+    ast.GeneratorExp,
+)
+
+
+def _bound_names_in_scope(scope):
+    """The names one scope binds, parameters first, then source order.
+
+    The walk reads the body of the scope and stops at any nested
+    function or class, because a name bound in a nested scope is
+    not bound in this one, and it never descends into a
+    comprehension, because a name bound only inside a comprehension
+    is not bound in this scope either. A function or class defined
+    in the body binds its own name in this scope.
+    """
+    found = []
+
+    def note(position, name):
+        found.append((position, name))
+
+    if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        args = scope.args
+        params = [
+            arg.arg for arg in (*args.posonlyargs, *args.args)
+        ]
+        if args.vararg is not None:
+            params.append(args.vararg.arg)
+        params.extend(arg.arg for arg in args.kwonlyargs)
+        if args.kwarg is not None:
+            params.append(args.kwarg.arg)
+        for index, name in enumerate(params):
+            note((0, 0, index), name)
+    stack = list(scope.body)
+    while stack:
+        current = stack.pop()
+        if isinstance(
+            current, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        ):
+            note((current.lineno, current.col_offset, 0), current.name)
+            continue
+        if isinstance(current, (ast.Lambda, *_COMPREHENSIONS)):
+            continue
+        if isinstance(current, ast.Name) and isinstance(
+            current.ctx, ast.Store
+        ):
+            note((current.lineno, current.col_offset, 0), current.id)
+        elif isinstance(current, ast.Import):
+            for index, alias in enumerate(current.names):
+                note(
+                    (current.lineno, current.col_offset, index),
+                    alias.asname or alias.name.split(".")[0],
+                )
+        elif isinstance(current, ast.ImportFrom):
+            for index, alias in enumerate(current.names):
+                note(
+                    (current.lineno, current.col_offset, index),
+                    alias.asname or alias.name,
+                )
+        elif isinstance(current, ast.ExceptHandler) and current.name:
+            note((current.lineno, current.col_offset, 0), current.name)
+        stack.extend(ast.iter_child_nodes(current))
+    names = []
+    for _position, name in sorted(found):
+        if name not in names:
+            names.append(name)
+    return names
+
+
+def _collect_loop_retargets(tree):
+    """The for loops of a tree with the name each one is pointed at.
+
+    Each entry carries the loop node and the first name bound in
+    the scope that encloses the loop other than the name the loop
+    already targets, and a loop whose scope binds no other name
+    earns no entry. The entries are collected from the tree as
+    parsed, before any loop is pointed anywhere.
+    """
+    found = []
+
+    def visit(node, scope):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        ):
+            scope = node
+        if isinstance(node, (ast.For, ast.AsyncFor)) and isinstance(
+            node.target, ast.Name
+        ):
+            for name in _bound_names_in_scope(scope):
+                if name != node.target.id:
+                    found.append((node, name))
+                    break
+        for child in ast.iter_child_nodes(node):
+            visit(child, scope)
+
+    visit(tree, tree)
+    return found
+
+
+def _apply_reassigned_loop_variable(tree):
+    targets = _collect_loop_retargets(tree)
+    for node, name in targets:
+        node.target = ast.Name(id=name, ctx=ast.Store())
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -346,6 +522,10 @@ SEEDS = [
     Seed("seed-13", "dropped else branch", "missing fallback", _apply_dropped_else, "Drops the else branch of a conditional so the fallback path never runs"),
     Seed("seed-14", "swapped boolean operator", "wrong predicate", _apply_swapped_boolean_operator, "Swaps a boolean and for an or, or an or for an and, in a compound condition"),
     Seed("seed-15", "dropped await", "missing wait", _apply_dropped_await, "Removes an await so the caller holds a coroutine instead of the awaited result"),
+    Seed("seed-16", "widened exception handler", "hidden failure", _apply_widened_exception_handler, "Widens an exception handler so it catches the broad base error type"),
+    Seed("seed-17", "swapped dictionary entry", "wrong data", _apply_swapped_dictionary_entry, "Swaps the key and the value of a dictionary entry so the mapping answers backwards"),
+    Seed("seed-18", "inverted truth test", "wrong branch", _apply_inverted_truth_test, "Toggles the negation on a condition test so its sense reads backwards on the shapes no other seed plants"),
+    Seed("seed-19", "reassigned loop variable", "wrong variable", _apply_reassigned_loop_variable, "Points a for loop at a different name already bound in the same scope so the loop writes into the wrong variable"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}
