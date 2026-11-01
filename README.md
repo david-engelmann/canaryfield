@@ -12,7 +12,7 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - The remote seed is still pending because a token access fix is outstanding and content writes are blocked
 - The canaryfield probe returned 403 on 31 October 2026 and that result is on file with the main chat
 - Setup is in progress locally on a branch and the full setup pull request flow waits on the remote fix
-- The contract lives in CONTRACT.md and its obligations are met for slice 1 and slice 2 and slice 3 and slice 4 as the test suite shows
+- The contract lives in CONTRACT.md and its obligations are met for slice 1 and slice 2 and slice 3 and slice 4 and slice 5 as the test suite shows
 - Slice 1 is built and proven on synthetic targets only
 - Slice 2 is built and proven on synthetic targets only
 - Slice 3 is built and proven on synthetic targets only
@@ -21,14 +21,19 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - Slice 4 is built and proven on synthetic targets only
 - Slice 4 plants every seed at every matching shape inside each file it plants into instead of only the first matching shape in that file, so a catch table row now means the gate faced the defect everywhere it could be planted in that file
 - Regenerating the committed examples under the slice 4 planting changed no verdict and no byte, because the demo project carries a single plantable module, the only seeds with more than one matching shape in that module were already caught through their first planting, and the two waved through seeds each match at a single shape there
+- Slice 5 is built and proven on synthetic targets only
+- Slice 5 grows the seed registry from twelve seeds to sixteen, adding swapped operand order and dropped else branch and swapped boolean operator and dropped await as seed-12 through seed-15
+- Slice 5 writes the seed pack under the format name canaryfield-seeds/2 with sixteen entries, and the loader still accepts canaryfield-seeds/1 packs at their twelve entries and refuses any pack whose entry count disagrees with its format version
+- Regenerating the committed examples under the sixteen seed registry changed no verdict on the original twelve seeds, and seed-12 is caught by the demo test gate while seed-13 and seed-14 and seed-15 do not apply to the demo project, so the two gates in the second example now honestly disagree on eleven seeds
+- Slice 5 is the Round 4 work increment, and Round 4 closed on 2026-11-01 after audit and review and red team and owner approval, with the review findings fixed under FIX5-1
 - Slice 2 adds a git branch planting mode that plants each seed on its own throwaway branch inside a scratch clone and never touches the target tree or its git state
-- Slice 2 adds a second example where two gates judge the same field and honestly disagree on ten seeds
-- Slice 2 adds a versioned seed pack file under the format name canaryfield-seeds/1 so other tools in the line can consume the same seed definitions
+- Slice 2 added a second example where two gates judge the same field, an example whose disagreements now stand at eleven under the sixteen seed registry
+- Slice 2 added a versioned seed pack file under the format name canaryfield-seeds/1 so other tools in the line can consume the same seed definitions, and slice 5 writes the pack under canaryfield-seeds/2 while version 1 packs still load
 - The owner of this line has run proving runs against scratch clones of real project trees, and their results are reported to the owner as numbers only and never committed here, and nothing has been planted in any live tree
 - Round 1 closed on 2026-10-31 after slice 2 was built, audited, reviewed on two axes, and attacked by a red team, with every material finding fixed under the contract fix obligations FIX2-1 to FIX2-5 before the owner of this line approved the round
 - Round 2 closed on 2026-10-31 after slice 3 was built, audited, and reviewed on two axes, with the red team rejecting the first form of the slice and every material finding fixed under the contract fix obligations FIX3-1 to FIX3-6 before the owner of this line approved the round
 - Round 3 closed on 2026-11-01 after slice 4 was built, audited, and reviewed on two axes and attacked by a red team, with every material finding fixed under the contract fix obligations FIX4-1 to FIX4-3 before the owner of this line approved the round
-- Closed rounds stand at 3 of 100
+- Closed rounds stand at 4 of 100
 - AGENTS.md is pending because the canonical template has not been supplied by the main chat
 - No formats are pinned by this repo yet
 

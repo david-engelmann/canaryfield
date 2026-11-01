@@ -5,11 +5,11 @@ from canaryfield.seeds import SEEDS, SEEDS_BY_ID
 from fixture_project import SAMPLE_SOURCE
 
 
-def test_registry_has_twelve_unique_seeds():
-    assert len(SEEDS) == 12
+def test_registry_has_sixteen_unique_seeds():
+    assert len(SEEDS) == 16
     ids = [seed.id for seed in SEEDS]
-    assert len(set(ids)) == 12
-    assert ids == [f"seed-{index:02d}" for index in range(12)]
+    assert len(set(ids)) == 16
+    assert ids == [f"seed-{index:02d}" for index in range(16)]
 
 
 def test_seed_zero_is_the_stale_version_string():
@@ -29,10 +29,15 @@ def test_seed_metadata_is_complete():
         assert isinstance(seed.apply(tree), bool), seed.id
 
 
-def test_every_seed_applies_to_the_main_fixture():
+def test_main_fixture_applies_the_seeds_it_covers():
+    # The main fixture was built for the original twelve seeds and
+    # also exercises seed-12 through the division in safe_div. The
+    # remaining slice 5 seeds carry their own fixtures in
+    # test_slice5.py, because this fixture holds no else branch, no
+    # compound condition, and no await.
     applied = []
     for seed in SEEDS:
         tree = ast.parse(SAMPLE_SOURCE)
         if seed.apply(tree):
             applied.append(seed.id)
-    assert applied == [seed.id for seed in SEEDS]
+    assert applied == [seed.id for seed in SEEDS[:13]]

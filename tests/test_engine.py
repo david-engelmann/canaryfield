@@ -38,30 +38,39 @@ def test_caught_and_waved_scoring(main_run):
         "seed-08",
         "seed-10",
         "seed-11",
+        "seed-12",
     ):
         assert cells[seed_id] == CAUGHT, seed_id
     assert cells["seed-07"] == WAVED
     assert cells["seed-09"] == WAVED
+    for seed_id in ("seed-13", "seed-14", "seed-15"):
+        assert cells[seed_id] == NOT_APPLICABLE, seed_id
 
 
 def test_gate_runs_on_clean_and_planted_copies(main_run):
     _target, result = main_run
     assert result["clean_exits"]["tests"] == 0
+    planted = 0
     for row in result["rows"]:
+        if not row["planted_files"]:
+            assert row["planted_file"] is None
+            continue
+        planted += 1
         assert row["planted_file"] == "sample.py"
         assert row["planted_exits"]["tests"] is not None
+    assert planted == 13
 
 
 def test_catch_table_shape_and_statuses(main_run):
     _target, result = main_run
-    assert len(result["rows"]) == 12
+    assert len(result["rows"]) == 16
     allowed = {CAUGHT, WAVED, NOT_APPLICABLE, GATE_BROKEN}
     for row in result["rows"]:
         assert set(row["gates"].values()) <= allowed
     summary = result["summary"]["tests"]
-    assert summary[CAUGHT] == 10
+    assert summary[CAUGHT] == 11
     assert summary[WAVED] == 2
-    assert summary[NOT_APPLICABLE] == 0
+    assert summary[NOT_APPLICABLE] == 3
     assert summary[GATE_BROKEN] == 0
 
 
@@ -72,7 +81,7 @@ def test_report_renders_text_and_json_with_the_same_facts(main_run):
     assert "canaryfield catch table" in text
     assert "seed-07" in text and WAVED in text
     assert '"seed-07"' in rendered_json and WAVED in rendered_json
-    assert result["summary"]["tests"][CAUGHT] == 10
+    assert result["summary"]["tests"][CAUGHT] == 11
 
 
 def test_target_tree_is_byte_identical_after_a_run(tmp_path):
@@ -103,4 +112,4 @@ def test_gate_failing_on_clean_copy_is_broken(tmp_path):
         expected = GATE_BROKEN if row["planted_file"] else NOT_APPLICABLE
         assert row["gates"]["broken"] == expected
     assert result["summary"]["broken"][CAUGHT] == 0
-    assert result["summary"]["broken"][GATE_BROKEN] == 12
+    assert result["summary"]["broken"][GATE_BROKEN] == 13

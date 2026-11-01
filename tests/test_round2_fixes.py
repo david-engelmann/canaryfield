@@ -225,7 +225,7 @@ def test_planted_files_sort_as_rendered_strings(tmp_path):
 
 def test_a_whitespace_only_pack_field_is_refused(tmp_path):
     entries = []
-    for seed in sorted(SEEDS_BY_ID.values(), key=lambda item: item.id):
+    for seed in sorted(SEEDS_BY_ID.values(), key=lambda item: item.id)[:12]:
         entries.append(
             {
                 "id": seed.id,

@@ -6,21 +6,25 @@ target unchanged true
 clean exit for gate tests is 0
 clean exit for gate compile is 0
 
-seed     name                         planted file  tests          compile
--------  ---------------------------  ------------  -------------  -------------
-seed-00  stale version string         sample.py     caught         waved-through
-seed-01  dropped return value         sample.py     caught         waved-through
-seed-02  inverted comparison          sample.py     caught         waved-through
-seed-03  off by one constant          sample.py     caught         waved-through
-seed-04  swallowed exception          sample.py     caught         waved-through
-seed-05  inverted boolean literal     sample.py     caught         waved-through
-seed-06  swapped arithmetic operator  sample.py     caught         waved-through
-seed-07  dropped call argument        sample.py     waved-through  waved-through
-seed-08  negated condition            sample.py     caught         waved-through
-seed-09  removed collection element   sample.py     waved-through  waved-through
-seed-10  range bound shifted by one   sample.py     caught         waved-through
-seed-11  wrong variable returned      sample.py     caught         waved-through
+seed     name                         planted file  tests           compile
+-------  ---------------------------  ------------  --------------  --------------
+seed-00  stale version string         sample.py     caught          waved-through
+seed-01  dropped return value         sample.py     caught          waved-through
+seed-02  inverted comparison          sample.py     caught          waved-through
+seed-03  off by one constant          sample.py     caught          waved-through
+seed-04  swallowed exception          sample.py     caught          waved-through
+seed-05  inverted boolean literal     sample.py     caught          waved-through
+seed-06  swapped arithmetic operator  sample.py     caught          waved-through
+seed-07  dropped call argument        sample.py     waved-through   waved-through
+seed-08  negated condition            sample.py     caught          waved-through
+seed-09  removed collection element   sample.py     waved-through   waved-through
+seed-10  range bound shifted by one   sample.py     caught          waved-through
+seed-11  wrong variable returned      sample.py     caught          waved-through
+seed-12  swapped operand order        sample.py     caught          waved-through
+seed-13  dropped else branch          none          not-applicable  not-applicable
+seed-14  swapped boolean operator     none          not-applicable  not-applicable
+seed-15  dropped await                none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 10  waved-through 2  not-applicable 0  gate-broken 0
-  compile  caught 0  waved-through 12  not-applicable 0  gate-broken 0
+  tests  caught 11  waved-through 2  not-applicable 3  gate-broken 0
+  compile  caught 0  waved-through 13  not-applicable 3  gate-broken 0

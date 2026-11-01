@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/1",
+  "format": "canaryfield-seeds/2",
   "seeds": [
     {
       "id": "seed-00",
@@ -72,6 +72,30 @@
       "name": "wrong variable returned",
       "defect_class": "wrong result",
       "description": "Returns the next parameter instead of the one the code named"
+    },
+    {
+      "id": "seed-12",
+      "name": "swapped operand order",
+      "defect_class": "wrong computation",
+      "description": "Swaps the operands of a subtraction, division, floor division, or modulo, where the order of the operands decides the result"
+    },
+    {
+      "id": "seed-13",
+      "name": "dropped else branch",
+      "defect_class": "missing fallback",
+      "description": "Drops the else branch of a conditional so the fallback path never runs"
+    },
+    {
+      "id": "seed-14",
+      "name": "swapped boolean operator",
+      "defect_class": "wrong predicate",
+      "description": "Swaps a boolean and for an or, or an or for an and, in a compound condition"
+    },
+    {
+      "id": "seed-15",
+      "name": "dropped await",
+      "defect_class": "missing wait",
+      "description": "Removes an await so the caller holds a coroutine instead of the awaited result"
     }
   ]
 }

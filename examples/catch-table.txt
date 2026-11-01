@@ -6,7 +6,7 @@ target unchanged true
 clean exit for gate tests is 0
 
 seed     name                         planted file  tests
--------  ---------------------------  ------------  -------------
+-------  ---------------------------  ------------  --------------
 seed-00  stale version string         sample.py     caught
 seed-01  dropped return value         sample.py     caught
 seed-02  inverted comparison          sample.py     caught
@@ -19,6 +19,10 @@ seed-08  negated condition            sample.py     caught
 seed-09  removed collection element   sample.py     waved-through
 seed-10  range bound shifted by one   sample.py     caught
 seed-11  wrong variable returned      sample.py     caught
+seed-12  swapped operand order        sample.py     caught
+seed-13  dropped else branch          none          not-applicable
+seed-14  swapped boolean operator     none          not-applicable
+seed-15  dropped await                none          not-applicable
 
 summary per gate
-  tests  caught 10  waved-through 2  not-applicable 0  gate-broken 0
+  tests  caught 11  waved-through 2  not-applicable 3  gate-broken 0

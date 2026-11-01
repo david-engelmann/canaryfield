@@ -211,19 +211,72 @@
         "sample.py"
       ],
       "seed": "seed-11"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "swapped operand order",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-12"
+    },
+    {
+      "defect_class": "missing fallback",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped else branch",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-13"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "swapped boolean operator",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-14"
+    },
+    {
+      "defect_class": "missing wait",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped await",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-15"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 0,
-      "waved-through": 12
+      "not-applicable": 3,
+      "waved-through": 13
     },
     "tests": {
-      "caught": 10,
+      "caught": 11,
       "gate-broken": 0,
-      "not-applicable": 0,
+      "not-applicable": 3,
       "waved-through": 2
     }
   },
