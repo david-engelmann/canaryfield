@@ -8,7 +8,16 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 
 ## Status
 
-Seeded in October 2026. The build has not started. Part of the impatient programming portfolio, in the Gate Truth arc.
+- The local seed is done and the seed commit sits on the local main branch
+- The remote seed is still pending because a token access fix is outstanding and content writes are blocked
+- The canaryfield probe returned 403 on 31 October 2026 and that result is on file with the main chat
+- Setup is in progress locally on a branch and the full setup pull request flow waits on the remote fix
+- The contract lives in CONTRACT.md and its obligations are met for slice 1 as the test suite shows
+- Slice 1 is built and proven on synthetic targets only
+- The proving run against a scratch clone of a real portfolio tree is future work and nothing has been planted in any live tree
+- Closed rounds stand at 0 of 100
+- AGENTS.md is pending because the canonical template has not been supplied by the main chat
+- No formats are pinned by this repo yet
 
 ## Licence
 

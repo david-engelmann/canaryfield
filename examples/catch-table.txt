@@ -1,0 +1,24 @@
+canaryfield catch table
+=======================
+
+target           examples/demo-project
+target unchanged true
+clean exit for gate tests is 0
+
+seed     name                         planted file  tests
+-------  ---------------------------  ------------  -------------
+seed-00  stale version string         sample.py     caught
+seed-01  dropped return value         sample.py     caught
+seed-02  inverted comparison          sample.py     caught
+seed-03  off by one constant          sample.py     caught
+seed-04  swallowed exception          sample.py     caught
+seed-05  inverted boolean literal     sample.py     caught
+seed-06  swapped arithmetic operator  sample.py     caught
+seed-07  dropped call argument        sample.py     waved-through
+seed-08  negated condition            sample.py     caught
+seed-09  removed collection element   sample.py     waved-through
+seed-10  range bound shifted by one   sample.py     caught
+seed-11  wrong variable returned      sample.py     caught
+
+summary per gate
+  tests  caught 10  waved-through 2  not-applicable 0  gate-broken 0
