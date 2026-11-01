@@ -132,12 +132,15 @@ def _apply_inverted_boolean(tree):
     return bool(targets)
 
 
+_ARITHMETIC_SWAPS = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.Add}
+
+
 def _apply_swapped_arithmetic(tree):
-    swaps = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.Add}
     targets = [
-        (node, swaps[type(node.op)])
+        (node, _ARITHMETIC_SWAPS[type(node.op)])
         for node in _sorted_nodes(tree)
-        if isinstance(node, ast.BinOp) and type(node.op) in swaps
+        if isinstance(node, ast.BinOp)
+        and type(node.op) in _ARITHMETIC_SWAPS
     ]
     for node, replacement in targets:
         node.op = replacement()
@@ -658,6 +661,59 @@ def _apply_swapped_loop_control(tree):
     return bool(targets)
 
 
+def _apply_swapped_augmented_operator(tree):
+    targets = [
+        (node, _ARITHMETIC_SWAPS[type(node.op)])
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.AugAssign)
+        and type(node.op) in _ARITHMETIC_SWAPS
+    ]
+    for node, replacement in targets:
+        node.op = replacement()
+    return bool(targets)
+
+
+_IDENTITY_TO_EQUALITY = {ast.Is: ast.Eq, ast.IsNot: ast.NotEq}
+
+
+def _apply_identity_comparison_as_equality(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if isinstance(node, ast.Compare) and node.ops:
+            swapped = _IDENTITY_TO_EQUALITY.get(type(node.ops[0]))
+            if swapped is not None:
+                targets.append((node, swapped))
+    for node, swapped in targets:
+        node.ops[0] = swapped()
+    return bool(targets)
+
+
+def _apply_subscript_index_shift(tree):
+    targets = [
+        node.slice
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Subscript) and _is_int_constant(node.slice)
+    ]
+    for target in targets:
+        target.value = target.value + 1
+    return bool(targets)
+
+
+def _apply_swapped_keyword_argument_values(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        named = [
+            keyword for keyword in node.keywords if keyword.arg is not None
+        ]
+        if len(named) >= 2:
+            targets.append((named[0], named[1]))
+    for first, second in targets:
+        first.value, second.value = second.value, first.value
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -692,6 +748,10 @@ SEEDS = [
     Seed("seed-21", "altered string literal", "wrong text", _apply_altered_string_literal, "Changes the first character of a string literal so the text the code compares or returns is no longer the text it wrote"),
     Seed("seed-22", "dropped numeric negation", "wrong sign", _apply_dropped_numeric_negation, "Removes a unary minus so a value carries the opposite sign from the one the code wrote"),
     Seed("seed-23", "swapped loop control", "wrong flow", _apply_swapped_loop_control, "Turns a break inside a loop into a continue so the loop runs on instead of ending"),
+    Seed("seed-24", "swapped augmented assignment operator", "wrong computation", _apply_swapped_augmented_operator, "Swaps the operator of an augmented assignment so the value it accumulates moves the wrong way"),
+    Seed("seed-25", "identity test replaced by equality", "wrong predicate", _apply_identity_comparison_as_equality, "Replaces an identity comparison with an equality comparison so the test asks sameness of value instead of sameness of object"),
+    Seed("seed-26", "subscript index shifted by one", "boundary error", _apply_subscript_index_shift, "Raises the constant index of a subscript by one so the code reads the element beside the one it named"),
+    Seed("seed-27", "swapped keyword argument values", "wrong input", _apply_swapped_keyword_argument_values, "Swaps the values of the first two keyword arguments of a call so each value binds to the wrong parameter"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}
