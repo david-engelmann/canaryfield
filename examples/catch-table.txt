@@ -39,6 +39,10 @@ seed-28  swapped raised error                   sample.py     caught
 seed-29  slice stop shifted by one              none          not-applicable
 seed-30  shifted numeric default                none          not-applicable
 seed-31  swapped sibling attribute              none          not-applicable
+seed-32  narrowed exception handler             none          not-applicable
+seed-33  swapped parameter defaults             none          not-applicable
+seed-34  dropped finally body                   none          not-applicable
+seed-35  dropped decorator                      none          not-applicable
 
 summary per gate
-  tests  caught 14  waved-through 3  not-applicable 15  gate-broken 0
+  tests  caught 14  waved-through 3  not-applicable 19  gate-broken 0

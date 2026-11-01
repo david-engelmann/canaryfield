@@ -12,7 +12,7 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - The remote seed is still pending because a token access fix is outstanding and content writes are blocked
 - The canaryfield probe returned 403 on 31 October 2026 and that result is on file with the main chat
 - Setup is in progress locally on a branch and the full setup pull request flow waits on the remote fix
-- The contract lives in CONTRACT.md and its obligations are met for slice 1 and slice 2 and slice 3 and slice 4 and slice 5 and slice 6 and slice 7 and slice 8 and slice 9 and slice 10 as the test suite shows
+- The contract lives in CONTRACT.md and its obligations are met for slice 1 and slice 2 and slice 3 and slice 4 and slice 5 and slice 6 and slice 7 and slice 8 and slice 9 and slice 10 and slice 11 as the test suite shows
 - Slice 1 is built and proven on synthetic targets only
 - Slice 2 is built and proven on synthetic targets only
 - Slice 3 is built and proven on synthetic targets only
@@ -50,14 +50,19 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - Slice 10 writes the seed pack under the format name canaryfield-seeds/6 with thirty two entries, and the loader still accepts canaryfield-seeds/1 packs at their twelve entries and canaryfield-seeds/2 packs at their sixteen entries and canaryfield-seeds/3 packs at their twenty entries and canaryfield-seeds/4 packs at their twenty four entries and canaryfield-seeds/5 packs at their twenty eight entries and refuses any pack whose entry count disagrees with its format version
 - Regenerating the committed examples under the thirty two seed registry changed no verdict on the original twenty eight seeds, and seed-28 plants into the demo project and is caught by its test gate while seed-29 and seed-30 and seed-31 do not apply to the demo project, so the two gates in the second example now honestly disagree on fourteen seeds
 - Slice 10 is the Round 9 work increment and is built on a local branch, and Round 9 closed on 2026-11-01 after audit and two-axis review and red team and owner approval, with the findings recorded in the Round 9 review fixes
+- Slice 11 is built and proven on synthetic targets only
+- Slice 11 grows the seed registry from thirty two seeds to thirty six, adding narrowed exception handler and swapped parameter defaults and dropped finally body and dropped decorator as seed-32 through seed-35
+- Slice 11 writes the seed pack under the format name canaryfield-seeds/7 with thirty six entries, and the loader still accepts canaryfield-seeds/1 packs at their twelve entries and canaryfield-seeds/2 packs at their sixteen entries and canaryfield-seeds/3 packs at their twenty entries and canaryfield-seeds/4 packs at their twenty four entries and canaryfield-seeds/5 packs at their twenty eight entries and canaryfield-seeds/6 packs at their thirty two entries and refuses any pack whose entry count disagrees with its format version
+- Regenerating the committed examples under the thirty six seed registry changed no verdict on the original thirty two seeds, and seed-32 and seed-33 and seed-34 and seed-35 do not apply to the demo project, so the two gates in the second example still honestly disagree on fourteen seeds
+- Slice 11 is the Round 10 work increment, and Round 10 closed on 2026-11-01 after audit and two-axis review and red team and owner approval, with the findings recorded in the Round 10 review fixes
 - Slice 2 adds a git branch planting mode that plants each seed on its own throwaway branch inside a scratch clone and never touches the target tree or its git state
-- Slice 2 added a second example where two gates judge the same field, an example whose disagreements now stand at fourteen under the thirty two seed registry
-- Slice 2 added a versioned seed pack file under the format name canaryfield-seeds/1 so other tools in the line can consume the same seed definitions, and slice 5 writes the pack under canaryfield-seeds/2 and slice 7 writes the pack under canaryfield-seeds/3 and slice 8 writes the pack under canaryfield-seeds/4 and slice 9 writes the pack under canaryfield-seeds/5 and slice 10 writes the pack under canaryfield-seeds/6 while version 1 and version 2 and version 3 and version 4 and version 5 packs still load
+- Slice 2 added a second example where two gates judge the same field, an example whose disagreements now stand at fourteen under the thirty six seed registry
+- Slice 2 added a versioned seed pack file under the format name canaryfield-seeds/1 so other tools in the line can consume the same seed definitions, and slice 5 writes the pack under canaryfield-seeds/2 and slice 7 writes the pack under canaryfield-seeds/3 and slice 8 writes the pack under canaryfield-seeds/4 and slice 9 writes the pack under canaryfield-seeds/5 and slice 10 writes the pack under canaryfield-seeds/6 and slice 11 writes the pack under canaryfield-seeds/7 while version 1 and version 2 and version 3 and version 4 and version 5 and version 6 packs still load
 - The owner of this line has run proving runs against scratch clones of real project trees, and their results are reported to the owner as numbers only and never committed here, and nothing has been planted in any live tree
 - Round 1 closed on 2026-10-31 after slice 2 was built, audited, reviewed on two axes, and attacked by a red team, with every material finding fixed under the contract fix obligations FIX2-1 to FIX2-5 before the owner of this line approved the round
 - Round 2 closed on 2026-10-31 after slice 3 was built, audited, and reviewed on two axes, with the red team rejecting the first form of the slice and every material finding fixed under the contract fix obligations FIX3-1 to FIX3-6 before the owner of this line approved the round
 - Round 3 closed on 2026-11-01 after slice 4 was built, audited, and reviewed on two axes and attacked by a red team, with every material finding fixed under the contract fix obligations FIX4-1 to FIX4-3 before the owner of this line approved the round
-- Closed rounds stand at 9 of 100
+- Closed rounds stand at 10 of 100
 - AGENTS.md is pending because the canonical template has not been supplied by the main chat
 - No formats are pinned by this repo yet
 

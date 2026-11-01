@@ -5,11 +5,11 @@ from canaryfield.seeds import SEEDS, SEEDS_BY_ID
 from fixture_project import SAMPLE_SOURCE
 
 
-def test_registry_has_thirty_two_unique_seeds():
-    assert len(SEEDS) == 32
+def test_registry_has_thirty_six_unique_seeds():
+    assert len(SEEDS) == 36
     ids = [seed.id for seed in SEEDS]
-    assert len(set(ids)) == 32
-    assert ids == [f"seed-{index:02d}" for index in range(32)]
+    assert len(set(ids)) == 36
+    assert ids == [f"seed-{index:02d}" for index in range(36)]
 
 
 def test_seed_zero_is_the_stale_version_string():
@@ -36,15 +36,17 @@ def test_main_fixture_applies_the_seeds_it_covers():
     # the greet call in banner and seed-21 through its plain string
     # literals and seed-28 through the raise in safe_div. The
     # remaining slice 5 and slice 7 and slice 8 and slice 9 and
-    # slice 10 seeds carry their own fixtures in test_slice5.py and
-    # test_slice7.py and test_slice8.py and test_slice9.py and
-    # test_slice10.py, because
-    # this fixture holds no else branch, no compound condition, no
-    # await, no dictionary literal, no while loop or negated test,
-    # no for loop, no unary minus, no break statement, no augmented
-    # assignment, no identity comparison, no subscript, no numeric
-    # default, no attribute load, and no call carrying keyword
-    # arguments.
+    # slice 10 and slice 11 seeds carry their own fixtures in
+    # test_slice5.py and test_slice7.py and test_slice8.py and
+    # test_slice9.py and test_slice10.py and test_slice11.py,
+    # because this fixture holds no else branch, no compound
+    # condition, no await, no dictionary literal, no while loop or
+    # negated test, no for loop, no unary minus, no break statement,
+    # no augmented assignment, no identity comparison, no subscript,
+    # no numeric default, no attribute load, no call carrying
+    # keyword arguments, no broad exception handler, no finally
+    # block, no decorator, and no definition carrying a second
+    # argument default.
     applied = []
     for seed in SEEDS:
         tree = ast.parse(SAMPLE_SOURCE)

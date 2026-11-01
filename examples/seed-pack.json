@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/6",
+  "format": "canaryfield-seeds/7",
   "seeds": [
     {
       "id": "seed-00",
@@ -192,6 +192,30 @@
       "name": "swapped sibling attribute",
       "defect_class": "wrong attribute",
       "description": "Reads the second attribute a scope loads off one object in place of the first so the value comes from a different part of the object than the code named"
+    },
+    {
+      "id": "seed-32",
+      "name": "narrowed exception handler",
+      "defect_class": "exposed failure",
+      "description": "Narrows an exception handler that names the broad base error type to the first specific error type its try body raises so the other failures the handler was written to recover from escape past it"
+    },
+    {
+      "id": "seed-33",
+      "name": "swapped parameter defaults",
+      "defect_class": "wrong default",
+      "description": "Exchanges the first two argument defaults of a definition so each parameter falls back to the value the code wrote for the other"
+    },
+    {
+      "id": "seed-34",
+      "name": "dropped finally body",
+      "defect_class": "missing cleanup",
+      "description": "Drops the finally block of a try statement so the cleanup the code wrote to run on every path never runs"
+    },
+    {
+      "id": "seed-35",
+      "name": "dropped decorator",
+      "defect_class": "missing wrapper",
+      "description": "Removes the first decorator from a definition so the behaviour the decorator added never runs"
     }
   ]
 }
