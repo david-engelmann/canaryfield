@@ -36,7 +36,11 @@ seed-24  swapped augmented assignment operator  none          not-applicable  no
 seed-25  identity test replaced by equality     none          not-applicable  not-applicable
 seed-26  subscript index shifted by one         none          not-applicable  not-applicable
 seed-27  swapped keyword argument values        none          not-applicable  not-applicable
+seed-28  swapped raised error                   sample.py     caught          waved-through
+seed-29  slice stop shifted by one              none          not-applicable  not-applicable
+seed-30  shifted numeric default                none          not-applicable  not-applicable
+seed-31  swapped sibling attribute              none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 13  waved-through 3  not-applicable 12  gate-broken 0
-  compile  caught 0  waved-through 16  not-applicable 12  gate-broken 0
+  tests  caught 14  waved-through 3  not-applicable 15  gate-broken 0
+  compile  caught 0  waved-through 17  not-applicable 15  gate-broken 0

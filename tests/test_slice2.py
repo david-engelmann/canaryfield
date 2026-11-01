@@ -101,7 +101,7 @@ def test_git_mode_scores_caught_and_waved(git_run):
     assert cells["seed-07"] == WAVED
     assert cells["seed-09"] == WAVED
     summary = result["summary"]["tests"]
-    assert summary[CAUGHT] == 13
+    assert summary[CAUGHT] == 14
     assert summary[WAVED] == 3
     for row in result["rows"]:
         if row["planted_files"]:
@@ -206,7 +206,7 @@ def test_two_gate_example_shows_an_honest_disagreement():
         for seed_id, gates in rows.items()
         if gates["tests"] != gates["compile"]
     ]
-    assert len(disagreements) == 13
+    assert len(disagreements) == 14
 
 
 def test_two_gate_run_scores_each_gate_on_its_own_evidence():
@@ -218,14 +218,14 @@ def test_two_gate_run_scores_each_gate_on_its_own_evidence():
     rows = {row["seed"]: row["gates"] for row in result["rows"]}
     assert rows["seed-01"]["tests"] == CAUGHT
     assert rows["seed-01"]["compile"] == WAVED
-    assert result["summary"]["compile"][WAVED] == 16
-    assert result["summary"]["tests"][CAUGHT] == 13
+    assert result["summary"]["compile"][WAVED] == 17
+    assert result["summary"]["tests"][CAUGHT] == 14
 
 
 def test_seed_pack_round_trip(tmp_path):
     pack_path = write_seed_pack(tmp_path / "seeds.json")
     data = json.loads(pack_path.read_text(encoding="utf-8"))
-    assert data["format"] == "canaryfield-seeds/5"
+    assert data["format"] == "canaryfield-seeds/6"
     entries = load_seed_pack(pack_path)
     assert [entry["id"] for entry in entries] == [seed.id for seed in SEEDS]
     assert [entry["defect_class"] for entry in entries] == [
@@ -240,7 +240,7 @@ def test_seed_pack_via_cli(tmp_path):
     pack_path = tmp_path / "pack.json"
     assert cli_main(["--write-seed-pack", str(pack_path)]) == 0
     entries = load_seed_pack(pack_path)
-    assert len(entries) == 28
+    assert len(entries) == 32
 
 
 def test_seed_pack_rejects_a_foreign_format(tmp_path):
