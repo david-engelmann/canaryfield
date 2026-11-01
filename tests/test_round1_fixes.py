@@ -96,7 +96,7 @@ def test_git_mode_survives_a_gate_that_writes_a_tracked_file(tmp_path):
         plant_mode="git-branches",
         timeout=60,
     )
-    assert len(result["rows"]) == 12
+    assert len(result["rows"]) == 16
     assert result["target_unchanged"] is True
 
 
@@ -151,13 +151,13 @@ def test_seed_pack_rejects_a_duplicate_id(tmp_path):
         load_seed_pack(_pack_with(tmp_path, mutate))
 
 
-def test_seed_pack_rejects_a_thirteenth_seed(tmp_path):
+def test_seed_pack_rejects_a_seventeenth_seed(tmp_path):
     def mutate(data):
         extra = dict(data["seeds"][0])
         extra["id"] = "seed-99"
         data["seeds"].append(extra)
 
-    with pytest.raises(ValueError, match="carries 13"):
+    with pytest.raises(ValueError, match="carries 17"):
         load_seed_pack(_pack_with(tmp_path, mutate))
 
 

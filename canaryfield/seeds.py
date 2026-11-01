@@ -1,4 +1,4 @@
-"""The slice 1 seed registry.
+"""The seed registry.
 
 Each seed is one defect drawn from a real defect class. A seed knows how to
 look for the code shape it needs inside a parsed module and how to change
@@ -244,6 +244,82 @@ def _apply_wrong_variable_returned(tree):
     return bool(targets)
 
 
+_OPERAND_SWAP_OPS = (ast.Sub, ast.Div, ast.FloorDiv, ast.Mod)
+
+
+def _apply_swapped_operand_order(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.BinOp) and isinstance(node.op, _OPERAND_SWAP_OPS)
+    ]
+    for node in targets:
+        node.left, node.right = node.right, node.left
+    return bool(targets)
+
+
+def _apply_dropped_else(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.If) and node.orelse
+    ]
+    for node in targets:
+        node.orelse = []
+    return bool(targets)
+
+
+def _apply_swapped_boolean_operator(tree):
+    targets = [
+        node for node in _sorted_nodes(tree) if isinstance(node, ast.BoolOp)
+    ]
+    for node in targets:
+        node.op = ast.Or() if isinstance(node.op, ast.And) else ast.And()
+    return bool(targets)
+
+
+def _collect_awaits(tree):
+    """The await expressions of a tree with their parents.
+
+    Each entry carries the depth of the await, the parent node,
+    the field the await sits in, the index inside that field when
+    the field is a list, and the await node itself. The entries
+    come back deepest first, so replacing an inner await inside
+    its parent await never strands the inner planting on a node
+    the outer planting already detached from the tree.
+    """
+    found = []
+
+    def visit(node, depth):
+        for field, value in ast.iter_fields(node):
+            if isinstance(value, list):
+                for index, item in enumerate(value):
+                    if isinstance(item, ast.AST):
+                        if isinstance(item, ast.Await):
+                            found.append(
+                                (depth + 1, node, field, index, item)
+                            )
+                        visit(item, depth + 1)
+            elif isinstance(value, ast.AST):
+                if isinstance(value, ast.Await):
+                    found.append((depth + 1, node, field, None, value))
+                visit(value, depth + 1)
+
+    visit(tree, 0)
+    found.sort(key=lambda entry: -entry[0])
+    return found
+
+
+def _apply_dropped_await(tree):
+    targets = _collect_awaits(tree)
+    for _depth, parent, field, index, node in targets:
+        if index is None:
+            setattr(parent, field, node.value)
+        else:
+            getattr(parent, field)[index] = node.value
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -266,6 +342,10 @@ SEEDS = [
     Seed("seed-09", "removed collection element", "missing data", _apply_removed_element, "Removes the first element from a list or dictionary literal"),
     Seed("seed-10", "range bound shifted by one", "boundary error", _apply_range_bound_shift, "Raises the last bound of a range call by one"),
     Seed("seed-11", "wrong variable returned", "wrong result", _apply_wrong_variable_returned, "Returns the next parameter instead of the one the code named"),
+    Seed("seed-12", "swapped operand order", "wrong computation", _apply_swapped_operand_order, "Swaps the operands of a subtraction, division, floor division, or modulo, where the order of the operands decides the result"),
+    Seed("seed-13", "dropped else branch", "missing fallback", _apply_dropped_else, "Drops the else branch of a conditional so the fallback path never runs"),
+    Seed("seed-14", "swapped boolean operator", "wrong predicate", _apply_swapped_boolean_operator, "Swaps a boolean and for an or, or an or for an and, in a compound condition"),
+    Seed("seed-15", "dropped await", "missing wait", _apply_dropped_await, "Removes an await so the caller holds a coroutine instead of the awaited result"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}
