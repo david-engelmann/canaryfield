@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/4",
+  "format": "canaryfield-seeds/5",
   "seeds": [
     {
       "id": "seed-00",
@@ -144,6 +144,30 @@
       "name": "swapped loop control",
       "defect_class": "wrong flow",
       "description": "Turns a break inside a loop into a continue so the loop runs on instead of ending"
+    },
+    {
+      "id": "seed-24",
+      "name": "swapped augmented assignment operator",
+      "defect_class": "wrong computation",
+      "description": "Swaps the operator of an augmented assignment so the value it accumulates moves the wrong way"
+    },
+    {
+      "id": "seed-25",
+      "name": "identity test replaced by equality",
+      "defect_class": "wrong predicate",
+      "description": "Replaces an identity comparison with an equality comparison so the test asks sameness of value instead of sameness of object"
+    },
+    {
+      "id": "seed-26",
+      "name": "subscript index shifted by one",
+      "defect_class": "boundary error",
+      "description": "Raises the constant index of a subscript by one so the code reads the element beside the one it named"
+    },
+    {
+      "id": "seed-27",
+      "name": "swapped keyword argument values",
+      "defect_class": "wrong input",
+      "description": "Swaps the values of the first two keyword arguments of a call so each value binds to the wrong parameter"
     }
   ]
 }

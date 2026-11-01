@@ -333,13 +333,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-23"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped augmented assignment operator",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-24"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "identity test replaced by equality",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-25"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "subscript index shifted by one",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-26"
+    },
+    {
+      "defect_class": "wrong input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped keyword argument values",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-27"
     }
   ],
   "summary": {
     "tests": {
       "caught": 13,
       "gate-broken": 0,
-      "not-applicable": 8,
+      "not-applicable": 12,
       "waved-through": 3
     }
   },
