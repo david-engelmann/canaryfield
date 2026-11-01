@@ -20,6 +20,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-00"
     },
     {
@@ -34,6 +37,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-01"
     },
     {
@@ -48,6 +54,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-02"
     },
     {
@@ -62,6 +71,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-03"
     },
     {
@@ -76,6 +88,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-04"
     },
     {
@@ -90,6 +105,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-05"
     },
     {
@@ -104,6 +122,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-06"
     },
     {
@@ -118,6 +139,9 @@
         "tests": 0
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-07"
     },
     {
@@ -132,6 +156,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-08"
     },
     {
@@ -146,6 +173,9 @@
         "tests": 0
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-09"
     },
     {
@@ -160,6 +190,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-10"
     },
     {
@@ -174,6 +207,9 @@
         "tests": 1
       },
       "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
       "seed": "seed-11"
     }
   ],
@@ -192,5 +228,6 @@
     }
   },
   "target": "examples/demo-project",
-  "target_unchanged": true
+  "target_unchanged": true,
+  "unparseable_files": []
 }
