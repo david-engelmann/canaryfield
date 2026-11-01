@@ -3,7 +3,8 @@
 A run works on scratch material only. In copy mode it copies the target
 tree into scratch copies, one clean copy and one planted copy per
 applicable seed. Inside a planted copy or branch a seed plants into
-every file where it applies, never just the first one. In git branch
+every file where it applies, never just the first one, and at every
+matching shape inside each of those files. In git branch
 mode it clones the target into a scratch clone and commits each seed on
 its own throwaway branch there, so git
 mode judges the committed HEAD of the target while copy mode judges its
@@ -63,17 +64,19 @@ def _copy_tree(source, destination):
     def ignore(directory, names):
         return [name for name in names if name in IGNORED_PARTS]
 
-    shutil.copytree(source, destination, ignore=ignore)
+    shutil.copytree(source, destination, ignore=ignore, symlinks=True)
 
 
 def plant_seed(source_root, seed, skipped=None):
     """Plant one seed everywhere it applies in the copy at source_root.
 
     Returns the planted files as repo relative path strings in
-    sorted order, one planting per file at the first matching shape
-    in that file. A file counts as planted only when the seed
-    changes its syntax tree, so a shape that is already in its
-    planted form plants nothing. A candidate that is a symlink, or
+    sorted order. Inside one file the seed plants at every matching
+    shape in a single pass, through one call to the seed apply
+    function, which collects its matches from the tree as parsed
+    and plants each one exactly once. A file counts as planted only
+    when the seed changes its syntax tree, so a file where every
+    occurrence already sits in its planted form plants nothing. A candidate that is a symlink, or
     that resolves outside the root, is never written through, so no
     mode can plant outside the scratch material. A candidate that
     cannot be parsed is skipped for every seed and named in the
