@@ -63,7 +63,7 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - Round 2 closed on 2026-10-31 after slice 3 was built, audited, and reviewed on two axes, with the red team rejecting the first form of the slice and every material finding fixed under the contract fix obligations FIX3-1 to FIX3-6 before the owner of this line approved the round
 - Round 3 closed on 2026-11-01 after slice 4 was built, audited, and reviewed on two axes and attacked by a red team, with every material finding fixed under the contract fix obligations FIX4-1 to FIX4-3 before the owner of this line approved the round
 - Closed rounds stand at 10 of 100
-- AGENTS.md is pending because the canonical template has not been supplied by the main chat
+- AGENTS.md stands in this repo, the canonical template of the program with this repo's annex below its marked line
 - No formats are pinned by this repo yet
 
 ## Licence

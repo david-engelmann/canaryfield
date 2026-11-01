@@ -7,8 +7,10 @@ This contract is the executable spec for canaryfield. Every obligation below map
 - SETUP-1 The seed files stay intact. README.md keeps the seed description and licence sections, LICENSE keeps the MIT text, and .gitignore keeps the seed rules. Proven by test_seed_files_present.
 - SETUP-2 The README status section tells the truth about the build state. It states the local seed, the blocked remote seed, the contract state, the slice state, the closed round count, and the pending AGENTS.md. Proven by test_readme_status_is_honest.
 - SETUP-3 Continuous integration runs the same command as the local gate. The workflow runs python -m pytest on push and on pull requests. Proven by test_ci_runs_the_local_gate.
-- SETUP-4 No AGENTS.md exists in this repo until the canonical template is supplied by the main chat. Proven by test_no_agents_md_yet.
+- SETUP-4 No AGENTS.md exists in this repo until the canonical template is supplied by the main chat. Proven by test_no_agents_md_yet. Amended by the setup completion record of 2026-11-01 below, which states the condition met and renames the proving test.
 - SETUP-5 Every fixture and example in this repo is synthetic and written for this repo. No real traces, real names, or private detail appear anywhere. Proven by the sanitization self scan reported with every change.
+
+Setup completion, 2026-11-01. The canonical template SETUP-4 waited on was authored once for the whole program by the Gate Truth Line owner chat, under David's direction on 2026-11-01 after the main chat never supplied one, and lives at the canonical path in the program's files. AGENTS.md now stands in this repo, the template copied verbatim above its marked line with this repo's annex below it, and the proving test is renamed test_agents_md_stands_from_the_canonical_template, asserting the file stands with its marked line and annex in place. SETUP-4's condition is met and the obligation is read as satisfied from this record onward.
 
 ## Slice obligations
 
