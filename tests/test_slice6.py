@@ -73,7 +73,7 @@ def test_pack_entry_order_does_not_matter_for_acceptance(tmp_path):
     data = seed_pack_data()
     data["seeds"] = list(reversed(data["seeds"]))
     entries = load_seed_pack(_pack_file(tmp_path, data))
-    assert len(entries) == 20
+    assert len(entries) == 24
     assert {entry["id"] for entry in entries} == {
         seed.id for seed in SEEDS
     }
@@ -111,7 +111,7 @@ def test_a_pack_entry_description_is_prose_and_is_not_verified(tmp_path):
         "A reworded description of the same planted defect"
     )
     entries = load_seed_pack(_pack_file(tmp_path, data))
-    assert len(entries) == 20
+    assert len(entries) == 24
     assert entries[5]["description"] == (
         "A reworded description of the same planted defect"
     )

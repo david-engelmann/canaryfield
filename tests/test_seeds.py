@@ -5,11 +5,11 @@ from canaryfield.seeds import SEEDS, SEEDS_BY_ID
 from fixture_project import SAMPLE_SOURCE
 
 
-def test_registry_has_twenty_unique_seeds():
-    assert len(SEEDS) == 20
+def test_registry_has_twenty_four_unique_seeds():
+    assert len(SEEDS) == 24
     ids = [seed.id for seed in SEEDS]
-    assert len(set(ids)) == 20
-    assert ids == [f"seed-{index:02d}" for index in range(20)]
+    assert len(set(ids)) == 24
+    assert ids == [f"seed-{index:02d}" for index in range(24)]
 
 
 def test_seed_zero_is_the_stale_version_string():
@@ -32,14 +32,17 @@ def test_seed_metadata_is_complete():
 def test_main_fixture_applies_the_seeds_it_covers():
     # The main fixture was built for the original twelve seeds and
     # also exercises seed-12 through the division in safe_div and
-    # seed-16 through the handler in safe_div. The remaining slice 5
-    # and slice 7 seeds carry their own fixtures in test_slice5.py
-    # and test_slice7.py, because this fixture holds no else branch,
+    # seed-16 through the handler in safe_div and seed-20 through
+    # the greet call in banner and seed-21 through its plain string
+    # literals. The remaining slice 5 and slice 7 and slice 8 seeds
+    # carry their own fixtures in test_slice5.py and test_slice7.py
+    # and test_slice8.py, because this fixture holds no else branch,
     # no compound condition, no await, no dictionary literal, no
-    # while loop or negated test, and no for loop.
+    # while loop or negated test, no for loop, no unary minus, and
+    # no break statement.
     applied = []
     for seed in SEEDS:
         tree = ast.parse(SAMPLE_SOURCE)
         if seed.apply(tree):
             applied.append(seed.id)
-    assert applied == [seed.id for seed in SEEDS[:13]] + ["seed-16"]
+    assert applied == [seed.id for seed in SEEDS[:13]] + ["seed-16", "seed-20", "seed-21"]

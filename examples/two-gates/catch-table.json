@@ -317,19 +317,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-19"
+    },
+    {
+      "defect_class": "wrong input",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "swapped call argument order",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-20"
+    },
+    {
+      "defect_class": "wrong text",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "altered string literal",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-21"
+    },
+    {
+      "defect_class": "wrong sign",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped numeric negation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-22"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "swapped loop control",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-23"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 6,
-      "waved-through": 14
+      "not-applicable": 8,
+      "waved-through": 16
     },
     "tests": {
-      "caught": 11,
+      "caught": 13,
       "gate-broken": 0,
-      "not-applicable": 6,
+      "not-applicable": 8,
       "waved-through": 3
     }
   },
