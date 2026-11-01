@@ -2,8 +2,10 @@
 
 A run works on scratch material only. In copy mode it copies the target
 tree into scratch copies, one clean copy and one planted copy per
-applicable seed. In git branch mode it clones the target into a scratch
-clone and commits each seed on its own throwaway branch there, so git
+applicable seed. Inside a planted copy or branch a seed plants into
+every file where it applies, never just the first one. In git branch
+mode it clones the target into a scratch clone and commits each seed on
+its own throwaway branch there, so git
 mode judges the committed HEAD of the target while copy mode judges its
 working tree. Gates run inside the scratch material only. The target
 tree itself is opened read only, and the run proves that with a hash
@@ -29,9 +31,18 @@ GATE_BROKEN = "gate-broken"
 IGNORED_PARTS = {".git", "__pycache__", ".pytest_cache"}
 
 
+TEST_DIR_PARTS = {"tests", "test", "testing"}
+TEST_FILE_NAMES = {"conftest.py", "test.py"}
+
+
 def _is_test_file(path):
     name = path.name
-    return name.startswith("test_") or name.endswith("_test.py") or "tests" in path.parts
+    return (
+        name in TEST_FILE_NAMES
+        or name.startswith("test_")
+        or name.endswith("_test.py")
+        or any(part in TEST_DIR_PARTS for part in path.parts)
+    )
 
 
 def hash_tree(root):
@@ -55,27 +66,58 @@ def _copy_tree(source, destination):
     shutil.copytree(source, destination, ignore=ignore)
 
 
-def plant_seed(source_root, seed):
-    """Plant one seed in the copy rooted at source_root.
+def plant_seed(source_root, seed, skipped=None):
+    """Plant one seed everywhere it applies in the copy at source_root.
 
-    Returns the repo relative path of the changed file, or None when the
-    seed does not apply anywhere in the copy.
+    Returns the planted files as repo relative path strings in
+    sorted order, one planting per file at the first matching shape
+    in that file. A file counts as planted only when the seed
+    changes its syntax tree, so a shape that is already in its
+    planted form plants nothing. A candidate that is a symlink, or
+    that resolves outside the root, is never written through, so no
+    mode can plant outside the scratch material. A candidate that
+    cannot be parsed is skipped for every seed and named in the
+    skipped list when one is passed, instead of ending the run.
+    The list is empty when the seed changes nothing in the copy.
     """
     root = Path(source_root)
+    resolved_root = root.resolve()
     candidates = sorted(
-        path
-        for path in root.rglob("*.py")
-        if path.is_file()
-        and not any(part in IGNORED_PARTS for part in path.relative_to(root).parts)
-        and not _is_test_file(path.relative_to(root))
+        (
+            path
+            for path in root.rglob("*.py")
+            if path.is_file()
+            and not any(
+                part in IGNORED_PARTS
+                for part in path.relative_to(root).parts
+            )
+            and not _is_test_file(path.relative_to(root))
+        ),
+        key=lambda path: str(path.relative_to(root)),
     )
+    planted_files = []
     for path in candidates:
-        tree = ast.parse(path.read_text(encoding="utf-8"))
-        if seed.apply(tree):
+        relative = str(path.relative_to(root))
+        if path.is_symlink():
+            continue
+        try:
+            resolved = path.resolve()
+        except OSError:
+            continue
+        if resolved != resolved_root and resolved_root not in resolved.parents:
+            continue
+        try:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+        except (SyntaxError, UnicodeDecodeError, ValueError):
+            if skipped is not None and relative not in skipped:
+                skipped.append(relative)
+            continue
+        before = ast.dump(tree)
+        if seed.apply(tree) and ast.dump(tree) != before:
             ast.fix_missing_locations(tree)
             path.write_text(ast.unparse(tree) + "\n", encoding="utf-8")
-            return str(path.relative_to(root))
-    return None
+            planted_files.append(relative)
+    return sorted(planted_files)
 
 
 def _run_gate(command, cwd, timeout):
@@ -131,14 +173,15 @@ def run_field(
             name: _run_gate(command, clean, timeout) for name, command in gates
         }
         rows = []
+        skipped = []
         for seed in SEEDS:
             planted = scratch / seed.id
             _copy_tree(target, planted)
-            changed_file = plant_seed(planted, seed)
+            planted_files = plant_seed(planted, seed, skipped)
             cells = {}
             planted_exits = {}
             for name, command in gates:
-                if changed_file is None:
+                if not planted_files:
                     cells[name] = NOT_APPLICABLE
                     continue
                 if clean_exits[name] != 0:
@@ -152,7 +195,8 @@ def run_field(
                     "seed": seed.id,
                     "name": seed.name,
                     "defect_class": seed.defect_class,
-                    "planted_file": changed_file,
+                    "planted_file": planted_files[0] if planted_files else None,
+                    "planted_files": planted_files,
                     "planted_exits": planted_exits,
                     "gates": cells,
                 }
@@ -163,6 +207,7 @@ def run_field(
             "gates": [name for name, _command in gates],
             "clean_exits": clean_exits,
             "target_unchanged": before == after,
+            "unparseable_files": sorted(skipped),
             "rows": rows,
             "summary": _summary(rows, gates),
         }
@@ -271,19 +316,20 @@ def _run_git_mode(target, gates, timeout, scratch, before):
     base = _git(["rev-parse", "HEAD"], clone)
     clean_exits = {name: _run_gate(command, clone, timeout) for name, command in gates}
     rows = []
+    skipped = []
     for seed in SEEDS:
         _restore_checkout(clone, base)
         _clean_caches(clone)
-        changed_file = plant_seed(clone, seed)
+        planted_files = plant_seed(clone, seed, skipped)
         cells = {}
         planted_exits = {}
         branch = None
-        if changed_file is None:
+        if not planted_files:
             cells = {name: NOT_APPLICABLE for name, _command in gates}
         else:
             branch = f"canaryfield/{seed.id}"
             _git(["checkout", "-q", "-b", branch], clone)
-            _git(["add", "--", changed_file], clone)
+            _git(["add", "--"] + planted_files, clone)
             _git(
                 ["commit", "-q", "-m", f"Plant {seed.id} {seed.name}"],
                 clone,
@@ -300,7 +346,8 @@ def _run_git_mode(target, gates, timeout, scratch, before):
                 "seed": seed.id,
                 "name": seed.name,
                 "defect_class": seed.defect_class,
-                "planted_file": changed_file,
+                "planted_file": planted_files[0] if planted_files else None,
+                "planted_files": planted_files,
                 "branch": branch,
                 "planted_exits": planted_exits,
                 "gates": cells,
@@ -314,6 +361,7 @@ def _run_git_mode(target, gates, timeout, scratch, before):
         "gates": [name for name, _command in gates],
         "clean_exits": clean_exits,
         "target_unchanged": before == after,
+        "unparseable_files": sorted(skipped),
         "rows": rows,
         "summary": _summary(rows, gates),
     }

@@ -113,6 +113,39 @@ def test_banner():
     assert banner() == "hi!"
 '''
 
+ALPHA_SOURCE = '''\
+def alpha_value():
+    return 10
+
+
+def alpha_scale(x):
+    return x * 2
+'''
+
+BETA_SOURCE = '''\
+def beta_value():
+    return 20
+
+
+def beta_scale(x):
+    return x * 3
+'''
+
+TWO_MODULE_TEST_SOURCE = '''\
+from alpha import alpha_scale, alpha_value
+from beta import beta_scale, beta_value
+
+
+def test_alpha():
+    assert alpha_value() == 10
+    assert alpha_scale(3) == 6
+
+
+def test_beta():
+    assert beta_value() == 20
+    assert beta_scale(4) == 12
+'''
+
 TINY_SOURCE = """\
 def answer():
     return 42
@@ -140,4 +173,14 @@ def write_tiny_project(root):
     root.mkdir(parents=True, exist_ok=True)
     (root / "tiny.py").write_text(TINY_SOURCE, encoding="utf-8")
     (root / "test_tiny.py").write_text(TINY_TEST_SOURCE, encoding="utf-8")
+    return root
+
+
+def write_two_module_project(root):
+    root.mkdir(parents=True, exist_ok=True)
+    (root / "alpha.py").write_text(ALPHA_SOURCE, encoding="utf-8")
+    (root / "beta.py").write_text(BETA_SOURCE, encoding="utf-8")
+    (root / "test_two_modules.py").write_text(
+        TWO_MODULE_TEST_SOURCE, encoding="utf-8"
+    )
     return root

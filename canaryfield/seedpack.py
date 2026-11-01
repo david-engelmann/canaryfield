@@ -59,7 +59,7 @@ def load_seed_pack(path):
         if not isinstance(entry, dict) or not {"id", "name", "defect_class", "description"} <= set(entry):
             raise ValueError(f"seed pack entry is missing fields: {entry!r}")
         for field in ("id", "name", "defect_class", "description"):
-            if not isinstance(entry[field], str) or not entry[field]:
+            if not isinstance(entry[field], str) or not entry[field].strip():
                 raise ValueError(
                     "seed pack entry field is not a non empty piece "
                     f"of text, {field} in {entry!r}"

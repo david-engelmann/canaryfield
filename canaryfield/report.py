@@ -37,8 +37,17 @@ def to_text(result):
 
     lines.append(render(header))
     lines.append(render(["-" * width for width in widths]))
-    for row in rows:
+    for index, row in enumerate(rows):
         lines.append(render(row))
+        planted_files = result["rows"][index].get("planted_files") or []
+        if len(planted_files) > 1:
+            lines.append(f"  planted in {', '.join(planted_files)}")
+    unparseable = result.get("unparseable_files") or []
+    if unparseable:
+        lines.append("")
+        lines.append(
+            "files skipped as unparseable " + ", ".join(unparseable)
+        )
     lines.append("")
     lines.append("summary per gate")
     for name in gate_names:
