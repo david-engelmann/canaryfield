@@ -81,7 +81,10 @@ def plant_seed(source_root, seed, skipped=None):
     mode can plant outside the scratch material. A candidate that
     cannot be parsed is skipped for every seed and named in the
     skipped list when one is passed, instead of ending the run.
-    The list is empty when the seed changes nothing in the copy.
+    A planting whose rendered form the language refuses is never
+    written and the file does not count as planted, so a planting
+    never leaves a tree the language refuses. The list is empty
+    when the seed changes nothing in the copy.
     """
     root = Path(source_root)
     resolved_root = root.resolve()
@@ -118,7 +121,12 @@ def plant_seed(source_root, seed, skipped=None):
         before = ast.dump(tree)
         if seed.apply(tree) and ast.dump(tree) != before:
             ast.fix_missing_locations(tree)
-            path.write_text(ast.unparse(tree) + "\n", encoding="utf-8")
+            rendered = ast.unparse(tree)
+            try:
+                compile(rendered, relative, "exec")
+            except SyntaxError:
+                continue
+            path.write_text(rendered + "\n", encoding="utf-8")
             planted_files.append(relative)
     return sorted(planted_files)
 

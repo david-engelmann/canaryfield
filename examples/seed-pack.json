@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/7",
+  "format": "canaryfield-seeds/8",
   "seeds": [
     {
       "id": "seed-00",
@@ -216,6 +216,30 @@
       "name": "dropped decorator",
       "defect_class": "missing wrapper",
       "description": "Removes the first decorator from a definition so the behaviour the decorator added never runs"
+    },
+    {
+      "id": "seed-36",
+      "name": "dropped exception handler",
+      "defect_class": "missing recovery",
+      "description": "Removes the first exception handler of a try statement so the failure it was written to recover from reaches a later handler instead, or escapes to the caller where no handler stands after it"
+    },
+    {
+      "id": "seed-37",
+      "name": "dropped yield",
+      "defect_class": "missing production",
+      "description": "Replaces each yield with the value it yields so the function runs as an ordinary function and produces none of the items it was written to generate"
+    },
+    {
+      "id": "seed-38",
+      "name": "dropped condition term",
+      "defect_class": "wrong predicate",
+      "description": "Drops the last term of a compound condition so the cases that term admitted or rejected are decided by the terms that stay"
+    },
+    {
+      "id": "seed-39",
+      "name": "dropped base class",
+      "defect_class": "missing inheritance",
+      "description": "Removes the first base class of a class definition so the behaviour the class inherited from that base is not there"
     }
   ]
 }

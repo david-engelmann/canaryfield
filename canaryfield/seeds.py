@@ -964,7 +964,10 @@ def _apply_dropped_finally_body(tree):
         if isinstance(node, (ast.Try, ast.TryStar)) and node.finalbody
     ]
     for node in targets:
-        node.finalbody = []
+        if node.handlers:
+            node.finalbody = []
+        else:
+            node.finalbody = [ast.Pass()]
     return bool(targets)
 
 
@@ -979,6 +982,95 @@ def _apply_dropped_decorator(tree):
     ]
     for node in targets:
         node.decorator_list = node.decorator_list[1:]
+    return bool(targets)
+
+
+def _apply_dropped_exception_handler(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, (ast.Try, ast.TryStar))
+        and node.handlers
+        and (
+            len(node.handlers) >= 2
+            or (node.finalbody and not node.orelse)
+        )
+    ]
+    for node in targets:
+        node.handlers = node.handlers[1:]
+    return bool(targets)
+
+
+def _collect_yields(tree):
+    """The yield expressions of a tree with their parents.
+
+    Each entry carries the depth of the yield, the parent node,
+    the field the yield sits in, the index inside that field when
+    the field is a list, and the yield node itself. The entries
+    come back deepest first, so replacing an inner yield inside
+    its parent yield never strands the inner planting on a node
+    the outer planting already detached from the tree. The
+    collection mirrors the one the dropped await seed uses. A
+    yield from is a different node and is never collected,
+    because it delegates the whole iteration to another iterable
+    rather than producing one item itself.
+    """
+    found = []
+
+    def visit(node, depth):
+        for field, value in ast.iter_fields(node):
+            if isinstance(value, list):
+                for index, item in enumerate(value):
+                    if isinstance(item, ast.AST):
+                        if isinstance(item, ast.Yield):
+                            found.append(
+                                (depth + 1, node, field, index, item)
+                            )
+                        visit(item, depth + 1)
+            elif isinstance(value, ast.AST):
+                if isinstance(value, ast.Yield):
+                    found.append((depth + 1, node, field, None, value))
+                visit(value, depth + 1)
+
+    visit(tree, 0)
+    found.sort(key=lambda entry: -entry[0])
+    return found
+
+
+def _apply_dropped_yield(tree):
+    targets = _collect_yields(tree)
+    for _depth, parent, field, index, node in targets:
+        replacement = (
+            node.value
+            if node.value is not None
+            else ast.Constant(value=None)
+        )
+        if index is None:
+            setattr(parent, field, replacement)
+        else:
+            getattr(parent, field)[index] = replacement
+    return bool(targets)
+
+
+def _apply_dropped_condition_term(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.BoolOp) and len(node.values) >= 2
+    ]
+    for node in targets:
+        node.values = node.values[:-1]
+    return bool(targets)
+
+
+def _apply_dropped_base_class(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.ClassDef) and node.bases
+    ]
+    for node in targets:
+        node.bases = node.bases[1:]
     return bool(targets)
 
 
@@ -1028,6 +1120,10 @@ SEEDS = [
     Seed("seed-33", "swapped parameter defaults", "wrong default", _apply_swapped_parameter_defaults, "Exchanges the first two argument defaults of a definition so each parameter falls back to the value the code wrote for the other"),
     Seed("seed-34", "dropped finally body", "missing cleanup", _apply_dropped_finally_body, "Drops the finally block of a try statement so the cleanup the code wrote to run on every path never runs"),
     Seed("seed-35", "dropped decorator", "missing wrapper", _apply_dropped_decorator, "Removes the first decorator from a definition so the behaviour the decorator added never runs"),
+    Seed("seed-36", "dropped exception handler", "missing recovery", _apply_dropped_exception_handler, "Removes the first exception handler of a try statement so the failure it was written to recover from reaches a later handler instead, or escapes to the caller where no handler stands after it"),
+    Seed("seed-37", "dropped yield", "missing production", _apply_dropped_yield, "Replaces each yield with the value it yields so the function runs as an ordinary function and produces none of the items it was written to generate"),
+    Seed("seed-38", "dropped condition term", "wrong predicate", _apply_dropped_condition_term, "Drops the last term of a compound condition so the cases that term admitted or rejected are decided by the terms that stay"),
+    Seed("seed-39", "dropped base class", "missing inheritance", _apply_dropped_base_class, "Removes the first base class of a class definition so the behaviour the class inherited from that base is not there"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}
