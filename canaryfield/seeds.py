@@ -876,6 +876,112 @@ def _apply_swapped_sibling_attribute(tree):
     return bool(targets)
 
 
+def _specific_raise_names(try_node):
+    """The specific exception type names one try body raises.
+
+    The walk reads the statements of the try body and stops at
+    any nested function or class or lambda, because a raise
+    inside one of those belongs to that nested scope and never
+    propagates through this try statement when the body runs. A
+    counted raise is the shape _raise_type_name reads, and a
+    raise of the broad base itself never serves as a name here.
+    Each name is gathered once, at the place it first stands.
+    """
+    names = []
+
+    def visit(node):
+        if isinstance(
+            node,
+            (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda),
+        ):
+            return
+        name = _raise_type_name(node)
+        if (
+            name is not None
+            and name not in _BROAD_HANDLER_NAMES
+            and name not in names
+        ):
+            names.append(name)
+        for child in ast.iter_child_nodes(node):
+            visit(child)
+
+    for statement in try_node.body:
+        visit(statement)
+    return names
+
+
+def _apply_narrowed_exception_handler(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if not isinstance(node, (ast.Try, ast.TryStar)):
+            continue
+        specific = _specific_raise_names(node)
+        if not specific:
+            continue
+        for handler in node.handlers:
+            if handler.type is None:
+                continue
+            if not (
+                _handler_type_names(handler.type)
+                & set(_BROAD_HANDLER_NAMES)
+            ):
+                continue
+            targets.append((handler, specific[0]))
+    for handler, replacement in targets:
+        handler.type = ast.Name(id=replacement, ctx=ast.Load())
+    return bool(targets)
+
+
+def _apply_swapped_parameter_defaults(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)
+        ):
+            holders = [
+                (node.args.defaults, index)
+                for index in range(len(node.args.defaults))
+            ]
+            holders.extend(
+                (node.args.kw_defaults, index)
+                for index, default in enumerate(node.args.kw_defaults)
+                if default is not None
+            )
+            if len(holders) >= 2:
+                targets.append((holders[0], holders[1]))
+    for (first_list, first_index), (second_list, second_index) in targets:
+        first_list[first_index], second_list[second_index] = (
+            second_list[second_index],
+            first_list[first_index],
+        )
+    return bool(targets)
+
+
+def _apply_dropped_finally_body(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, (ast.Try, ast.TryStar)) and node.finalbody
+    ]
+    for node in targets:
+        node.finalbody = []
+    return bool(targets)
+
+
+def _apply_dropped_decorator(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        )
+        and node.decorator_list
+    ]
+    for node in targets:
+        node.decorator_list = node.decorator_list[1:]
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -918,6 +1024,10 @@ SEEDS = [
     Seed("seed-29", "slice stop shifted by one", "boundary error", _apply_slice_stop_shift, "Raises the stop of a slice by one so the code takes one element more than the slice it wrote"),
     Seed("seed-30", "shifted numeric default", "wrong default", _apply_shifted_numeric_default, "Raises a numeric argument default by one so a call that leaves the argument out runs with a value the code never wrote"),
     Seed("seed-31", "swapped sibling attribute", "wrong attribute", _apply_swapped_sibling_attribute, "Reads the second attribute a scope loads off one object in place of the first so the value comes from a different part of the object than the code named"),
+    Seed("seed-32", "narrowed exception handler", "exposed failure", _apply_narrowed_exception_handler, "Narrows an exception handler that names the broad base error type to the first specific error type its try body raises so the other failures the handler was written to recover from escape past it"),
+    Seed("seed-33", "swapped parameter defaults", "wrong default", _apply_swapped_parameter_defaults, "Exchanges the first two argument defaults of a definition so each parameter falls back to the value the code wrote for the other"),
+    Seed("seed-34", "dropped finally body", "missing cleanup", _apply_dropped_finally_body, "Drops the finally block of a try statement so the cleanup the code wrote to run on every path never runs"),
+    Seed("seed-35", "dropped decorator", "missing wrapper", _apply_dropped_decorator, "Removes the first decorator from a definition so the behaviour the decorator added never runs"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}

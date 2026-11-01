@@ -476,19 +476,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-31"
+    },
+    {
+      "defect_class": "exposed failure",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "narrowed exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-32"
+    },
+    {
+      "defect_class": "wrong default",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "swapped parameter defaults",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-33"
+    },
+    {
+      "defect_class": "missing cleanup",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped finally body",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-34"
+    },
+    {
+      "defect_class": "missing wrapper",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped decorator",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-35"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 15,
+      "not-applicable": 19,
       "waved-through": 17
     },
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 15,
+      "not-applicable": 19,
       "waved-through": 3
     }
   },
