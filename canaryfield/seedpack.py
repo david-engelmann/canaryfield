@@ -10,7 +10,12 @@ original twelve seeds and format canaryfield-seeds/2 carries the grown
 registry of sixteen. Writing a pack always writes the current format.
 The loader accepts both formats and holds each one to the entry count
 its own version carries, so a pack whose count disagrees with its
-declared version is refused.
+declared version is refused. The loader also holds each version to the
+registry it names, refusing a pack whose ids are not exactly the ids of
+its declared version and a pack whose entries disagree with the
+registry on a name or a defect class. The description of an entry is
+prose for a human reader and is checked only for presence, never
+against the registry wording.
 """
 
 import json
@@ -24,6 +29,11 @@ SEED_PACK_FORMAT_V1 = "canaryfield-seeds/1"
 PACK_ENTRY_COUNTS = {
     SEED_PACK_FORMAT_V1: 12,
     SEED_PACK_FORMAT: 16,
+}
+
+PACK_REGISTRIES = {
+    pack_format: {seed.id: seed for seed in SEEDS[:count]}
+    for pack_format, count in PACK_ENTRY_COUNTS.items()
 }
 
 
@@ -56,7 +66,9 @@ def load_seed_pack(path):
 
     Raises ValueError when the document is not a pack of an accepted
     format, or when its entry count disagrees with the count its
-    format version carries.
+    format version carries, or when its ids are not exactly the ids
+    its format version carries, or when an entry disagrees with the
+    registry on a name or a defect class.
     """
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(data, dict) or data.get("format") not in PACK_ENTRY_COUNTS:
@@ -83,4 +95,17 @@ def load_seed_pack(path):
         if entry["id"] in seen:
             raise ValueError(f"seed pack carries a duplicate id: {entry['id']}")
         seen.add(entry["id"])
+    registry = PACK_REGISTRIES[pack_format]
+    if seen != set(registry):
+        raise ValueError(
+            f"seed pack ids do not match format {pack_format}: {path}"
+        )
+    for entry in entries:
+        seed = registry[entry["id"]]
+        for field in ("name", "defect_class"):
+            if entry[field] != getattr(seed, field):
+                raise ValueError(
+                    f"seed pack entry {entry['id']} disagrees with the "
+                    f"registry on {field}: {path}"
+                )
     return entries
