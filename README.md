@@ -12,10 +12,15 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - The remote seed is still pending because a token access fix is outstanding and content writes are blocked
 - The canaryfield probe returned 403 on 31 October 2026 and that result is on file with the main chat
 - Setup is in progress locally on a branch and the full setup pull request flow waits on the remote fix
-- The contract lives in CONTRACT.md and its obligations are met for slice 1 as the test suite shows
+- The contract lives in CONTRACT.md and its obligations are met for slice 1 and slice 2 as the test suite shows
 - Slice 1 is built and proven on synthetic targets only
+- Slice 2 is built and proven on synthetic targets only
+- Slice 2 adds a git branch planting mode that plants each seed on its own throwaway branch inside a scratch clone and never touches the target tree or its git state
+- Slice 2 adds a second example where two gates judge the same field and honestly disagree on ten seeds
+- Slice 2 adds a versioned seed pack file under the format name canaryfield-seeds/1 so other tools in the line can consume the same seed definitions
 - The proving run against a scratch clone of a real portfolio tree is future work and nothing has been planted in any live tree
-- Closed rounds stand at 0 of 100
+- Round 1 closed on 2026-10-31 after slice 2 was built, audited, reviewed on two axes, and attacked by a red team, with every material finding fixed under the contract fix obligations FIX2-1 to FIX2-5 before the owner of this line approved the round
+- Closed rounds stand at 1 of 100
 - AGENTS.md is pending because the canonical template has not been supplied by the main chat
 - No formats are pinned by this repo yet
 

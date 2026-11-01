@@ -1,0 +1,196 @@
+{
+  "clean_exits": {
+    "compile": 0,
+    "tests": 0
+  },
+  "gates": [
+    "tests",
+    "compile"
+  ],
+  "rows": [
+    {
+      "defect_class": "stale metadata",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "stale version string",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-00"
+    },
+    {
+      "defect_class": "missing result",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "dropped return value",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-01"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "inverted comparison",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-02"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "off by one constant",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-03"
+    },
+    {
+      "defect_class": "hidden failure",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "swallowed exception",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-04"
+    },
+    {
+      "defect_class": "wrong flag",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "inverted boolean literal",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-05"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "swapped arithmetic operator",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-06"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "dropped call argument",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-07"
+    },
+    {
+      "defect_class": "wrong branch",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "negated condition",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-08"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "removed collection element",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-09"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "range bound shifted by one",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-10"
+    },
+    {
+      "defect_class": "wrong result",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "wrong variable returned",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "seed": "seed-11"
+    }
+  ],
+  "summary": {
+    "compile": {
+      "caught": 0,
+      "gate-broken": 0,
+      "not-applicable": 0,
+      "waved-through": 12
+    },
+    "tests": {
+      "caught": 10,
+      "gate-broken": 0,
+      "not-applicable": 0,
+      "waved-through": 2
+    }
+  },
+  "target": "examples/demo-project",
+  "target_unchanged": true
+}

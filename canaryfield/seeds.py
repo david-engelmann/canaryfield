@@ -185,21 +185,22 @@ class Seed:
     name: str
     defect_class: str
     apply: Callable[[ast.AST], bool]
+    description: str = ""
 
 
 SEEDS = [
-    Seed("seed-00", "stale version string", "stale metadata", _apply_stale_version),
-    Seed("seed-01", "dropped return value", "missing result", _apply_dropped_return),
-    Seed("seed-02", "inverted comparison", "wrong predicate", _apply_inverted_comparison),
-    Seed("seed-03", "off by one constant", "boundary error", _apply_off_by_one),
-    Seed("seed-04", "swallowed exception", "hidden failure", _apply_swallowed_exception),
-    Seed("seed-05", "inverted boolean literal", "wrong flag", _apply_inverted_boolean),
-    Seed("seed-06", "swapped arithmetic operator", "wrong computation", _apply_swapped_arithmetic),
-    Seed("seed-07", "dropped call argument", "missing input", _apply_dropped_call_argument),
-    Seed("seed-08", "negated condition", "wrong branch", _apply_negated_condition),
-    Seed("seed-09", "removed collection element", "missing data", _apply_removed_element),
-    Seed("seed-10", "range bound shifted by one", "boundary error", _apply_range_bound_shift),
-    Seed("seed-11", "wrong variable returned", "wrong result", _apply_wrong_variable_returned),
+    Seed("seed-00", "stale version string", "stale metadata", _apply_stale_version, "Replaces a version literal with the stale string 9.9.9"),
+    Seed("seed-01", "dropped return value", "missing result", _apply_dropped_return, "Drops the value from a return so the caller gets nothing"),
+    Seed("seed-02", "inverted comparison", "wrong predicate", _apply_inverted_comparison, "Flips a comparison operator to its opposite"),
+    Seed("seed-03", "off by one constant", "boundary error", _apply_off_by_one, "Adds one to an integer constant in a return or comparison"),
+    Seed("seed-04", "swallowed exception", "hidden failure", _apply_swallowed_exception, "Replaces an exception handler body with a silent pass"),
+    Seed("seed-05", "inverted boolean literal", "wrong flag", _apply_inverted_boolean, "Flips a boolean literal to its opposite"),
+    Seed("seed-06", "swapped arithmetic operator", "wrong computation", _apply_swapped_arithmetic, "Swaps an arithmetic operator for a different one"),
+    Seed("seed-07", "dropped call argument", "missing input", _apply_dropped_call_argument, "Drops the last argument from a call that takes at least two"),
+    Seed("seed-08", "negated condition", "wrong branch", _apply_negated_condition, "Wraps an if condition in a negation"),
+    Seed("seed-09", "removed collection element", "missing data", _apply_removed_element, "Removes the first element from a list or dictionary literal"),
+    Seed("seed-10", "range bound shifted by one", "boundary error", _apply_range_bound_shift, "Raises the last bound of a range call by one"),
+    Seed("seed-11", "wrong variable returned", "wrong result", _apply_wrong_variable_returned, "Returns the next parameter instead of the one the code named"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}

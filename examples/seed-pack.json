@@ -1,0 +1,77 @@
+{
+  "format": "canaryfield-seeds/1",
+  "seeds": [
+    {
+      "id": "seed-00",
+      "name": "stale version string",
+      "defect_class": "stale metadata",
+      "description": "Replaces a version literal with the stale string 9.9.9"
+    },
+    {
+      "id": "seed-01",
+      "name": "dropped return value",
+      "defect_class": "missing result",
+      "description": "Drops the value from a return so the caller gets nothing"
+    },
+    {
+      "id": "seed-02",
+      "name": "inverted comparison",
+      "defect_class": "wrong predicate",
+      "description": "Flips a comparison operator to its opposite"
+    },
+    {
+      "id": "seed-03",
+      "name": "off by one constant",
+      "defect_class": "boundary error",
+      "description": "Adds one to an integer constant in a return or comparison"
+    },
+    {
+      "id": "seed-04",
+      "name": "swallowed exception",
+      "defect_class": "hidden failure",
+      "description": "Replaces an exception handler body with a silent pass"
+    },
+    {
+      "id": "seed-05",
+      "name": "inverted boolean literal",
+      "defect_class": "wrong flag",
+      "description": "Flips a boolean literal to its opposite"
+    },
+    {
+      "id": "seed-06",
+      "name": "swapped arithmetic operator",
+      "defect_class": "wrong computation",
+      "description": "Swaps an arithmetic operator for a different one"
+    },
+    {
+      "id": "seed-07",
+      "name": "dropped call argument",
+      "defect_class": "missing input",
+      "description": "Drops the last argument from a call that takes at least two"
+    },
+    {
+      "id": "seed-08",
+      "name": "negated condition",
+      "defect_class": "wrong branch",
+      "description": "Wraps an if condition in a negation"
+    },
+    {
+      "id": "seed-09",
+      "name": "removed collection element",
+      "defect_class": "missing data",
+      "description": "Removes the first element from a list or dictionary literal"
+    },
+    {
+      "id": "seed-10",
+      "name": "range bound shifted by one",
+      "defect_class": "boundary error",
+      "description": "Raises the last bound of a range call by one"
+    },
+    {
+      "id": "seed-11",
+      "name": "wrong variable returned",
+      "defect_class": "wrong result",
+      "description": "Returns the next parameter instead of the one the code named"
+    }
+  ]
+}
