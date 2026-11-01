@@ -34,8 +34,10 @@ def test_ci_runs_the_local_gate():
     assert "pull_request" in workflow
 
 
-def test_no_agents_md_yet():
-    assert not (ROOT / "AGENTS.md").exists()
+def test_agents_md_stands_from_the_canonical_template():
+    agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    assert "<!-- repo annex below this line -->" in agents
+    assert "## Repo annex" in agents
 
 
 def test_example_target_is_synthetic():
