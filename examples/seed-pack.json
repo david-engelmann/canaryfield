@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/2",
+  "format": "canaryfield-seeds/3",
   "seeds": [
     {
       "id": "seed-00",
@@ -96,6 +96,30 @@
       "name": "dropped await",
       "defect_class": "missing wait",
       "description": "Removes an await so the caller holds a coroutine instead of the awaited result"
+    },
+    {
+      "id": "seed-16",
+      "name": "widened exception handler",
+      "defect_class": "hidden failure",
+      "description": "Widens an exception handler so it catches the broad base error type"
+    },
+    {
+      "id": "seed-17",
+      "name": "swapped dictionary entry",
+      "defect_class": "wrong data",
+      "description": "Swaps the key and the value of a dictionary entry so the mapping answers backwards"
+    },
+    {
+      "id": "seed-18",
+      "name": "inverted truth test",
+      "defect_class": "wrong branch",
+      "description": "Toggles the negation on a condition test so its sense reads backwards on the shapes no other seed plants"
+    },
+    {
+      "id": "seed-19",
+      "name": "reassigned loop variable",
+      "defect_class": "wrong variable",
+      "description": "Points a for loop at a different name already bound in the same scope so the loop writes into the wrong variable"
     }
   ]
 }

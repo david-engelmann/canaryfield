@@ -264,20 +264,73 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-15"
+    },
+    {
+      "defect_class": "hidden failure",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "widened exception handler",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-16"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "swapped dictionary entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-17"
+    },
+    {
+      "defect_class": "wrong branch",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "inverted truth test",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-18"
+    },
+    {
+      "defect_class": "wrong variable",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "reassigned loop variable",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-19"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 3,
-      "waved-through": 13
+      "not-applicable": 6,
+      "waved-through": 14
     },
     "tests": {
       "caught": 11,
       "gate-broken": 0,
-      "not-applicable": 3,
-      "waved-through": 2
+      "not-applicable": 6,
+      "waved-through": 3
     }
   },
   "target": "examples/demo-project",

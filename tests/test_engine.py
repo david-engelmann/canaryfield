@@ -58,19 +58,19 @@ def test_gate_runs_on_clean_and_planted_copies(main_run):
         planted += 1
         assert row["planted_file"] == "sample.py"
         assert row["planted_exits"]["tests"] is not None
-    assert planted == 13
+    assert planted == 14
 
 
 def test_catch_table_shape_and_statuses(main_run):
     _target, result = main_run
-    assert len(result["rows"]) == 16
+    assert len(result["rows"]) == 20
     allowed = {CAUGHT, WAVED, NOT_APPLICABLE, GATE_BROKEN}
     for row in result["rows"]:
         assert set(row["gates"].values()) <= allowed
     summary = result["summary"]["tests"]
     assert summary[CAUGHT] == 11
-    assert summary[WAVED] == 2
-    assert summary[NOT_APPLICABLE] == 3
+    assert summary[WAVED] == 3
+    assert summary[NOT_APPLICABLE] == 6
     assert summary[GATE_BROKEN] == 0
 
 
@@ -112,4 +112,4 @@ def test_gate_failing_on_clean_copy_is_broken(tmp_path):
         expected = GATE_BROKEN if row["planted_file"] else NOT_APPLICABLE
         assert row["gates"]["broken"] == expected
     assert result["summary"]["broken"][CAUGHT] == 0
-    assert result["summary"]["broken"][GATE_BROKEN] == 13
+    assert result["summary"]["broken"][GATE_BROKEN] == 14
