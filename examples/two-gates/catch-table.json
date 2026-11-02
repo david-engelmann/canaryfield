@@ -620,19 +620,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-43"
+    },
+    {
+      "defect_class": "missing fallback",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped loop else clause",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-44"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-45"
+    },
+    {
+      "defect_class": "wrong direction",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "flipped range step sign",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-46"
+    },
+    {
+      "defect_class": "wrong flag",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped logical negation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-47"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 27,
+      "not-applicable": 31,
       "waved-through": 17
     },
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 27,
+      "not-applicable": 31,
       "waved-through": 3
     }
   },

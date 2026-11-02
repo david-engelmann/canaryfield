@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/9",
+  "format": "canaryfield-seeds/10",
   "seeds": [
     {
       "id": "seed-00",
@@ -264,6 +264,30 @@
       "name": "swapped assignment values",
       "defect_class": "wrong data",
       "description": "Exchanges the first two elements of the tuple an assignment binds so each name takes the value the code wrote for the other"
+    },
+    {
+      "id": "seed-44",
+      "name": "dropped loop else clause",
+      "defect_class": "missing fallback",
+      "description": "Drops the else clause of a loop so the code written to run when the loop finishes without a break never runs"
+    },
+    {
+      "id": "seed-45",
+      "name": "dropped keyword argument",
+      "defect_class": "missing input",
+      "description": "Drops the first keyword argument of a call so the callee never receives the value the caller named for that parameter"
+    },
+    {
+      "id": "seed-46",
+      "name": "flipped range step sign",
+      "defect_class": "wrong direction",
+      "description": "Negates the step of a range call carrying three arguments so the sequence travels in the opposite direction from the one the code wrote"
+    },
+    {
+      "id": "seed-47",
+      "name": "dropped logical negation",
+      "defect_class": "wrong flag",
+      "description": "Removes a logical not standing outside a condition test so the expression it negated carries the opposite truth from the one the code wrote"
     }
   ]
 }

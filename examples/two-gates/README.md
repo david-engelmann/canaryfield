@@ -2,7 +2,7 @@
 
 This example runs the slice 1 demo project through two gates in a single run. The tests gate runs the project test suite. The compile gate only checks that every file still compiles.
 
-The catch table carries one column per gate and the gates honestly disagree. The test suite catches fourteen of the forty four seeds and twenty seven of the forty four do not apply to this project at all. The compile gate catches none of them because every planted defect still parses. A seed can therefore be caught and waved through in the same run and both verdicts are true at once.
+The catch table carries one column per gate and the gates honestly disagree. The test suite catches fourteen of the forty eight seeds and thirty one of the forty eight do not apply to this project at all. The compile gate catches none of them because every planted defect still parses. A seed can therefore be caught and waved through in the same run and both verdicts are true at once.
 
 Regenerate the tables from the repo root with one command.
 
