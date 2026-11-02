@@ -137,3 +137,21 @@ def test_seed_forty_three_swaps_a_named_expression_standing_second():
     rendered = ast.unparse(tree)
     assert rendered == "pair = ((x := 1), 2)"
     compile(rendered, "planted", "exec")
+
+
+def test_seed_forty_and_seed_three_part_on_a_tuple_sibling_constant():
+    source = "def f(items):\n    return (0, items[1:])\n"
+    _, tree40 = _planted("seed-40", source)
+    _, tree03 = _planted("seed-03", source)
+    assert "(0, items[2:])" in ast.unparse(tree40)
+    assert "(1, items[2:])" in ast.unparse(tree03)
+    assert ast.dump(tree40) != ast.dump(tree03)
+
+
+def test_seed_forty_and_seed_three_plant_the_same_tree_on_a_call_argument_inside_a_return():
+    source = "def f(items):\n    return len(items[1:])\n"
+    applied40, tree40 = _planted("seed-40", source)
+    applied03, tree03 = _planted("seed-03", source)
+    assert applied40 and applied03
+    assert ast.dump(tree40) == ast.dump(tree03)
+    assert "len(items[2:])" in ast.unparse(tree40)
