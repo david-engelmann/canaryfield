@@ -48,7 +48,11 @@ seed-36  dropped exception handler              none          not-applicable  no
 seed-37  dropped yield                          none          not-applicable  not-applicable
 seed-38  dropped condition term                 none          not-applicable  not-applicable
 seed-39  dropped base class                     none          not-applicable  not-applicable
+seed-40  shifted slice start                    none          not-applicable  not-applicable
+seed-41  reversed loop control                  none          not-applicable  not-applicable
+seed-42  dropped scope declaration              none          not-applicable  not-applicable
+seed-43  swapped assignment values              none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 14  waved-through 3  not-applicable 23  gate-broken 0
-  compile  caught 0  waved-through 17  not-applicable 23  gate-broken 0
+  tests  caught 14  waved-through 3  not-applicable 27  gate-broken 0
+  compile  caught 0  waved-through 17  not-applicable 27  gate-broken 0

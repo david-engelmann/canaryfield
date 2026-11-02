@@ -225,7 +225,7 @@ def test_two_gate_run_scores_each_gate_on_its_own_evidence():
 def test_seed_pack_round_trip(tmp_path):
     pack_path = write_seed_pack(tmp_path / "seeds.json")
     data = json.loads(pack_path.read_text(encoding="utf-8"))
-    assert data["format"] == "canaryfield-seeds/8"
+    assert data["format"] == "canaryfield-seeds/9"
     entries = load_seed_pack(pack_path)
     assert [entry["id"] for entry in entries] == [seed.id for seed in SEEDS]
     assert [entry["defect_class"] for entry in entries] == [
@@ -240,7 +240,7 @@ def test_seed_pack_via_cli(tmp_path):
     pack_path = tmp_path / "pack.json"
     assert cli_main(["--write-seed-pack", str(pack_path)]) == 0
     entries = load_seed_pack(pack_path)
-    assert len(entries) == 40
+    assert len(entries) == 44
 
 
 def test_seed_pack_rejects_a_foreign_format(tmp_path):

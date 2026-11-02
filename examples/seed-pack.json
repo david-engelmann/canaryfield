@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/8",
+  "format": "canaryfield-seeds/9",
   "seeds": [
     {
       "id": "seed-00",
@@ -240,6 +240,30 @@
       "name": "dropped base class",
       "defect_class": "missing inheritance",
       "description": "Removes the first base class of a class definition so the behaviour the class inherited from that base is not there"
+    },
+    {
+      "id": "seed-40",
+      "name": "shifted slice start",
+      "defect_class": "boundary error",
+      "description": "Raises the start of a slice by one so the code takes its elements from one position later than the slice it wrote"
+    },
+    {
+      "id": "seed-41",
+      "name": "reversed loop control",
+      "defect_class": "wrong flow",
+      "description": "Turns a continue inside a loop into a break so the loop ends at the first item it was written to skip and every later item goes unprocessed"
+    },
+    {
+      "id": "seed-42",
+      "name": "dropped scope declaration",
+      "defect_class": "wrong scope",
+      "description": "Removes a global or nonlocal declaration so a plain assignment meant for the module or the enclosing scope lands in a local and is lost silently, and an augmented assignment reads that local first and raises instead"
+    },
+    {
+      "id": "seed-43",
+      "name": "swapped assignment values",
+      "defect_class": "wrong data",
+      "description": "Exchanges the first two elements of the tuple an assignment binds so each name takes the value the code wrote for the other"
     }
   ]
 }

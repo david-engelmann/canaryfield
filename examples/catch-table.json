@@ -513,13 +513,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-39"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "shifted slice start",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-40"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "reversed loop control",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-41"
+    },
+    {
+      "defect_class": "wrong scope",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped scope declaration",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-42"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped assignment values",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-43"
     }
   ],
   "summary": {
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 23,
+      "not-applicable": 27,
       "waved-through": 3
     }
   },

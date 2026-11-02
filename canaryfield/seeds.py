@@ -1074,6 +1074,133 @@ def _apply_dropped_base_class(tree):
     return bool(targets)
 
 
+def _apply_slice_start_shift(tree):
+    targets = [
+        node.lower
+        for node in _sorted_nodes(tree)
+        if isinstance(node, ast.Slice) and _is_int_constant(node.lower)
+    ]
+    for target in targets:
+        target.value = target.value + 1
+    return bool(targets)
+
+
+def _collect_loop_continues(tree):
+    """The continue statements standing in the body of a loop.
+
+    Each entry carries the parent node, the field the continue
+    sits in, the index inside that field when the field is a
+    list, and the continue node itself. The walk turns its
+    inside a loop reading on for the body of a for or while
+    loop and off again for the else clause of the loop, and it
+    never carries the reading across a function or class or
+    lambda boundary, because a continue inside one of those
+    does not belong to the loop around it. The collection
+    mirrors the one the swapped loop control seed uses for
+    its break statements.
+    """
+    found = []
+
+    def visit(node, parent, field, index, inside_loop_body):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
+        ):
+            inside_loop_body = False
+        if isinstance(node, ast.Continue) and inside_loop_body:
+            found.append((parent, field, index, node))
+        if isinstance(node, (ast.For, ast.AsyncFor, ast.While)):
+            for position, statement in enumerate(node.body):
+                visit(statement, node, "body", position, True)
+            for position, statement in enumerate(node.orelse):
+                visit(statement, node, "orelse", position, False)
+            return
+        for child_field, value in ast.iter_fields(node):
+            if isinstance(value, list):
+                for position, item in enumerate(value):
+                    if isinstance(item, ast.AST):
+                        visit(item, node, child_field, position, inside_loop_body)
+            elif isinstance(value, ast.AST):
+                visit(value, node, child_field, None, inside_loop_body)
+
+    visit(tree, None, None, None, False)
+    return found
+
+
+def _apply_reversed_loop_control(tree):
+    targets = _collect_loop_continues(tree)
+    for parent, field, index, _node in targets:
+        replacement = ast.Break()
+        if index is None:
+            setattr(parent, field, replacement)
+        else:
+            getattr(parent, field)[index] = replacement
+    return bool(targets)
+
+
+def _collect_scope_declarations(tree):
+    """The global and nonlocal statements of a tree with their parents.
+
+    Each entry carries the parent node, the field the statement
+    sits in, the index inside that field, and the statement
+    itself. A declaration is a statement and stands in a
+    statement list, so only list fields earn entries, and the
+    entries for one list let the apply function judge that list
+    as a whole before it removes anything from it.
+    """
+    found = []
+
+    def visit(node):
+        for field, value in ast.iter_fields(node):
+            if isinstance(value, list):
+                for index, item in enumerate(value):
+                    if isinstance(item, (ast.Global, ast.Nonlocal)):
+                        found.append((node, field, index, item))
+                    if isinstance(item, ast.AST):
+                        visit(item)
+            elif isinstance(value, ast.AST):
+                visit(value)
+
+    visit(tree)
+    return found
+
+
+def _apply_dropped_scope_declaration(tree):
+    targets = _collect_scope_declarations(tree)
+    lists = {}
+    for parent, field, index, _node in targets:
+        key = (id(parent), field)
+        if key not in lists:
+            lists[key] = (parent, field, [])
+        lists[key][2].append(index)
+    planted = False
+    for parent, field, indices in lists.values():
+        statements = getattr(parent, field)
+        if all(
+            isinstance(statement, (ast.Global, ast.Nonlocal))
+            for statement in statements
+        ):
+            continue
+        for index in sorted(indices, reverse=True):
+            del statements[index]
+        planted = True
+    return planted
+
+
+def _apply_swapped_assignment_values(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        value = None
+        if isinstance(node, ast.Assign):
+            value = node.value
+        elif isinstance(node, ast.AnnAssign):
+            value = node.value
+        if isinstance(value, ast.Tuple) and len(value.elts) >= 2:
+            targets.append(value)
+    for value in targets:
+        value.elts[0], value.elts[1] = value.elts[1], value.elts[0]
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -1124,6 +1251,10 @@ SEEDS = [
     Seed("seed-37", "dropped yield", "missing production", _apply_dropped_yield, "Replaces each yield with the value it yields so the function runs as an ordinary function and produces none of the items it was written to generate"),
     Seed("seed-38", "dropped condition term", "wrong predicate", _apply_dropped_condition_term, "Drops the last term of a compound condition so the cases that term admitted or rejected are decided by the terms that stay"),
     Seed("seed-39", "dropped base class", "missing inheritance", _apply_dropped_base_class, "Removes the first base class of a class definition so the behaviour the class inherited from that base is not there"),
+    Seed("seed-40", "shifted slice start", "boundary error", _apply_slice_start_shift, "Raises the start of a slice by one so the code takes its elements from one position later than the slice it wrote"),
+    Seed("seed-41", "reversed loop control", "wrong flow", _apply_reversed_loop_control, "Turns a continue inside a loop into a break so the loop ends at the first item it was written to skip and every later item goes unprocessed"),
+    Seed("seed-42", "dropped scope declaration", "wrong scope", _apply_dropped_scope_declaration, "Removes a global or nonlocal declaration so a plain assignment meant for the module or the enclosing scope lands in a local and is lost silently, and an augmented assignment reads that local first and raises instead"),
+    Seed("seed-43", "swapped assignment values", "wrong data", _apply_swapped_assignment_values, "Exchanges the first two elements of the tuple an assignment binds so each name takes the value the code wrote for the other"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}
