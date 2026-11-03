@@ -65,6 +65,7 @@ def test_gate_runs_on_clean_and_planted_copies(main_run):
 
 def test_catch_table_shape_and_statuses(main_run):
     _target, result = main_run
+    # Slice 14 registry growth, 44 to 48 seeds under canaryfield-seeds/10.
     assert len(result["rows"]) == 48
     allowed = {CAUGHT, WAVED, NOT_APPLICABLE, GATE_BROKEN}
     for row in result["rows"]:
@@ -72,6 +73,7 @@ def test_catch_table_shape_and_statuses(main_run):
     summary = result["summary"]["tests"]
     assert summary[CAUGHT] == 14
     assert summary[WAVED] == 3
+    # The four slice 14 seeds do not apply to the demo project, 27 to 31.
     assert summary[NOT_APPLICABLE] == 31
     assert summary[GATE_BROKEN] == 0
 

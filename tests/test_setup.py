@@ -14,6 +14,8 @@ def test_seed_files_present():
 def test_readme_status_is_honest():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     status = readme.split("## Status", 1)[1].split("## Licence", 1)[0]
+    # The closed round count below moves only at a round closure,
+    # together with the README line it pins.
     for phrase in (
         "local seed is done",
         "403",
