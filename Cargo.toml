@@ -1,0 +1,14 @@
+[package]
+name = "canaryfield"
+version = "0.1.0"
+edition = "2021"
+description = "Plant seeded defects into scratch copies of a target tree and score which gates catch each one."
+license = "MIT"
+
+[lib]
+name = "canaryfield"
+path = "src/lib.rs"
+
+[[bin]]
+name = "canaryfield"
+path = "src/main.rs"
