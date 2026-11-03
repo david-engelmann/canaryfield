@@ -125,7 +125,8 @@ def test_multi_file_fixture_scores_the_fully_planted_state(two_module_run):
     summary = result["summary"]["tests"]
     assert summary[CAUGHT] == 3
     assert summary[WAVED] == 0
-    assert summary[NOT_APPLICABLE] == 41
+    # The four slice 14 seeds do not apply to this fixture either, 41 to 45.
+    assert summary[NOT_APPLICABLE] == 45
     assert result["target_unchanged"] is True
 
 

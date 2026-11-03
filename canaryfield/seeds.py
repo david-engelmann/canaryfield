@@ -25,6 +25,18 @@ def _sorted_nodes(tree):
     return sorted(nodes, key=lambda n: (n.lineno, n.col_offset, type(n).__name__))
 
 
+def _is_zero_literal(node):
+    """A numeric zero in any literal spelling, plus sign included."""
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.UAdd):
+        node = node.operand
+    return (
+        isinstance(node, ast.Constant)
+        and isinstance(node.value, (int, float, complex))
+        and not isinstance(node.value, bool)
+        and node.value == 0
+    )
+
+
 def _is_int_constant(node):
     return (
         isinstance(node, ast.Constant)
@@ -1201,6 +1213,122 @@ def _apply_swapped_assignment_values(tree):
     return bool(targets)
 
 
+def _apply_dropped_loop_else(tree):
+    targets = [
+        node
+        for node in _sorted_nodes(tree)
+        if isinstance(node, (ast.For, ast.AsyncFor, ast.While)) and node.orelse
+    ]
+    for node in targets:
+        node.orelse = []
+    return bool(targets)
+
+
+def _apply_dropped_keyword_argument(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if isinstance(node, ast.Call):
+            named = [kw for kw in node.keywords if kw.arg is not None]
+            if named:
+                targets.append((node, named[0]))
+    for node, keyword in targets:
+        node.keywords.remove(keyword)
+    return bool(targets)
+
+
+def _apply_flipped_range_step(tree):
+    targets = []
+    for node in _sorted_nodes(tree):
+        if not (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "range"
+            and len(node.args) == 3
+        ):
+            continue
+        step = node.args[2]
+        if isinstance(step, ast.Starred):
+            continue
+        if isinstance(step, ast.UnaryOp) and isinstance(step.op, ast.USub):
+            continue
+        if isinstance(step, ast.Constant) and isinstance(step.value, bool):
+            continue
+        if _is_zero_literal(step):
+            continue
+        targets.append(node)
+    for node in targets:
+        step = node.args[2]
+        if _is_int_constant(step):
+            node.args[2] = ast.Constant(value=-step.value)
+        else:
+            node.args[2] = ast.UnaryOp(op=ast.USub(), operand=step)
+    return bool(targets)
+
+
+_TEST_HOLDERS = (ast.If, ast.While, ast.IfExp)
+
+
+def _collect_outer_negations(tree):
+    """The logical negations of a tree standing outside a condition test.
+
+    Each entry carries the depth of the negation, the parent node,
+    the field the negation sits in, the index inside that field when
+    the field is a list, and the negation node itself. The entries
+    come back deepest first, so stripping an inner negation inside
+    its parent negation never strands the inner planting on a node
+    the outer planting already detached from the tree. A negation
+    standing anywhere inside the test expression of an if statement
+    or a while loop or a conditional expression is never collected,
+    and the exclusion follows the test into everything it carries.
+    The guard of a match case is a condition test in the same sense,
+    so a negation standing anywhere inside a guard is never
+    collected either.
+    """
+    found = []
+
+    def visit(node, depth, in_test):
+        for field, value in ast.iter_fields(node):
+            child_in_test = in_test or (
+                field == "test" and isinstance(node, _TEST_HOLDERS)
+            ) or (
+                field == "guard" and isinstance(node, ast.match_case)
+            )
+            if isinstance(value, list):
+                for index, item in enumerate(value):
+                    if isinstance(item, ast.AST):
+                        if (
+                            isinstance(item, ast.UnaryOp)
+                            and isinstance(item.op, ast.Not)
+                            and not child_in_test
+                        ):
+                            found.append(
+                                (depth + 1, node, field, index, item)
+                            )
+                        visit(item, depth + 1, child_in_test)
+            elif isinstance(value, ast.AST):
+                if (
+                    isinstance(value, ast.UnaryOp)
+                    and isinstance(value.op, ast.Not)
+                    and not child_in_test
+                ):
+                    found.append((depth + 1, node, field, None, value))
+                visit(value, depth + 1, child_in_test)
+
+    visit(tree, 0, False)
+    found.sort(key=lambda entry: -entry[0])
+    return found
+
+
+def _apply_dropped_logical_negation(tree):
+    targets = _collect_outer_negations(tree)
+    for _depth, parent, field, index, node in targets:
+        if index is None:
+            setattr(parent, field, node.operand)
+        else:
+            getattr(parent, field)[index] = node.operand
+    return bool(targets)
+
+
 @dataclass(frozen=True)
 class Seed:
     id: str
@@ -1255,6 +1383,10 @@ SEEDS = [
     Seed("seed-41", "reversed loop control", "wrong flow", _apply_reversed_loop_control, "Turns a continue inside a loop into a break so the loop ends at the first item it was written to skip and every later item goes unprocessed"),
     Seed("seed-42", "dropped scope declaration", "wrong scope", _apply_dropped_scope_declaration, "Removes a global or nonlocal declaration so a plain assignment meant for the module or the enclosing scope lands in a local and is lost silently, and an augmented assignment reads that local first and raises instead"),
     Seed("seed-43", "swapped assignment values", "wrong data", _apply_swapped_assignment_values, "Exchanges the first two elements of the tuple an assignment binds so each name takes the value the code wrote for the other"),
+    Seed("seed-44", "dropped loop else clause", "missing fallback", _apply_dropped_loop_else, "Drops the else clause of a loop so the code written to run when the loop finishes without a break never runs"),
+    Seed("seed-45", "dropped keyword argument", "missing input", _apply_dropped_keyword_argument, "Drops the first keyword argument of a call so the callee never receives the value the caller named for that parameter"),
+    Seed("seed-46", "flipped range step sign", "wrong direction", _apply_flipped_range_step, "Negates the step of a range call carrying three arguments so the sequence travels in the opposite direction from the one the code wrote"),
+    Seed("seed-47", "dropped logical negation", "wrong flag", _apply_dropped_logical_negation, "Removes a logical not standing outside a condition test so the expression it negated carries the opposite truth from the one the code wrote"),
 ]
 
 SEEDS_BY_ID = {seed.id: seed for seed in SEEDS}

@@ -557,13 +557,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-43"
+    },
+    {
+      "defect_class": "missing fallback",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped loop else clause",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-44"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-45"
+    },
+    {
+      "defect_class": "wrong direction",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "flipped range step sign",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-46"
+    },
+    {
+      "defect_class": "wrong flag",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped logical negation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-47"
     }
   ],
   "summary": {
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 27,
+      "not-applicable": 31,
       "waved-through": 3
     }
   },

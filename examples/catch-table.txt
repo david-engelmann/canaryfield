@@ -51,6 +51,10 @@ seed-40  shifted slice start                    none          not-applicable
 seed-41  reversed loop control                  none          not-applicable
 seed-42  dropped scope declaration              none          not-applicable
 seed-43  swapped assignment values              none          not-applicable
+seed-44  dropped loop else clause               none          not-applicable
+seed-45  dropped keyword argument               none          not-applicable
+seed-46  flipped range step sign                none          not-applicable
+seed-47  dropped logical negation               none          not-applicable
 
 summary per gate
-  tests  caught 14  waved-through 3  not-applicable 27  gate-broken 0
+  tests  caught 14  waved-through 3  not-applicable 31  gate-broken 0
