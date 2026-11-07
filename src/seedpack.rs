@@ -177,9 +177,8 @@ pub fn load_seed_pack(path: &Path) -> Result<Vec<SeedEntry>, CanaryfieldError> {
     let raw = std::fs::read(path).map_err(|exc| {
         CanaryfieldError::new(format!("cannot read the seed pack {shown} ({exc})"))
     })?;
-    let text = String::from_utf8(raw).map_err(|_| {
-        CanaryfieldError::new(format!("the seed pack is not UTF-8 text: {shown}"))
-    })?;
+    let text = String::from_utf8(raw)
+        .map_err(|_| CanaryfieldError::new(format!("the seed pack is not UTF-8 text: {shown}")))?;
     let data = json::parse(&text)?;
     let not_a_pack = || CanaryfieldError::new(format!("not a canaryfield seed pack: {shown}"));
     if !matches!(data, JsonValue::Object(_)) {
@@ -217,10 +216,7 @@ pub fn load_seed_pack(path: &Path) -> Result<Vec<SeedEntry>, CanaryfieldError> {
             }
         };
         let entry = SeedEntry { fields };
-        if ENTRY_FIELDS
-            .iter()
-            .any(|field| entry.get(field).is_none())
-        {
+        if ENTRY_FIELDS.iter().any(|field| entry.get(field).is_none()) {
             return Err(CanaryfieldError::new(format!(
                 "seed pack entry is missing fields: {}",
                 json::py_repr(item)

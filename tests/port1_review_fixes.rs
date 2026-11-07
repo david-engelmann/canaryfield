@@ -118,9 +118,11 @@ fn the_missing_fields_refusal_carries_the_witness_reprs() {
     // note field carrying the format, private use, and
     // unassigned witnesses, and the refusal names the entry
     // with every witness escaped the Python way.
-    let note: String = ['a', '\u{ad}', '\u{200b}', '\u{600}', '\u{e000}', '\u{378}', 'b']
-        .into_iter()
-        .collect();
+    let note: String = [
+        'a', '\u{ad}', '\u{200b}', '\u{600}', '\u{e000}', '\u{378}', 'b',
+    ]
+    .into_iter()
+    .collect();
     let mut data = seed_pack_data();
     let pairs = entry_pairs_mut(&mut data, 0);
     pairs.retain(|(name, _)| name != "description");
@@ -140,9 +142,11 @@ fn the_second_entry_refusal_carries_the_witness_reprs() {
     // Recorded from the landed Python loader the same way, on
     // the second entry losing its id, so the repr order of the
     // remaining fields is pinned with the witnesses inside it.
-    let note: String = ['x', '\u{ad}', '\u{200b}', '\u{600}', '\u{e000}', '\u{378}', 'y']
-        .into_iter()
-        .collect();
+    let note: String = [
+        'x', '\u{ad}', '\u{200b}', '\u{600}', '\u{e000}', '\u{378}', 'y',
+    ]
+    .into_iter()
+    .collect();
     let mut data = seed_pack_data();
     let pairs = entry_pairs_mut(&mut data, 1);
     pairs.retain(|(name, _)| name != "id");
