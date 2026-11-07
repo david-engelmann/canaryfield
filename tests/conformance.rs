@@ -84,15 +84,13 @@ fn load_cases_match_the_recorded_python_answers() {
                 other => panic!("case {name}: expected entries not a list: {other:?}"),
             };
             match answer {
-                Err(exc) => panic!("case {name}: the Python loaded this pack and the port refused it: {exc}"),
+                Err(exc) => panic!(
+                    "case {name}: the Python loaded this pack and the port refused it: {exc}"
+                ),
                 Ok(entries) => {
                     assert_eq!(entries.len(), expected_list.len(), "case {name}");
                     for (got, wanted) in entries.iter().zip(expected_list.iter()) {
-                        assert_eq!(
-                            got.fields(),
-                            entry_fields(wanted).as_slice(),
-                            "case {name}"
-                        );
+                        assert_eq!(got.fields(), entry_fields(wanted).as_slice(), "case {name}");
                     }
                 }
             }
@@ -110,7 +108,11 @@ fn the_pack_document_and_written_bytes_match_the_recording() {
             continue;
         }
         let expected_text = text_of(case.get("expected_text").expect("expected text"));
-        assert_eq!(seed_pack_text(), expected_text, "the rendered pack document");
+        assert_eq!(
+            seed_pack_text(),
+            expected_text,
+            "the rendered pack document"
+        );
         let dir = fresh_dir("data");
         let nested = dir.join("nested").join("deeper").join("pack.json");
         let returned = write_seed_pack(&nested).expect("the pack writes");
