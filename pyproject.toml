@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "canaryfield"
 version = "0.1.0"
-description = "Plant seeded defects into scratch copies of a codebase and score which gates catch each one."
+description = "It plants real seeded defects into a codebase on a schedule and keeps score of which gates catch each one and which wave it through."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}

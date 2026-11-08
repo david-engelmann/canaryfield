@@ -2,7 +2,7 @@
 name = "canaryfield"
 version = "0.1.0"
 edition = "2021"
-description = "Plant seeded defects into scratch copies of a target tree and score which gates catch each one."
+description = "It plants real seeded defects into a codebase on a schedule and keeps score of which gates catch each one and which wave it through."
 license = "MIT"
 
 [lib]
