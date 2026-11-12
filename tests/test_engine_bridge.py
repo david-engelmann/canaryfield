@@ -65,6 +65,16 @@ def test_the_bridge_carries_the_skipped_names_back(tmp_path):
 
 
 @needs_binary
+def test_run_field_names_an_unparseable_file_once(tmp_path):
+    target = tmp_path / "target"
+    target.mkdir()
+    (target / "mod.py").write_text(MATCH_SOURCE, encoding="utf-8")
+    (target / "bad.py").write_text("def broken(:\n", encoding="utf-8")
+    report = engine.run_field(target, [("always", "true")])
+    assert report["unparseable_files"] == ["bad.py"]
+
+
+@needs_binary
 def test_run_field_returns_the_full_report(tmp_path):
     target = tmp_path / "target"
     target.mkdir()

@@ -115,7 +115,9 @@ def plant_seed(source_root, seed, skipped=None):
         )
     answer = json.loads(completed.stdout)
     if skipped is not None:
-        skipped.extend(answer["skipped"])
+        for name in answer["skipped"]:
+            if name not in skipped:
+                skipped.append(name)
     return answer["planted"]
 
 
