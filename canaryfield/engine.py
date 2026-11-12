@@ -70,65 +70,16 @@ def _copy_tree(source, destination):
 def plant_seed(source_root, seed, skipped=None):
     """Plant one seed everywhere it applies in the copy at source_root.
 
-    Returns the planted files as repo relative path strings in
-    sorted order. Inside one file the seed plants at every matching
-    shape in a single pass, through one call to the seed apply
-    function, which collects its matches from the tree as parsed
-    and plants each one exactly once. A file counts as planted only
-    when the seed changes its syntax tree, so a file where every
-    occurrence already sits in its planted form plants nothing. A candidate that is a symlink, or
-    that resolves outside the root, is never written through, so no
-    mode can plant outside the scratch material. A candidate that
-    cannot be parsed is skipped for every seed and named in the
-    skipped list when one is passed, instead of ending the run.
-    A planting whose rendered form the language refuses is never
-    written and the file does not count as planted, so a planting
-    never leaves a tree the language refuses. The list is empty
-    when the seed changes nothing in the copy.
+    The planting stands in the Rust crate under PORT2-1 and
+    PORT2-7, proven against the recordings this function's own
+    behaviour made before it retired. This body stands as the
+    record of the move. It plants nothing and refuses, so a
+    caller still holding the Python engine meets the boundary
+    in words instead of a second planting.
     """
-    root = Path(source_root)
-    resolved_root = root.resolve()
-    candidates = sorted(
-        (
-            path
-            for path in root.rglob("*.py")
-            if path.is_file()
-            and not any(
-                part in IGNORED_PARTS
-                for part in path.relative_to(root).parts
-            )
-            and not _is_test_file(path.relative_to(root))
-        ),
-        key=lambda path: str(path.relative_to(root)),
+    raise NotImplementedError(
+        "plant_seed stands in the Rust crate under PORT2-7"
     )
-    planted_files = []
-    for path in candidates:
-        relative = str(path.relative_to(root))
-        if path.is_symlink():
-            continue
-        try:
-            resolved = path.resolve()
-        except OSError:
-            continue
-        if resolved != resolved_root and resolved_root not in resolved.parents:
-            continue
-        try:
-            tree = ast.parse(path.read_text(encoding="utf-8"))
-        except (SyntaxError, UnicodeDecodeError, ValueError):
-            if skipped is not None and relative not in skipped:
-                skipped.append(relative)
-            continue
-        before = ast.dump(tree)
-        if seed.apply(tree) and ast.dump(tree) != before:
-            ast.fix_missing_locations(tree)
-            rendered = ast.unparse(tree)
-            try:
-                compile(rendered, relative, "exec")
-            except SyntaxError:
-                continue
-            path.write_text(rendered + "\n", encoding="utf-8")
-            planted_files.append(relative)
-    return sorted(planted_files)
 
 
 def _run_gate(command, cwd, timeout):
