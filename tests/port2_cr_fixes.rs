@@ -231,7 +231,7 @@ fn physical_newlines_translate_on_the_parse_path() {
     assert!(tree
         .nodes
         .iter()
-        .any(|node| matches!(node.data, Data::Assign { .. })));
+        .any(|node| matches!(node.data, Data::Assign)));
 }
 
 #[test]
