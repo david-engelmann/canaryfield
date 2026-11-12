@@ -37,7 +37,7 @@ class Seed:
     id: str
     name: str
     defect_class: str
-    description: str = ""
+    description: str
 
     def apply(self, tree):
         raise NotImplementedError(
@@ -52,7 +52,13 @@ def _load_seeds():
     entries = data.get("seeds")
     if not isinstance(entries, list):
         raise ValueError(f"seed pack carries no seed list: {_PACK_PATH}")
+    if len(entries) != 48:
+        raise ValueError(
+            f"seed pack carries {len(entries)} seeds and the registry "
+            f"carries 48: {_PACK_PATH}"
+        )
     seeds = []
+    seen = set()
     for entry in entries:
         if not isinstance(entry, dict) or not set(_PACK_FIELDS) <= set(entry):
             raise ValueError(f"seed pack entry is missing fields: {entry!r}")
@@ -62,6 +68,9 @@ def _load_seeds():
                     "seed pack entry field is not a non empty piece "
                     f"of text, {field} in {entry!r}"
                 )
+        if entry["id"] in seen:
+            raise ValueError(f"seed pack carries a duplicate id: {entry['id']}")
+        seen.add(entry["id"])
         seeds.append(Seed(**{field: entry[field] for field in _PACK_FIELDS}))
     return seeds
 

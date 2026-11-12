@@ -14,7 +14,6 @@ walk taken before and after. A supplied work root must start empty and
 a run removes only what it created.
 """
 
-import ast
 import hashlib
 import os
 import shutil
@@ -30,20 +29,6 @@ NOT_APPLICABLE = "not-applicable"
 GATE_BROKEN = "gate-broken"
 
 IGNORED_PARTS = {".git", "__pycache__", ".pytest_cache"}
-
-
-TEST_DIR_PARTS = {"tests", "test", "testing"}
-TEST_FILE_NAMES = {"conftest.py", "test.py"}
-
-
-def _is_test_file(path):
-    name = path.name
-    return (
-        name in TEST_FILE_NAMES
-        or name.startswith("test_")
-        or name.endswith("_test.py")
-        or any(part in TEST_DIR_PARTS for part in path.parts)
-    )
 
 
 def hash_tree(root):

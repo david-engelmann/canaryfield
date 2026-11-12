@@ -17,6 +17,7 @@ import pytest
 
 import canaryfield
 import canaryfield.engine
+import canaryfield.registry
 import canaryfield.seedpack
 from canaryfield import SEEDS, SEEDS_BY_ID, Seed
 
@@ -77,3 +78,69 @@ def test_plant_seed_still_refuses_in_words(tmp_path):
     with pytest.raises(NotImplementedError) as caught:
         canaryfield.engine.plant_seed(tmp_path, SEEDS[0])
     assert "Rust crate" in str(caught.value)
+
+
+def _doctored_pack(tmp_path, monkeypatch, mutate):
+    data = json.loads(
+        (ROOT / "canaryfield" / "seed-pack.json").read_text(encoding="utf-8")
+    )
+    mutate(data)
+    path = tmp_path / "pack.json"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    monkeypatch.setattr(canaryfield.registry, "_PACK_PATH", path)
+    return path
+
+
+def test_registry_loader_refuses_a_short_pack(tmp_path, monkeypatch):
+    _doctored_pack(
+        tmp_path, monkeypatch, lambda data: data["seeds"].pop()
+    )
+    with pytest.raises(ValueError, match="carries 47 seeds"):
+        canaryfield.registry._load_seeds()
+
+
+def test_registry_loader_refuses_a_grown_pack(tmp_path, monkeypatch):
+    def mutate(data):
+        extra = dict(data["seeds"][0])
+        extra["id"] = "seed-99"
+        data["seeds"].append(extra)
+
+    _doctored_pack(tmp_path, monkeypatch, mutate)
+    with pytest.raises(ValueError, match="carries 49 seeds"):
+        canaryfield.registry._load_seeds()
+
+
+def test_registry_loader_refuses_a_duplicate_id(tmp_path, monkeypatch):
+    def mutate(data):
+        data["seeds"][1]["id"] = data["seeds"][0]["id"]
+
+    _doctored_pack(tmp_path, monkeypatch, mutate)
+    with pytest.raises(ValueError, match="duplicate id"):
+        canaryfield.registry._load_seeds()
+
+
+def test_registry_loader_refuses_a_non_text_field(tmp_path, monkeypatch):
+    def mutate(data):
+        data["seeds"][0]["id"] = 7
+
+    _doctored_pack(tmp_path, monkeypatch, mutate)
+    with pytest.raises(ValueError, match="non empty piece of text"):
+        canaryfield.registry._load_seeds()
+
+
+def test_registry_loader_refuses_a_non_text_description(
+    tmp_path, monkeypatch
+):
+    def mutate(data):
+        data["seeds"][3]["description"] = None
+
+    _doctored_pack(tmp_path, monkeypatch, mutate)
+    with pytest.raises(ValueError, match="non empty piece of text"):
+        canaryfield.registry._load_seeds()
+
+
+def test_seed_record_fields_carry_no_defaults():
+    import dataclasses
+
+    for field in fields(Seed):
+        assert field.default is dataclasses.MISSING
