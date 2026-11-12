@@ -154,15 +154,36 @@ impl Scanner {
     }
 }
 
-/// Whether the character can start an identifier under the
-/// reading the tokenizer makes, a letter or an underscore.
-fn is_name_start(ch: char) -> bool {
-    ch == '_' || ch.is_alphabetic()
+/// Whether the character stands in a table of codepoint
+/// ranges, read by binary search over the sorted ranges.
+fn in_ranges(ranges: &[(u32, u32)], cp: u32) -> bool {
+    let mut lo = 0usize;
+    let mut hi = ranges.len();
+    while lo < hi {
+        let mid = (lo + hi) / 2;
+        let (start, end) = ranges[mid];
+        if cp < start {
+            hi = mid;
+        } else if cp > end {
+            lo = mid + 1;
+        } else {
+            return true;
+        }
+    }
+    false
 }
 
-/// Whether the character can continue an identifier.
+/// Whether the character can start an identifier under the
+/// reading the tokenizer makes, the XID_Start table the
+/// interpreter reads, or an underscore.
+fn is_name_start(ch: char) -> bool {
+    ch == '_' || in_ranges(crate::xid_tables::XID_START, ch as u32)
+}
+
+/// Whether the character can continue an identifier, the
+/// XID_Continue table the interpreter reads.
 fn is_name_part(ch: char) -> bool {
-    ch == '_' || ch.is_alphanumeric() || ('\u{300}'..='\u{36f}').contains(&ch)
+    in_ranges(crate::xid_tables::XID_CONTINUE, ch as u32)
 }
 
 const OPERATORS: &[&str] = &[
@@ -170,6 +191,31 @@ const OPERATORS: &[&str] = &[
     "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "@=", "(", ")", "[", "]", "{", "}", ",", ":",
     ".", ";", "@", "+", "-", "*", "/", "%", "&", "|", "^", "~", "<", ">", "=",
 ];
+
+/// Translate the physical line endings of a source the way
+/// the interpreter's reading translates them, a carriage
+/// return before a newline and a carriage return standing
+/// alone both becoming the newline itself, before any token
+/// is read, so a string value and a comment ending see the
+/// same endings the line structure does.
+fn physical_lines(source: &str) -> String {
+    if !source.contains('\r') {
+        return source.to_string();
+    }
+    let mut out = String::with_capacity(source.len());
+    let mut chars = source.chars().peekable();
+    while let Some(ch) = chars.next() {
+        if ch == '\r' {
+            if chars.peek() == Some(&'\n') {
+                chars.next();
+            }
+            out.push('\n');
+        } else {
+            out.push(ch);
+        }
+    }
+    out
+}
 
 /// Tokenize a whole source. The base line and the base column
 /// of the first line let a fragment, the expression of an
@@ -182,7 +228,8 @@ pub fn tokenize(source: &str, base_line: u32, base_col: u32) -> Result<Vec<Token
     if source.starts_with('\u{feff}') {
         return Err(err("invalid non-printable character U+FEFF"));
     }
-    let mut scanner = Scanner::new(source);
+    let normalized = physical_lines(source);
+    let mut scanner = Scanner::new(&normalized);
     let mut tokens: Vec<Token> = Vec::new();
     let mut indents: Vec<(u32, u32)> = vec![(0, 0)];
     let mut depth: usize = 0;
@@ -255,6 +302,13 @@ pub fn tokenize(source: &str, base_line: u32, base_col: u32) -> Result<Vec<Token
                 // deeper refuses as a syntax error.
                 if indents.len() >= 100 {
                     return Err(err("too many levels of indentation"));
+                }
+                // A deeper line whose raw column does not
+                // grow past the level it joins has mixed its
+                // indentation against that level, and the
+                // interpreter refuses it.
+                if altcol <= current_alt {
+                    return Err(err("inconsistent use of tabs and spaces in indentation"));
                 }
                 indents.push((col, altcol));
                 tokens.push(Token {
@@ -448,9 +502,31 @@ pub fn tokenize(source: &str, base_line: u32, base_col: u32) -> Result<Vec<Token
     if base_line != 1 || base_col != 0 {
         for token in tokens.iter_mut() {
             token.pos = adjusted(token.pos, base_line, base_col);
+            if let Tok::Str(StrTok::FString(parts)) = &mut token.kind {
+                adjust_parts(parts, base_line, base_col);
+            }
         }
     }
     Ok(tokens)
+}
+
+/// Carry the fields of an f-string token over a fragment
+/// base, the brace positions and the starts of the
+/// expression texts alike, the fields of a format spec
+/// standing under the same base as the field whose spec
+/// they are.
+fn adjust_parts(parts: &mut [FPart], base_line: u32, base_col: u32) {
+    for part in parts.iter_mut() {
+        if let FPart::Field(field) = part {
+            field.pos = adjusted(field.pos, base_line, base_col);
+            let start = adjusted(Pos::new(field.expr_line, field.expr_col), base_line, base_col);
+            field.expr_line = start.line;
+            field.expr_col = start.col;
+            if let Some(spec) = &mut field.spec {
+                adjust_parts(spec, base_line, base_col);
+            }
+        }
+    }
 }
 
 fn adjusted(pos: Pos, base_line: u32, base_col: u32) -> Pos {
@@ -465,7 +541,7 @@ fn is_string_prefix(word: &str) -> bool {
     let lower = word.to_lowercase();
     matches!(
         lower.as_str(),
-        "r" | "b" | "f" | "u" | "rb" | "br" | "rf" | "fr" | "bf" | "fb"
+        "r" | "b" | "f" | "u" | "rb" | "br" | "rf" | "fr"
     )
 }
 
@@ -553,7 +629,7 @@ fn scan_string(scanner: &mut Scanner, prefix: Option<&str>) -> Result<StrTok, To
         scanner.bump();
     }
     if spec.fstring {
-        let parts = scan_fstring_parts(scanner, quote, triple, spec.raw)?;
+        let parts = scan_fstring_parts(scanner, quote, triple, spec.raw, 0)?;
         return Ok(StrTok::FString(parts));
     }
     let mut text: Vec<u32> = Vec::new();
@@ -784,6 +860,7 @@ fn scan_fstring_parts(
     quote: char,
     triple: bool,
     raw: bool,
+    spec_depth: u32,
 ) -> Result<Vec<FPart>, TokenError> {
     let mut parts: Vec<FPart> = Vec::new();
     let mut literal: Vec<u32> = Vec::new();
@@ -821,7 +898,7 @@ fn scan_fstring_parts(
                 if !literal.is_empty() {
                     parts.push(FPart::Lit(std::mem::take(&mut literal)));
                 }
-                let field = scan_field(scanner, raw)?;
+                let field = scan_field(scanner, raw, spec_depth)?;
                 parts.push(FPart::Field(field));
             }
             '}' => {
@@ -832,6 +909,19 @@ fn scan_fstring_parts(
                     continue;
                 }
                 return Err(err("f-string: single '}' is not allowed"));
+            }
+            '\\' if raw => {
+                // A backslash in a raw literal stands in the
+                // value, and a quote standing after one is a
+                // literal character of the string rather than
+                // its end, the reading the interpreter makes
+                // of a raw escaped quote.
+                scanner.bump();
+                literal.push('\\' as u32);
+                if scanner.peek() == Some(quote) {
+                    scanner.bump();
+                    literal.push(quote as u32);
+                }
             }
             '\\' if !raw => {
                 // A brace after a backslash keeps its
@@ -923,7 +1013,7 @@ fn skip_string(scanner: &mut Scanner) -> Result<(), TokenError> {
 /// Scan one replacement field, the opening brace standing at
 /// the scanner. The expression text is captured raw, with its
 /// start position, for the parser to read as a fragment.
-fn scan_field(scanner: &mut Scanner, raw: bool) -> Result<FieldData, TokenError> {
+fn scan_field(scanner: &mut Scanner, raw: bool, spec_depth: u32) -> Result<FieldData, TokenError> {
     let brace_pos = scanner.pos_at(scanner.index);
     scanner.bump(); // the opening brace
     let mut expr = String::new();
@@ -985,7 +1075,7 @@ fn scan_field(scanner: &mut Scanner, raw: bool) -> Result<FieldData, TokenError>
             }
             ':' if depth == 0 && lambda_colons == 0 => {
                 scanner.bump();
-                spec = Some(scan_spec(scanner, raw)?);
+                spec = Some(scan_spec(scanner, raw, spec_depth)?);
                 break;
             }
             ':' if depth == 0 => {
@@ -1004,7 +1094,7 @@ fn scan_field(scanner: &mut Scanner, raw: bool) -> Result<FieldData, TokenError>
                     scanner.bump();
                     if after == Some(':') {
                         scanner.bump();
-                        spec = Some(scan_spec(scanner, raw)?);
+                        spec = Some(scan_spec(scanner, raw, spec_depth)?);
                     } else {
                         scanner.bump();
                     }
@@ -1048,7 +1138,7 @@ fn scan_field(scanner: &mut Scanner, raw: bool) -> Result<FieldData, TokenError>
                             scanner.bump();
                             if after == Some(':') {
                                 scanner.bump();
-                                spec = Some(scan_spec(scanner, raw)?);
+                                spec = Some(scan_spec(scanner, raw, spec_depth)?);
                             } else {
                                 scanner.bump();
                             }
@@ -1059,7 +1149,7 @@ fn scan_field(scanner: &mut Scanner, raw: bool) -> Result<FieldData, TokenError>
                     }
                     if scanner.peek() == Some(':') {
                         scanner.bump();
-                        spec = Some(scan_spec(scanner, raw)?);
+                        spec = Some(scan_spec(scanner, raw, spec_depth)?);
                     } else if scanner.peek() == Some('}') {
                         scanner.bump();
                     } else {
@@ -1129,7 +1219,7 @@ fn finish_field(
 /// stands apart, measured against the interpreter. In a
 /// raw string the name escape of a spec fails to decode
 /// there, and the scan refuses it in the port's wording.
-fn scan_spec(scanner: &mut Scanner, raw: bool) -> Result<Vec<FPart>, TokenError> {
+fn scan_spec(scanner: &mut Scanner, raw: bool, spec_depth: u32) -> Result<Vec<FPart>, TokenError> {
     let mut parts: Vec<FPart> = Vec::new();
     let mut literal: Vec<u32> = Vec::new();
     loop {
@@ -1139,10 +1229,17 @@ fn scan_spec(scanner: &mut Scanner, raw: bool) -> Result<Vec<FPart>, TokenError>
         };
         match ch {
             '{' => {
+                // A field standing in the spec of a field at
+                // the deepest standing level is one level too
+                // deep, and the interpreter refuses the string
+                // before any reading of that field is made.
+                if spec_depth >= 3 {
+                    return Err(err("f-string: expressions nested too deeply"));
+                }
                 if !literal.is_empty() {
                     parts.push(FPart::Lit(std::mem::take(&mut literal)));
                 }
-                let field = scan_field(scanner, raw)?;
+                let field = scan_field(scanner, raw, spec_depth + 1)?;
                 parts.push(FPart::Field(field));
             }
             '}' => {

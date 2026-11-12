@@ -180,3 +180,126 @@ fn plant_counts_a_match_capture_as_a_binding() {
         .expect("reads")
         .contains("flag = False"));
 }
+
+use canaryfield::pyarena::{parse_tree, Data};
+use canaryfield::pyast::ConstVal;
+use canaryfield::pytoken::{tokenize, StrTok, Tok};
+
+fn name_tokens(source: &str) -> Vec<String> {
+    tokenize(source, 1, 0)
+        .expect("the source tokenizes")
+        .into_iter()
+        .filter_map(|token| match token.kind {
+            Tok::Name(word) => Some(word),
+            _ => None,
+        })
+        .collect()
+}
+
+#[test]
+fn identifier_readings_follow_the_xid_tables() {
+    // The script property sign starts a name, and the
+    // connector punctuation and the middle dot continue one,
+    // the XID readings of the interpreter. The Greek numeral
+    // sign and the katakana middle dot do neither, and a
+    // name carrying one is refused.
+    assert_eq!(name_tokens("\u{2118} = 1\n"), vec!["\u{2118}".to_string()]);
+    assert_eq!(
+        name_tokens("x\u{203f}y = 1\n"),
+        vec!["x\u{203f}y".to_string()]
+    );
+    assert_eq!(name_tokens("x\u{b7}y = 1\n"), vec!["x\u{b7}y".to_string()]);
+    assert!(tokenize("\u{375} = 1\n", 1, 0).is_err());
+    assert!(tokenize("x\u{375} = 1\n", 1, 0).is_err());
+    assert!(tokenize("x\u{30fb}y = 1\n", 1, 0).is_err());
+}
+
+#[test]
+fn physical_newlines_translate_on_the_parse_path() {
+    // A carriage return standing inside a string reads as
+    // the newline the interpreter's translation makes of
+    // it, and a comment ends at the carriage return that
+    // ends its line, on the direct parse path and not only
+    // on the planting path that already translated.
+    let tokens = tokenize("s = '''a\r\nb'''\n", 1, 0).expect("the source tokenizes");
+    let mut values: Vec<Vec<u32>> = Vec::new();
+    for token in &tokens {
+        if let Tok::Str(StrTok::Value(ConstVal::Str(text, _))) = &token.kind {
+            values.push(text.codepoints().to_vec());
+        }
+    }
+    assert_eq!(values, vec![vec![97, 10, 98]]);
+    let tree = parse_tree("# note\rx = 1\r").expect("the source parses");
+    assert!(tree
+        .nodes
+        .iter()
+        .any(|node| matches!(node.data, Data::Assign { .. })));
+}
+
+#[test]
+fn an_indent_whose_altcol_does_not_grow_is_refused() {
+    // One space opens the outer level and a tab alone the
+    // inner one, its raw column no greater than the level
+    // it joins, the mixing the interpreter refuses on the
+    // push of the deeper level. A tab and a space together
+    // grow the raw column past it and stand.
+    assert!(tokenize("if True:\n if True:\n\tpass\n", 1, 0).is_err());
+    assert!(tokenize("if True:\n  if True:\n \tpass\n", 1, 0).is_err());
+    assert!(tokenize("if True:\n if True:\n\t pass\n", 1, 0).is_ok());
+    assert!(tokenize("if True:\n\tpass\n", 1, 0).is_ok());
+    assert!(tokenize("if True:\n    pass\n", 1, 0).is_ok());
+}
+
+#[test]
+fn the_bf_and_fb_prefixes_are_refused() {
+    assert!(parse_tree("v = bf'x'\n").is_err());
+    assert!(parse_tree("v = fb'x'\n").is_err());
+    assert!(parse_tree("v = f'x'\n").is_ok());
+    assert!(parse_tree("v = b'x'\n").is_ok());
+    assert!(parse_tree("v = br'x'\n").is_ok());
+}
+
+#[test]
+fn a_raw_fstring_escaped_quote_does_not_end_the_string() {
+    // The escaped quotes stand in the value and the field
+    // between them stands as a field, the string ending at
+    // the quote no backslash precedes.
+    let tree = parse_tree("v = rf'\\'{name}\\''\n").expect("the raw f-string parses");
+    assert!(tree
+        .nodes
+        .iter()
+        .any(|node| matches!(node.data, Data::Name { .. })));
+}
+
+fn spec_chain(depth: u32) -> String {
+    let mut field = String::from("{1}");
+    for _ in 0..depth {
+        field = format!("{{1:{field}}}");
+    }
+    format!("f'{field}'")
+}
+
+#[test]
+fn format_spec_fields_nest_three_deep_and_no_deeper() {
+    assert!(parse_tree(&format!("v = {}\n", spec_chain(3))).is_ok());
+    assert!(parse_tree(&format!("v = {}\n", spec_chain(4))).is_err());
+    // A chain of any depth refuses in words, never by
+    // running the stack down.
+    assert!(parse_tree(&format!("v = {}\n", spec_chain(200))).is_err());
+}
+
+#[test]
+fn a_nested_field_carries_the_fragment_base() {
+    // The comparison stands in a string standing in a field
+    // on the third line of the file, and the position it
+    // carries is the position it stands at in the file, the
+    // fragment base carried through both fields.
+    let tree = parse_tree("\n\nresult = f\"{f'{left < right}'}\"\n").expect("the source parses");
+    let compare = tree
+        .nodes
+        .iter()
+        .find(|node| matches!(node.data, Data::Compare { .. }))
+        .expect("a comparison stands in the tree");
+    let pos = compare.pos.expect("the comparison carries a position");
+    assert_eq!((pos.line, pos.col), (3, 15));
+}

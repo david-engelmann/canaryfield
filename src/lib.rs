@@ -41,6 +41,7 @@ pub mod pyunparse;
 pub mod pywalk;
 pub mod registry;
 pub mod seedpack;
+pub mod xid_tables;
 
 pub use crate::errors::CanaryfieldError;
 pub use crate::json::JsonValue;
