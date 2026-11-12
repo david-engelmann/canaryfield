@@ -2461,18 +2461,21 @@ fn number_value(text: &str) -> Result<ConstVal, ParseError> {
     Ok(value)
 }
 
-/// An integer written with a leading zero and a further
-/// digit refuses, the reading the interpreter makes.
+/// An integer part written with a leading zero refuses
+/// only when a later digit of the integer part is not
+/// itself zero, the reading the interpreter makes, so an
+/// all zero integer part stands, in an integer literal
+/// and in the integer part of a float alike.
 fn check_leading_zero(body: &str) -> Result<(), ParseError> {
-    let mut chars = body.chars();
-    if chars.next() == Some('0') {
-        if let Some(second) = chars.next() {
-            if second.is_ascii_digit() {
-                return Err(err(
-                    "leading zeros in decimal integer literals are not permitted",
-                ));
-            }
-        }
+    let digits: String = body
+        .chars()
+        .take_while(|ch| ch.is_ascii_digit() || *ch == '_')
+        .filter(|ch| *ch != '_')
+        .collect();
+    if digits.len() > 1 && digits.starts_with('0') && digits.chars().any(|ch| ch != '0') {
+        return Err(err(
+            "leading zeros in decimal integer literals are not permitted",
+        ));
     }
     Ok(())
 }

@@ -244,11 +244,42 @@ fn scope_bindings(tree: &Tree, scope: usize, kind: ScopeKind) -> ScopeInfo {
     let mut stack: Vec<usize> = body;
     while let Some(current) = stack.pop() {
         match &tree.nodes[current].data {
-            Data::FuncDef { name, .. } | Data::ClassDef { name } => {
+            Data::FuncDef { name, .. } => {
+                // The definition binds its name here, and
+                // its header is read in this scope, the
+                // decorators and the defaults and the
+                // annotations, because a walrus standing in
+                // one of them binds here. The body is a
+                // scope of its own and is never entered.
                 info.bound.insert(name.clone());
+                stack.extend(tree.many(current, "decorator_list").iter().copied());
+                if let Some(args) = tree.one(current, "args") {
+                    stack.push(args);
+                }
+                if let Some(returns) = tree.one(current, "returns") {
+                    stack.push(returns);
+                }
+                continue;
+            }
+            Data::ClassDef { name } => {
+                // The class binds its name here, and its
+                // header is read in this scope on the same
+                // ground, the decorators and the bases and
+                // the keyword values, a walrus in a base
+                // binding here. The body is never entered.
+                info.bound.insert(name.clone());
+                stack.extend(tree.many(current, "decorator_list").iter().copied());
+                stack.extend(tree.many(current, "bases").iter().copied());
+                stack.extend(tree.many(current, "keywords").iter().copied());
                 continue;
             }
             Data::Lambda => {
+                // A lambda binds nothing here, but its
+                // defaults are read in this scope, so the
+                // arguments are walked and the body is not.
+                if let Some(args) = tree.one(current, "args") {
+                    stack.push(args);
+                }
                 continue;
             }
             Data::Name {
