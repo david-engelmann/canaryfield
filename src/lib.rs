@@ -31,6 +31,7 @@ pub mod errors;
 pub mod json;
 pub mod pyapply;
 pub mod pyarena;
+pub mod pyplant;
 pub mod pyast;
 pub mod pydata;
 pub mod pydump;
