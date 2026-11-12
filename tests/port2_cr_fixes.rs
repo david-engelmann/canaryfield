@@ -303,3 +303,69 @@ fn a_nested_field_carries_the_fragment_base() {
     let pos = compare.pos.expect("the comparison carries a position");
     assert_eq!((pos.line, pos.col), (3, 15));
 }
+
+use canaryfield::pydata::lookup_name;
+
+#[test]
+fn character_names_resolve_by_the_interpreters_reading() {
+    // A name resolves under its exact spelling, capitals
+    // aside. The hyphen of TIBETAN LETTER -A is part of the
+    // name, and losing it or doubling a space loses the
+    // character.
+    assert_eq!(lookup_name("TIBETAN LETTER A"), Some('\u{f68}'));
+    assert_eq!(lookup_name("TIBETAN LETTER -A"), Some('\u{f60}'));
+    assert_eq!(lookup_name("tibetan letter a"), Some('\u{f68}'));
+    assert_eq!(lookup_name("TIBETAN LETTER-A"), None);
+    assert_eq!(lookup_name("TIBETAN  LETTER A"), None);
+    assert_eq!(lookup_name("TIBETAN LETTER A "), None);
+    // The formal aliases resolve beside the names.
+    assert_eq!(lookup_name("BYTE ORDER MARK"), Some('\u{feff}'));
+    assert_eq!(lookup_name("BEL"), Some('\u{7}'));
+    assert_eq!(lookup_name("NULL"), Some('\u{0}'));
+    assert_eq!(lookup_name("BELL"), Some('\u{1f514}'));
+}
+
+#[test]
+fn hangul_names_follow_the_medial_order() {
+    // The medials stand in the order the interpreter
+    // composes them, WA ninth and WEO fourteenth, so GWA
+    // lands where the interpreter puts it and the names
+    // the wrong spellings composed stand resolved too.
+    assert_eq!(lookup_name("HANGUL SYLLABLE GWA"), Some('\u{acfc}'));
+    assert_eq!(lookup_name("HANGUL SYLLABLE GWAK"), Some('\u{ad14}'));
+    assert_eq!(lookup_name("HANGUL SYLLABLE WEO"), Some('\u{c6cc}'));
+    assert_eq!(lookup_name("HANGUL SYLLABLE GWEO"), Some('\u{ad88}'));
+    assert_eq!(lookup_name("HANGUL SYLLABLE HANG"), Some('\u{d56d}'));
+    assert_eq!(lookup_name("hangul syllable gwa"), None);
+}
+
+#[test]
+fn algorithmic_families_validate_their_ranges() {
+    // The unified ideographs resolve by rule over their
+    // true ranges, in four or five upper case digits, and
+    // every other spelling and family stands as the
+    // interpreter leaves it.
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-3400"), Some('\u{3400}'));
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-03400"), Some('\u{3400}'));
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-0041"), None);
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-4DC0"), None);
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-2A6E0"), None);
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-9fff"), None);
+    assert_eq!(lookup_name("CJK UNIFIED IDEOGRAPH-003400"), None);
+    // The compatibility ideographs and the Khitan and
+    // Nushu characters stand in the table under their
+    // exact names, padded spellings refused.
+    assert_eq!(
+        lookup_name("CJK COMPATIBILITY IDEOGRAPH-F900"),
+        Some('\u{f900}')
+    );
+    assert_eq!(lookup_name("CJK COMPATIBILITY IDEOGRAPH-0F900"), None);
+    assert_eq!(
+        lookup_name("KHITAN SMALL SCRIPT CHARACTER-18B00"),
+        Some('\u{18b00}')
+    );
+    assert_eq!(lookup_name("KHITAN SMALL SCRIPT CHARACTER-018B00"), None);
+    // The Tangut ideographs carry no name the lookup
+    // resolves, in this database as in the interpreter.
+    assert_eq!(lookup_name("TANGUT IDEOGRAPH-17000"), None);
+}
