@@ -12,10 +12,8 @@ use std::path::PathBuf;
 use canaryfield::pyplant::{compile_accepts, plant_seed};
 
 fn fresh_dir(tag: &str) -> PathBuf {
-    let dir = std::env::temp_dir().join(format!(
-        "canaryfield-cr-fixes-{}-{tag}",
-        std::process::id()
-    ));
+    let dir =
+        std::env::temp_dir().join(format!("canaryfield-cr-fixes-{}-{tag}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
     fs::create_dir_all(&dir).expect("temp dir creates");
     dir
@@ -401,7 +399,10 @@ fn a_lone_starred_subscript_stands_as_a_one_tuple() {
     let tree = parse_tree("del a[*-1]\n").expect("the source parses");
     assert_eq!(render_tree(&tree).expect("the tree renders"), "del a[*-1,]");
     let tree = parse_tree("x = a[*b, c]\n").expect("the source parses");
-    assert_eq!(render_tree(&tree).expect("the tree renders"), "x = a[*b, c]");
+    assert_eq!(
+        render_tree(&tree).expect("the tree renders"),
+        "x = a[*b, c]"
+    );
 }
 
 #[test]
@@ -413,7 +414,10 @@ fn the_format_spec_render_doubles_a_backslash_once() {
     let source = "v = f'{1:\\\\<4}'\n";
     let tree = parse_tree(source).expect("the source parses");
     let rendered = render_tree(&tree).expect("the tree renders");
-    assert_eq!(rendered, source.strip_suffix('\n').expect("the source ends"));
+    assert_eq!(
+        rendered,
+        source.strip_suffix('\n').expect("the source ends")
+    );
     let again = parse_tree(&rendered).expect("the render parses");
     assert_eq!(
         dump_tree(&again).expect("the render dumps"),
@@ -440,10 +444,9 @@ fn the_binary_door_plants_and_reports_in_json() {
         .output()
         .expect("the binary runs");
     assert!(output.status.success(), "the door accepts the shape");
-    let document = canaryfield::json::parse(
-        std::str::from_utf8(&output.stdout).expect("the answer is text"),
-    )
-    .expect("the answer is a JSON document");
+    let document =
+        canaryfield::json::parse(std::str::from_utf8(&output.stdout).expect("the answer is text"))
+            .expect("the answer is a JSON document");
     let names = |key: &str| -> Vec<String> {
         match document.get(key) {
             Some(canaryfield::JsonValue::Array(items)) => items

@@ -519,7 +519,11 @@ fn adjust_parts(parts: &mut [FPart], base_line: u32, base_col: u32) {
     for part in parts.iter_mut() {
         if let FPart::Field(field) = part {
             field.pos = adjusted(field.pos, base_line, base_col);
-            let start = adjusted(Pos::new(field.expr_line, field.expr_col), base_line, base_col);
+            let start = adjusted(
+                Pos::new(field.expr_line, field.expr_col),
+                base_line,
+                base_col,
+            );
             field.expr_line = start.line;
             field.expr_col = start.col;
             if let Some(spec) = &mut field.spec {

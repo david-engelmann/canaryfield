@@ -86,8 +86,8 @@ const HANGUL_INITIALS: [&str; 19] = [
     "H",
 ];
 const HANGUL_MEDIALS: [&str; 21] = [
-    "A", "AE", "YA", "YAE", "EO", "E", "YEO", "YE", "O", "WA", "WAE", "OE", "YO", "U", "WEO",
-    "WE", "WI", "YU", "EU", "YI", "I",
+    "A", "AE", "YA", "YAE", "EO", "E", "YEO", "YE", "O", "WA", "WAE", "OE", "YO", "U", "WEO", "WE",
+    "WI", "YU", "EU", "YI", "I",
 ];
 const HANGUL_FINALS: [&str; 28] = [
     "", "G", "GG", "GS", "N", "NJ", "NH", "D", "L", "LG", "LM", "LB", "LS", "LT", "LP", "LH", "M",
@@ -163,7 +163,10 @@ fn unified_lookup(name: &str) -> Option<u32> {
     if hex.len() < 4 || hex.len() > 5 {
         return None;
     }
-    if !hex.bytes().all(|b| b.is_ascii_digit() || (b'A'..=b'F').contains(&b)) {
+    if !hex
+        .bytes()
+        .all(|b| b.is_ascii_digit() || (b'A'..=b'F').contains(&b))
+    {
         return None;
     }
     let cp = u32::from_str_radix(hex, 16).ok()?;

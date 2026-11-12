@@ -197,9 +197,9 @@ fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
 /// rendering any reading refuses is refused here.
 pub fn compile_accepts(rendered: &str) -> bool {
     match parse_tree(rendered) {
-        Ok(tree) => crate::pyarena::run_big_stack(move || {
-            nonlocal_accepts(&tree) && symbol_accepts(&tree)
-        }),
+        Ok(tree) => {
+            crate::pyarena::run_big_stack(move || nonlocal_accepts(&tree) && symbol_accepts(&tree))
+        }
         Err(_) => false,
     }
 }
@@ -534,7 +534,10 @@ fn symbol_accepts(tree: &Tree) -> bool {
 }
 
 fn scope_accepts(tree: &Tree, scope: usize, kind: ScopeKind) -> bool {
-    let is_async_fn = matches!(&tree.nodes[scope].data, Data::FuncDef { is_async: true, .. });
+    let is_async_fn = matches!(
+        &tree.nodes[scope].data,
+        Data::FuncDef { is_async: true, .. }
+    );
     let mut walk = ScopeWalk {
         kind,
         is_async_fn,
@@ -566,9 +569,10 @@ fn scope_accepts(tree: &Tree, scope: usize, kind: ScopeKind) -> bool {
     // An annotated name takes no declaration of either
     // kind, in either order, as the interpreter refuses
     // the pairing wherever it stands in the scope.
-    !walk.annotated.iter().any(|name| {
-        walk.declared_global.contains(name) || walk.declared_nonlocal.contains(name)
-    })
+    !walk
+        .annotated
+        .iter()
+        .any(|name| walk.declared_global.contains(name) || walk.declared_nonlocal.contains(name))
 }
 
 fn visit_children(
