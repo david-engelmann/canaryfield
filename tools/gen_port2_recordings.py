@@ -8,10 +8,8 @@ taken from before the seed module retired. Recordings are never
 hand written.
 """
 import ast
-import copy
 import hashlib
 import json
-import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -20,7 +18,7 @@ ROOT = Path(sys.argv[1]).resolve()
 OUT = Path(sys.argv[2])
 sys.path.insert(0, str(ROOT))
 
-from canaryfield.seeds import SEEDS, SEEDS_BY_ID  # noqa: E402
+from canaryfield.seeds import SEEDS  # noqa: E402
 from canaryfield import engine  # noqa: E402
 
 TEXT_LIMIT = 6000
@@ -294,6 +292,21 @@ SYNTHETIC = {
         "    case {'k': x, **rest}:\n        pass\n    case Point(x=0) | None:\n        pass\n"
         "    case _:\n        pass\n"
     ),
+    "match-star-paren": (
+        "match v:\n    case (first, *rest):\n        pass\n"
+    ),
+    "match-star-open": (
+        "match v:\n    case first, *rest:\n        pass\n"
+    ),
+    "match-star-value": (
+        "match v:\n    case (1, *rest):\n        pass\n"
+    ),
+    "match-star-bracket": (
+        "match v:\n    case [first, *rest]:\n        pass\n"
+    ),
+    "double-await": (
+        "async def f():\n    await await g()\n"
+    ),
     "big-ints": (
         "x = 123456789012345678901234567890\n"
         "def f(a=99999999999999999999999999):\n    return 18446744073709551616\n"
@@ -412,6 +425,18 @@ def plant_cases():
         "depth-250": {"deep.py": "x = " + "not " * 250 + "y\n"},
         "depth-450": {"deep.py": "x = " + "not " * 450 + "y\n"},
         "depth-2000": {"deep.py": "x = " + "not " * 2000 + "y\n"},
+        "dot-py": {
+            ".py": "x = -1\n",
+            "mod.py": "y = -2\n",
+        },
+        "dirlink": {
+            "real/inside.py": "x = -1\nVERSION = '1.0'\n",
+            "dirlink": {"link": "real"},
+        },
+        "dirlink-double-flip": {
+            "real/flag.py": "flag = True\n",
+            "dirlink": {"link": "real"},
+        },
         "symlink-inside": {
             "real.py": "x = -1\n",
             "alias.py": {"link": "real.py"},

@@ -344360,6 +344360,12 @@
   },
   {
    "kind": "apply",
+   "name": "synthetic:double-await",
+   "source": "async def f():\n    await await g()\n",
+   "parse": "refused"
+  },
+  {
+   "kind": "apply",
    "name": "synthetic:empty",
    "source": "",
    "parse": "ok",
@@ -347090,6 +347096,1598 @@
       "render": {
        "t": "match v:\n    case 1:\n        pass\n    case [a, *rest] if not flag:\n        pass\n    case {'z': x, **rest}:\n        pass\n    case Point(x=0) | None:\n        pass\n    case _:\n        pass"
       }
+     }
+    },
+    "seed-22": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-23": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-24": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-25": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-26": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-27": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-28": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-29": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-30": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-31": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-32": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-33": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-34": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-35": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-36": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-37": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-38": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-39": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-40": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-41": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-42": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-43": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-44": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-45": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-46": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-47": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    }
+   }
+  },
+  {
+   "kind": "apply",
+   "name": "synthetic:match-star-bracket",
+   "source": "match v:\n    case [first, *rest]:\n        pass\n",
+   "parse": "ok",
+   "dump0": {
+    "t": "Module(body=[Match(subject=Name(id='v', ctx=Load()), cases=[match_case(pattern=MatchSequence(patterns=[MatchAs(name='first'), MatchStar(name='rest')]), body=[Pass()])])], type_ignores=[])"
+   },
+   "render0": {
+    "t": "match v:\n    case [first, *rest]:\n        pass"
+   },
+   "seeds": {
+    "seed-00": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-01": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-02": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-03": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-04": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-05": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-06": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-07": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-08": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-09": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-10": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-11": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-12": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-13": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-14": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-15": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-16": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-17": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-18": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-19": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-20": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-21": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-22": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-23": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-24": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-25": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-26": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-27": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-28": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-29": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-30": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-31": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-32": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-33": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-34": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-35": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-36": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-37": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-38": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-39": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-40": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-41": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-42": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-43": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-44": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-45": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-46": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-47": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    }
+   }
+  },
+  {
+   "kind": "apply",
+   "name": "synthetic:match-star-open",
+   "source": "match v:\n    case first, *rest:\n        pass\n",
+   "parse": "ok",
+   "dump0": {
+    "t": "Module(body=[Match(subject=Name(id='v', ctx=Load()), cases=[match_case(pattern=MatchSequence(patterns=[MatchAs(name='first'), MatchStar(name='rest')]), body=[Pass()])])], type_ignores=[])"
+   },
+   "render0": {
+    "t": "match v:\n    case [first, *rest]:\n        pass"
+   },
+   "seeds": {
+    "seed-00": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-01": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-02": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-03": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-04": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-05": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-06": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-07": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-08": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-09": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-10": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-11": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-12": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-13": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-14": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-15": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-16": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-17": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-18": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-19": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-20": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-21": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-22": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-23": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-24": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-25": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-26": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-27": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-28": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-29": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-30": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-31": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-32": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-33": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-34": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-35": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-36": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-37": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-38": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-39": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-40": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-41": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-42": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-43": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-44": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-45": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-46": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-47": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    }
+   }
+  },
+  {
+   "kind": "apply",
+   "name": "synthetic:match-star-paren",
+   "source": "match v:\n    case (first, *rest):\n        pass\n",
+   "parse": "ok",
+   "dump0": {
+    "t": "Module(body=[Match(subject=Name(id='v', ctx=Load()), cases=[match_case(pattern=MatchSequence(patterns=[MatchAs(name='first'), MatchStar(name='rest')]), body=[Pass()])])], type_ignores=[])"
+   },
+   "render0": {
+    "t": "match v:\n    case [first, *rest]:\n        pass"
+   },
+   "seeds": {
+    "seed-00": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-01": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-02": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-03": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-04": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-05": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-06": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-07": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-08": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-09": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-10": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-11": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-12": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-13": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-14": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-15": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-16": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-17": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-18": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-19": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-20": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-21": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-22": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-23": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-24": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-25": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-26": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-27": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-28": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-29": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-30": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-31": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-32": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-33": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-34": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-35": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-36": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-37": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-38": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-39": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-40": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-41": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-42": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-43": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-44": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-45": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-46": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-47": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    }
+   }
+  },
+  {
+   "kind": "apply",
+   "name": "synthetic:match-star-value",
+   "source": "match v:\n    case (1, *rest):\n        pass\n",
+   "parse": "ok",
+   "dump0": {
+    "t": "Module(body=[Match(subject=Name(id='v', ctx=Load()), cases=[match_case(pattern=MatchSequence(patterns=[MatchValue(value=Constant(value=1)), MatchStar(name='rest')]), body=[Pass()])])], type_ignores=[])"
+   },
+   "render0": {
+    "t": "match v:\n    case [1, *rest]:\n        pass"
+   },
+   "seeds": {
+    "seed-00": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-01": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-02": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-03": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-04": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-05": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-06": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-07": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-08": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-09": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-10": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-11": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-12": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-13": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-14": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-15": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-16": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-17": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-18": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-19": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-20": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-21": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
      }
     },
     "seed-22": {
@@ -371262,6 +372860,1785 @@
      "after": {
       "only.py": {
        "t": "d = {key: key}\n"
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "plant",
+   "name": "plant:dirlink",
+   "files": {
+    "real/inside.py": {
+     "t": "x = -1\nVERSION = '1.0'\n"
+    },
+    "dirlink": {
+     "link": "real"
+    }
+   },
+   "seeds": {
+    "seed-00": {
+     "planted": [
+      "real/inside.py"
+     ],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '9.9.9'\n"
+      }
+     }
+    },
+    "seed-01": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-02": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-03": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-04": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-05": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-06": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-07": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-08": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-09": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-10": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-11": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-12": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-13": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-14": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-15": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-16": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-17": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-18": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-19": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-20": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-21": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-22": {
+     "planted": [
+      "real/inside.py"
+     ],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = 1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-23": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-24": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-25": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-26": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-27": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-28": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-29": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-30": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-31": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-32": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-33": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-34": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-35": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-36": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-37": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-38": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-39": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-40": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-41": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-42": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-43": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-44": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-45": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-46": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    },
+    "seed-47": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/inside.py": {
+       "t": "x = -1\nVERSION = '1.0'\n"
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "plant",
+   "name": "plant:dirlink-double-flip",
+   "files": {
+    "real/flag.py": {
+     "t": "flag = True\n"
+    },
+    "dirlink": {
+     "link": "real"
+    }
+   },
+   "seeds": {
+    "seed-00": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-01": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-02": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-03": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-04": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-05": {
+     "planted": [
+      "real/flag.py"
+     ],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = False\n"
+      }
+     }
+    },
+    "seed-06": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-07": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-08": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-09": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-10": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-11": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-12": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-13": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-14": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-15": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-16": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-17": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-18": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-19": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-20": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-21": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-22": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-23": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-24": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-25": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-26": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-27": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-28": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-29": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-30": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-31": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-32": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-33": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-34": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-35": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-36": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-37": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-38": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-39": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-40": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-41": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-42": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-43": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-44": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-45": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-46": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    },
+    "seed-47": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      "dirlink": {
+       "link": "real"
+      },
+      "real/flag.py": {
+       "t": "flag = True\n"
+      }
+     }
+    }
+   }
+  },
+  {
+   "kind": "plant",
+   "name": "plant:dot-py",
+   "files": {
+    ".py": {
+     "t": "x = -1\n"
+    },
+    "mod.py": {
+     "t": "y = -2\n"
+    }
+   },
+   "seeds": {
+    "seed-00": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-01": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-02": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-03": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-04": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-05": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-06": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-07": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-08": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-09": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-10": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-11": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-12": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-13": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-14": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-15": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-16": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-17": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-18": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-19": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-20": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-21": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-22": {
+     "planted": [
+      ".py",
+      "mod.py"
+     ],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = 1\n"
+      },
+      "mod.py": {
+       "t": "y = 2\n"
+      }
+     }
+    },
+    "seed-23": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-24": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-25": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-26": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-27": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-28": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-29": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-30": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-31": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-32": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-33": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-34": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-35": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-36": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-37": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-38": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-39": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-40": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-41": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-42": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-43": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-44": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-45": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-46": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
+      }
+     }
+    },
+    "seed-47": {
+     "planted": [],
+     "skipped": [],
+     "after": {
+      ".py": {
+       "t": "x = -1\n"
+      },
+      "mod.py": {
+       "t": "y = -2\n"
       }
      }
     }
