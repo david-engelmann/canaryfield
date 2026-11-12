@@ -420,3 +420,68 @@ fn the_format_spec_render_doubles_a_backslash_once() {
         dump_tree(&tree).expect("the tree dumps")
     );
 }
+
+/// Family 5, the engine bridge door. The Python engine
+/// plants through the crate binary, and the door answers
+/// with the planted and skipped names as one JSON
+/// document. On the pre fix head the binary knows only
+/// the pack writing flag and answers every other shape
+/// with a usage line.
+#[test]
+fn the_binary_door_plants_and_reports_in_json() {
+    let root = fresh_dir("door-plants");
+    let source = "def outer():\n    match y:\n        case [x]:\n            pass\n    def inner():\n        nonlocal x\n        flag = True\n";
+    fs::write(root.join("mod.py"), source).expect("write");
+    fs::write(root.join("bad.py"), "def broken(:\n").expect("write");
+    let output = std::process::Command::new(env!("CARGO_BIN_EXE_canaryfield"))
+        .arg("--plant-seed")
+        .arg(&root)
+        .arg("seed-05")
+        .output()
+        .expect("the binary runs");
+    assert!(output.status.success(), "the door accepts the shape");
+    let document = canaryfield::json::parse(
+        std::str::from_utf8(&output.stdout).expect("the answer is text"),
+    )
+    .expect("the answer is a JSON document");
+    let names = |key: &str| -> Vec<String> {
+        match document.get(key) {
+            Some(canaryfield::JsonValue::Array(items)) => items
+                .iter()
+                .map(|item| item.as_str().expect("a name is text").to_string())
+                .collect(),
+            _ => panic!("the answer carries a {key} list"),
+        }
+    };
+    assert_eq!(names("planted"), vec!["mod.py".to_string()]);
+    assert_eq!(names("skipped"), vec!["bad.py".to_string()]);
+    assert!(fs::read_to_string(root.join("mod.py"))
+        .expect("reads")
+        .contains("flag = False"));
+}
+
+/// Family 5 at the refusal edge. A seed id outside the
+/// registry is refused in the door's own words and
+/// nothing is written, where the pre fix head answers
+/// with the usage line alone.
+#[test]
+fn the_binary_door_refuses_an_unknown_seed() {
+    let root = fresh_dir("door-refuses");
+    fs::write(root.join("mod.py"), "flag = True\n").expect("write");
+    let output = std::process::Command::new(env!("CARGO_BIN_EXE_canaryfield"))
+        .arg("--plant-seed")
+        .arg(&root)
+        .arg("seed-99")
+        .output()
+        .expect("the binary runs");
+    assert!(!output.status.success(), "the door refuses the seed");
+    let stderr = String::from_utf8(output.stderr).expect("the refusal is text");
+    assert!(
+        stderr.contains("outside the registry"),
+        "the refusal names its ground, got: {stderr}"
+    );
+    assert_eq!(
+        fs::read_to_string(root.join("mod.py")).expect("reads"),
+        "flag = True\n"
+    );
+}

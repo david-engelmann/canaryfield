@@ -18,6 +18,13 @@ ROOT = Path(sys.argv[1]).resolve()
 OUT = Path(sys.argv[2])
 sys.path.insert(0, str(ROOT))
 
+if sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 12):
+    raise SystemExit(
+        "the recordings stand under CPython 3.12 only and this "
+        f"interpreter is {sys.implementation.name} "
+        f"{sys.version_info.major}.{sys.version_info.minor}"
+    )
+
 from canaryfield.seeds import SEEDS  # noqa: E402
 from canaryfield import engine  # noqa: E402
 
@@ -521,7 +528,14 @@ def main():
         cases.append(apply_case(f"synthetic:{name}", source))
     for name, spec in sorted(plant_cases().items()):
         cases.append(record_plant_case(f"plant:{name}", spec))
-    OUT.write_text(json.dumps({"cases": cases}, indent=1), encoding="utf-8")
+    stamp = (
+        f"CPython {sys.version_info.major}."
+        f"{sys.version_info.minor}.{sys.version_info.micro}"
+    )
+    OUT.write_text(
+        json.dumps({"interpreter": stamp, "cases": cases}, indent=1),
+        encoding="utf-8",
+    )
     print(f"{len(cases)} cases recorded")
 
 

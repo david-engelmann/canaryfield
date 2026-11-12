@@ -74,7 +74,14 @@ def test_seed_apply_refuses_in_words():
     assert "Rust crate" in str(caught.value)
 
 
-def test_plant_seed_still_refuses_in_words(tmp_path):
+def test_plant_seed_still_refuses_in_words(tmp_path, monkeypatch):
+    # The bridge plants where a binary stands. Where none
+    # stands, the refusal in words is still the answer, and
+    # this pin clears every road to a binary so that world
+    # is the one under test in any environment.
+    monkeypatch.delenv("CANARYFIELD_BINARY", raising=False)
+    monkeypatch.setattr(canaryfield.engine.shutil, "which", lambda name: None)
+    monkeypatch.setattr(canaryfield.engine, "_CHECKOUT_ROOT", tmp_path)
     with pytest.raises(NotImplementedError) as caught:
         canaryfield.engine.plant_seed(tmp_path, SEEDS[0])
     assert "Rust crate" in str(caught.value)

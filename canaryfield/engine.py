@@ -15,6 +15,7 @@ a run removes only what it created.
 """
 
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -52,19 +53,70 @@ def _copy_tree(source, destination):
     shutil.copytree(source, destination, ignore=ignore, symlinks=True)
 
 
+_CHECKOUT_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _find_binary():
+    """Find the crate binary the bridge drives.
+
+    The name the caller hands over in CANARYFIELD_BINARY
+    stands first, and a name that stands for no file is
+    refused in words that name it. Then the binary on the
+    path, then the checkout's own build under target in
+    debug or release shape. Where no binary stands at all
+    the standing refusal in words is the answer, so a caller
+    holding only the Python meets the boundary in words
+    instead of a second planting.
+    """
+    named = os.environ.get("CANARYFIELD_BINARY")
+    if named:
+        candidate = Path(named)
+        if candidate.is_file():
+            return candidate
+        raise NotImplementedError(
+            f"the named canaryfield binary does not stand: {named}"
+        )
+    on_path = shutil.which("canaryfield")
+    if on_path:
+        return Path(on_path)
+    for candidate in (
+        _CHECKOUT_ROOT / "target" / "debug" / "canaryfield",
+        _CHECKOUT_ROOT / "target" / "release" / "canaryfield",
+    ):
+        if candidate.is_file():
+            return candidate
+    raise NotImplementedError(
+        "plant_seed stands in the Rust crate under PORT2-7"
+    )
+
+
 def plant_seed(source_root, seed, skipped=None):
     """Plant one seed everywhere it applies in the copy at source_root.
 
     The planting stands in the Rust crate under PORT2-1 and
     PORT2-7, proven against the recordings this function's own
-    behaviour made before it retired. This body stands as the
-    record of the move. It plants nothing and refuses, so a
-    caller still holding the Python engine meets the boundary
-    in words instead of a second planting.
+    behaviour made before it retired. This body is the bridge
+    to that planting. It drives the crate binary over the
+    copy and carries the answer back, the planted names as
+    the return and the skipped names into the list the caller
+    hands over, so the engine runs whole again with the one
+    planting standing where the crate put it.
     """
-    raise NotImplementedError(
-        "plant_seed stands in the Rust crate under PORT2-7"
+    binary = _find_binary()
+    completed = subprocess.run(
+        [str(binary), "--plant-seed", str(source_root), seed.id],
+        capture_output=True,
+        text=True,
     )
+    if completed.returncode != 0:
+        raise ValueError(
+            "the canaryfield binary refused the planting: "
+            f"{completed.stderr.strip()}"
+        )
+    answer = json.loads(completed.stdout)
+    if skipped is not None:
+        skipped.extend(answer["skipped"])
+    return answer["planted"]
 
 
 def _run_gate(command, cwd, timeout):
