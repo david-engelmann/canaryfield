@@ -126,15 +126,24 @@ fn plant_walk_collects_a_bare_dot_py_name() {
 /// synthetic:match-star-value. A star element stands in a
 /// parenthesised sequence the way it stands in brackets.
 #[test]
-fn match_star_parenthesised_parses() {
+fn match_star_parenthesised_needs_its_comma() {
     for source in [
         "match v:\n    case (first, *rest):\n        pass\n",
         "match v:\n    case (1, *rest):\n        pass\n",
-        "match v:\n    case (*rest):\n        pass\n",
+        "match v:\n    case (*rest,):\n        pass\n",
     ] {
         assert!(
             parse_tree(source).is_ok(),
             "the port refused a parenthesised star pattern: {source:?}"
+        );
+    }
+    for source in [
+        "match v:\n    case (*rest):\n        pass\n",
+        "match v:\n    case ((*rest)):\n        pass\n",
+    ] {
+        assert!(
+            parse_tree(source).is_err(),
+            "the port accepted a star pattern standing alone in parentheses: {source:?}"
         );
     }
 }

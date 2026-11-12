@@ -1262,15 +1262,20 @@ fn literal_part_cps(text: &PyText) -> Vec<u32> {
 /// its spelling, the reading the contract amendment on
 /// the carrying of string constants states for this
 /// surface. A backslash in the carried text stands
-/// quadrupled, the interpreter's doubling of a literal
-/// backslash and one doubling more. A lone surrogate
-/// stands as two backslashes and its escape text, because
-/// the interpreter leaves the raw character standing here
-/// and a Rust string cannot hold it. The two quotes and
-/// the newline take the escaped forms the interpreter's
-/// unparser writes for them, a single backslash before
-/// each. Every other codepoint stands as itself, and a
-/// codepoint no Rust char holds takes its unicode escape.
+/// doubled, the interpreter's doubling of a literal
+/// backslash, whose own reading decodes back to the
+/// backslash itself. An earlier form of this spelling
+/// doubled it once more than the interpreter does, and
+/// the interpreter's rendered output governs over that
+/// form. A lone surrogate stands as a backslash and its
+/// escape text, because the interpreter leaves the raw
+/// character standing here and a Rust string cannot hold
+/// it, and the escape is the spelling that reads back to
+/// the surrogate. The two quotes and the newline take the
+/// escaped forms the interpreter's unparser writes for
+/// them, a single backslash before each. Every other
+/// codepoint stands as itself, and a codepoint no Rust
+/// char holds takes its unicode escape.
 fn spec_spelling(cps: &[u32]) -> String {
     let mut out = String::new();
     for point in cps {
@@ -1278,11 +1283,8 @@ fn spec_spelling(cps: &[u32]) -> String {
             0x5c => {
                 out.push(0x5c as char);
                 out.push(0x5c as char);
-                out.push(0x5c as char);
-                out.push(0x5c as char);
             }
             0xd800..=0xdfff => {
-                out.push(0x5c as char);
                 out.push(0x5c as char);
                 out.push('u');
                 out.push_str(&format!("{:04x}", point));

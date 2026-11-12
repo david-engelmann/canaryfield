@@ -369,3 +369,54 @@ fn algorithmic_families_validate_their_ranges() {
     // resolves, in this database as in the interpreter.
     assert_eq!(lookup_name("TANGUT IDEOGRAPH-17000"), None);
 }
+
+use canaryfield::pyarena::render_tree;
+use canaryfield::pydump::dump_tree;
+
+#[test]
+fn a_parenthesised_star_without_a_comma_is_refused() {
+    // A star standing alone inside parentheses is neither
+    // a tuple nor a sequence pattern, in an expression or
+    // in a case, and the comma is what makes it one.
+    assert!(parse_tree("x = (*b)\n").is_err());
+    assert!(parse_tree("x = (*b,)\n").is_ok());
+    assert!(parse_tree("x = (*b, *c)\n").is_ok());
+    assert!(parse_tree("match v:\n    case (*rest):\n        pass\n").is_err());
+    assert!(parse_tree("match v:\n    case ((*rest)):\n        pass\n").is_err());
+    assert!(parse_tree("match v:\n    case (*rest,):\n        pass\n").is_ok());
+    assert!(parse_tree("match v:\n    case [*rest]:\n        pass\n").is_ok());
+}
+
+#[test]
+fn a_lone_starred_subscript_stands_as_a_one_tuple() {
+    // One starred item in a subscript is a tuple of one,
+    // in the dump and in the render, on every context the
+    // subscript can stand in.
+    let tree = parse_tree("x = a[*b]\n").expect("the source parses");
+    let dump = dump_tree(&tree).expect("the tree dumps");
+    assert!(dump.contains("slice=Tuple(elts=[Starred"), "{dump}");
+    assert_eq!(render_tree(&tree).expect("the tree renders"), "x = a[*b,]");
+    let tree = parse_tree("a[*b] = 1\n").expect("the source parses");
+    assert_eq!(render_tree(&tree).expect("the tree renders"), "a[*b,] = 1");
+    let tree = parse_tree("del a[*-1]\n").expect("the source parses");
+    assert_eq!(render_tree(&tree).expect("the tree renders"), "del a[*-1,]");
+    let tree = parse_tree("x = a[*b, c]\n").expect("the source parses");
+    assert_eq!(render_tree(&tree).expect("the tree renders"), "x = a[*b, c]");
+}
+
+#[test]
+fn the_format_spec_render_doubles_a_backslash_once() {
+    // The source carries two backslashes in the spec and
+    // its value one, and the render carries two again, so
+    // the render reads back to the value it was rendered
+    // from.
+    let source = "v = f'{1:\\\\<4}'\n";
+    let tree = parse_tree(source).expect("the source parses");
+    let rendered = render_tree(&tree).expect("the tree renders");
+    assert_eq!(rendered, source.strip_suffix('\n').expect("the source ends"));
+    let again = parse_tree(&rendered).expect("the render parses");
+    assert_eq!(
+        dump_tree(&again).expect("the render dumps"),
+        dump_tree(&tree).expect("the tree dumps")
+    );
+}

@@ -1881,7 +1881,15 @@ impl Parser {
             }
         }
         if items.len() == 1 {
-            Ok(items.into_iter().next().unwrap())
+            let only = items.into_iter().next().unwrap();
+            // A starred item standing alone is a one tuple,
+            // the reading the interpreter makes of it, where
+            // every other single item stands as itself.
+            if matches!(only.kind, ExprKind::Starred { .. }) {
+                let pos = only.pos;
+                return Ok(self.expr(pos, ExprKind::Tuple { elts: vec![only] }));
+            }
+            Ok(only)
         } else {
             let pos = items[0].pos;
             Ok(self.expr(pos, ExprKind::Tuple { elts: items }))
@@ -2114,7 +2122,14 @@ impl Parser {
         }
         self.expect_op(")")?;
         if elts.len() == 1 && !trailing {
-            Ok(elts.into_iter().next().unwrap())
+            let only = elts.into_iter().next().unwrap();
+            // A starred expression standing alone inside
+            // parentheses is neither a tuple nor a grouping,
+            // and the interpreter refuses it.
+            if matches!(only.kind, ExprKind::Starred { .. }) {
+                return Err(err("cannot use starred expression here"));
+            }
+            Ok(only)
         } else {
             Ok(self.expr(pos, ExprKind::Tuple { elts }))
         }
@@ -2663,10 +2678,13 @@ impl Parser {
                     }
                 }
                 self.expect_op(")")?;
-                if patterns.len() == 1
-                    && !saw_comma
-                    && !matches!(patterns[0].kind, PatternKind::MatchStar(_))
-                {
+                if patterns.len() == 1 && !saw_comma {
+                    // A star pattern standing alone inside
+                    // parentheses is refused, the comma being
+                    // what makes a sequence of it.
+                    if matches!(patterns[0].kind, PatternKind::MatchStar(_)) {
+                        return Err(err("a starred pattern cannot stand alone in parentheses"));
+                    }
                     return Ok(patterns.into_iter().next().expect("one pattern stands"));
                 }
                 Ok(self.pattern(pos, PatternKind::MatchSequence(patterns)))
