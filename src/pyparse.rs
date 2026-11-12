@@ -1731,6 +1731,9 @@ impl Parser {
     fn parse_primary_with_trailers(&mut self) -> Result<Expr, ParseError> {
         if self.at_name("await") {
             let pos = self.bump().pos;
+            if self.at_name("await") {
+                return Err(err("an await stands inside an await"));
+            }
             let inner = self.deepen(|parser| parser.parse_primary_with_trailers())?;
             return Ok(self.expr(
                 pos,
@@ -2531,7 +2534,7 @@ impl Parser {
         self.skip_newlines();
         while self.at_name("case") {
             let case_pos = self.bump().pos;
-            let pattern = self.parse_pattern()?;
+            let pattern = self.parse_case_pattern()?;
             let guard = if self.eat_name("if") {
                 Some(self.parse_expr()?)
             } else {
@@ -2555,6 +2558,42 @@ impl Parser {
             self.bump();
         }
         Ok(self.stmt(pos, StmtKind::Match { subject, cases }))
+    }
+
+    /// The pattern of one case, where a sequence may stand
+    /// open, its elements divided by commas with no bracket
+    /// around them. Every other pattern position takes the
+    /// closed reading of parse_pattern, where a comma ends
+    /// the pattern.
+    fn parse_case_pattern(&mut self) -> Result<Pattern, ParseError> {
+        let mut pattern = self.parse_pattern()?;
+        if self.at_op(",") {
+            let pos = pattern.pos;
+            let mut patterns = vec![pattern];
+            while self.eat_op(",") {
+                if self.at_op(":") || self.at_name("if") {
+                    break;
+                }
+                patterns.push(self.parse_sequence_element()?);
+            }
+            pattern = Pattern {
+                id: self.fresh_id(),
+                pos,
+                kind: PatternKind::MatchSequence(patterns),
+            };
+            if self.eat_name("as") {
+                let name = self.expect_name_text()?;
+                pattern = Pattern {
+                    id: self.fresh_id(),
+                    pos,
+                    kind: PatternKind::MatchAs {
+                        pattern: Some(Box::new(pattern)),
+                        name: Some(name),
+                    },
+                };
+            }
+        }
+        Ok(pattern)
     }
 
     fn parse_pattern(&mut self) -> Result<Pattern, ParseError> {
@@ -2610,19 +2649,26 @@ impl Parser {
                 if self.eat_op(")") {
                     return Ok(self.pattern(pos, PatternKind::MatchSequence(Vec::new())));
                 }
-                let first = self.parse_pattern()?;
-                if !self.at_op(",") {
-                    self.expect_op(")")?;
-                    return Ok(first);
-                }
-                let mut patterns = vec![first];
-                while self.eat_op(",") {
-                    if self.at_op(")") {
+                let mut patterns = Vec::new();
+                let mut saw_comma = false;
+                loop {
+                    patterns.push(self.parse_sequence_element()?);
+                    if self.eat_op(",") {
+                        saw_comma = true;
+                        if self.at_op(")") {
+                            break;
+                        }
+                    } else {
                         break;
                     }
-                    patterns.push(self.parse_pattern()?);
                 }
                 self.expect_op(")")?;
+                if patterns.len() == 1
+                    && !saw_comma
+                    && !matches!(patterns[0].kind, PatternKind::MatchStar(_))
+                {
+                    return Ok(patterns.into_iter().next().expect("one pattern stands"));
+                }
                 Ok(self.pattern(pos, PatternKind::MatchSequence(patterns)))
             }
             Tok::Op(text) if text == "{" => self.parse_mapping_pattern(),
@@ -2699,26 +2745,31 @@ impl Parser {
         }
     }
 
+    /// One element of a sequence pattern, a star element
+    /// or a pattern whole.
+    fn parse_sequence_element(&mut self) -> Result<Pattern, ParseError> {
+        if self.at_op("*") {
+            let star_pos = self.bump().pos;
+            let name = if matches!(self.peek_kind(), Tok::Name(word) if word != "_") {
+                Some(self.expect_name_text()?)
+            } else if self.at_name("_") {
+                self.bump();
+                None
+            } else {
+                None
+            };
+            return Ok(self.pattern(star_pos, PatternKind::MatchStar(name)));
+        }
+        self.parse_pattern()
+    }
+
     fn parse_pattern_list(&mut self, _closer: &str) -> Result<Vec<Pattern>, ParseError> {
         let mut patterns = Vec::new();
         if self.at_op("]") || self.at_op(")") || self.at_op("}") {
             return Ok(patterns);
         }
         loop {
-            if self.at_op("*") {
-                let star_pos = self.bump().pos;
-                let name = if matches!(self.peek_kind(), Tok::Name(word) if word != "_") {
-                    Some(self.expect_name_text()?)
-                } else if self.at_name("_") {
-                    self.bump();
-                    None
-                } else {
-                    None
-                };
-                patterns.push(self.pattern(star_pos, PatternKind::MatchStar(name)));
-            } else {
-                patterns.push(self.parse_pattern()?);
-            }
+            patterns.push(self.parse_sequence_element()?);
             if !self.eat_op(",") {
                 break;
             }

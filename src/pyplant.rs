@@ -155,9 +155,14 @@ fn note_skipped(skipped: &mut Option<&mut Vec<String>>, relative: &str) {
     }
 }
 
-/// The recursive candidate walk, every .py path under the
-/// directory, files and links to files alike, the filtering
-/// standing in the caller.
+/// The recursive candidate walk, every path under the
+/// directory whose name ends in .py, the bare name .py
+/// itself included, files and links to files alike, the
+/// filtering standing in the caller. The walk reads the
+/// tree the way the Python glob reading does, so it never
+/// descends into a directory reached through a link, and
+/// a file under a linked directory is reached only under
+/// its real path.
 fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
     let entries = match std::fs::read_dir(dir) {
         Ok(entries) => entries,
@@ -169,10 +174,14 @@ fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
         .collect();
     paths.sort();
     for path in paths {
-        let is_dir = path.is_dir();
-        if is_dir {
+        if path.is_dir() && !path.is_symlink() {
             collect_candidates(&path, _root, out);
-        } else if path.extension().map(|ext| ext == "py").unwrap_or(false) && path.is_file() {
+        } else if path
+            .file_name()
+            .map(|name| name.to_string_lossy().ends_with(".py"))
+            .unwrap_or(false)
+            && path.is_file()
+        {
             out.push(path);
         }
     }
