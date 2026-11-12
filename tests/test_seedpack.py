@@ -1,10 +1,14 @@
-"""Tests for the slice 6 obligations in CONTRACT.md.
+"""Pins for the seed pack loader refusals, restored at Round 15.
 
-Slice 6 pins each seed pack version to the registry it names. The
-loader refuses a pack whose ids are not exactly the id set of its
-declared format version and a pack whose entries disagree with the
-registry on a name or a defect class, while the description of an
-entry stays unverified prose.
+These pins stood in tests/test_slice6.py and
+tests/test_round1_fixes.py at the base tree and retired with
+the apply surface under PORT2-9, but the machinery they pin,
+the seed pack loader of canaryfield/seedpack.py, stands
+untouched and answers in Python still. The Round 15 fix pass
+restores them here, re-pointed at canaryfield.registry where
+they named the retired canaryfield.seeds module. The report
+module pins that retired in the same files are not restored
+here, because they belong to the slice that ports report.py.
 
 Every fixture here is synthetic and written for this test file.
 """
@@ -13,8 +17,8 @@ import json
 
 import pytest
 
+from canaryfield.registry import SEEDS
 from canaryfield.seedpack import load_seed_pack, seed_pack_data
-from canaryfield.seeds import SEEDS
 
 
 def _pack_file(tmp_path, data):
@@ -115,3 +119,37 @@ def test_a_pack_entry_description_is_prose_and_is_not_verified(tmp_path):
     assert entries[5]["description"] == (
         "A reworded description of the same planted defect"
     )
+
+
+def _pack_with(tmp_path, mutate):
+    data = seed_pack_data()
+    mutate(data)
+    path = tmp_path / "pack.json"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    return path
+
+
+def test_seed_pack_rejects_a_duplicate_id(tmp_path):
+    def mutate(data):
+        data["seeds"][1]["id"] = data["seeds"][0]["id"]
+
+    with pytest.raises(ValueError, match="duplicate"):
+        load_seed_pack(_pack_with(tmp_path, mutate))
+
+
+def test_seed_pack_rejects_an_extra_seed(tmp_path):
+    def mutate(data):
+        extra = dict(data["seeds"][0])
+        extra["id"] = "seed-99"
+        data["seeds"].append(extra)
+
+    with pytest.raises(ValueError, match="carries 49"):
+        load_seed_pack(_pack_with(tmp_path, mutate))
+
+
+def test_seed_pack_rejects_a_numeric_id(tmp_path):
+    def mutate(data):
+        data["seeds"][0]["id"] = 7
+
+    with pytest.raises(ValueError, match="non empty piece of text"):
+        load_seed_pack(_pack_with(tmp_path, mutate))

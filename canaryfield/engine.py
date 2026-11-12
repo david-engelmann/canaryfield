@@ -14,15 +14,15 @@ walk taken before and after. A supplied work root must start empty and
 a run removes only what it created.
 """
 
-import ast
 import hashlib
+import json
 import os
 import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 
-from .seeds import SEEDS
+from .registry import SEEDS
 
 CAUGHT = "caught"
 WAVED = "waved-through"
@@ -30,20 +30,6 @@ NOT_APPLICABLE = "not-applicable"
 GATE_BROKEN = "gate-broken"
 
 IGNORED_PARTS = {".git", "__pycache__", ".pytest_cache"}
-
-
-TEST_DIR_PARTS = {"tests", "test", "testing"}
-TEST_FILE_NAMES = {"conftest.py", "test.py"}
-
-
-def _is_test_file(path):
-    name = path.name
-    return (
-        name in TEST_FILE_NAMES
-        or name.startswith("test_")
-        or name.endswith("_test.py")
-        or any(part in TEST_DIR_PARTS for part in path.parts)
-    )
 
 
 def hash_tree(root):
@@ -67,68 +53,72 @@ def _copy_tree(source, destination):
     shutil.copytree(source, destination, ignore=ignore, symlinks=True)
 
 
+_CHECKOUT_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _find_binary():
+    """Find the crate binary the bridge drives.
+
+    The name the caller hands over in CANARYFIELD_BINARY
+    stands first, and a name that stands for no file is
+    refused in words that name it. Then the binary on the
+    path, then the checkout's own build under target in
+    debug or release shape. Where no binary stands at all
+    the standing refusal in words is the answer, so a caller
+    holding only the Python meets the boundary in words
+    instead of a second planting.
+    """
+    named = os.environ.get("CANARYFIELD_BINARY")
+    if named:
+        candidate = Path(named)
+        if candidate.is_file():
+            return candidate
+        raise NotImplementedError(
+            f"the named canaryfield binary does not stand: {named}"
+        )
+    on_path = shutil.which("canaryfield")
+    if on_path:
+        return Path(on_path)
+    for candidate in (
+        _CHECKOUT_ROOT / "target" / "debug" / "canaryfield",
+        _CHECKOUT_ROOT / "target" / "release" / "canaryfield",
+    ):
+        if candidate.is_file():
+            return candidate
+    raise NotImplementedError(
+        "plant_seed stands in the Rust crate under PORT2-7"
+    )
+
+
 def plant_seed(source_root, seed, skipped=None):
     """Plant one seed everywhere it applies in the copy at source_root.
 
-    Returns the planted files as repo relative path strings in
-    sorted order. Inside one file the seed plants at every matching
-    shape in a single pass, through one call to the seed apply
-    function, which collects its matches from the tree as parsed
-    and plants each one exactly once. A file counts as planted only
-    when the seed changes its syntax tree, so a file where every
-    occurrence already sits in its planted form plants nothing. A candidate that is a symlink, or
-    that resolves outside the root, is never written through, so no
-    mode can plant outside the scratch material. A candidate that
-    cannot be parsed is skipped for every seed and named in the
-    skipped list when one is passed, instead of ending the run.
-    A planting whose rendered form the language refuses is never
-    written and the file does not count as planted, so a planting
-    never leaves a tree the language refuses. The list is empty
-    when the seed changes nothing in the copy.
+    The planting stands in the Rust crate under PORT2-1 and
+    PORT2-7, proven against the recordings this function's own
+    behaviour made before it retired. This body is the bridge
+    to that planting. It drives the crate binary over the
+    copy and carries the answer back, the planted names as
+    the return and the skipped names into the list the caller
+    hands over, so the engine runs whole again with the one
+    planting standing where the crate put it.
     """
-    root = Path(source_root)
-    resolved_root = root.resolve()
-    candidates = sorted(
-        (
-            path
-            for path in root.rglob("*.py")
-            if path.is_file()
-            and not any(
-                part in IGNORED_PARTS
-                for part in path.relative_to(root).parts
-            )
-            and not _is_test_file(path.relative_to(root))
-        ),
-        key=lambda path: str(path.relative_to(root)),
+    binary = _find_binary()
+    completed = subprocess.run(
+        [str(binary), "--plant-seed", str(source_root), seed.id],
+        capture_output=True,
+        text=True,
     )
-    planted_files = []
-    for path in candidates:
-        relative = str(path.relative_to(root))
-        if path.is_symlink():
-            continue
-        try:
-            resolved = path.resolve()
-        except OSError:
-            continue
-        if resolved != resolved_root and resolved_root not in resolved.parents:
-            continue
-        try:
-            tree = ast.parse(path.read_text(encoding="utf-8"))
-        except (SyntaxError, UnicodeDecodeError, ValueError):
-            if skipped is not None and relative not in skipped:
-                skipped.append(relative)
-            continue
-        before = ast.dump(tree)
-        if seed.apply(tree) and ast.dump(tree) != before:
-            ast.fix_missing_locations(tree)
-            rendered = ast.unparse(tree)
-            try:
-                compile(rendered, relative, "exec")
-            except SyntaxError:
-                continue
-            path.write_text(rendered + "\n", encoding="utf-8")
-            planted_files.append(relative)
-    return sorted(planted_files)
+    if completed.returncode != 0:
+        raise ValueError(
+            "the canaryfield binary refused the planting: "
+            f"{completed.stderr.strip()}"
+        )
+    answer = json.loads(completed.stdout)
+    if skipped is not None:
+        for name in answer["skipped"]:
+            if name not in skipped:
+                skipped.append(name)
+    return answer["planted"]
 
 
 def _run_gate(command, cwd, timeout):

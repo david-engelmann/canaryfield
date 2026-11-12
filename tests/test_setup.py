@@ -20,7 +20,7 @@ def test_readme_status_is_honest():
         "local seed is done",
         "403",
         "CONTRACT.md",
-        "14 of 100",
+        "15 of 100",
         "AGENTS.md",
         "canonical template",
         "synthetic",

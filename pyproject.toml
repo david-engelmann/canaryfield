@@ -13,5 +13,8 @@ license = {text = "MIT"}
 [tool.setuptools.packages.find]
 include = ["canaryfield*"]
 
+[tool.setuptools.package-data]
+canaryfield = ["seed-pack.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
