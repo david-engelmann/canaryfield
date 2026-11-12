@@ -10,7 +10,7 @@
 //! module rendering plus one trailing newline. The compile
 //! check the Python makes with compile stands here as the
 //! port's own reading of the rendered text, a reparse plus
-//! the binding rule for nonlocal declarations, and a refused
+//! the compile readings whole, and a refused
 //! rendering is never written, the file counting neither as
 //! planted nor as skipped. Nothing guards the write itself,
 //! so a write error travels out as the Python's does.
@@ -190,12 +190,16 @@ fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
 /// The compile check over a rendering. The Python hands the
 /// rendering to compile, which reads it as a whole program.
 /// The port reads it with its own parser and then applies
-/// the binding rule for nonlocal declarations, the refusal
-/// family the round record carries. A rendering either
-/// reading refuses is refused here.
+/// the compile readings whole, the binding rule for
+/// nonlocal declarations wherever they stand and the
+/// symbol table family one scope at a time, the statement
+/// grounds and the declaration order among them. A
+/// rendering any reading refuses is refused here.
 pub fn compile_accepts(rendered: &str) -> bool {
     match parse_tree(rendered) {
-        Ok(tree) => nonlocal_accepts(&tree),
+        Ok(tree) => crate::pyarena::run_big_stack(move || {
+            nonlocal_accepts(&tree) && symbol_accepts(&tree)
+        }),
         Err(_) => false,
     }
 }
@@ -323,6 +327,19 @@ fn scope_bindings(tree: &Tree, scope: usize, kind: ScopeKind) -> ScopeInfo {
             Data::ExceptHandler { name: Some(name) } => {
                 info.bound.insert(name.clone());
             }
+            Data::MatchAs { name: Some(name) } => {
+                // A match capture binds in this scope, as
+                // the interpreter's symbol table counts it,
+                // the pattern standing in the body like any
+                // other binding statement.
+                info.bound.insert(name.clone());
+            }
+            Data::MatchStar { name: Some(name) } => {
+                info.bound.insert(name.clone());
+            }
+            Data::MatchMapping { rest: Some(name) } => {
+                info.bound.insert(name.clone());
+            }
             Data::Global { names } => {
                 for name in names {
                     info.globals.insert(name.clone());
@@ -361,13 +378,51 @@ fn scope_kind(tree: &Tree, id: usize) -> Option<ScopeKind> {
     }
 }
 
+/// The resolution of one nonlocal name standing in the
+/// scope at `scope`. The reading walks the enclosing
+/// scopes, class scopes passed over and the module never
+/// a binding, and a name an enclosing function declares
+/// global blocks the reading outright.
+enum Resolution {
+    Resolved,
+    Unresolved,
+    Blocked,
+}
+
+fn nonlocal_resolution(
+    tree: &Tree,
+    parents: &std::collections::HashMap<usize, usize>,
+    scope: usize,
+    name: &str,
+) -> Resolution {
+    let mut cursor = parents.get(&scope).copied();
+    while let Some(at) = cursor {
+        cursor = parents.get(&at).copied();
+        match scope_kind(tree, at) {
+            Some(ScopeKind::Class) => continue,
+            Some(ScopeKind::Module) => break,
+            Some(ScopeKind::Function) => {
+                let outer = scope_bindings(tree, at, ScopeKind::Function);
+                if outer.globals.contains(name) {
+                    return Resolution::Blocked;
+                }
+                if outer.bound.contains(name) {
+                    return Resolution::Resolved;
+                }
+            }
+            None => {}
+        }
+    }
+    Resolution::Unresolved
+}
+
 /// The nonlocal rule over the whole tree. Every nonlocal
-/// declaration of a function scope must name a binding of
-/// an enclosing function scope, class scopes passed over
-/// and the module never a binding, and a name an enclosing
-/// function declares global blocks the reading, as the
-/// interpreter's symbol table refuses them. A nonlocal at
-/// module level is refused outright.
+/// declaration, of a function scope or of a class body
+/// alike, must name a binding of an enclosing function
+/// scope, the binding reading passing class scopes over
+/// while the declaration reading validates them where
+/// they stand, as the interpreter's symbol table does.
+/// A nonlocal at module level is refused outright.
 fn nonlocal_accepts(tree: &Tree) -> bool {
     let parents = tree.parent_map();
     let module_info = scope_bindings(tree, tree.root, ScopeKind::Module);
@@ -375,42 +430,421 @@ fn nonlocal_accepts(tree: &Tree) -> bool {
         return false;
     }
     for scope in tree.walk() {
-        if scope_kind(tree, scope) != Some(ScopeKind::Function) {
-            continue;
-        }
-        // A lambda holds no statements and declares nothing.
-        if matches!(&tree.nodes[scope].data, Data::Lambda) {
-            continue;
-        }
-        let info = scope_bindings(tree, scope, ScopeKind::Function);
+        let kind = match scope_kind(tree, scope) {
+            Some(ScopeKind::Function) => {
+                // A lambda holds no statements and declares nothing.
+                if matches!(&tree.nodes[scope].data, Data::Lambda) {
+                    continue;
+                }
+                ScopeKind::Function
+            }
+            Some(ScopeKind::Class) => ScopeKind::Class,
+            _ => continue,
+        };
+        let info = scope_bindings(tree, scope, kind);
         for name in &info.nonlocals {
             if info.globals.contains(name) {
                 return false;
             }
-            let mut resolved = false;
-            let mut cursor = parents.get(&scope).copied();
-            while let Some(at) = cursor {
-                cursor = parents.get(&at).copied();
-                match scope_kind(tree, at) {
-                    Some(ScopeKind::Class) => continue,
-                    Some(ScopeKind::Module) => break,
-                    Some(ScopeKind::Function) => {
-                        let outer = scope_bindings(tree, at, ScopeKind::Function);
-                        if outer.globals.contains(name) {
-                            return false;
-                        }
-                        if outer.bound.contains(name) {
-                            resolved = true;
-                            break;
-                        }
+            match nonlocal_resolution(tree, &parents, scope, name) {
+                Resolution::Resolved => {}
+                Resolution::Unresolved | Resolution::Blocked => return false,
+            }
+        }
+    }
+    true
+}
+
+/// The argument names of one definition, in signature
+/// order across every parameter list.
+fn argument_names(tree: &Tree, args_node: usize) -> Vec<String> {
+    let mut all: Vec<usize> = Vec::new();
+    all.extend(tree.many(args_node, "posonlyargs").iter().copied());
+    all.extend(tree.many(args_node, "args").iter().copied());
+    if let Some(vararg) = tree.one(args_node, "vararg") {
+        all.push(vararg);
+    }
+    all.extend(tree.many(args_node, "kwonlyargs").iter().copied());
+    if let Some(kwarg) = tree.one(args_node, "kwarg") {
+        all.push(kwarg);
+    }
+    let mut names: Vec<String> = Vec::new();
+    for arg in all {
+        if let Data::Arg { name } = &tree.nodes[arg].data {
+            names.push(name.clone());
+        }
+    }
+    names
+}
+
+/// One scope's ordered reading, the events the symbol
+/// table counts as it walks the body in statement order.
+/// A binding or a use recorded before a declaration of
+/// the same name refuses the scope, a parameter takes no
+/// declaration, a name takes only one of the two
+/// declarations, and an annotated name takes neither, the
+/// interpreter's readings stated as one walk. An import
+/// records no event, as the interpreter's declaration
+/// readings pass an imported name by.
+struct ScopeWalk {
+    kind: ScopeKind,
+    /// The scope is an async function, the one ground an
+    /// await and the asynchronous forms stand on.
+    is_async_fn: bool,
+    params: HashSet<String>,
+    bound: HashSet<String>,
+    used: HashSet<String>,
+    annotated: HashSet<String>,
+    declared_global: HashSet<String>,
+    declared_nonlocal: HashSet<String>,
+    ok: bool,
+}
+
+impl ScopeWalk {
+    fn note_bound(&mut self, name: &str) {
+        self.bound.insert(name.to_string());
+    }
+}
+
+/// The symbol table family over the whole tree. Every
+/// definition's argument names stand unique, and every
+/// scope's own statements pass the ordered reading.
+fn symbol_accepts(tree: &Tree) -> bool {
+    for id in tree.walk() {
+        if matches!(&tree.nodes[id].data, Data::FuncDef { .. } | Data::Lambda) {
+            if let Some(args) = tree.one(id, "args") {
+                let names = argument_names(tree, args);
+                let mut seen: HashSet<&String> = HashSet::new();
+                for name in &names {
+                    if !seen.insert(name) {
+                        return false;
                     }
-                    None => {}
                 }
             }
-            if !resolved {
+        }
+    }
+    for id in tree.walk() {
+        if let Some(kind) = scope_kind(tree, id) {
+            if !scope_accepts(tree, id, kind) {
                 return false;
             }
         }
     }
     true
+}
+
+fn scope_accepts(tree: &Tree, scope: usize, kind: ScopeKind) -> bool {
+    let is_async_fn = matches!(&tree.nodes[scope].data, Data::FuncDef { is_async: true, .. });
+    let mut walk = ScopeWalk {
+        kind,
+        is_async_fn,
+        params: HashSet::new(),
+        bound: HashSet::new(),
+        used: HashSet::new(),
+        annotated: HashSet::new(),
+        declared_global: HashSet::new(),
+        declared_nonlocal: HashSet::new(),
+        ok: true,
+    };
+    if kind == ScopeKind::Function {
+        if let Some(args) = tree.one(scope, "args") {
+            walk.params = argument_names(tree, args).into_iter().collect();
+        }
+    }
+    if matches!(&tree.nodes[scope].data, Data::Lambda) {
+        if let Some(body) = tree.one(scope, "body") {
+            visit_node(tree, &mut walk, body, 0, 0, false);
+        }
+    } else {
+        for statement in tree.many(scope, "body").to_vec() {
+            visit_node(tree, &mut walk, statement, 0, 0, false);
+        }
+    }
+    if !walk.ok {
+        return false;
+    }
+    // An annotated name takes no declaration of either
+    // kind, in either order, as the interpreter refuses
+    // the pairing wherever it stands in the scope.
+    !walk.annotated.iter().any(|name| {
+        walk.declared_global.contains(name) || walk.declared_nonlocal.contains(name)
+    })
+}
+
+fn visit_children(
+    tree: &Tree,
+    walk: &mut ScopeWalk,
+    id: usize,
+    loops: usize,
+    in_comp: usize,
+    limited: bool,
+) {
+    for child in tree.child_ids(id) {
+        visit_node(tree, walk, child, loops, in_comp, limited);
+    }
+}
+
+/// The argument readings of a definition standing in
+/// this scope, the annotations and the defaults, which
+/// the interpreter reads here and not in the definition's
+/// own scope.
+fn visit_arguments(
+    tree: &Tree,
+    walk: &mut ScopeWalk,
+    args: usize,
+    loops: usize,
+    in_comp: usize,
+    limited: bool,
+) {
+    visit_children(tree, walk, args, loops, in_comp, limited);
+}
+
+/// The ordered walk of one node standing in the scope
+/// under reading. A nested definition or class is read
+/// by its header alone, its body a scope of its own the
+/// outer reading never enters. The limited reading walks
+/// a comprehension's interior, where a name load and a
+/// name store belong to the comprehension alone and only
+/// a walrus target binds here.
+fn visit_node(
+    tree: &Tree,
+    walk: &mut ScopeWalk,
+    id: usize,
+    loops: usize,
+    in_comp: usize,
+    limited: bool,
+) {
+    if !walk.ok {
+        return;
+    }
+    match &tree.nodes[id].data {
+        Data::FuncDef { name, .. } => {
+            walk.note_bound(name);
+            for child in tree.many(id, "decorator_list").iter().copied() {
+                visit_node(tree, walk, child, loops, in_comp, limited);
+            }
+            if let Some(args) = tree.one(id, "args") {
+                visit_arguments(tree, walk, args, loops, in_comp, limited);
+            }
+            if let Some(returns) = tree.one(id, "returns") {
+                visit_node(tree, walk, returns, loops, in_comp, limited);
+            }
+        }
+        Data::ClassDef { name } => {
+            walk.note_bound(name);
+            for child in tree.many(id, "decorator_list").iter().copied() {
+                visit_node(tree, walk, child, loops, in_comp, limited);
+            }
+            for child in tree.many(id, "bases").iter().copied() {
+                visit_node(tree, walk, child, loops, in_comp, limited);
+            }
+            for child in tree.many(id, "keywords").iter().copied() {
+                visit_node(tree, walk, child, loops, in_comp, limited);
+            }
+        }
+        Data::Lambda => {
+            if let Some(args) = tree.one(id, "args") {
+                visit_arguments(tree, walk, args, loops, in_comp, limited);
+            }
+        }
+        Data::ListComp | Data::SetComp | Data::DictComp | Data::GeneratorExp => {
+            let generators: Vec<usize> = tree.many(id, "generators").to_vec();
+            for generator in &generators {
+                if let Data::Comprehension { is_async: true } = &tree.nodes[*generator].data {
+                    if !walk.is_async_fn {
+                        walk.ok = false;
+                    }
+                }
+            }
+            // The outermost iterable is read in this scope,
+            // a yield standing in it on this scope's ground.
+            // Everything else in the comprehension is its
+            // interior, read under the limited reading at
+            // one more comprehension depth.
+            if let Some(first) = generators.first() {
+                if let Some(iter) = tree.one(*first, "iter") {
+                    visit_node(tree, walk, iter, loops, in_comp, limited);
+                }
+            }
+            for (index, generator) in generators.iter().enumerate() {
+                if let Some(target) = tree.one(*generator, "target") {
+                    visit_node(tree, walk, target, loops, in_comp + 1, true);
+                }
+                if index > 0 {
+                    if let Some(iter) = tree.one(*generator, "iter") {
+                        visit_node(tree, walk, iter, loops, in_comp + 1, true);
+                    }
+                }
+                for cond in tree.many(*generator, "ifs").iter().copied() {
+                    visit_node(tree, walk, cond, loops, in_comp + 1, true);
+                }
+            }
+            for field in ["elt", "key", "value"] {
+                if let Some(child) = tree.one(id, field) {
+                    visit_node(tree, walk, child, loops, in_comp + 1, true);
+                }
+            }
+        }
+        Data::For { is_async } => {
+            if *is_async && !walk.is_async_fn {
+                walk.ok = false;
+            }
+            if let Some(target) = tree.one(id, "target") {
+                visit_node(tree, walk, target, loops, in_comp, limited);
+            }
+            if let Some(iter) = tree.one(id, "iter") {
+                visit_node(tree, walk, iter, loops, in_comp, limited);
+            }
+            for statement in tree.many(id, "body").to_vec() {
+                visit_node(tree, walk, statement, loops + 1, in_comp, limited);
+            }
+            for statement in tree.many(id, "orelse").to_vec() {
+                visit_node(tree, walk, statement, loops, in_comp, limited);
+            }
+        }
+        Data::While => {
+            if let Some(test) = tree.one(id, "test") {
+                visit_node(tree, walk, test, loops, in_comp, limited);
+            }
+            for statement in tree.many(id, "body").to_vec() {
+                visit_node(tree, walk, statement, loops + 1, in_comp, limited);
+            }
+            for statement in tree.many(id, "orelse").to_vec() {
+                visit_node(tree, walk, statement, loops, in_comp, limited);
+            }
+        }
+        Data::With { is_async } => {
+            if *is_async && !walk.is_async_fn {
+                walk.ok = false;
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::Return => {
+            if walk.kind != ScopeKind::Function {
+                walk.ok = false;
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::Break | Data::Continue => {
+            if loops == 0 {
+                walk.ok = false;
+            }
+        }
+        Data::Yield | Data::YieldFrom => {
+            if in_comp > 0 || walk.kind != ScopeKind::Function {
+                walk.ok = false;
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::Await => {
+            if !walk.is_async_fn {
+                walk.ok = false;
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::Import => {}
+        Data::ImportFrom { .. } => {
+            if walk.kind != ScopeKind::Module {
+                for alias in tree.many(id, "names") {
+                    if let Data::Alias { name, .. } = &tree.nodes[*alias].data {
+                        if name == "*" {
+                            walk.ok = false;
+                        }
+                    }
+                }
+            }
+        }
+        Data::Global { names } => {
+            for name in names {
+                if walk.params.contains(name)
+                    || walk.declared_nonlocal.contains(name)
+                    || walk.bound.contains(name)
+                    || walk.used.contains(name)
+                {
+                    walk.ok = false;
+                }
+                walk.declared_global.insert(name.clone());
+            }
+        }
+        Data::Nonlocal { names } => {
+            for name in names {
+                if walk.params.contains(name)
+                    || walk.declared_global.contains(name)
+                    || walk.bound.contains(name)
+                    || walk.used.contains(name)
+                {
+                    walk.ok = false;
+                }
+                walk.declared_nonlocal.insert(name.clone());
+            }
+        }
+        Data::AnnAssign { .. } => {
+            if let Some(target) = tree.one(id, "target") {
+                if let Data::Name { id: name, .. } = &tree.nodes[target].data {
+                    walk.annotated.insert(name.clone());
+                } else {
+                    visit_node(tree, walk, target, loops, in_comp, limited);
+                }
+            }
+            if let Some(annotation) = tree.one(id, "annotation") {
+                visit_node(tree, walk, annotation, loops, in_comp, limited);
+            }
+            if let Some(value) = tree.one(id, "value") {
+                visit_node(tree, walk, value, loops, in_comp, limited);
+            }
+        }
+        Data::ExceptHandler { name } => {
+            if let Some(name) = name {
+                walk.note_bound(name);
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::MatchAs { name } => {
+            if let Some(name) = name {
+                walk.note_bound(name);
+            }
+            if let Some(pattern) = tree.one(id, "pattern") {
+                visit_node(tree, walk, pattern, loops, in_comp, limited);
+            }
+        }
+        Data::MatchStar { name } => {
+            if let Some(name) = name {
+                walk.note_bound(name);
+            }
+        }
+        Data::MatchMapping { rest } => {
+            if let Some(name) = rest {
+                walk.note_bound(name);
+            }
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+        Data::NamedExpr => {
+            // A walrus target binds in this scope wherever
+            // the expression stands, a comprehension's
+            // interior included.
+            if let Some(target) = tree.one(id, "target") {
+                if let Data::Name { id: name, .. } = &tree.nodes[target].data {
+                    walk.note_bound(name);
+                }
+            }
+            if let Some(value) = tree.one(id, "value") {
+                visit_node(tree, walk, value, loops, in_comp, limited);
+            }
+        }
+        Data::Name { id: name, ctx } => match ctx {
+            Ctx::Load => {
+                if !limited {
+                    walk.used.insert(name.clone());
+                }
+            }
+            Ctx::Store | Ctx::Del => {
+                if !limited {
+                    walk.note_bound(name);
+                }
+            }
+        },
+        _ => {
+            visit_children(tree, walk, id, loops, in_comp, limited);
+        }
+    }
 }
