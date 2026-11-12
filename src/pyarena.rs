@@ -109,34 +109,62 @@ pub enum Slot {
 #[derive(Debug, Clone)]
 pub enum Data {
     Module,
-    FuncDef { name: String, is_async: bool },
-    ClassDef { name: String },
+    FuncDef {
+        name: String,
+        is_async: bool,
+    },
+    ClassDef {
+        name: String,
+    },
     Return,
     Delete,
     Assign,
-    AugAssign { op: BinOpKind },
-    AnnAssign { simple: bool },
-    For { is_async: bool },
+    AugAssign {
+        op: BinOpKind,
+    },
+    AnnAssign {
+        simple: bool,
+    },
+    For {
+        is_async: bool,
+    },
     While,
     If,
-    With { is_async: bool },
+    With {
+        is_async: bool,
+    },
     Match,
     Raise,
-    Try { star: bool },
+    Try {
+        star: bool,
+    },
     Assert,
     Import,
-    ImportFrom { module: Option<String>, level: u32 },
-    Global { names: Vec<String> },
-    Nonlocal { names: Vec<String> },
+    ImportFrom {
+        module: Option<String>,
+        level: u32,
+    },
+    Global {
+        names: Vec<String>,
+    },
+    Nonlocal {
+        names: Vec<String>,
+    },
     ExprStmt,
     Pass,
     Break,
     Continue,
     TypeAlias,
-    BoolOp { op: BoolKind },
+    BoolOp {
+        op: BoolKind,
+    },
     NamedExpr,
-    BinOp { op: BinOpKind },
-    UnaryOp { op: UnaryKind },
+    BinOp {
+        op: BinOpKind,
+    },
+    UnaryOp {
+        op: UnaryKind,
+    },
     Lambda,
     IfExp,
     Dict,
@@ -148,36 +176,83 @@ pub enum Data {
     Await,
     Yield,
     YieldFrom,
-    Compare { ops: Vec<CmpKind> },
+    Compare {
+        ops: Vec<CmpKind>,
+    },
     Call,
-    FormattedValue { conversion: i32 },
+    FormattedValue {
+        conversion: i32,
+    },
     JoinedStr,
-    Constant { value: ConstVal },
-    Attribute { attr: String, ctx: Ctx },
-    Subscript { ctx: Ctx },
-    Starred { ctx: Ctx },
-    Name { id: String, ctx: Ctx },
-    List { ctx: Ctx },
-    Tuple { ctx: Ctx },
+    Constant {
+        value: ConstVal,
+    },
+    Attribute {
+        attr: String,
+        ctx: Ctx,
+    },
+    Subscript {
+        ctx: Ctx,
+    },
+    Starred {
+        ctx: Ctx,
+    },
+    Name {
+        id: String,
+        ctx: Ctx,
+    },
+    List {
+        ctx: Ctx,
+    },
+    Tuple {
+        ctx: Ctx,
+    },
     Slice,
     Arguments,
-    Arg { name: String },
-    Keyword { arg: Option<String> },
-    Comprehension { is_async: bool },
-    ExceptHandler { name: Option<String> },
+    Arg {
+        name: String,
+    },
+    Keyword {
+        arg: Option<String>,
+    },
+    Comprehension {
+        is_async: bool,
+    },
+    ExceptHandler {
+        name: Option<String>,
+    },
     MatchCase,
     WithItem,
-    Alias { name: String, asname: Option<String> },
-    TypeVar { name: String },
-    TypeVarTuple { name: String },
-    ParamSpec { name: String },
+    Alias {
+        name: String,
+        asname: Option<String>,
+    },
+    TypeVar {
+        name: String,
+    },
+    TypeVarTuple {
+        name: String,
+    },
+    ParamSpec {
+        name: String,
+    },
     MatchValue,
-    MatchSingleton { value: ConstVal },
+    MatchSingleton {
+        value: ConstVal,
+    },
     MatchSequence,
-    MatchMapping { rest: Option<String> },
-    MatchClass { kwd_attrs: Vec<String> },
-    MatchAs { name: Option<String> },
-    MatchStar { name: Option<String> },
+    MatchMapping {
+        rest: Option<String>,
+    },
+    MatchClass {
+        kwd_attrs: Vec<String>,
+    },
+    MatchAs {
+        name: Option<String>,
+    },
+    MatchStar {
+        name: Option<String>,
+    },
     MatchOr,
 }
 
@@ -372,11 +447,9 @@ pub fn field_table(data: &Data) -> Vec<Field> {
         ]),
         Data::Assert => fields(&[("test", ONE), ("msg", ONE)]),
         Data::Import => fields(&[("names", MANY)]),
-        Data::ImportFrom { .. } => fields(&[
-            ("module", SCALAR),
-            ("names", MANY),
-            ("level", SCALAR),
-        ]),
+        Data::ImportFrom { .. } => {
+            fields(&[("module", SCALAR), ("names", MANY), ("level", SCALAR)])
+        }
         Data::Global { .. } | Data::Nonlocal { .. } => fields(&[("names", SCALAR)]),
         Data::ExprStmt => fields(&[("value", ONE)]),
         Data::Pass | Data::Break | Data::Continue => fields(&[]),
@@ -395,17 +468,11 @@ pub fn field_table(data: &Data) -> Vec<Field> {
         Data::DictComp => fields(&[("key", ONE), ("value", ONE), ("generators", MANY)]),
         Data::Await | Data::YieldFrom => fields(&[("value", ONE)]),
         Data::Yield => fields(&[("value", ONE)]),
-        Data::Compare { .. } => fields(&[
-            ("left", ONE),
-            ("ops", SCALAR),
-            ("comparators", MANY),
-        ]),
+        Data::Compare { .. } => fields(&[("left", ONE), ("ops", SCALAR), ("comparators", MANY)]),
         Data::Call => fields(&[("func", ONE), ("args", MANY), ("keywords", MANY)]),
-        Data::FormattedValue { .. } => fields(&[
-            ("value", ONE),
-            ("conversion", SCALAR),
-            ("format_spec", ONE),
-        ]),
+        Data::FormattedValue { .. } => {
+            fields(&[("value", ONE), ("conversion", SCALAR), ("format_spec", ONE)])
+        }
         Data::JoinedStr => fields(&[("values", MANY)]),
         Data::Constant { .. } => fields(&[("value", SCALAR), ("kind", SCALAR)]),
         Data::Attribute { .. } => fields(&[("value", ONE), ("attr", SCALAR), ("ctx", SCALAR)]),
@@ -440,11 +507,9 @@ pub fn field_table(data: &Data) -> Vec<Field> {
         Data::MatchValue => fields(&[("value", ONE)]),
         Data::MatchSingleton { .. } => fields(&[("value", SCALAR)]),
         Data::MatchSequence => fields(&[("patterns", MANY)]),
-        Data::MatchMapping { .. } => fields(&[
-            ("keys", MANY),
-            ("patterns", MANY),
-            ("rest", SCALAR),
-        ]),
+        Data::MatchMapping { .. } => {
+            fields(&[("keys", MANY), ("patterns", MANY), ("rest", SCALAR)])
+        }
         Data::MatchClass { .. } => fields(&[
             ("cls", ONE),
             ("patterns", MANY),
@@ -628,7 +693,10 @@ impl Tree {
 
     /// The child ids of a node alone, in field order.
     pub fn child_ids(&self, id: usize) -> Vec<usize> {
-        self.children(id).into_iter().map(|(_, _, child)| child).collect()
+        self.children(id)
+            .into_iter()
+            .map(|(_, _, child)| child)
+            .collect()
     }
 
     /// Every node reachable from the root in the breadth
@@ -868,13 +936,10 @@ impl<'a> Lowerer<'a> {
                 let body = self.stmts(body);
                 let orelse = self.stmts(orelse);
                 self.tree.push(
-                    Data::For { is_async: *is_async },
-                    vec![
-                        one(Some(target)),
-                        one(Some(iter)),
-                        many(body),
-                        many(orelse),
-                    ],
+                    Data::For {
+                        is_async: *is_async,
+                    },
+                    vec![one(Some(target)), one(Some(iter)), many(body), many(orelse)],
                     pos,
                 )
             }
@@ -906,7 +971,9 @@ impl<'a> Lowerer<'a> {
                 let items = items.iter().map(|item| self.with_item(item)).collect();
                 let body = self.stmts(body);
                 self.tree.push(
-                    Data::With { is_async: *is_async },
+                    Data::With {
+                        is_async: *is_async,
+                    },
                     vec![many(items), many(body)],
                     pos,
                 )
@@ -965,7 +1032,9 @@ impl<'a> Lowerer<'a> {
                 )
             }
             StmtKind::Global { names } => self.tree.push(
-                Data::Global { names: names.clone() },
+                Data::Global {
+                    names: names.clone(),
+                },
                 vec![],
                 pos,
             ),
@@ -978,8 +1047,7 @@ impl<'a> Lowerer<'a> {
             ),
             StmtKind::ExprStmt { value } => {
                 let value = self.expr(value);
-                self.tree
-                    .push(Data::ExprStmt, vec![one(Some(value))], pos)
+                self.tree.push(Data::ExprStmt, vec![one(Some(value))], pos)
             }
             StmtKind::Pass => self.tree.push(Data::Pass, vec![], pos),
             StmtKind::Break => self.tree.push(Data::Break, vec![], pos),
@@ -1055,11 +1123,8 @@ impl<'a> Lowerer<'a> {
             }
             ExprKind::UnaryOp { op, operand } => {
                 let operand = self.expr(operand);
-                self.tree.push(
-                    Data::UnaryOp { op: *op },
-                    vec![one(Some(operand))],
-                    pos,
-                )
+                self.tree
+                    .push(Data::UnaryOp { op: *op }, vec![one(Some(operand))], pos)
             }
             ExprKind::BoolOp { op, values } => {
                 let values = self.exprs(values);
@@ -1102,11 +1167,8 @@ impl<'a> Lowerer<'a> {
                 let lower = lower.as_ref().map(|expr| self.expr(expr));
                 let upper = upper.as_ref().map(|expr| self.expr(expr));
                 let step = step.as_ref().map(|expr| self.expr(expr));
-                self.tree.push(
-                    Data::Slice,
-                    vec![one(lower), one(upper), one(step)],
-                    pos,
-                )
+                self.tree
+                    .push(Data::Slice, vec![one(lower), one(upper), one(step)], pos)
             }
             ExprKind::List { elts } => {
                 let elts = self.exprs(elts);
@@ -1160,20 +1222,14 @@ impl<'a> Lowerer<'a> {
             ExprKind::ListComp { elt, generators } => {
                 let elt = self.expr(elt);
                 let generators = self.comprehensions(generators);
-                self.tree.push(
-                    Data::ListComp,
-                    vec![one(Some(elt)), many(generators)],
-                    pos,
-                )
+                self.tree
+                    .push(Data::ListComp, vec![one(Some(elt)), many(generators)], pos)
             }
             ExprKind::SetComp { elt, generators } => {
                 let elt = self.expr(elt);
                 let generators = self.comprehensions(generators);
-                self.tree.push(
-                    Data::SetComp,
-                    vec![one(Some(elt)), many(generators)],
-                    pos,
-                )
+                self.tree
+                    .push(Data::SetComp, vec![one(Some(elt)), many(generators)], pos)
             }
             ExprKind::GeneratorExp { elt, generators } => {
                 let elt = self.expr(elt);
@@ -1339,11 +1395,10 @@ impl<'a> Lowerer<'a> {
                 self.tree
                     .push(Data::MatchSequence, vec![many(patterns)], pos)
             }
-            PatternKind::MatchStar(name) => self.tree.push(
-                Data::MatchStar { name: name.clone() },
-                vec![],
-                pos,
-            ),
+            PatternKind::MatchStar(name) => {
+                self.tree
+                    .push(Data::MatchStar { name: name.clone() }, vec![], pos)
+            }
             PatternKind::MatchMapping {
                 keys,
                 patterns,
@@ -1392,11 +1447,8 @@ impl<'a> Lowerer<'a> {
     fn with_item(&mut self, item: &WithItem) -> usize {
         let context = self.expr(&item.context_expr);
         let vars = item.optional_vars.as_ref().map(|expr| self.expr(expr));
-        self.tree.push(
-            Data::WithItem,
-            vec![one(Some(context)), one(vars)],
-            None,
-        )
+        self.tree
+            .push(Data::WithItem, vec![one(Some(context)), one(vars)], None)
     }
 
     fn alias(&mut self, alias: &Alias) -> usize {
@@ -1418,22 +1470,17 @@ impl<'a> Lowerer<'a> {
                 match &param.kind {
                     TypeParamKind::TypeVar { name, bound } => {
                         let bound = bound.as_ref().map(|expr| self.expr(expr));
-                        self.tree.push(
-                            Data::TypeVar { name: name.clone() },
-                            vec![one(bound)],
-                            pos,
-                        )
+                        self.tree
+                            .push(Data::TypeVar { name: name.clone() }, vec![one(bound)], pos)
                     }
-                    TypeParamKind::TypeVarTuple { name } => self.tree.push(
-                        Data::TypeVarTuple { name: name.clone() },
-                        vec![],
-                        pos,
-                    ),
-                    TypeParamKind::ParamSpec { name } => self.tree.push(
-                        Data::ParamSpec { name: name.clone() },
-                        vec![],
-                        pos,
-                    ),
+                    TypeParamKind::TypeVarTuple { name } => {
+                        self.tree
+                            .push(Data::TypeVarTuple { name: name.clone() }, vec![], pos)
+                    }
+                    TypeParamKind::ParamSpec { name } => {
+                        self.tree
+                            .push(Data::ParamSpec { name: name.clone() }, vec![], pos)
+                    }
                 }
             })
             .collect()
@@ -1764,9 +1811,7 @@ impl<'a> Raiser<'a> {
             Data::IfExp => ExprKind::IfExp {
                 test: Box::new(self.expr(self.tree.one(id, "test").expect("a test stands"))),
                 body: Box::new(self.expr(self.tree.one(id, "body").expect("a body stands"))),
-                orelse: Box::new(
-                    self.expr(self.tree.one(id, "orelse").expect("an orelse stands")),
-                ),
+                orelse: Box::new(self.expr(self.tree.one(id, "orelse").expect("an orelse stands"))),
             },
             Data::Subscript { .. } => ExprKind::Subscript {
                 value: Box::new(self.expr(self.tree.one(id, "value").expect("a value stands"))),
@@ -1852,9 +1897,7 @@ impl<'a> Raiser<'a> {
                     .map(|expr| Box::new(self.expr(expr))),
             },
             Data::NamedExpr => ExprKind::NamedExpr {
-                target: Box::new(
-                    self.expr(self.tree.one(id, "target").expect("a target stands")),
-                ),
+                target: Box::new(self.expr(self.tree.one(id, "target").expect("a target stands"))),
                 value: Box::new(self.expr(self.tree.one(id, "value").expect("a value stands"))),
             },
             _ => panic!("an expression kind stands at an expression place"),
@@ -2074,12 +2117,10 @@ impl<'a> Raiser<'a> {
                             .one(*id, "bound")
                             .map(|expr| Box::new(self.expr(expr))),
                     },
-                    Data::TypeVarTuple { name } => TypeParamKind::TypeVarTuple {
-                        name: name.clone(),
-                    },
-                    Data::ParamSpec { name } => TypeParamKind::ParamSpec {
-                        name: name.clone(),
-                    },
+                    Data::TypeVarTuple { name } => {
+                        TypeParamKind::TypeVarTuple { name: name.clone() }
+                    }
+                    Data::ParamSpec { name } => TypeParamKind::ParamSpec { name: name.clone() },
                     _ => panic!("a type parameter kind stands at a type parameter place"),
                 };
                 TypeParam {

@@ -163,7 +163,10 @@ fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
         Ok(entries) => entries,
         Err(_) => return,
     };
-    let mut paths: Vec<PathBuf> = entries.filter_map(|entry| entry.ok()).map(|e| e.path()).collect();
+    let mut paths: Vec<PathBuf> = entries
+        .filter_map(|entry| entry.ok())
+        .map(|e| e.path())
+        .collect();
     paths.sort();
     for path in paths {
         let is_dir = path.is_dir();
@@ -291,20 +294,20 @@ fn scope_bindings(tree: &Tree, scope: usize, kind: ScopeKind) -> ScopeInfo {
             Data::Import => {
                 for alias in tree.many(current, "names") {
                     if let Data::Alias { name, asname } = &tree.nodes[*alias].data {
-                        info.bound.insert(
-                            asname
-                                .clone()
-                                .unwrap_or_else(|| {
-                                    name.split('.').next().expect("a segment stands").to_string()
-                                }),
-                        );
+                        info.bound.insert(asname.clone().unwrap_or_else(|| {
+                            name.split('.')
+                                .next()
+                                .expect("a segment stands")
+                                .to_string()
+                        }));
                     }
                 }
             }
             Data::ImportFrom { .. } => {
                 for alias in tree.many(current, "names") {
                     if let Data::Alias { name, asname } = &tree.nodes[*alias].data {
-                        info.bound.insert(asname.clone().unwrap_or_else(|| name.clone()));
+                        info.bound
+                            .insert(asname.clone().unwrap_or_else(|| name.clone()));
                     }
                 }
             }

@@ -176,8 +176,9 @@ fn apply_cases_match_the_recorded_python_answers() {
         let seeds = case.get("seeds").expect("seed answers stand");
         for seed in canaryfield::registry::SEEDS {
             let entry = seeds.get(seed.id).expect("a seed entry stands");
-            let mut tree = parse_tree(&source)
-                .unwrap_or_else(|error| panic!("{name}: the port refused the parse: {}", error.message));
+            let mut tree = parse_tree(&source).unwrap_or_else(|error| {
+                panic!("{name}: the port refused the parse: {}", error.message)
+            });
             let first = entry.get("first").expect("a first application stands");
             let (dump1, render1) =
                 check_application(&name, seed.id, first, &mut tree, &dump0, &render0);
@@ -192,10 +193,7 @@ fn apply_cases_match_the_recorded_python_answers() {
 }
 
 fn fresh_dir(tag: &str) -> PathBuf {
-    let dir = std::env::temp_dir().join(format!(
-        "canaryfield-port2-{}-{tag}",
-        std::process::id()
-    ));
+    let dir = std::env::temp_dir().join(format!("canaryfield-port2-{}-{tag}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
     fs::create_dir_all(&dir).expect("temp dir creates");
     dir
@@ -210,7 +208,8 @@ fn stage(case: &JsonValue, tag: &str) -> (PathBuf, PathBuf) {
         for (rel, spec) in entries {
             if rel == "__outside__" {
                 let outside = base.join("outside.py");
-                fs::write(&outside, text_of(spec.get("t").expect("outside text"))).expect("outside writes");
+                fs::write(&outside, text_of(spec.get("t").expect("outside text")))
+                    .expect("outside writes");
                 continue;
             }
             let path = root.join(rel);
@@ -264,11 +263,7 @@ fn plant_cases_match_the_recorded_python_answers() {
         let name = text_of(case.get("name").expect("a name stands")).to_string();
         let seeds = case.get("seeds").expect("seed answers stand");
         for seed in canaryfield::registry::SEEDS {
-            let tag = format!(
-                "{}-{}",
-                name.replace([':', '/'], "-"),
-                seed.id
-            );
+            let tag = format!("{}-{}", name.replace([':', '/'], "-"), seed.id);
             let (base, root) = stage(&case, &tag);
             let entry = seeds.get(seed.id).expect("a seed entry stands");
             let mut skipped: Vec<String> = Vec::new();
@@ -280,8 +275,9 @@ fn plant_cases_match_the_recorded_python_answers() {
                     other => panic!("{name} {}: recorded a raise, got {other:?}", seed.id),
                 }
             } else {
-                let planted = outcome
-                    .unwrap_or_else(|error| panic!("{name} {}: the port failed: {error:?}", seed.id));
+                let planted = outcome.unwrap_or_else(|error| {
+                    panic!("{name} {}: the port failed: {error:?}", seed.id)
+                });
                 let want: Vec<String> = list_of(entry.get("planted").expect("a planted list"))
                     .iter()
                     .map(|item| text_of(item).to_string())
@@ -331,7 +327,11 @@ fn plant_cases_match_the_recorded_python_answers() {
             assert_eq!(present, seen, "{name} {} file set", seed.id);
             if let Some(outside) = entry.get("outside_after") {
                 let bytes = fs::read(base.join("outside.py")).expect("outside reads");
-                assert!(bytes_match(outside, &bytes), "{name} {} outside bytes", seed.id);
+                assert!(
+                    bytes_match(outside, &bytes),
+                    "{name} {} outside bytes",
+                    seed.id
+                );
             }
             compared += 1;
             let _ = fs::remove_dir_all(&base);
@@ -350,10 +350,8 @@ fn unknown_seed_ids_are_refused() {
 
 #[test]
 fn plant_seed_on_a_missing_directory_plants_nothing() {
-    let dir = std::env::temp_dir().join(format!(
-        "canaryfield-port2-missing-{}",
-        std::process::id()
-    ));
+    let dir =
+        std::env::temp_dir().join(format!("canaryfield-port2-missing-{}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
     let planted = plant_seed(&dir, "seed-05", None).expect("a missing root plants nothing");
     assert!(planted.is_empty());
@@ -376,7 +374,8 @@ const SHA256_K: [u32; 64] = [
 
 fn sha256_hex(data: &[u8]) -> String {
     let mut state: [u32; 8] = [
-        0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
+        0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab,
+        0x5be0cd19,
     ];
     let bit_len = (data.len() as u64) * 8;
     let mut padded = data.to_vec();

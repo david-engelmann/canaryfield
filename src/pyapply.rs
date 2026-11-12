@@ -9,9 +9,7 @@
 //! readings over the flat walk and the explicit stacks carry
 //! no ceiling, as theirs carry none.
 
-use crate::pyarena::{
-    refusal, run_big_stack, Ctx, Data, Refusal, Tree, COLLECT_LIMIT,
-};
+use crate::pyarena::{refusal, run_big_stack, Ctx, Data, Refusal, Tree, COLLECT_LIMIT};
 use crate::pyast::{BinOpKind, BoolKind, CmpKind, ConstVal, PyText, UnaryKind};
 use std::collections::{HashMap, HashSet};
 
@@ -82,11 +80,21 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
 // The shared readings.
 
 fn is_int_constant(tree: &Tree, id: usize) -> bool {
-    matches!(&tree.nodes[id].data, Data::Constant { value: ConstVal::Int(_) })
+    matches!(
+        &tree.nodes[id].data,
+        Data::Constant {
+            value: ConstVal::Int(_)
+        }
+    )
 }
 
 fn is_bool_constant(tree: &Tree, id: usize) -> bool {
-    matches!(&tree.nodes[id].data, Data::Constant { value: ConstVal::Bool(_) })
+    matches!(
+        &tree.nodes[id].data,
+        Data::Constant {
+            value: ConstVal::Bool(_)
+        }
+    )
 }
 
 fn str_constant(tree: &Tree, id: usize) -> Option<&PyText> {
@@ -102,7 +110,10 @@ fn str_constant(tree: &Tree, id: usize) -> Option<&PyText> {
 /// included, the _is_zero_literal reading. Booleans are
 /// never zero literals.
 fn is_zero_literal(tree: &Tree, mut id: usize) -> bool {
-    if let Data::UnaryOp { op: UnaryKind::UAdd } = &tree.nodes[id].data {
+    if let Data::UnaryOp {
+        op: UnaryKind::UAdd,
+    } = &tree.nodes[id].data
+    {
         if let Some(operand) = tree.one(id, "operand") {
             id = operand;
         }
@@ -307,7 +318,9 @@ fn collect_with_parents(
         found: &mut Vec<Hit>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         for (field, index, child) in tree.children(node) {
             if matches(tree, child) {
@@ -584,11 +597,7 @@ fn apply_negated_condition(tree: &mut Tree) -> bool {
         .collect();
     for id in &targets {
         let test = tree.one(*id, "test").expect("a test stands");
-        let wrapped = fresh(
-            tree,
-            Data::UnaryOp { op: UnaryKind::Not },
-            vec![one(test)],
-        );
+        let wrapped = fresh(tree, Data::UnaryOp { op: UnaryKind::Not }, vec![one(test)]);
         tree.set_one(*id, "test", Some(wrapped));
     }
     !targets.is_empty()
@@ -631,7 +640,9 @@ fn apply_range_bound_shift(tree: &mut Tree) -> bool {
             }
             let func = tree.one(*id, "func");
             let named_range = match func {
-                Some(func) => matches!(&tree.nodes[func].data, Data::Name { id, .. } if id == "range"),
+                Some(func) => {
+                    matches!(&tree.nodes[func].data, Data::Name { id, .. } if id == "range")
+                }
                 None => false,
             };
             named_range && !tree.many(*id, "args").is_empty()
@@ -681,7 +692,13 @@ fn apply_wrong_variable_returned(tree: &mut Tree) -> bool {
     let mut planted: HashSet<usize> = HashSet::new();
     for id in tree.sorted_nodes() {
         // FunctionDef only, the async form never judged.
-        if !matches!(&tree.nodes[id].data, Data::FuncDef { is_async: false, .. }) {
+        if !matches!(
+            &tree.nodes[id].data,
+            Data::FuncDef {
+                is_async: false,
+                ..
+            }
+        ) {
             continue;
         }
         let args_node = tree.one(id, "args").expect("args stand");
@@ -799,7 +816,10 @@ fn apply_widened_exception_handler(tree: &mut Tree) -> bool {
             None => continue,
         };
         let names: HashSet<String> = handler_type_name_list(tree, type_id).into_iter().collect();
-        if BROAD_HANDLER_NAMES.iter().any(|broad| names.contains(*broad)) {
+        if BROAD_HANDLER_NAMES
+            .iter()
+            .any(|broad| names.contains(*broad))
+        {
             continue;
         }
         targets.push(id);
@@ -871,11 +891,7 @@ fn apply_inverted_truth_test(tree: &mut Tree) -> bool {
             let operand = tree.one(test, "operand").expect("an operand stands");
             tree.set_one(*id, "test", Some(operand));
         } else {
-            let wrapped = fresh(
-                tree,
-                Data::UnaryOp { op: UnaryKind::Not },
-                vec![one(test)],
-            );
+            let wrapped = fresh(tree, Data::UnaryOp { op: UnaryKind::Not }, vec![one(test)]);
             tree.set_one(*id, "test", Some(wrapped));
         }
     }
@@ -952,11 +968,7 @@ fn bound_names_in_scope(tree: &Tree, scope: usize) -> Result<Vec<String>, Refusa
                 found.push(((pos.line, pos.col, 0), name.clone()));
                 continue;
             }
-            Data::Lambda
-            | Data::ListComp
-            | Data::SetComp
-            | Data::DictComp
-            | Data::GeneratorExp => {
+            Data::Lambda | Data::ListComp | Data::SetComp | Data::DictComp | Data::GeneratorExp => {
                 continue;
             }
             Data::Name {
@@ -972,7 +984,11 @@ fn bound_names_in_scope(tree: &Tree, scope: usize) -> Result<Vec<String>, Refusa
                     if let Data::Alias { name, asname } = &tree.nodes[*alias].data {
                         let bound = match asname {
                             Some(asname) => asname.clone(),
-                            None => name.split('.').next().expect("a segment stands").to_string(),
+                            None => name
+                                .split('.')
+                                .next()
+                                .expect("a segment stands")
+                                .to_string(),
                         };
                         found.push(((pos.line, pos.col, index), bound));
                     }
@@ -1010,9 +1026,9 @@ fn bound_names_in_scope(tree: &Tree, scope: usize) -> Result<Vec<String>, Refusa
 /// the refusal of the position family when a planting
 /// built the binding by hand and it carries none.
 fn binding_position(tree: &Tree, id: usize) -> Result<crate::pyast::Pos, Refusal> {
-    tree.nodes[id].pos.ok_or_else(|| {
-        refusal("a binding the planting built by hand carries no position to read")
-    })
+    tree.nodes[id]
+        .pos
+        .ok_or_else(|| refusal("a binding the planting built by hand carries no position to read"))
 }
 
 fn collect_loop_retargets(tree: &Tree) -> Result<Vec<(usize, String)>, Refusal> {
@@ -1024,7 +1040,9 @@ fn collect_loop_retargets(tree: &Tree) -> Result<Vec<(usize, String)>, Refusal> 
         found: &mut Vec<(usize, String)>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         let scope = if matches!(
             &tree.nodes[node].data,
@@ -1036,7 +1054,10 @@ fn collect_loop_retargets(tree: &Tree) -> Result<Vec<(usize, String)>, Refusal> 
         };
         if matches!(&tree.nodes[node].data, Data::For { .. }) {
             if let Some(target) = tree.one(node, "target") {
-                if let Data::Name { id: target_name, .. } = &tree.nodes[target].data {
+                if let Data::Name {
+                    id: target_name, ..
+                } = &tree.nodes[target].data
+                {
                     for name in bound_names_in_scope(tree, scope)? {
                         if name != *target_name {
                             found.push((node, name));
@@ -1143,7 +1164,12 @@ fn apply_altered_string_literal(tree: &mut Tree) -> bool {
 
 fn apply_dropped_numeric_negation(tree: &mut Tree) -> Result<bool, Refusal> {
     let hits = collect_with_parents(tree, &|tree, id| {
-        matches!(&tree.nodes[id].data, Data::UnaryOp { op: UnaryKind::USub })
+        matches!(
+            &tree.nodes[id].data,
+            Data::UnaryOp {
+                op: UnaryKind::USub
+            }
+        )
     })?;
     Ok(replace_hits_with_child(tree, hits, "operand"))
 }
@@ -1168,7 +1194,9 @@ fn collect_loop_control(tree: &Tree, breaks: bool) -> Result<Vec<Hit>, Refusal> 
         found: &mut Vec<Hit>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         let inside = if is_scope_boundary(tree, node) {
             false
@@ -1234,7 +1262,9 @@ fn collect_loop_control(tree: &Tree, breaks: bool) -> Result<Vec<Hit>, Refusal> 
         Ok(())
     }
     let mut found = Vec::new();
-    visit(tree, tree.root, 1, tree.root, "", None, false, breaks, &mut found)?;
+    visit(
+        tree, tree.root, 1, tree.root, "", None, false, breaks, &mut found,
+    )?;
     Ok(found)
 }
 
@@ -1400,10 +1430,7 @@ fn apply_slice_stop_shift(tree: &mut Tree) -> bool {
 fn apply_shifted_numeric_default(tree: &mut Tree) -> bool {
     let mut targets: Vec<usize> = Vec::new();
     for id in tree.sorted_nodes() {
-        if !matches!(
-            &tree.nodes[id].data,
-            Data::FuncDef { .. } | Data::Lambda
-        ) {
+        if !matches!(&tree.nodes[id].data, Data::FuncDef { .. } | Data::Lambda) {
             continue;
         }
         let args_node = tree.one(id, "args").expect("args stand");
@@ -1443,7 +1470,9 @@ fn collect_sibling_attribute_swaps(tree: &Tree) -> Result<Vec<(usize, String)>, 
         records: &mut Vec<ScopeRecord>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         if is_scope_boundary(tree, node) {
             // The header of a nested definition reads in the
@@ -1602,7 +1631,9 @@ fn specific_raise_names(tree: &Tree, try_id: usize) -> Result<Vec<String>, Refus
         names: &mut Vec<String>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         if is_scope_boundary(tree, node) {
             return Ok(());
@@ -1650,7 +1681,10 @@ fn apply_narrowed_exception_handler(tree: &mut Tree) -> Result<bool, Refusal> {
             };
             let names: HashSet<String> =
                 handler_type_name_list(tree, type_id).into_iter().collect();
-            if !BROAD_HANDLER_NAMES.iter().any(|broad| names.contains(*broad)) {
+            if !BROAD_HANDLER_NAMES
+                .iter()
+                .any(|broad| names.contains(*broad))
+            {
                 continue;
             }
             targets.push((handler, specific[0].clone()));
@@ -1674,10 +1708,7 @@ fn apply_swapped_parameter_defaults(tree: &mut Tree) -> bool {
     }
     let mut targets: Vec<((usize, HolderList, usize), (usize, HolderList, usize))> = Vec::new();
     for id in tree.sorted_nodes() {
-        if !matches!(
-            &tree.nodes[id].data,
-            Data::FuncDef { .. } | Data::Lambda
-        ) {
+        if !matches!(&tree.nodes[id].data, Data::FuncDef { .. } | Data::Lambda) {
             continue;
         }
         let args_node = tree.one(id, "args").expect("args stand");
@@ -1702,14 +1733,16 @@ fn apply_swapped_parameter_defaults(tree: &mut Tree) -> bool {
         let read = |tree: &Tree, args: usize, list: HolderList, index: usize| -> usize {
             match list {
                 HolderList::Defaults => tree.many(args, "defaults")[index],
-                HolderList::KwDefaults => tree.maybe(args, "kw_defaults")[index]
-                    .expect("a default stands"),
+                HolderList::KwDefaults => {
+                    tree.maybe(args, "kw_defaults")[index].expect("a default stands")
+                }
             }
         };
         let first = read(tree, args_a, list_a, index_a);
         let second = read(tree, args_b, list_b, index_b);
-        let write = |tree: &mut Tree, args: usize, list: HolderList, index: usize, value: usize| {
-            match list {
+        let write =
+            |tree: &mut Tree, args: usize, list: HolderList, index: usize, value: usize| match list
+            {
                 HolderList::Defaults => {
                     let mut defaults = tree.many(args, "defaults").to_vec();
                     defaults[index] = value;
@@ -1720,8 +1753,7 @@ fn apply_swapped_parameter_defaults(tree: &mut Tree) -> bool {
                     defaults[index] = Some(value);
                     tree.set_maybe(args, "kw_defaults", defaults);
                 }
-            }
-        };
+            };
         write(tree, args_a, list_a, index_a, second);
         write(tree, args_b, list_b, index_b, first);
     }
@@ -1893,7 +1925,9 @@ fn apply_reversed_loop_control(tree: &mut Tree) -> Result<bool, Refusal> {
 fn collect_scope_declarations(tree: &Tree) -> Result<Vec<Hit>, Refusal> {
     fn visit(tree: &Tree, node: usize, depth: usize, found: &mut Vec<Hit>) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         for (field, index, child) in tree.children(node) {
             if let Some(index) = index {
@@ -2052,7 +2086,12 @@ fn apply_flipped_range_step(tree: &mut Tree) -> bool {
         if matches!(&tree.nodes[step].data, Data::Starred { .. }) {
             continue;
         }
-        if matches!(&tree.nodes[step].data, Data::UnaryOp { op: UnaryKind::USub }) {
+        if matches!(
+            &tree.nodes[step].data,
+            Data::UnaryOp {
+                op: UnaryKind::USub
+            }
+        ) {
             continue;
         }
         if is_bool_constant(tree, step) {
@@ -2084,7 +2123,9 @@ fn apply_flipped_range_step(tree: &mut Tree) -> bool {
         } else {
             let wrapped = fresh(
                 tree,
-                Data::UnaryOp { op: UnaryKind::USub },
+                Data::UnaryOp {
+                    op: UnaryKind::USub,
+                },
                 vec![one(step)],
             );
             args[2] = wrapped;
@@ -2105,18 +2146,20 @@ fn collect_outer_negations(tree: &Tree) -> Result<Vec<Hit>, Refusal> {
         found: &mut Vec<Hit>,
     ) -> Result<(), Refusal> {
         if depth > COLLECT_LIMIT {
-            return Err(refusal("the tree stands past the depth the collectors read"));
+            return Err(refusal(
+                "the tree stands past the depth the collectors read",
+            ));
         }
         for (field, index, child) in tree.children(node) {
             let child_in_test = in_test
                 || (field == "test"
-                    && matches!(
-                        &tree.nodes[node].data,
-                        Data::If | Data::While | Data::IfExp
-                    ))
+                    && matches!(&tree.nodes[node].data, Data::If | Data::While | Data::IfExp))
                 || (field == "guard" && matches!(&tree.nodes[node].data, Data::MatchCase));
             if !child_in_test
-                && matches!(&tree.nodes[child].data, Data::UnaryOp { op: UnaryKind::Not })
+                && matches!(
+                    &tree.nodes[child].data,
+                    Data::UnaryOp { op: UnaryKind::Not }
+                )
             {
                 found.push(Hit {
                     depth: depth + 1,
