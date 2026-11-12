@@ -22,7 +22,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from .seeds import SEEDS
+from .registry import SEEDS
 
 CAUGHT = "caught"
 WAVED = "waved-through"

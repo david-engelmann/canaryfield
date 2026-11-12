@@ -29,7 +29,7 @@ against the registry wording.
 import json
 from pathlib import Path
 
-from .seeds import SEEDS
+from .registry import SEEDS
 
 SEED_PACK_FORMAT = "canaryfield-seeds/10"
 SEED_PACK_FORMAT_V9 = "canaryfield-seeds/9"

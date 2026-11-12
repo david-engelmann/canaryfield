@@ -2,7 +2,7 @@
 
 from .engine import GATE_BROKEN, CAUGHT, NOT_APPLICABLE, WAVED, run_field
 from .seedpack import SEED_PACK_FORMAT, load_seed_pack, write_seed_pack
-from .seeds import SEEDS, SEEDS_BY_ID, Seed
+from .registry import SEEDS, SEEDS_BY_ID, Seed
 
 __all__ = [
     "CAUGHT",
