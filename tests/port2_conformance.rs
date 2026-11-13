@@ -157,6 +157,7 @@ fn check_application(
 fn the_case_census_stands_at_928() {
     let mut compared = 0;
     for case in recordings() {
+        // A well-formedness guard, so a case lacking a text kind fails the count rather than being silently counted.
         let _ = text_of(case.get("kind").expect("a kind stands"));
         compared += 1;
     }
