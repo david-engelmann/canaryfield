@@ -40,7 +40,11 @@ fn missing(owner: &str, key: &str) -> CanaryfieldError {
     CanaryfieldError::new(format!("{owner} holds no key named \"{key}\""))
 }
 
-fn key_of<'a>(value: &'a JsonValue, key: &str, owner: &str) -> Result<&'a JsonValue, CanaryfieldError> {
+fn key_of<'a>(
+    value: &'a JsonValue,
+    key: &str,
+    owner: &str,
+) -> Result<&'a JsonValue, CanaryfieldError> {
     value.get(key).ok_or_else(|| missing(owner, key))
 }
 
@@ -138,16 +142,17 @@ fn read_shape(result: &JsonValue) -> Result<Shape, CanaryfieldError> {
             ))
         }
     };
-    let exits_value = as_object(key_of(root, "clean_exits", "the result")?, "the clean exits")?;
+    let exits_value = as_object(
+        key_of(root, "clean_exits", "the result")?,
+        "the clean exits value",
+    )?;
     let mut clean_exits: Vec<String> = Vec::new();
     for gate in &gates {
-        let owner = "the clean exits".to_string();
-        let value = exits_value
-            .get(gate)
-            .ok_or_else(|| missing(&owner, gate))?;
-        clean_exits.push(
-            as_int(value, &format!("the clean exit for gate \"{gate}\""))?.to_string(),
-        );
+        let value = exits_value.get(gate).ok_or_else(|| {
+            CanaryfieldError::new(format!("the clean exits hold no key named \"{gate}\""))
+        })?;
+        clean_exits
+            .push(as_int(value, &format!("the clean exit for gate \"{gate}\""))?.to_string());
     }
     let rows_value = key_of(root, "rows", "the result")?;
     let row_items = match rows_value {
@@ -188,27 +193,30 @@ fn read_shape(result: &JsonValue) -> Result<Shape, CanaryfieldError> {
         };
         let cells_value = as_object(
             key_of(row, "gates", &format!("row {number}"))?,
-            &format!("row {number}'s gates"),
+            &format!("row {number}'s gates value"),
         )?;
         let mut cells = vec![seed, name, planted];
         for gate in &gates {
-            let value = cells_value
-                .get(gate)
-                .ok_or_else(|| missing(&format!("row {number}'s gates"), gate))?;
+            let value = cells_value.get(gate).ok_or_else(|| {
+                CanaryfieldError::new(format!("row {number}'s gates hold no key named \"{gate}\""))
+            })?;
             cells.push(
                 as_text(value, &format!("row {number}'s cell for gate \"{gate}\""))?.to_string(),
             );
         }
         let planted_files = optional_list(
             row.get("planted_files"),
-            &format!("row {number}'s planted files"),
+            &format!("row {number}'s planted files value"),
             &format!("an entry of row {number}'s planted files"),
         )?;
-        rows.push(Row { cells, planted_files });
+        rows.push(Row {
+            cells,
+            planted_files,
+        });
     }
     let unparseable_files = optional_list(
         root.get("unparseable_files"),
-        "the unparseable files",
+        "the unparseable files value",
         "an entry of the unparseable files",
     )?;
     let summary_value = as_object(key_of(root, "summary", "the result")?, "the summary")?;
@@ -223,9 +231,8 @@ fn read_shape(result: &JsonValue) -> Result<Shape, CanaryfieldError> {
             let value = entry
                 .get(key)
                 .ok_or_else(|| missing(&format!("the summary for gate \"{gate}\""), key))?;
-            counts.push(
-                as_int(value, &format!("the {key} count for gate \"{gate}\""))?.to_string(),
-            );
+            counts
+                .push(as_int(value, &format!("the {key} count for gate \"{gate}\""))?.to_string());
         }
         summaries.push(counts);
     }
@@ -273,13 +280,21 @@ pub fn render_text(result: &JsonValue) -> Result<String, CanaryfieldError> {
     lines.push(format!("target           {}", shape.target));
     lines.push(format!(
         "target unchanged {}",
-        if shape.target_unchanged { "true" } else { "false" }
+        if shape.target_unchanged {
+            "true"
+        } else {
+            "false"
+        }
     ));
     for (gate, exit) in shape.gates.iter().zip(&shape.clean_exits) {
         lines.push(format!("clean exit for gate {gate} is {exit}"));
     }
     lines.push(String::new());
-    let mut header = vec!["seed".to_string(), "name".to_string(), "planted file".to_string()];
+    let mut header = vec![
+        "seed".to_string(),
+        "name".to_string(),
+        "planted file".to_string(),
+    ];
     header.extend(shape.gates.iter().cloned());
     let mut widths: Vec<usize> = header.iter().map(|cell| cell.chars().count()).collect();
     for row in &shape.rows {

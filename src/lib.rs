@@ -53,8 +53,8 @@ pub mod xid_tables;
 
 pub use crate::errors::CanaryfieldError;
 pub use crate::json::JsonValue;
-pub use crate::report::{render_json, render_report, render_text};
 pub use crate::registry::{SeedMeta, SEEDS};
+pub use crate::report::{render_json, render_report, render_text};
 pub use crate::seedpack::{
     load_seed_pack, pack_entry_count, registry_for_format, seed_pack_data, seed_pack_text,
     write_seed_pack, SeedEntry, PACK_ENTRY_COUNTS, SEED_PACK_FORMAT,
