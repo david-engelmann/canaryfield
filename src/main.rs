@@ -6,17 +6,25 @@
 //! root, and a seed id, it plants that seed over the root
 //! through the crate planting and prints the planted and
 //! skipped names as one JSON document, the door the Python
-//! engine drives under the bridge. Every other part of the
-//! command line, the field run and its gates and its
-//! reports, stays with the Python in this slice, as the
-//! contract port section states, and any other argument
-//! shape is answered with a usage line and a nonzero exit.
+//! engine drives under the bridge. Handed the render report
+//! flag, the path of a result document written as JSON, and
+//! the name of a form, the word text or the word json, it
+//! prints that rendering's bytes as they stand, the door the
+//! Python command line drives under the report bridge, and it
+//! answers a refusal with the refusal's words on the error
+//! stream and a nonzero exit. Every other part of the
+//! command line, the field run and its gates, stays with the
+//! Python in this slice, as the contract port section states,
+//! and any other argument shape is answered with a usage line
+//! and a nonzero exit.
 
+use std::io::Write;
 use std::path::Path;
 use std::process::ExitCode;
 
 use canaryfield::json::{dumps_indent2, JsonValue};
 use canaryfield::pyplant::{plant_seed, PlantError};
+use canaryfield::report::render_report;
 
 fn names(items: &[String]) -> JsonValue {
     JsonValue::Array(
@@ -64,8 +72,31 @@ fn main() -> ExitCode {
                 ExitCode::from(2)
             }
         }
+    } else if args.len() == 4 && args[1] == "--render-report" {
+        let staged = std::fs::read_to_string(&args[2])
+            .map_err(|error| canaryfield::CanaryfieldError::new(error.to_string()))
+            .and_then(|text| canaryfield::json::parse(&text))
+            .and_then(|document| render_report(&document, &args[3]));
+        match staged {
+            Ok(rendering) => {
+                let mut out = std::io::stdout().lock();
+                match out.write_all(rendering.as_bytes()) {
+                    Ok(_) => ExitCode::SUCCESS,
+                    Err(error) => {
+                        eprintln!("{error}");
+                        ExitCode::from(2)
+                    }
+                }
+            }
+            Err(exc) => {
+                eprintln!("{exc}");
+                ExitCode::from(2)
+            }
+        }
     } else {
-        eprintln!("usage: canaryfield --write-seed-pack PATH | --plant-seed ROOT SEED");
+        eprintln!(
+            "usage: canaryfield --write-seed-pack PATH | --plant-seed ROOT SEED | --render-report PATH FORM"
+        );
         ExitCode::from(2)
     }
 }

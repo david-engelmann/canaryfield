@@ -26,6 +26,13 @@
 //! ast.dump spells it for the change test, pyapply carries
 //! the forty eight seed applies, and pyplant carries
 //! plant_seed over a directory.
+//!
+//! Port slice 4 adds the report module of PORT4. The report
+//! module renders the engine's result as the text catch table
+//! and as the JSON document, the two renderings
+//! canaryfield/report.py carried before it retired, and the
+//! binary's render report door prints the one rendering the
+//! caller names for the command line's bridge.
 
 pub mod errors;
 pub mod json;
@@ -40,11 +47,13 @@ pub mod pytoken;
 pub mod pyunparse;
 pub mod pywalk;
 pub mod registry;
+pub mod report;
 pub mod seedpack;
 pub mod xid_tables;
 
 pub use crate::errors::CanaryfieldError;
 pub use crate::json::JsonValue;
+pub use crate::report::{render_json, render_report, render_text};
 pub use crate::registry::{SeedMeta, SEEDS};
 pub use crate::seedpack::{
     load_seed_pack, pack_entry_count, registry_for_format, seed_pack_data, seed_pack_text,
