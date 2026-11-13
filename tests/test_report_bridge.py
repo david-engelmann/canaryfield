@@ -103,6 +103,26 @@ def test_a_reference_cycle_is_refused_before_the_door():
     assert str(caught.value) == "the result holds a reference cycle"
 
 
+def test_a_named_relative_binary_is_resolved_before_it_is_driven(
+    tmp_path, monkeypatch
+):
+    named = tmp_path / "cfbin"
+    named.write_text("#!/bin/sh\n", encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("CANARYFIELD_BINARY", "./cfbin")
+    found = cli._find_report_binary()
+    assert found.is_absolute()
+    assert found == named.resolve()
+
+
+@needs_binary
+def test_the_bridge_preserves_carriage_returns_in_a_rendering():
+    result = _result()
+    result["target"] = "demo\rtarget\r\nline"
+    rendered = cli._render_report(result, "text")
+    assert "demo\rtarget\r\nline" in rendered
+
+
 @needs_binary
 def test_the_bridge_renders_the_text_form_through_the_binary():
     rendered = cli._render_report(_result(), "text")

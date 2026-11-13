@@ -67,19 +67,22 @@ def _find_report_binary():
     debug or release shape. Where no binary stands at all the
     refusal names the ground the renderings stand on, so a
     caller holding only the Python meets the boundary in
-    words instead of a second rendering.
+    words instead of a second rendering. A found binary is
+    returned resolved, so the path the bridge drives is the
+    file discovery checked, never a name the program search
+    would read again on its own.
     """
     named = os.environ.get("CANARYFIELD_BINARY")
     if named:
         candidate = Path(named)
         if candidate.is_file():
-            return candidate
+            return candidate.resolve()
         raise NotImplementedError(
             f"the named canaryfield binary does not stand: {named}"
         )
     on_path = shutil.which("canaryfield")
     if on_path:
-        return Path(on_path)
+        return Path(on_path).resolve()
     for candidate in (
         _CHECKOUT_ROOT / "target" / "debug" / "canaryfield",
         _CHECKOUT_ROOT / "target" / "release" / "canaryfield",
@@ -134,7 +137,10 @@ def _render_report(result, form):
     renderings. It writes the result as a JSON document and
     drives the binary's report door over it once, carrying
     the rendering back whole, and a refusal of the door is
-    raised as an error carrying the door's words.
+    raised as an error carrying the door's words. The answer
+    is captured as bytes and decoded as UTF-8 here, because a
+    rendering may carry any character the result carries and
+    a text mode capture would rewrite its line endings.
     """
     _check_carryable(result, set())
     binary = _find_report_binary()
@@ -147,17 +153,15 @@ def _render_report(result, form):
         completed = subprocess.run(
             [str(binary), "--render-report", staged.name, form],
             capture_output=True,
-            text=True,
-            encoding="utf-8",
         )
     finally:
         os.unlink(staged.name)
     if completed.returncode != 0:
         raise ValueError(
             "the canaryfield binary refused the rendering: "
-            f"{completed.stderr.strip()}"
+            f"{completed.stderr.decode('utf-8').strip()}"
         )
-    return completed.stdout
+    return completed.stdout.decode("utf-8")
 
 
 def main(argv=None):

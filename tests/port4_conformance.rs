@@ -176,6 +176,13 @@ fn the_divergence_case_renders_in_the_port_where_the_python_encoder_dies() {
             json.ends_with('\n') && json.len() > 6000,
             "case {name}: the port renders the deep document within its bound"
         );
+        let reparsed = json::parse(&json)
+            .unwrap_or_else(|exc| panic!("case {name}: the deep rendering parses back: {exc}"));
+        assert_eq!(
+            sorted_pairs(&reparsed),
+            sorted_pairs(&input),
+            "case {name}: the deep rendering carries the whole document"
+        );
         compared += 1;
     }
     assert_eq!(compared, 1, "the divergence case compared");
@@ -194,6 +201,24 @@ fn the_example_tables_render_to_the_committed_bytes() {
         assert_eq!(text, committed_text, "{directory}: text bytes differ");
         let json = render_json(&document);
         assert_eq!(json, document_text, "{directory}: JSON bytes differ");
+    }
+}
+
+/// A value with its object pairs sorted by key at every
+/// level, so two documents compare on content alone, the
+/// JSON form's key order standing outside the comparison.
+fn sorted_pairs(value: &JsonValue) -> JsonValue {
+    match value {
+        JsonValue::Array(items) => JsonValue::Array(items.iter().map(sorted_pairs).collect()),
+        JsonValue::Object(pairs) => {
+            let mut sorted: Vec<(String, JsonValue)> = pairs
+                .iter()
+                .map(|(key, item)| (key.clone(), sorted_pairs(item)))
+                .collect();
+            sorted.sort_by(|left, right| left.0.cmp(&right.0));
+            JsonValue::Object(sorted)
+        }
+        other => other.clone(),
     }
 }
 

@@ -265,7 +265,14 @@ fn render_line(cells: &[String], widths: &[usize]) -> String {
             }
         })
         .collect();
-    padded.join("  ").trim_end().to_string()
+    // The Python strips the joined line with its own
+    // whitespace reading, whose set carries the four
+    // separator controls U+001C to U+001F that the Rust
+    // whitespace set does not, so the trim names them.
+    padded
+        .join("  ")
+        .trim_end_matches(|ch: char| ch.is_whitespace() || matches!(ch, '\u{1c}'..='\u{1f}'))
+        .to_string()
 }
 
 /// Render the result as the catch table in text, byte for

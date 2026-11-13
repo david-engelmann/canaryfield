@@ -231,6 +231,36 @@ fn the_summary_line_stands_in_its_wording_and_spacing() {
 }
 
 #[test]
+fn the_table_strips_trailing_whitespace_the_python_way() {
+    // The Python render helper strips its lines with the
+    // string strip of CPython, whose whitespace set carries
+    // the four separator controls U+001C to U+001F that the
+    // Rust trim set does not, so a final gate name ending in
+    // one of them loses it from the header line.
+    let gate = "alpha\u{1c}";
+    let mut doc = base();
+    set(&mut doc, "gates", JsonValue::Array(vec![text(gate)]));
+    let mut exits = doc.get("clean_exits").expect("exits").clone();
+    remove(&mut exits, "alpha");
+    set(&mut exits, gate, JsonValue::Int("0".to_string()));
+    set(&mut doc, "clean_exits", exits);
+    let first = row(&mut doc, 0);
+    let mut cells = first.get("gates").expect("cells").clone();
+    remove(&mut cells, "alpha");
+    set(&mut cells, gate, text("caught"));
+    set(first, "gates", cells);
+    let mut summary = doc.get("summary").expect("summary").clone();
+    let entry = summary.get("alpha").expect("entry").clone();
+    remove(&mut summary, "alpha");
+    set(&mut summary, gate, entry);
+    set(&mut doc, "summary", summary);
+    let rendered = render_text(&doc).expect("renders");
+    let lines: Vec<&str> = rendered.lines().collect();
+    assert_eq!(lines[7], "seed     name        planted file  alpha");
+    assert_eq!(lines[8], "-------  ----------  ------------  ------");
+}
+
+#[test]
 fn the_json_form_sorts_keys_at_every_level_and_stands_empty_containers_inline() {
     let doc = json::parse(r#"{"b": 1, "a": {"y": [1, 2], "x": {}}, "c": []}"#).expect("parses");
     assert_eq!(
