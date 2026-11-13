@@ -188,6 +188,7 @@ SYNTHETIC = {
         "a = [1, 2, 3]\nb = {1: 'a', 2: 'b'}\nc = {**d}\nd = {}\ne = []\n"
         "f = {None: 1}\ng = {'k': v, **rest, 'j': w}\nh = (1, 2)\n"
     ),
+    "dict-selfmap-17": "d = {key: key}\n",
     "dict-swap-17": "d = {key: key}\ne = {a: b, c: d}\n",
     "handlers": (
         "try:\n    risky()\nexcept ValueError:\n    raise\n"

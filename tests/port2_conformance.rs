@@ -154,6 +154,17 @@ fn check_application(
 }
 
 #[test]
+fn the_case_census_stands_at_928() {
+    let mut compared = 0;
+    for case in recordings() {
+        // A well-formedness guard, so a case lacking a text kind fails the count rather than being silently counted.
+        let _ = text_of(case.get("kind").expect("a kind stands"));
+        compared += 1;
+    }
+    assert_eq!(compared, 928, "the case census stands at 928");
+}
+
+#[test]
 fn apply_cases_match_the_recorded_python_answers() {
     let mut compared = 0usize;
     let mut refused = 0usize;
