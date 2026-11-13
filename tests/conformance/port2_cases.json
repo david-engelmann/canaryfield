@@ -343938,6 +343938,410 @@
   },
   {
    "kind": "apply",
+   "name": "synthetic:dict-selfmap-17",
+   "source": "d = {key: key}\n",
+   "parse": "ok",
+   "dump0": {
+    "t": "Module(body=[Assign(targets=[Name(id='d', ctx=Store())], value=Dict(keys=[Name(id='key', ctx=Load())], values=[Name(id='key', ctx=Load())]))], type_ignores=[])"
+   },
+   "render0": {
+    "t": "d = {key: key}"
+   },
+   "seeds": {
+    "seed-00": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-01": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-02": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-03": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-04": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-05": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-06": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-07": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-08": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-09": {
+     "first": {
+      "bool": true,
+      "dump": {
+       "t": "Module(body=[Assign(targets=[Name(id='d', ctx=Store())], value=Dict(keys=[], values=[]))], type_ignores=[])"
+      },
+      "render": {
+       "t": "d = {}"
+      }
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-10": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-11": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-12": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-13": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-14": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-15": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-16": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-17": {
+     "first": {
+      "bool": true
+     },
+     "second": {
+      "bool": true
+     }
+    },
+    "seed-18": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-19": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-20": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-21": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-22": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-23": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-24": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-25": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-26": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-27": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-28": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-29": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-30": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-31": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-32": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-33": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-34": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-35": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-36": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-37": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-38": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-39": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-40": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-41": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-42": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-43": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-44": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-45": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-46": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    },
+    "seed-47": {
+     "first": {
+      "bool": false
+     },
+     "second": {
+      "bool": false
+     }
+    }
+   }
+  },
+  {
+   "kind": "apply",
    "name": "synthetic:dict-swap-17",
    "source": "d = {key: key}\ne = {a: b, c: d}\n",
    "parse": "ok",
