@@ -1,0 +1,5 @@
+copy A ranges: 712
+copy B ranges: 711
+A vs B: 0 codepoints []
+A vs Python isprintable: 0 codepoints []
+B vs Python isprintable: 0 codepoints []

@@ -1,0 +1,8 @@
+seams = [0x41, 0x20, 0xAD, 0xFEFF, 0x200B, 0x202F, 0x3000, 0x1680, 0xE000, 0x378, 0xFFFE, 0x7F,
+         0x85, 0x2028, 0x2029, 0xFFFD, 0xE0001, 0x61, 0xA0, 0x180E, 0x2060, 0xFFF9]
+for cp in seams:
+    print(f"cp {cp:06x} PY={repr(chr(cp))}")
+print(f"surrogate PY={repr(chr(0xD800))}")
+print(f"surrogate-mixed PY={repr('a' + chr(0xD800) + 'b')}")
+for s in ["it's", 'say "hi"', "both ' and \"", "back\\slash", "a\nb", "a\tb", "a\rb", ""]:
+    print(f"text {s!r} PY={repr(s)}")

@@ -1,0 +1,12 @@
+source="d = {key: key}\n" bool=true dump_unchanged=true render_unchanged=true
+  second bool=true
+source="d = {1: 1}\n" bool=true dump_unchanged=true render_unchanged=true
+  second bool=true
+source="d = {'a': 'a', 'b': 2}\n" bool=true dump_unchanged=false render_unchanged=false
+  second bool=true
+source="d = {a: 1, b: 2}\n" bool=true dump_unchanged=false render_unchanged=false
+  second bool=true
+source="d = {}\n" bool=false dump_unchanged=true render_unchanged=true
+  second bool=false
+source="d = {**other}\n" bool=false dump_unchanged=true render_unchanged=true
+  second bool=false

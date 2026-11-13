@@ -1,0 +1,37 @@
+cp 000041 A='A' B='A'
+cp 000020 A=' ' B=' '
+cp 0000ad A='\xad' B='\xad'
+cp 00feff A='\ufeff' B='\ufeff'
+cp 00200b A='\u200b' B='\u200b'
+cp 00202f A='\u202f' B='\u202f'
+cp 003000 A='\u3000' B='\u3000'
+cp 001680 A='\u1680' B='\u1680'
+cp 00e000 A='\ue000' B='\ue000'
+cp 000378 A='\u0378' B='\u0378'
+cp 00fffe A='\ufffe' B='\ufffe'
+cp 00007f A='\x7f' B='\x7f'
+cp 000085 A='\x85' B='\x85'
+cp 002028 A='\u2028' B='\u2028'
+cp 002029 A='\u2029' B='\u2029'
+cp 00fffd A='�' B='�'
+cp 0e0001 A='\U000e0001' B='\U000e0001'
+cp 000061 A='a' B='a'
+cp 0000a0 A='\xa0' B='\xa0'
+cp 00180e A='\u180e' B='\u180e'
+cp 002060 A='\u2060' B='\u2060'
+cp 00fff9 A='\ufff9' B='\ufff9'
+surrogate B='\ud800'
+surrogate-mixed B='a\ud800b'
+text "it's" A="it's" B="it's"
+text "say \"hi\"" A='say "hi"' B='say "hi"'
+text "both ' and \"" A='both \' and "' B='both \' and "'
+text "back\\slash" A='back\\slash' B='back\\slash'
+text "a\nb" A='a\nb' B='a\nb'
+text "a\tb" A='a\tb' B='a\tb'
+text "a\rb" A='a\rb' B='a\rb'
+text "" A='' B=''
+scalar A=None
+scalar A=True
+scalar A=123456789012345678901234567890
+scalar A=1e+16
+scalar A=1e-05

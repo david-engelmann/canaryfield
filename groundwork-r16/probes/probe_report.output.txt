@@ -1,0 +1,70 @@
+specimen to_text == examples/catch-table.txt: True
+specimen to_json round-trips the file: True
+--- zero rows (the width line reads max over an empty star) ---
+RAISES TypeError: 'int' object is not iterable
+--- zero gates, one row ---
+canaryfield catch table
+=======================
+
+target           /tmp/target
+target unchanged true
+
+seed     name                  planted file
+-------  --------------------  ------------
+seed-00  stale version string  none
+
+summary per gate
+--- one row, planted_file None spells none ---
+canaryfield catch table
+=======================
+
+target           /tmp/target
+target unchanged true
+clean exit for gate lint is 0
+clean exit for gate tests is 1
+
+seed     name                  planted file  lint            tests
+-------  --------------------  ------------  --------------  --------------
+seed-00  stale version string  none          not-applicable  not-applicable
+
+summary per gate
+  lint  caught 0  waved-through 0  not-applicable 0  gate-broken 0
+  tests  caught 0  waved-through 0  not-applicable 0  gate-broken 0
+--- two planted files and unparseable files ---
+canaryfield catch table
+=======================
+
+target           /tmp/target
+target unchanged true
+clean exit for gate lint is 0
+clean exit for gate tests is 1
+
+seed     name                  planted file  lint    tests
+-------  --------------------  ------------  ------  -------------
+seed-00  stale version string  a.py          caught  waved-through
+  planted in a.py, b.py
+
+files skipped as unparseable bad.py, odd.py
+
+summary per gate
+  lint  caught 0  waved-through 0  not-applicable 0  gate-broken 0
+  tests  caught 0  waved-through 0  not-applicable 0  gate-broken 0
+exactly one planted file adds no planted-in line: True
+row with no planted_files key renders (get default): True
+--- summary missing a gate ---
+RAISES KeyError: 'tests'
+--- clean_exits missing a gate ---
+RAISES KeyError: 'tests'
+--- row missing a gate cell ---
+RAISES KeyError: 'lint'
+--- result missing the gates key ---
+RAISES KeyError: 'gates'
+target_unchanged False spells: ['target unchanged false']
+--- to_json: sorted keys, indent 2, one trailing newline ---
+{
+  "a": [
+    1,
+    2
+  ],
+  "b": 1
+}
