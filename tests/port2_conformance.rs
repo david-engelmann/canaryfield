@@ -157,8 +157,14 @@ fn check_application(
 fn the_case_census_stands_at_928() {
     let mut compared = 0;
     for case in recordings() {
-        // A well-formedness guard, so a case lacking a text kind fails the count rather than being silently counted.
-        let _ = text_of(case.get("kind").expect("a kind stands"));
+        // A well-formedness guard, so a case lacking a text kind, or carrying
+        // a kind the replay does not know, fails the count rather than being
+        // silently counted.
+        let kind = text_of(case.get("kind").expect("a kind stands"));
+        assert!(
+            kind == "apply" || kind == "plant",
+            "a case carries the kind {kind}, which the replay does not know"
+        );
         compared += 1;
     }
     assert_eq!(compared, 928, "the case census stands at 928");
