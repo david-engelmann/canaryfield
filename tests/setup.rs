@@ -23,8 +23,14 @@ fn read(rel: &str) -> String {
 #[test]
 fn the_seed_files_stand() {
     let readme = read("README.md");
-    assert!(readme.contains("## What this is"), "the README opens with its account");
-    assert!(readme.contains("## Licence"), "the README carries its licence section");
+    assert!(
+        readme.contains("## What this is"),
+        "the README opens with its account"
+    );
+    assert!(
+        readme.contains("## Licence"),
+        "the README carries its licence section"
+    );
     assert!(read("LICENSE").contains("MIT"), "the licence stands");
 }
 
@@ -57,7 +63,10 @@ fn the_ci_runs_the_local_gate() {
     let workflow = read(".github/workflows/ci.yml");
     assert!(workflow.contains("cargo test"), "the gate stands in CI");
     assert!(workflow.contains("push"), "the push trigger stands");
-    assert!(workflow.contains("pull_request"), "the pull request trigger stands");
+    assert!(
+        workflow.contains("pull_request"),
+        "the pull request trigger stands"
+    );
 }
 
 #[test]
