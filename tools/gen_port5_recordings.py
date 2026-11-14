@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT = Path(sys.argv[1]).resolve()
 OUT = Path(sys.argv[2])
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "tests"))
+sys.path.insert(0, str(ROOT / "tools"))
 
 if sys.implementation.name != "cpython" or sys.version_info[:2] != (3, 12):
     raise SystemExit(

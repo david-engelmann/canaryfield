@@ -12,8 +12,10 @@
 //! form, and the continuation and unparseable lines in their
 //! standing places. The refusal pins carry the port's refusal
 //! texts word for word, one for each member of the PORT4-6
-//! family, and two pins carry the report bridge's refusal
-//! sentences against the command line's own source.
+//! family. One further pin carried the report bridge's
+//! refusal sentences against the command line's own source,
+//! and it retired at PORT6 with the bridge it pinned, its
+//! subject being the Python source the retirement removed.
 
 use std::fs;
 use std::process::Command;
@@ -486,20 +488,6 @@ fn wrongly_kinded_values_are_refused_by_position() {
     assert_eq!(
         refusal(&JsonValue::Array(vec![JsonValue::Int("1".to_string())])),
         "the result stands as a list where the shape asks an object"
-    );
-}
-
-#[test]
-fn the_bridge_refusal_sentences_stand_in_the_command_line_source() {
-    let path = concat!(env!("CARGO_MANIFEST_DIR"), "/canaryfield/cli.py");
-    let source = fs::read_to_string(path).expect("the command line source reads");
-    assert!(
-        source.contains("the report renderings stand in the Rust crate under PORT4"),
-        "the no binary sentence stands in the bridge"
-    );
-    assert!(
-        source.contains("the named canaryfield binary does not stand:"),
-        "the named binary sentence stands in the bridge"
     );
 }
 

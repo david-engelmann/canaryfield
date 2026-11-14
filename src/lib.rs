@@ -42,6 +42,7 @@
 //! for the engine bridge in canaryfield/engine.py, which
 //! stands as the run's Python surface from this slice on.
 
+pub mod cli;
 pub mod engine;
 pub mod errors;
 pub mod json;
