@@ -13,7 +13,9 @@ jobs:
       - name: Build the Rust port
         run: cargo build
       - name: Run the Rust port tests
-        run: cargo test
+        run: |
+          set -o pipefail
+          cargo test 2>&1 | sed -n -e 's/^\(test .* FAILED\)$/::error::\1/p' -e 's/^\(failures:\)$/::error::\1/p' -e 's/^    \([a-z_0-9]*\)$/::error::failing test \1/p'
       - name: Check the formatting
         run: cargo fmt --check
       - name: Run the linter
