@@ -22,7 +22,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-FIXTURE_PATH = ROOT / "tests" / "fixture_project.py"
+FIXTURE_PATH = ROOT / "tools" / "fixture_project.py"
 
 GIT_ENV = {
     "GIT_AUTHOR_NAME": "canaryfield",

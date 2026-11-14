@@ -78,7 +78,7 @@ fn build_fixture(kind: &str, scene: &Path) {
     let status = Command::new(python3())
         .arg(&builder)
         .arg(scene)
-        .arg(root.join("tests"))
+        .arg(root.join("tools"))
         .arg(kind)
         .status()
         .expect("the fixture builder runs");
