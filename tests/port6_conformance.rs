@@ -12,12 +12,14 @@
 //! the recordings tokenize, the scene's absolute path and
 //! the Python interpreter, are substituted back before the
 //! drive, the interpreter as the word the standing harness
-//! resolves it to.
+//! resolves it to. A case whose gate invokes pytest is
+//! skipped with a note where no pytest stands in the
+//! interpreter, the discipline the PORT5 battery states.
 
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 use canaryfield::json::{parse, JsonValue};
 
@@ -64,6 +66,28 @@ fn python3() -> String {
     std::env::var("CANARYFIELD_PYTHON").unwrap_or_else(|_| "python3".to_string())
 }
 
+fn pytest_available() -> bool {
+    Command::new(python3())
+        .args(["-c", "import pytest"])
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .map(|status| status.success())
+        .unwrap_or(false)
+}
+
+/// A case needs pytest standing in the interpreter where
+/// one of its gate commands invokes it, the discipline the
+/// PORT5 battery states for its own pytest cases.
+fn needs_pytest(case: &JsonValue) -> bool {
+    match case.get("argv") {
+        Some(JsonValue::Array(items)) => items
+            .iter()
+            .any(|item| matches!(item, JsonValue::Str(text) if text.contains("-m pytest"))),
+        _ => false,
+    }
+}
+
 fn fresh_scene(name: &str) -> PathBuf {
     let dir = std::env::temp_dir().join(format!("canaryfield-port6-{name}-{}", std::process::id()));
     let _ = fs::remove_dir_all(&dir);
@@ -101,9 +125,16 @@ fn port6_cases_match_the_recorded_python_answers() {
         other => panic!("the cases stand as a list: {other:?}"),
     };
     let binary = env!("CARGO_BIN_EXE_canaryfield");
+    let have_pytest = pytest_available();
     let mut compared = 0usize;
+    let mut skipped = 0usize;
     for case in &cases {
         let name = text_of(case.get("name").expect("name")).to_string();
+        if needs_pytest(case) && !have_pytest {
+            eprintln!("case {name} skipped, no pytest stands in {}", python3());
+            skipped += 1;
+            continue;
+        }
         let scene = fresh_scene(&name);
         if let Some(JsonValue::Str(kind)) = case.get("fixture") {
             build_fixture(&kind.clone(), &scene);
@@ -155,7 +186,14 @@ fn port6_cases_match_the_recorded_python_answers() {
         }
         compared += 1;
     }
-    assert_eq!(compared, 25, "the whole PORT6 battery stands compared");
+    assert_eq!(
+        compared + skipped,
+        25,
+        "the whole PORT6 battery stands compared or named skipped"
+    );
+    if have_pytest {
+        assert_eq!(skipped, 0, "where pytest stands every case compares");
+    }
 }
 
 /// The example reports and the example seed pack regenerate
@@ -181,6 +219,10 @@ fn the_examples_regenerate_through_the_shell() {
         fs::read(root.join("examples/seed-pack.json")).expect("the example reads"),
         "the example seed pack regenerates byte identical"
     );
+    if !pytest_available() {
+        eprintln!("the demo run skipped, no pytest stands in {}", python3());
+        return;
+    }
     let gate = format!("tests={} -m pytest -q", python3());
     let output = Command::new(binary)
         .args([
