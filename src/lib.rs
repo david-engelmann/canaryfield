@@ -34,6 +34,15 @@
 //! binary's render report door prints the one rendering the
 //! caller names for the command line's bridge.
 
+//! Port slice 5 adds the engine module of PORT5. The engine
+//! module carries the field run whole, the copy mode and the
+//! git branch mode with their gates and the hash walk over
+//! the SHA-256 module, and the binary's run field door takes
+//! a request document and prints the run's result document
+//! for the engine bridge in canaryfield/engine.py, which
+//! stands as the run's Python surface from this slice on.
+
+pub mod engine;
 pub mod errors;
 pub mod json;
 pub mod pyapply;
@@ -49,6 +58,7 @@ pub mod pywalk;
 pub mod registry;
 pub mod report;
 pub mod seedpack;
+pub mod sha256;
 pub mod xid_tables;
 
 pub use crate::errors::CanaryfieldError;
