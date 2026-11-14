@@ -99,7 +99,7 @@ struct Args {
     write_seed_pack: Option<String>,
     out: Option<String>,
     json: bool,
-    timeout: i64,
+    timeout: String,
     work_root: Option<String>,
     keep_scratch: bool,
 }
@@ -133,46 +133,89 @@ fn as_text(bytes: &[u8]) -> Result<String, Scan> {
 
 /// The Python int reading of PORT6-2: a leading sign
 /// standing, surrounding whitespace stripped, underscores
-/// between digits standing.
-fn py_int(text: &str) -> Option<i64> {
+/// between digits standing, and Unicode decimal digits
+/// standing as Python's own reading takes them. The value
+/// is carried as its normalized decimal text, the spelling
+/// the bridge's document carries, so a value beyond this
+/// machine's integer stands as Python accepts it.
+fn py_int_text(text: &str) -> Option<String> {
     let trimmed = text.trim_matches(|ch: char| ch.is_whitespace());
     if trimmed.is_empty() {
         return None;
     }
-    let (sign, digits) = match trimmed.as_bytes()[0] {
-        b'+' => (1i64, &trimmed[1..]),
-        b'-' => (-1i64, &trimmed[1..]),
-        _ => (1i64, trimmed),
+    let (negative, digits) = match trimmed.as_bytes()[0] {
+        b'+' => (false, &trimmed[1..]),
+        b'-' => (true, &trimmed[1..]),
+        _ => (false, trimmed),
     };
     if digits.is_empty() {
         return None;
     }
-    let mut value: i64 = 0;
+    let mut values: Vec<u32> = Vec::new();
     let mut previous_underscore = false;
     let mut previous_digit = false;
-    for (index, ch) in digits.chars().enumerate() {
+    for ch in digits.chars() {
         if ch == '_' {
             if !previous_digit || previous_underscore {
                 return None;
             }
             previous_underscore = true;
             previous_digit = false;
-            let _ = index;
             continue;
         }
-        if !ch.is_ascii_digit() {
-            return None;
-        }
+        let value = decimal_digit(ch)?;
         previous_underscore = false;
         previous_digit = true;
-        value = value
-            .checked_mul(10)?
-            .checked_add((ch as i64) - ('0' as i64))?;
+        values.push(value);
     }
-    if previous_underscore {
+    if previous_underscore || values.is_empty() {
         return None;
     }
-    Some(sign * value)
+    let first = values.iter().position(|value| *value != 0);
+    let Some(first) = first else {
+        return Some("0".to_string());
+    };
+    let body: String = values[first..]
+        .iter()
+        .map(|value| char::from_digit(*value, 10).expect("a decimal digit"))
+        .collect();
+    if negative {
+        Some(format!("-{body}"))
+    } else {
+        Some(body)
+    }
+}
+
+/// The decimal digit blocks of the Unicode data
+/// CPython 3.12 carries, each block ten codepoints wide
+/// except the mathematical block at 0x1d7ce, which carries
+/// five styles of ten. A codepoint in a block reads as
+/// its offset in the block, by tens where the block runs
+/// long, which is the value Python's int reading gives it.
+const DECIMAL_DIGIT_BLOCKS: &[u32] = &[
+    0x30, 0x660, 0x6f0, 0x7c0, 0x966, 0x9e6, 0xa66, 0xae6, 0xb66, 0xbe6, 0xc66, 0xce6, 0xd66,
+    0xde6, 0xe50, 0xed0, 0xf20, 0x1040, 0x1090, 0x17e0, 0x1810, 0x1946, 0x19d0, 0x1a80, 0x1a90,
+    0x1b50, 0x1bb0, 0x1c40, 0x1c50, 0xa620, 0xa8d0, 0xa900, 0xa9d0, 0xa9f0, 0xaa50, 0xabf0, 0xff10,
+    0x104a0, 0x10d30, 0x11066, 0x110f0, 0x11136, 0x111d0, 0x112f0, 0x11450, 0x114d0, 0x11650,
+    0x116c0, 0x11730, 0x118e0, 0x11950, 0x11c50, 0x11d50, 0x11da0, 0x11f50, 0x16a60, 0x16ac0,
+    0x16b50, 0x1d7ce, 0x1e140, 0x1e2f0, 0x1e4f0, 0x1e950, 0x1fbf0,
+];
+
+fn decimal_digit(ch: char) -> Option<u32> {
+    if ch.is_ascii_digit() {
+        return ch.to_digit(10);
+    }
+    let point = ch as u32;
+    let block = DECIMAL_DIGIT_BLOCKS
+        .iter()
+        .rev()
+        .find(|start| point >= **start && point - **start < 50)?;
+    let offset = point - block;
+    if offset < 10 || *block == 0x1d7ce {
+        Some(offset % 10)
+    } else {
+        None
+    }
 }
 
 /// The gate type's partition of PORT6-2.
@@ -197,7 +240,7 @@ fn parse_gate(text: &str) -> Result<(String, String), Scan> {
 fn scan(tokens: &[Vec<u8>]) -> Scan {
     let mut args = Args {
         plant: "copy".to_string(),
-        timeout: 120,
+        timeout: "120".to_string(),
         ..Args::default()
     };
     let mut extras: Vec<Vec<u8>> = Vec::new();
@@ -212,9 +255,10 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
         }
         if token == b"--" {
             separator_seen = true;
+            extras.push(token.clone());
             continue;
         }
-        if token.len() > 2 && token.starts_with(b"--") {
+        if token.len() > 2 && token.starts_with(b"--") && !token.contains(&b' ') {
             let text = match as_text(token) {
                 Ok(text) => text,
                 Err(scan) => return scan,
@@ -291,7 +335,10 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
                     return refusal(format!("argument {}: expected one argument", chosen));
                 };
                 if next == b"--"
-                    || (next.len() > 1 && next.starts_with(b"-") && !looks_like_negative(next))
+                    || (next.len() > 1
+                        && next.starts_with(b"-")
+                        && !next.contains(&b' ')
+                        && !looks_like_negative(next))
                 {
                     return refusal(format!("argument {}: expected one argument", chosen));
                 }
@@ -318,7 +365,7 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
                 }
                 Field::WriteSeedPack => args.write_seed_pack = Some(value),
                 Field::Out => args.out = Some(value),
-                Field::Timeout => match py_int(&value) {
+                Field::Timeout => match py_int_text(&value) {
                     Some(number) => args.timeout = number,
                     None => {
                         return refusal(format!(
@@ -331,7 +378,7 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
             }
             continue;
         }
-        if token.len() > 1 && token.starts_with(b"-") && token != b"-" {
+        if token.len() > 1 && token.starts_with(b"-") && token != b"-" && !token.contains(&b' ') {
             // A short cluster: help fires where its first
             // letter is h, and any other cluster is an
             // unknown token whole.
@@ -345,9 +392,6 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
     }
     if !extras.is_empty() {
         let mut named: Vec<String> = Vec::new();
-        if separator_seen {
-            named.push("--".to_string());
-        }
         for extra in &extras {
             match as_text(extra) {
                 Ok(text) => named.push(text),
@@ -359,8 +403,25 @@ fn scan(tokens: &[Vec<u8>]) -> Scan {
     Scan::Parsed(Box::new(args))
 }
 
+/// The parser's negative number matcher whole, a minus
+/// and digits, or a minus and a decimal fraction, the two
+/// shapes CPython's matcher carries.
 fn looks_like_negative(token: &[u8]) -> bool {
-    token.len() > 1 && token[1].is_ascii_digit()
+    let Ok(text) = std::str::from_utf8(token) else {
+        return false;
+    };
+    let Some(body) = text.strip_prefix('-') else {
+        return false;
+    };
+    if !body.is_empty() && body.bytes().all(|byte| byte.is_ascii_digit()) {
+        return true;
+    }
+    let Some((head, tail)) = body.split_once('.') else {
+        return false;
+    };
+    head.bytes().all(|byte| byte.is_ascii_digit())
+        && !tail.is_empty()
+        && tail.bytes().all(|byte| byte.is_ascii_digit())
 }
 
 /// Perform the command line's work and return its exit
@@ -383,7 +444,9 @@ pub fn shell(arguments: &[OsString]) -> i32 {
     let args = match scan(&tokens) {
         Scan::Help => {
             let mut out = std::io::stdout().lock();
-            let _ = out.write_all(HELP.as_bytes());
+            if out.write_all(HELP.as_bytes()).is_err() {
+                return 1;
+            }
             return 0;
         }
         Scan::Refusal(message) => return error_exit(&message),
@@ -420,10 +483,7 @@ pub fn shell(arguments: &[OsString]) -> i32 {
     let document = JsonValue::Object(vec![
         ("target".to_string(), JsonValue::Str(target)),
         ("gates".to_string(), JsonValue::Array(gates)),
-        (
-            "timeout".to_string(),
-            JsonValue::Int(args.timeout.to_string()),
-        ),
+        ("timeout".to_string(), JsonValue::Int(args.timeout.clone())),
         (
             "work_root".to_string(),
             match &args.work_root {
@@ -474,7 +534,9 @@ pub fn shell(arguments: &[OsString]) -> i32 {
     match render_report(&result, form) {
         Ok(rendering) => {
             let mut out = std::io::stdout().lock();
-            let _ = out.write_all(rendering.as_bytes());
+            if out.write_all(rendering.as_bytes()).is_err() {
+                return 1;
+            }
             0
         }
         Err(exc) => {

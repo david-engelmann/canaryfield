@@ -188,7 +188,7 @@ fn port6_cases_match_the_recorded_python_answers() {
     }
     assert_eq!(
         compared + skipped,
-        25,
+        32,
         "the whole PORT6 battery stands compared or named skipped"
     );
     if have_pytest {
@@ -278,5 +278,5 @@ fn the_battery_document_shape_stands() {
             names.insert(text_of(case.get("name").expect("name")).to_string(), ());
         }
     }
-    assert_eq!(names.len(), 25, "the battery carries its twenty five cases");
+    assert_eq!(names.len(), 32, "the battery carries its thirty two cases");
 }

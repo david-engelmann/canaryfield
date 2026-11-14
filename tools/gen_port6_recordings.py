@@ -182,6 +182,39 @@ def main():
             "files": ["out/catch-table.txt", "out/catch-table.json"],
         },
         {
+            "name": "separator_trailing",
+            "argv": ["--write-seed-pack", "out/pack.json", "--"],
+        },
+        {
+            "name": "extras_stand_in_scan_order",
+            "argv": ["--target", "x", "--gate", "a=b", "hello", "--", "extra"],
+        },
+        {
+            "name": "space_carrying_value_pack",
+            "argv": ["--write-seed-pack", "out/pack.json", "--target", "-synthetic tree"],
+            "files": ["out/pack.json"],
+        },
+        {
+            "name": "negative_decimal_value",
+            "argv": ["--target", "-.5", "--gate", "a=b"],
+        },
+        {
+            "name": "negative_junk_value",
+            "argv": ["--target", "-1oops", "--gate", "a=b"],
+        },
+        {
+            "name": "timeout_unicode_digits",
+            "argv": ["--target", "missing", "--gate", "a=b", "--timeout", "１２"],
+        },
+        {
+            "name": "timeout_huge_pack",
+            "argv": [
+                "--write-seed-pack", "out/pack.json",
+                "--timeout", "9223372036854775808",
+            ],
+            "files": ["out/pack.json"],
+        },
+        {
             "name": "run_changed_target_exit_3",
             "fixture": "main",
             "argv": [
