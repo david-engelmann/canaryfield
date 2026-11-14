@@ -12,11 +12,12 @@
 //! prints that rendering's bytes as they stand, the door the
 //! Python command line drives under the report bridge, and it
 //! answers a refusal with the refusal's words on the error
-//! stream and a nonzero exit. Every other part of the
-//! command line, the field run and its gates, stays with the
-//! Python in this slice, as the contract port section states,
-//! and any other argument shape is answered with a usage line
-//! and a nonzero exit.
+//! stream and a nonzero exit. Handed the run field flag and
+//! the path of a request document written as JSON, it
+//! performs the run of PORT5 and prints the result document,
+//! the door the Python engine drives under its bridge,
+//! answering a refusal the same way. Any other argument shape
+//! is answered with a usage line and a nonzero exit.
 
 use std::io::Write;
 use std::path::Path;
@@ -93,9 +94,25 @@ fn main() -> ExitCode {
                 ExitCode::from(2)
             }
         }
+    } else if args.len() == 3 && args[1] == "--run-field" {
+        let staged = std::fs::read_to_string(&args[2])
+            .map_err(|error| error.to_string())
+            .and_then(|text| canaryfield::json::parse(&text).map_err(|error| error.to_string()))
+            .and_then(|document| canaryfield::engine::request_from(&document))
+            .and_then(|request| canaryfield::engine::run(&request));
+        match staged {
+            Ok(result) => {
+                println!("{}", dumps_indent2(&result));
+                ExitCode::SUCCESS
+            }
+            Err(wording) => {
+                eprintln!("{wording}");
+                ExitCode::from(2)
+            }
+        }
     } else {
         eprintln!(
-            "usage: canaryfield --write-seed-pack PATH | --plant-seed ROOT SEED | --render-report PATH FORM"
+            "usage: canaryfield --write-seed-pack PATH | --plant-seed ROOT SEED | --render-report PATH FORM | --run-field PATH"
         );
         ExitCode::from(2)
     }
