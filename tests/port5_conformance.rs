@@ -177,6 +177,12 @@ fn build_fixture(kind: &str, root: &Path) {
 }
 
 fn needs_pytest(case: &JsonValue) -> bool {
+    // A refusal answers before any gate runs, so only a result
+    // case whose gates run under the pytest interpreter needs
+    // pytest standing in the environment.
+    if case.get("result").is_none() {
+        return false;
+    }
     fn hunt(value: &JsonValue) -> bool {
         match value {
             JsonValue::Str(text) => text.contains("<PYTHON>"),
