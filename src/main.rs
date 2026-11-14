@@ -37,9 +37,13 @@ fn names(items: &[String]) -> JsonValue {
 }
 
 fn main() -> ExitCode {
-    let args: Vec<String> = std::env::args().collect();
+    let raw: Vec<std::ffi::OsString> = std::env::args_os().collect();
+    let args: Vec<String> = raw
+        .iter()
+        .map(|arg| arg.to_string_lossy().into_owned())
+        .collect();
     if args.len() == 3 && args[1] == "--write-seed-pack" {
-        match canaryfield::write_seed_pack(Path::new(&args[2])) {
+        match canaryfield::write_seed_pack(Path::new(&raw[2])) {
             Ok(_) => {
                 println!(
                     "wrote {} seed pack to {}",
@@ -55,7 +59,7 @@ fn main() -> ExitCode {
         }
     } else if args.len() == 4 && args[1] == "--plant-seed" {
         let mut skipped: Vec<String> = Vec::new();
-        match plant_seed(Path::new(&args[2]), &args[3], Some(&mut skipped)) {
+        match plant_seed(Path::new(&raw[2]), &args[3], Some(&mut skipped)) {
             Ok(planted) => {
                 let answer = JsonValue::Object(vec![
                     ("planted".to_string(), names(&planted)),
@@ -74,7 +78,7 @@ fn main() -> ExitCode {
             }
         }
     } else if args.len() == 4 && args[1] == "--render-report" {
-        let staged = std::fs::read_to_string(&args[2])
+        let staged = std::fs::read_to_string(&raw[2])
             .map_err(|error| canaryfield::CanaryfieldError::new(error.to_string()))
             .and_then(|text| canaryfield::json::parse(&text))
             .and_then(|document| render_report(&document, &args[3]));
@@ -95,7 +99,7 @@ fn main() -> ExitCode {
             }
         }
     } else if args.len() == 3 && args[1] == "--run-field" {
-        let staged = std::fs::read_to_string(&args[2])
+        let staged = std::fs::read_to_string(&raw[2])
             .map_err(|error| error.to_string())
             .and_then(|text| canaryfield::json::parse(&text).map_err(|error| error.to_string()))
             .and_then(|document| canaryfield::engine::request_from(&document))
@@ -111,9 +115,6 @@ fn main() -> ExitCode {
             }
         }
     } else {
-        eprintln!(
-            "usage: canaryfield --write-seed-pack PATH | --plant-seed ROOT SEED | --render-report PATH FORM | --run-field PATH"
-        );
-        ExitCode::from(2)
+        ExitCode::from(canaryfield::cli::shell(&raw[1..]) as u8)
     }
 }

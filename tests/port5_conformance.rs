@@ -32,7 +32,7 @@ from pathlib import Path
 
 root = Path(sys.argv[2])
 sys.path.insert(0, sys.argv[3])
-sys.path.insert(0, str(Path(sys.argv[3]) / "tests"))
+sys.path.insert(0, str(Path(sys.argv[3]) / "tools"))
 from fixture_project import (
     write_main_project,
     write_tiny_project,
