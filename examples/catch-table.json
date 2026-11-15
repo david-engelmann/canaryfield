@@ -645,13 +645,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-51"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped slice bound",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-52"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped augmentation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-53"
+    },
+    {
+      "defect_class": "wrong input",
+      "gates": {
+        "tests": "caught"
+      },
+      "name": "swapped parameter order",
+      "planted_exits": {
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-54"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped import",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-55"
     }
   ],
   "summary": {
     "tests": {
-      "caught": 14,
+      "caught": 15,
       "gate-broken": 0,
-      "not-applicable": 35,
+      "not-applicable": 38,
       "waved-through": 3
     }
   },

@@ -782,26 +782,82 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught",
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 14,
+      "caught": 15,
       "waved-through": 3,
-      "not-applicable": 35,
+      "not-applicable": 38,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 35,
-      "gate-broken": 17
+      "not-applicable": 38,
+      "gate-broken": 18
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 35,
-      "gate-broken": 17
+      "not-applicable": 38,
+      "gate-broken": 18
      }
     }
    }
@@ -1525,13 +1581,65 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "branch": "canaryfield/seed-54",
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 14,
+      "caught": 15,
       "waved-through": 3,
-      "not-applicable": 35,
+      "not-applicable": 38,
       "gate-broken": 0
      }
     }
@@ -2143,13 +2251,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 2,
       "waved-through": 0,
-      "not-applicable": 50,
+      "not-applicable": 54,
       "gate-broken": 0
      }
     }
@@ -2768,13 +2920,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 49,
+      "not-applicable": 53,
       "gate-broken": 0
      }
     }
@@ -3412,14 +3608,60 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {},
+      "gates": {
+       "slow": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 35,
-      "gate-broken": 17
+      "not-applicable": 38,
+      "gate-broken": 18
      }
     }
    }
@@ -4090,13 +4332,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 14,
+      "caught": 15,
       "waved-through": 3,
-      "not-applicable": 35,
+      "not-applicable": 38,
       "gate-broken": 0
      }
     }
@@ -4154,7 +4444,11 @@
     "seed-48",
     "seed-49",
     "seed-50",
-    "seed-51"
+    "seed-51",
+    "seed-52",
+    "seed-53",
+    "seed-54",
+    "seed-55"
    ]
   },
   {
@@ -4763,13 +5057,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 2,
       "waved-through": 0,
-      "not-applicable": 50,
+      "not-applicable": 54,
       "gate-broken": 0
      }
     }

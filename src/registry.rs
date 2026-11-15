@@ -2,7 +2,7 @@
 //!
 //! This table mirrors the metadata half of the Python registry
 //! in canaryfield/seeds.py, the id and the name and the defect
-//! class and the description of each of the fifty two seeds,
+//! class and the description of each of the fifty six seeds,
 //! in registry order. The apply function each Python seed
 //! carries is behavior over a parsed Python tree and is not
 //! part of this table, as the contract port section states.
@@ -16,7 +16,7 @@
 /// One seed of the registry, metadata only.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SeedMeta {
-    /// The stable seed id, seed-00 through seed-51.
+    /// The stable seed id, seed-00 through seed-55.
     pub id: &'static str,
     /// The human name of the planted defect.
     pub name: &'static str,
@@ -26,7 +26,7 @@ pub struct SeedMeta {
     pub description: &'static str,
 }
 
-/// The fifty two seeds in registry order.
+/// The fifty six seeds in registry order.
 pub const SEEDS: &[SeedMeta] = &[
     SeedMeta {
         id: "seed-00",
@@ -339,5 +339,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped exception chain",
         defect_class: "wrong error",
         description: "Removes the from clause of a raise so the error arrives without the failure it was chained to as its cause",
+    },
+    SeedMeta {
+        id: "seed-52",
+        name: "dropped slice bound",
+        defect_class: "boundary error",
+        description: "Drops the lower bound of a slice, or its upper bound where no lower bound stands, so the code reads elements on a side of the slice the bound it wrote closed off",
+    },
+    SeedMeta {
+        id: "seed-53",
+        name: "dropped augmentation",
+        defect_class: "wrong computation",
+        description: "Reads an augmented assignment as a plain assignment of its value so the target keeps the value alone and loses everything it had accumulated",
+    },
+    SeedMeta {
+        id: "seed-54",
+        name: "swapped parameter order",
+        defect_class: "wrong input",
+        description: "Exchanges the first two positional parameters of a definition so the function reads its first two inputs each in the other's place",
+    },
+    SeedMeta {
+        id: "seed-55",
+        name: "dropped import",
+        defect_class: "missing input",
+        description: "Removes an import statement so the names it binds are never bound and every read of them meets their absence",
     },
 ];
