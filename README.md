@@ -82,7 +82,7 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - Feature slice 2 grows the seed registry from forty eight seeds to fifty two, adding dropped try else clause and shifted slice step and swapped conditional expression arms and dropped exception chain as seed-48 through seed-51
 - Feature slice 2 writes the seed pack under the format name canaryfield-seeds/11 with fifty two entries, and the loader still accepts canaryfield-seeds/1 packs at their twelve entries and canaryfield-seeds/2 packs at their sixteen entries and canaryfield-seeds/3 packs at their twenty entries and canaryfield-seeds/4 packs at their twenty four entries and canaryfield-seeds/5 packs at their twenty eight entries and canaryfield-seeds/6 packs at their thirty two entries and canaryfield-seeds/7 packs at their thirty six entries and canaryfield-seeds/8 packs at their forty entries and canaryfield-seeds/9 packs at their forty four entries and canaryfield-seeds/10 packs at their forty eight entries and refuses any pack whose entry count disagrees with its format version
 - Regenerating the committed examples under the fifty two seed registry changed no verdict on the original forty eight seeds, and seed-48 and seed-49 and seed-50 and seed-51 do not apply to the demo project, so the two gates in the second example still honestly disagree on fourteen seeds
-- Closed rounds stand at 20 of 100
+- Closed rounds stand at 21 of 100
 - AGENTS.md stands in this repo, the canonical template of the program with this repo's annex below its marked line
 - No formats are pinned by this repo yet
 
