@@ -17,10 +17,10 @@ use crate::json::{self, JsonValue};
 use crate::registry::{SeedMeta, SEEDS};
 
 /// The format a pack written now carries.
-pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/10";
+pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/11";
 
-/// The ten pack formats and the entry count each one carries.
-pub const PACK_ENTRY_COUNTS: [(&str, usize); 10] = [
+/// The eleven pack formats and the entry count each one carries.
+pub const PACK_ENTRY_COUNTS: [(&str, usize); 11] = [
     ("canaryfield-seeds/1", 12),
     ("canaryfield-seeds/2", 16),
     ("canaryfield-seeds/3", 20),
@@ -31,6 +31,7 @@ pub const PACK_ENTRY_COUNTS: [(&str, usize); 10] = [
     ("canaryfield-seeds/8", 40),
     ("canaryfield-seeds/9", 44),
     ("canaryfield-seeds/10", 48),
+    ("canaryfield-seeds/11", 52),
 ];
 
 /// The entry count a format carries, and nothing for a format
@@ -294,15 +295,16 @@ mod tests {
     use super::*;
 
     #[test]
-    fn the_ten_formats_carry_their_own_counts() {
+    fn the_eleven_formats_carry_their_own_counts() {
         assert_eq!(pack_entry_count("canaryfield-seeds/1"), Some(12));
         assert_eq!(pack_entry_count("canaryfield-seeds/10"), Some(48));
-        assert_eq!(pack_entry_count("canaryfield-seeds/11"), None);
+        assert_eq!(pack_entry_count("canaryfield-seeds/11"), Some(52));
+        assert_eq!(pack_entry_count("canaryfield-seeds/12"), None);
         assert_eq!(pack_entry_count("other/9"), None);
     }
 
     #[test]
-    fn the_current_document_carries_forty_eight_entries_in_order() {
+    fn the_current_document_carries_fifty_two_entries_in_order() {
         let data = seed_pack_data();
         assert_eq!(
             data.get("format"),
@@ -310,14 +312,14 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 48);
+                assert_eq!(items.len(), 52);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
                 );
                 assert_eq!(
-                    items[47].get("id"),
-                    Some(&JsonValue::Str("seed-47".to_string()))
+                    items[51].get("id"),
+                    Some(&JsonValue::Str("seed-51".to_string()))
                 );
             }
             other => panic!("seeds is not a list: {other:?}"),

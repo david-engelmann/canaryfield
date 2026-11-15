@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/10",
+  "format": "canaryfield-seeds/11",
   "seeds": [
     {
       "id": "seed-00",
@@ -288,6 +288,30 @@
       "name": "dropped logical negation",
       "defect_class": "wrong flag",
       "description": "Removes a logical not standing outside a condition test so the expression it negated carries the opposite truth from the one the code wrote"
+    },
+    {
+      "id": "seed-48",
+      "name": "dropped try else clause",
+      "defect_class": "missing fallback",
+      "description": "Drops the else clause of a try so the code written to run when the try finishes without an error never runs"
+    },
+    {
+      "id": "seed-49",
+      "name": "shifted slice step",
+      "defect_class": "boundary error",
+      "description": "Raises the step of a slice by one so the code takes its elements at a wider stride than the slice it wrote"
+    },
+    {
+      "id": "seed-50",
+      "name": "swapped conditional expression arms",
+      "defect_class": "wrong data",
+      "description": "Exchanges the value a conditional expression yields when its test holds with the value it yields when its test fails so every caller receives the value written for the opposite outcome"
+    },
+    {
+      "id": "seed-51",
+      "name": "dropped exception chain",
+      "defect_class": "wrong error",
+      "description": "Removes the from clause of a raise so the error arrives without the failure it was chained to as its cause"
     }
   ]
 }

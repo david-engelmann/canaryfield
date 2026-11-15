@@ -601,13 +601,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-47"
+    },
+    {
+      "defect_class": "missing fallback",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped try else clause",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-48"
+    },
+    {
+      "defect_class": "boundary error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "shifted slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-49"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped conditional expression arms",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-50"
+    },
+    {
+      "defect_class": "wrong error",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped exception chain",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-51"
     }
   ],
   "summary": {
     "tests": {
       "caught": 14,
       "gate-broken": 0,
-      "not-applicable": 31,
+      "not-applicable": 35,
       "waved-through": 3
     }
   },
