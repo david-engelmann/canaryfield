@@ -2,20 +2,21 @@
 //!
 //! This table mirrors the metadata half of the Python registry
 //! in canaryfield/seeds.py, the id and the name and the defect
-//! class and the description of each of the forty eight seeds,
+//! class and the description of each of the fifty two seeds,
 //! in registry order. The apply function each Python seed
 //! carries is behavior over a parsed Python tree and is not
 //! part of this table, as the contract port section states.
-//! The table is generated from the Python registry by the
-//! generator kept in the Round 14 scratch, and the conformance
-//! data case pins every field of it against the document the
-//! Python itself builds from its registry, so a drift between
-//! the two registries fails the cargo gate.
+//! The first forty eight entries are generated from the Python
+//! registry by the generator kept in the Round 14 scratch, and
+//! the four entries feature slice 2 grows the registry with
+//! are stated in the contract's feature slice 2 section, the
+//! conformance data case pinning the table against the pack
+//! document the crate itself builds from it.
 
 /// One seed of the registry, metadata only.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct SeedMeta {
-    /// The stable seed id, seed-00 through seed-47.
+    /// The stable seed id, seed-00 through seed-51.
     pub id: &'static str,
     /// The human name of the planted defect.
     pub name: &'static str,
@@ -25,7 +26,7 @@ pub struct SeedMeta {
     pub description: &'static str,
 }
 
-/// The forty eight seeds in registry order.
+/// The fifty two seeds in registry order.
 pub const SEEDS: &[SeedMeta] = &[
     SeedMeta {
         id: "seed-00",
@@ -314,5 +315,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped logical negation",
         defect_class: "wrong flag",
         description: "Removes a logical not standing outside a condition test so the expression it negated carries the opposite truth from the one the code wrote",
+    },
+    SeedMeta {
+        id: "seed-48",
+        name: "dropped try else clause",
+        defect_class: "missing fallback",
+        description: "Drops the else clause of a try so the code written to run when the try finishes without an error never runs",
+    },
+    SeedMeta {
+        id: "seed-49",
+        name: "shifted slice step",
+        defect_class: "boundary error",
+        description: "Raises the step of a slice by one so the code takes its elements at a wider stride than the slice it wrote",
+    },
+    SeedMeta {
+        id: "seed-50",
+        name: "swapped conditional expression arms",
+        defect_class: "wrong data",
+        description: "Exchanges the value a conditional expression yields when its test holds with the value it yields when its test fails so every caller receives the value written for the opposite outcome",
+    },
+    SeedMeta {
+        id: "seed-51",
+        name: "dropped exception chain",
+        defect_class: "wrong error",
+        description: "Removes the from clause of a raise so the error arrives without the failure it was chained to as its cause",
     },
 ];

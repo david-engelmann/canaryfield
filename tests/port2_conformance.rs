@@ -11,7 +11,12 @@
 //! and the rendering after each, a surface standing in the
 //! record only where it moved. An application the Python
 //! raised out of is recorded with the exception it raised,
-//! and the port's refusal is held against it. Each plant
+//! and the port's refusal is held against it. The entries
+//! for the four seeds feature slice 2 grows the registry
+//! with were recorded by the independent implementation of
+//! that slice's obligations the contract names, written in
+//! Python over its ast module, the standing entries beside
+//! them unchanged. Each plant
 //! case carries a staged directory and, for every seed,
 //! the planted list, the skipped list, and the bytes of
 //! every file afterwards. These tests replay the recordings

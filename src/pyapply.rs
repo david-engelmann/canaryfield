@@ -1,5 +1,10 @@
-//! The forty eight seed applies of PORT2-1, each reproducing
-//! seed.apply of the landed Python over the arena. One call
+//! The fifty two seed applies, the first forty eight
+//! reproducing seed.apply of the landed Python over the arena
+//! under PORT2-1 and the four feature slice 2 grows the
+//! registry with implementing the obligations of the
+//! contract's feature slice 2 section, their battery entries
+//! recorded by the independent implementation that section
+//! names. One call
 //! plants at every match, the matches are collected from the
 //! tree as parsed before any change is made, and each matched
 //! node is planted exactly once, the standing the module
@@ -73,6 +78,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-45" => apply_dropped_keyword_argument(tree),
         "seed-46" => apply_flipped_range_step(tree),
         "seed-47" => apply_dropped_logical_negation(tree)?,
+        "seed-48" => apply_dropped_try_else(tree),
+        "seed-49" => apply_slice_step_shift(tree),
+        "seed-50" => apply_swapped_conditional_arms(tree),
+        "seed-51" => apply_dropped_exception_chain(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2182,4 +2191,76 @@ fn collect_outer_negations(tree: &Tree) -> Result<Vec<Hit>, Refusal> {
 fn apply_dropped_logical_negation(tree: &mut Tree) -> Result<bool, Refusal> {
     let hits = collect_outer_negations(tree)?;
     Ok(replace_hits_with_child(tree, hits, "operand"))
+}
+
+// seed-48, dropped try else clause.
+
+fn apply_dropped_try_else(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Try { .. })
+                && !tree.many(*id, "orelse").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_many(*id, "orelse", vec![]);
+    }
+    !targets.is_empty()
+}
+
+// seed-49, shifted slice step.
+
+fn apply_slice_step_shift(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| {
+            if matches!(&tree.nodes[id].data, Data::Slice) {
+                let step = tree.one(id, "step")?;
+                if is_int_constant(tree, step) {
+                    return Some(step);
+                }
+            }
+            None
+        })
+        .collect();
+    for target in &targets {
+        add_one_to_int(tree, *target);
+    }
+    !targets.is_empty()
+}
+
+// seed-50, swapped conditional expression arms.
+
+fn apply_swapped_conditional_arms(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::IfExp))
+        .collect();
+    for id in &targets {
+        let body = tree.one(*id, "body").expect("a body stands");
+        let orelse = tree.one(*id, "orelse").expect("an orelse stands");
+        tree.set_one(*id, "body", Some(orelse));
+        tree.set_one(*id, "orelse", Some(body));
+    }
+    !targets.is_empty()
+}
+
+// seed-51, dropped exception chain.
+
+fn apply_dropped_exception_chain(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Raise) && tree.one(*id, "cause").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "cause", None);
+    }
+    !targets.is_empty()
 }
