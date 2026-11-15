@@ -26,6 +26,7 @@ pub const CAUGHT: &str = "caught";
 pub const WAVED: &str = "waved-through";
 pub const NOT_APPLICABLE: &str = "not-applicable";
 pub const GATE_BROKEN: &str = "gate-broken";
+pub const TIMED_OUT: &str = "timed-out";
 
 const IGNORED_PARTS: [&str; 3] = [".git", "__pycache__", ".pytest_cache"];
 
@@ -269,10 +270,25 @@ fn carry_permissions(source: &Path, destination: &Path) -> Result<(), String> {
     std::fs::set_permissions(destination, metadata.permissions()).map_err(|error| error.to_string())
 }
 
+/// The outcome of one gate run, its recorded exit spelling
+/// and whether the runner killed it at its timeout.
+///
+/// The spelling is the standing one, the exit code where the
+/// gate exited with one, the negated signal where a signal
+/// ended it, and minus one for a gate killed at its timeout,
+/// for a gate that could not be started, and for a gate that
+/// exited with no code the runner could read. The timeout
+/// truth stands beside the spelling because the planted
+/// judgement reads it, a gate killed at its deadline having
+/// rendered no judgement the catch word may claim.
+struct GateRun {
+    exit: i32,
+    timed_out: bool,
+}
+
 /// Run one gate through the shell in the named directory with
-/// its output discarded, answering its exit code, and answering
-/// -1 for a gate killed at its timeout.
-fn run_gate(command: &str, cwd: &Path, timeout: f64) -> i32 {
+/// its output discarded, answering its outcome.
+fn run_gate(command: &str, cwd: &Path, timeout: f64) -> GateRun {
     let spawned = Command::new("sh")
         .arg("-c")
         .arg(command)
@@ -282,33 +298,55 @@ fn run_gate(command: &str, cwd: &Path, timeout: f64) -> i32 {
         .spawn();
     let mut child = match spawned {
         Ok(child) => child,
-        Err(_) => return -1,
+        Err(_) => {
+            return GateRun {
+                exit: -1,
+                timed_out: false,
+            }
+        }
     };
     let deadline = Instant::now() + Duration::from_secs_f64(timeout.max(0.0));
     loop {
         match child.try_wait() {
             Ok(Some(status)) => {
                 if let Some(code) = status.code() {
-                    return code;
+                    return GateRun {
+                        exit: code,
+                        timed_out: false,
+                    };
                 }
                 #[cfg(unix)]
                 {
                     use std::os::unix::process::ExitStatusExt;
                     if let Some(signal) = status.signal() {
-                        return -signal;
+                        return GateRun {
+                            exit: -signal,
+                            timed_out: false,
+                        };
                     }
                 }
-                return -1;
+                return GateRun {
+                    exit: -1,
+                    timed_out: false,
+                };
             }
             Ok(None) => {
                 if Instant::now() >= deadline {
                     let _ = child.kill();
                     let _ = child.wait();
-                    return -1;
+                    return GateRun {
+                        exit: -1,
+                        timed_out: true,
+                    };
                 }
                 std::thread::sleep(Duration::from_millis(5));
             }
-            Err(_) => return -1,
+            Err(_) => {
+                return GateRun {
+                    exit: -1,
+                    timed_out: false,
+                }
+            }
         }
     }
 }
@@ -454,11 +492,13 @@ fn run_gates_for_rows(
             cells.push((name.clone(), GATE_BROKEN.to_string()));
             continue;
         }
-        let exit = run_gate(command, cwd, timeout);
-        planted_exits.push((name.clone(), exit));
+        let outcome = run_gate(command, cwd, timeout);
+        planted_exits.push((name.clone(), outcome.exit));
         cells.push((
             name.clone(),
-            if exit != 0 {
+            if outcome.timed_out {
+                TIMED_OUT.to_string()
+            } else if outcome.exit != 0 {
                 CAUGHT.to_string()
             } else {
                 WAVED.to_string()
@@ -471,7 +511,7 @@ fn run_gates_for_rows(
 fn clean_exits_for(gates: &[(String, String)], cwd: &Path, timeout: f64) -> Vec<(String, i32)> {
     gates
         .iter()
-        .map(|(name, command)| (name.clone(), run_gate(command, cwd, timeout)))
+        .map(|(name, command)| (name.clone(), run_gate(command, cwd, timeout).exit))
         .collect()
 }
 
