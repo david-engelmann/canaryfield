@@ -596,8 +596,8 @@ fn test_seed_pack_via_cli() {
     let written = fs::read_to_string(&path).expect("the written pack reads");
     assert_eq!(written, seed_pack_text());
     assert!(
-        written.contains("\"canaryfield-seeds/13\""),
-        "the written pack carries the thirteenth format"
+        written.contains("\"canaryfield-seeds/14\""),
+        "the written pack carries the fourteenth format"
     );
     let _ = fs::remove_dir_all(&dir);
 }
