@@ -822,20 +822,73 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-59"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "swapped dictionary entry values",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-60"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "swapped sequence literal elements",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-61"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped assert statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-62"
+    },
+    {
+      "defect_class": "wrong sign",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "added numeric negation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-63"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 41,
-      "waved-through": 19
+      "not-applicable": 44,
+      "waved-through": 20
     },
     "tests": {
       "caught": 16,
       "gate-broken": 0,
-      "not-applicable": 41,
-      "waved-through": 3
+      "not-applicable": 44,
+      "waved-through": 4
     }
   },
   "target": "examples/demo-project",

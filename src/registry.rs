@@ -388,4 +388,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong predicate",
         description: "Exchanges every operator after the first in a chained comparison for its paired opposite so the chain closes where the code wrote it to run on",
     },
+    SeedMeta {
+        id: "seed-60",
+        name: "swapped dictionary entry values",
+        defect_class: "wrong data",
+        description: "Exchanges the values of the first two keyed entries of a dictionary literal so each key maps to the value the code wrote for the other",
+    },
+    SeedMeta {
+        id: "seed-61",
+        name: "swapped sequence literal elements",
+        defect_class: "wrong data",
+        description: "Exchanges the first two elements of a list or tuple literal so the element the code placed first stands second in the sequence the literal builds",
+    },
+    SeedMeta {
+        id: "seed-62",
+        name: "dropped assert statement",
+        defect_class: "wrong flow",
+        description: "Removes an assert statement so the check the code placed on its own state never runs and a state it was written to refuse passes through",
+    },
+    SeedMeta {
+        id: "seed-63",
+        name: "added numeric negation",
+        defect_class: "wrong sign",
+        description: "Wraps an integer or float constant in a unary minus so a value carries the opposite sign from the one the code wrote",
+    },
 ];
