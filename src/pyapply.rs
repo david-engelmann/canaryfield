@@ -86,6 +86,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-53" => apply_dropped_augmentation(tree),
         "seed-54" => apply_swapped_parameter_order(tree),
         "seed-55" => apply_dropped_import(tree),
+        "seed-56" => apply_dropped_return_statement(tree),
+        "seed-57" => apply_swapped_boolean_operands(tree),
+        "seed-58" => apply_dropped_comprehension_condition(tree),
+        "seed-59" => apply_flipped_later_comparison_operator(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2388,4 +2392,109 @@ fn apply_dropped_import(tree: &mut Tree) -> bool {
         planted = true;
     }
     planted
+}
+
+// seed-56, dropped return statement.
+
+fn apply_dropped_return_statement(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Return)
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-57, swapped boolean operands.
+
+fn apply_swapped_boolean_operands(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::BoolOp { .. })
+                && tree.many(*id, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut values = tree.many(*id, "values").to_vec();
+        values.swap(0, 1);
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-58, dropped comprehension condition.
+
+fn apply_dropped_comprehension_condition(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        for clause in tree.many(*id, "generators").to_vec() {
+            if !tree.many(clause, "ifs").is_empty() {
+                let rest = tree.many(clause, "ifs")[1..].to_vec();
+                tree.set_many(clause, "ifs", rest);
+                planted = true;
+            }
+        }
+    }
+    planted
+}
+
+// seed-59, flipped later comparison operator.
+
+fn apply_flipped_later_comparison_operator(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| match &tree.nodes[*id].data {
+            Data::Compare { ops } => ops.len() >= 2,
+            _ => false,
+        })
+        .collect();
+    for id in &targets {
+        if let Data::Compare { ops } = &mut tree.node_mut(*id).data {
+            for op in ops.iter_mut().skip(1) {
+                *op = comparison_flip(*op);
+            }
+        }
+    }
+    !targets.is_empty()
 }

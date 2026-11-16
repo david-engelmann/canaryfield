@@ -63,6 +63,10 @@ seed-52  dropped slice bound                    none          not-applicable
 seed-53  dropped augmentation                   none          not-applicable
 seed-54  swapped parameter order                sample.py     caught
 seed-55  dropped import                         none          not-applicable
+seed-56  dropped return statement               sample.py     caught
+seed-57  swapped boolean operands               none          not-applicable
+seed-58  dropped comprehension condition        none          not-applicable
+seed-59  flipped later comparison operator      none          not-applicable
 
 summary per gate
-  tests  caught 15  waved-through 3  not-applicable 38  gate-broken 0
+  tests  caught 16  waved-through 3  not-applicable 41  gate-broken 0
