@@ -838,26 +838,82 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught",
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 15,
+      "caught": 16,
       "waved-through": 3,
-      "not-applicable": 38,
+      "not-applicable": 41,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 38,
-      "gate-broken": 18
+      "not-applicable": 41,
+      "gate-broken": 19
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 38,
-      "gate-broken": 18
+      "not-applicable": 41,
+      "gate-broken": 19
      }
     }
    }
@@ -1633,13 +1689,65 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "branch": "canaryfield/seed-56",
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 15,
+      "caught": 16,
       "waved-through": 3,
-      "not-applicable": 38,
+      "not-applicable": 41,
       "gate-broken": 0
      }
     }
@@ -2295,13 +2403,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 2,
       "waved-through": 0,
-      "not-applicable": 54,
+      "not-applicable": 58,
       "gate-broken": 0
      }
     }
@@ -2964,13 +3116,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 53,
+      "not-applicable": 57,
       "gate-broken": 0
      }
     }
@@ -3654,14 +3850,60 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {},
+      "gates": {
+       "slow": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 38,
-      "gate-broken": 18
+      "not-applicable": 41,
+      "gate-broken": 19
      }
     }
    }
@@ -4380,13 +4622,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 1
+      },
+      "gates": {
+       "tests": "caught"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
-      "caught": 15,
+      "caught": 16,
       "waved-through": 3,
-      "not-applicable": 38,
+      "not-applicable": 41,
       "gate-broken": 0
      }
     }
@@ -4448,7 +4738,11 @@
     "seed-52",
     "seed-53",
     "seed-54",
-    "seed-55"
+    "seed-55",
+    "seed-56",
+    "seed-57",
+    "seed-58",
+    "seed-59"
    ]
   },
   {
@@ -5101,13 +5395,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-56",
+      "name": "dropped return statement",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-57",
+      "name": "swapped boolean operands",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-58",
+      "name": "dropped comprehension condition",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-59",
+      "name": "flipped later comparison operator",
+      "defect_class": "wrong predicate",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 2,
       "waved-through": 0,
-      "not-applicable": 54,
+      "not-applicable": 58,
       "gate-broken": 0
      }
     }

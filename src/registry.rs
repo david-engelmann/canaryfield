@@ -364,4 +364,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing input",
         description: "Removes an import statement so the names it binds are never bound and every read of them meets their absence",
     },
+    SeedMeta {
+        id: "seed-56",
+        name: "dropped return statement",
+        defect_class: "wrong flow",
+        description: "Removes a return statement so the flow runs on past the place the code wrote it to stop and deliver its result",
+    },
+    SeedMeta {
+        id: "seed-57",
+        name: "swapped boolean operands",
+        defect_class: "wrong predicate",
+        description: "Exchanges the first two values of a boolean operation so the term the code placed behind a guard stands in front of it in the reading order the short circuit follows",
+    },
+    SeedMeta {
+        id: "seed-58",
+        name: "dropped comprehension condition",
+        defect_class: "wrong data",
+        description: "Removes the first condition of a comprehension clause so the elements it held back pass into the comprehension",
+    },
+    SeedMeta {
+        id: "seed-59",
+        name: "flipped later comparison operator",
+        defect_class: "wrong predicate",
+        description: "Exchanges every operator after the first in a chained comparison for its paired opposite so the chain closes where the code wrote it to run on",
+    },
 ];
