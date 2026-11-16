@@ -14,7 +14,7 @@
 //! readings over the flat walk and the explicit stacks carry
 //! no ceiling, as theirs carry none.
 
-use crate::pyarena::{refusal, run_big_stack, Ctx, Data, Refusal, Tree, COLLECT_LIMIT};
+use crate::pyarena::{refusal, run_big_stack, Ctx, Data, Refusal, Slot, Tree, COLLECT_LIMIT};
 use crate::pyast::{BinOpKind, BoolKind, CmpKind, ConstVal, PyText, UnaryKind};
 use std::collections::{HashMap, HashSet};
 
@@ -82,6 +82,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-49" => apply_slice_step_shift(tree),
         "seed-50" => apply_swapped_conditional_arms(tree),
         "seed-51" => apply_dropped_exception_chain(tree),
+        "seed-52" => apply_dropped_slice_bound(tree),
+        "seed-53" => apply_dropped_augmentation(tree),
+        "seed-54" => apply_swapped_parameter_order(tree),
+        "seed-55" => apply_dropped_import(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2263,4 +2267,125 @@ fn apply_dropped_exception_chain(tree: &mut Tree) -> bool {
         tree.set_one(*id, "cause", None);
     }
     !targets.is_empty()
+}
+
+// seed-52, dropped slice bound.
+
+fn apply_dropped_slice_bound(tree: &mut Tree) -> bool {
+    let targets: Vec<(usize, &'static str)> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| {
+            if matches!(&tree.nodes[id].data, Data::Slice) {
+                if tree.one(id, "lower").is_some() {
+                    return Some((id, "lower"));
+                }
+                if tree.one(id, "upper").is_some() {
+                    return Some((id, "upper"));
+                }
+            }
+            None
+        })
+        .collect();
+    for (id, field) in &targets {
+        tree.set_one(*id, field, None);
+    }
+    !targets.is_empty()
+}
+
+// seed-53, dropped augmentation.
+
+fn apply_dropped_augmentation(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::AugAssign { .. }))
+        .collect();
+    for id in &targets {
+        let target = tree.one(*id, "target").expect("a target stands");
+        let value = tree.one(*id, "value").expect("a value stands");
+        let node = tree.node_mut(*id);
+        node.data = Data::Assign;
+        node.slots = vec![Slot::Many(vec![target]), Slot::One(Some(value))];
+    }
+    !targets.is_empty()
+}
+
+// seed-54, swapped parameter order.
+
+fn apply_swapped_parameter_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda) {
+                return false;
+            }
+            let Some(args_node) = tree.one(*id, "args") else {
+                return false;
+            };
+            tree.many(args_node, "posonlyargs").len() + tree.many(args_node, "args").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let args_node = tree.one(*id, "args").expect("the arguments stand");
+        let posonly = tree.many(args_node, "posonlyargs").to_vec();
+        let ordinary = tree.many(args_node, "args").to_vec();
+        if posonly.len() >= 2 {
+            let mut swapped = posonly.clone();
+            swapped.swap(0, 1);
+            tree.set_many(args_node, "posonlyargs", swapped);
+        } else if posonly.len() == 1 {
+            let first = posonly[0];
+            let second = ordinary[0];
+            tree.set_many(args_node, "posonlyargs", vec![second]);
+            let mut rest = ordinary.clone();
+            rest[0] = first;
+            tree.set_many(args_node, "args", rest);
+        } else {
+            let mut swapped = ordinary.clone();
+            swapped.swap(0, 1);
+            tree.set_many(args_node, "args", swapped);
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-55, dropped import.
+
+fn apply_dropped_import(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Import | Data::ImportFrom { .. })
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
 }

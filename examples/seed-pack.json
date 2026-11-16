@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/11",
+  "format": "canaryfield-seeds/12",
   "seeds": [
     {
       "id": "seed-00",
@@ -312,6 +312,30 @@
       "name": "dropped exception chain",
       "defect_class": "wrong error",
       "description": "Removes the from clause of a raise so the error arrives without the failure it was chained to as its cause"
+    },
+    {
+      "id": "seed-52",
+      "name": "dropped slice bound",
+      "defect_class": "boundary error",
+      "description": "Drops the lower bound of a slice, or its upper bound where no lower bound stands, so the code reads elements on a side of the slice the bound it wrote closed off"
+    },
+    {
+      "id": "seed-53",
+      "name": "dropped augmentation",
+      "defect_class": "wrong computation",
+      "description": "Reads an augmented assignment as a plain assignment of its value so the target keeps the value alone and loses everything it had accumulated"
+    },
+    {
+      "id": "seed-54",
+      "name": "swapped parameter order",
+      "defect_class": "wrong input",
+      "description": "Exchanges the first two positional parameters of a definition so the function reads its first two inputs each in the other's place"
+    },
+    {
+      "id": "seed-55",
+      "name": "dropped import",
+      "defect_class": "missing input",
+      "description": "Removes an import statement so the names it binds are never bound and every read of them meets their absence"
     }
   ]
 }

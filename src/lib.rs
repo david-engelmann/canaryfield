@@ -5,7 +5,7 @@
 //! judged against. Port slice 1 covers the seed registry as data
 //! and the versioned seed pack file, the pack document and its
 //! writer and its loader with every refusal the Python loader
-//! promises. The registry module holds the fifty two seeds as
+//! promises. The registry module holds the fifty six seeds as
 //! a data table, the JSON module carries the document reading
 //! and writing the pack file needs, and the seed pack module
 //! holds the pack surface over both.
@@ -24,7 +24,7 @@
 //! pyarena module lowers that tree into the mutable arena the
 //! applies plant into, pydump spells the tree the way
 //! ast.dump spells it for the change test, pyapply carries
-//! the fifty two seed applies, and pyplant carries
+//! the fifty six seed applies, and pyplant carries
 //! plant_seed over a directory.
 //!
 //! Port slice 4 adds the report module of PORT4. The report
