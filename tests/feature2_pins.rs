@@ -92,15 +92,15 @@ const RAISE_MODULE: &str = "def check():\n    try:\n        raise ValueError(\"i
 // The registry pins of F2-1.
 
 #[test]
-fn test_registry_has_sixty_unique_seeds() {
-    assert_eq!(SEEDS.len(), 60, "the grown registry holds sixty");
+fn test_registry_has_sixty_four_unique_seeds() {
+    assert_eq!(SEEDS.len(), 64, "the grown registry holds sixty four");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 60, "every seed id stands once");
+    assert_eq!(ids.len(), 64, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-59"));
+    assert_eq!(standing.last(), Some(&"seed-63"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -147,7 +147,11 @@ fn test_seed_metadata_is_complete() {
             "dropped return statement",
             "swapped boolean operands",
             "dropped comprehension condition",
-            "flipped later comparison operator"
+            "flipped later comparison operator",
+            "swapped dictionary entry values",
+            "swapped sequence literal elements",
+            "dropped assert statement",
+            "added numeric negation"
         ]
     );
 }
@@ -566,7 +570,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 60);
+    assert_eq!(loaded.len(), 64);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -592,8 +596,8 @@ fn test_seed_pack_via_cli() {
     let written = fs::read_to_string(&path).expect("the written pack reads");
     assert_eq!(written, seed_pack_text());
     assert!(
-        written.contains("\"canaryfield-seeds/13\""),
-        "the written pack carries the thirteenth format"
+        written.contains("\"canaryfield-seeds/14\""),
+        "the written pack carries the fourteenth format"
     );
     let _ = fs::remove_dir_all(&dir);
 }

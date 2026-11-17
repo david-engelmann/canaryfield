@@ -90,6 +90,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-57" => apply_swapped_boolean_operands(tree),
         "seed-58" => apply_dropped_comprehension_condition(tree),
         "seed-59" => apply_flipped_later_comparison_operator(tree),
+        "seed-60" => apply_swapped_dictionary_entry_values(tree),
+        "seed-61" => apply_swapped_sequence_literal_elements(tree),
+        "seed-62" => apply_dropped_assert_statement(tree),
+        "seed-63" => apply_added_numeric_negation(tree)?,
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2497,4 +2501,132 @@ fn apply_flipped_later_comparison_operator(tree: &mut Tree) -> bool {
         }
     }
     !targets.is_empty()
+}
+
+// seed-60, swapped dictionary entry values.
+
+fn apply_swapped_dictionary_entry_values(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Dict)
+                && tree
+                    .maybe(*id, "keys")
+                    .iter()
+                    .filter(|key| key.is_some())
+                    .count()
+                    >= 2
+        })
+        .collect();
+    for id in &targets {
+        let keys = tree.maybe(*id, "keys").to_vec();
+        let keyed: Vec<usize> = keys
+            .iter()
+            .enumerate()
+            .filter(|(_, key)| key.is_some())
+            .map(|(at, _)| at)
+            .collect();
+        let mut values = tree.many(*id, "values").to_vec();
+        values.swap(keyed[0], keyed[1]);
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-61, swapped sequence literal elements.
+
+fn apply_swapped_sequence_literal_elements(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::List { .. } | Data::Tuple { .. }
+            ) && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.swap(0, 1);
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-62, dropped assert statement.
+
+fn apply_dropped_assert_statement(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Assert)
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-63, added numeric negation.
+
+fn apply_added_numeric_negation(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        let numeric = match &tree.nodes[id].data {
+            Data::Constant { value } => {
+                matches!(value, ConstVal::Int(_))
+                    || matches!(value, ConstVal::Float(value) if value.is_finite())
+            }
+            _ => false,
+        };
+        numeric && !is_zero_literal(tree, id)
+    })?;
+    let mut planted = false;
+    for hit in hits {
+        let negated = matches!(
+            &tree.nodes[hit.parent].data,
+            Data::UnaryOp {
+                op: UnaryKind::USub
+            }
+        ) && hit.field == "operand";
+        if negated {
+            continue;
+        }
+        if *tree.slot_mut(hit.parent, hit.field, hit.index) != hit.node {
+            continue;
+        }
+        let wrapped = fresh(
+            tree,
+            Data::UnaryOp {
+                op: UnaryKind::USub,
+            },
+            vec![one(hit.node)],
+        );
+        *tree.slot_mut(hit.parent, hit.field, hit.index) = wrapped;
+        planted = true;
+    }
+    Ok(planted)
 }
