@@ -94,6 +94,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-61" => apply_swapped_sequence_literal_elements(tree),
         "seed-62" => apply_dropped_assert_statement(tree),
         "seed-63" => apply_added_numeric_negation(tree)?,
+        "seed-64" => apply_dropped_with_target(tree),
+        "seed-65" => apply_dropped_assignment_expression(tree)?,
+        "seed-66" => apply_dropped_delete_statement(tree),
+        "seed-67" => apply_dropped_match_case(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2629,4 +2633,82 @@ fn apply_added_numeric_negation(tree: &mut Tree) -> Result<bool, Refusal> {
         planted = true;
     }
     Ok(planted)
+}
+
+// seed-64, dropped with target.
+
+fn apply_dropped_with_target(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::WithItem) && tree.one(id, "optional_vars").is_some()
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let planted = !hits.is_empty();
+    for hit in hits {
+        tree.set_one(hit.node, "optional_vars", None);
+    }
+    planted
+}
+
+// seed-65, dropped assignment expression.
+
+fn apply_dropped_assignment_expression(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::NamedExpr)
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "value"))
+}
+
+// seed-66, dropped delete statement.
+
+fn apply_dropped_delete_statement(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Delete)
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-67, dropped match case.
+
+fn apply_dropped_match_case(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Match) && tree.many(*id, "cases").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let rest = tree.many(*id, "cases")[1..].to_vec();
+        tree.set_many(*id, "cases", rest);
+    }
+    !targets.is_empty()
 }

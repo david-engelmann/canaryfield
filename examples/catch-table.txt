@@ -71,6 +71,10 @@ seed-60  swapped dictionary entry values        none          not-applicable
 seed-61  swapped sequence literal elements      sample.py     waved-through
 seed-62  dropped assert statement               none          not-applicable
 seed-63  added numeric negation                 none          not-applicable
+seed-64  dropped with target                    none          not-applicable
+seed-65  dropped assignment expression          none          not-applicable
+seed-66  dropped delete statement               none          not-applicable
+seed-67  dropped match case                     none          not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 4  not-applicable 44  gate-broken 0
+  tests  caught 16  waved-through 4  not-applicable 48  gate-broken 0

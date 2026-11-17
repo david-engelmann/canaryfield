@@ -950,25 +950,77 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 4,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 20
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 20
      }
     }
@@ -1849,13 +1901,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 4,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 0
      }
     }
@@ -2603,13 +2703,57 @@
       "gates": {
        "tests": "caught"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 61,
+      "not-applicable": 65,
       "gate-broken": 0
      }
     }
@@ -3365,13 +3509,57 @@
       "gates": {
        "tests": "caught"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "waved-through": 0,
-      "not-applicable": 60,
+      "not-applicable": 64,
       "gate-broken": 0
      }
     }
@@ -4147,13 +4335,57 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 20
      }
     }
@@ -4969,13 +5201,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 4,
-      "not-applicable": 44,
+      "not-applicable": 48,
       "gate-broken": 0
      }
     }
@@ -5045,7 +5321,11 @@
     "seed-60",
     "seed-61",
     "seed-62",
-    "seed-63"
+    "seed-63",
+    "seed-64",
+    "seed-65",
+    "seed-66",
+    "seed-67"
    ]
   },
   {
@@ -5790,13 +6070,57 @@
       "gates": {
        "tests": "caught"
       }
+     },
+     {
+      "seed": "seed-64",
+      "name": "dropped with target",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-65",
+      "name": "dropped assignment expression",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-66",
+      "name": "dropped delete statement",
+      "defect_class": "wrong data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-67",
+      "name": "dropped match case",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 61,
+      "not-applicable": 65,
       "gate-broken": 0
      }
     }
