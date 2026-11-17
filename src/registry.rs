@@ -412,4 +412,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong sign",
         description: "Wraps an integer or float constant in a unary minus so a value carries the opposite sign from the one the code wrote",
     },
+    SeedMeta {
+        id: "seed-64",
+        name: "dropped with target",
+        defect_class: "missing input",
+        description: "Clears the binding target of a with item so the value the context manager produces is bound to no name and a body reading that name finds it unbound",
+    },
+    SeedMeta {
+        id: "seed-65",
+        name: "dropped assignment expression",
+        defect_class: "missing input",
+        description: "Replaces an assignment expression with the value it carries so the value still flows where it stood while the name the expression bound is never bound",
+    },
+    SeedMeta {
+        id: "seed-66",
+        name: "dropped delete statement",
+        defect_class: "wrong data",
+        description: "Removes a delete statement so the name or entry the code removed stands on in its scope with the value it held",
+    },
+    SeedMeta {
+        id: "seed-67",
+        name: "dropped match case",
+        defect_class: "wrong branch",
+        description: "Removes the first case of a match statement so a value the case would have taken falls to a later case or past the match altogether",
+    },
 ];
