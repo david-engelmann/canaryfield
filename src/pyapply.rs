@@ -98,6 +98,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-65" => apply_dropped_assignment_expression(tree)?,
         "seed-66" => apply_dropped_delete_statement(tree),
         "seed-67" => apply_dropped_match_case(tree),
+        "seed-68" => apply_swapped_slice_bounds(tree),
+        "seed-69" => apply_swapped_branch_bodies(tree),
+        "seed-70" => apply_dropped_match_guard(tree),
+        "seed-71" => apply_dropped_yield_from_delegation(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2709,6 +2713,78 @@ fn apply_dropped_match_case(tree: &mut Tree) -> bool {
     for id in &targets {
         let rest = tree.many(*id, "cases")[1..].to_vec();
         tree.set_many(*id, "cases", rest);
+    }
+    !targets.is_empty()
+}
+
+// seed-68, swapped slice bounds.
+
+fn apply_swapped_slice_bounds(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Slice)
+                && tree.one(*id, "lower").is_some()
+                && tree.one(*id, "upper").is_some()
+        })
+        .collect();
+    for id in &targets {
+        let lower = tree.one(*id, "lower").expect("a lower bound stands");
+        let upper = tree.one(*id, "upper").expect("an upper bound stands");
+        tree.set_one(*id, "lower", Some(upper));
+        tree.set_one(*id, "upper", Some(lower));
+    }
+    !targets.is_empty()
+}
+
+// seed-69, swapped branch bodies.
+
+fn apply_swapped_branch_bodies(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::If)
+                && !tree.many(*id, "body").is_empty()
+                && !tree.many(*id, "orelse").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        let body = tree.many(*id, "body").to_vec();
+        let orelse = tree.many(*id, "orelse").to_vec();
+        tree.set_many(*id, "body", orelse);
+        tree.set_many(*id, "orelse", body);
+    }
+    !targets.is_empty()
+}
+
+// seed-70, dropped match guard.
+
+fn apply_dropped_match_guard(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::MatchCase) && tree.one(*id, "guard").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "guard", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-71, dropped yield-from delegation.
+
+fn apply_dropped_yield_from_delegation(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::YieldFrom))
+        .collect();
+    for id in &targets {
+        tree.node_mut(*id).data = Data::Yield;
     }
     !targets.is_empty()
 }
