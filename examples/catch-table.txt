@@ -75,6 +75,10 @@ seed-64  dropped with target                    none          not-applicable
 seed-65  dropped assignment expression          none          not-applicable
 seed-66  dropped delete statement               none          not-applicable
 seed-67  dropped match case                     none          not-applicable
+seed-68  swapped slice bounds                   none          not-applicable
+seed-69  swapped branch bodies                  none          not-applicable
+seed-70  dropped match guard                    none          not-applicable
+seed-71  dropped yield-from delegation          none          not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 4  not-applicable 48  gate-broken 0
+  tests  caught 16  waved-through 4  not-applicable 52  gate-broken 0

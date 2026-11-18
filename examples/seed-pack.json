@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/15",
+  "format": "canaryfield-seeds/16",
   "seeds": [
     {
       "id": "seed-00",
@@ -408,6 +408,30 @@
       "name": "dropped match case",
       "defect_class": "wrong branch",
       "description": "Removes the first case of a match statement so a value the case would have taken falls to a later case or past the match altogether"
+    },
+    {
+      "id": "seed-68",
+      "name": "swapped slice bounds",
+      "defect_class": "wrong data",
+      "description": "Exchanges the start and the stop of a slice so the slice takes the elements standing between the bounds in the other order or none of them at all"
+    },
+    {
+      "id": "seed-69",
+      "name": "swapped branch bodies",
+      "defect_class": "wrong branch",
+      "description": "Exchanges the body and the else body of an if statement so each branch runs under the opposite answer to the test"
+    },
+    {
+      "id": "seed-70",
+      "name": "dropped match guard",
+      "defect_class": "wrong branch",
+      "description": "Clears the guard of a match case so the case takes every value its pattern matches, the condition that narrowed it standing nowhere"
+    },
+    {
+      "id": "seed-71",
+      "name": "dropped yield-from delegation",
+      "defect_class": "wrong data",
+      "description": "Stands a yield from as a plain yield of the same value so the generator yields the iterable itself once instead of yielding its items in turn"
     }
   ]
 }
