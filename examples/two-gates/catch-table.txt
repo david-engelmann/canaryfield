@@ -84,7 +84,11 @@ seed-72  swapped comprehension generator order  none          not-applicable  no
 seed-73  dropped argument unpacking             none          not-applicable  not-applicable
 seed-74  swapped formatted string values        none          not-applicable  not-applicable
 seed-75  dropped call statement                 none          not-applicable  not-applicable
+seed-76  swapped decorator order                none          not-applicable  not-applicable
+seed-77  dropped parameter default              sample.py     waved-through   waved-through
+seed-78  swapped base class order               none          not-applicable  not-applicable
+seed-79  swapped match case order               none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 4  not-applicable 56  gate-broken 0
-  compile  caught 0  waved-through 20  not-applicable 56  gate-broken 0
+  tests  caught 16  waved-through 5  not-applicable 59  gate-broken 0
+  compile  caught 0  waved-through 21  not-applicable 59  gate-broken 0

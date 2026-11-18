@@ -1106,26 +1106,82 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 0
+      },
+      "gates": {
+       "tests": "waved-through",
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
-      "waved-through": 4,
-      "not-applicable": 56,
+      "waved-through": 5,
+      "not-applicable": 59,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 56,
-      "gate-broken": 20
+      "not-applicable": 59,
+      "gate-broken": 21
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 56,
-      "gate-broken": 20
+      "not-applicable": 59,
+      "gate-broken": 21
      }
     }
    }
@@ -2149,13 +2205,65 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "branch": "canaryfield/seed-77",
+      "planted_exits": {
+       "tests": 0
+      },
+      "gates": {
+       "tests": "waved-through"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
-      "waved-through": 4,
-      "not-applicable": 56,
+      "waved-through": 5,
+      "not-applicable": 59,
       "gate-broken": 0
      }
     }
@@ -3035,13 +3143,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 73,
+      "not-applicable": 77,
       "gate-broken": 0
      }
     }
@@ -3929,13 +4081,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "waved-through": 0,
-      "not-applicable": 72,
+      "not-applicable": 76,
       "gate-broken": 0
      }
     }
@@ -4843,14 +5039,60 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {},
+      "gates": {
+       "slow": "gate-broken"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 56,
-      "gate-broken": 20
+      "not-applicable": 59,
+      "gate-broken": 21
      }
     }
    }
@@ -5797,13 +6039,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "planted_exits": {
+       "tests": 0
+      },
+      "gates": {
+       "tests": "waved-through"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
-      "waved-through": 4,
-      "not-applicable": 56,
+      "waved-through": 5,
+      "not-applicable": 59,
       "gate-broken": 0
      }
     }
@@ -5885,7 +6175,11 @@
     "seed-72",
     "seed-73",
     "seed-74",
-    "seed-75"
+    "seed-75",
+    "seed-76",
+    "seed-77",
+    "seed-78",
+    "seed-79"
    ]
   },
   {
@@ -6762,13 +7056,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-76",
+      "name": "swapped decorator order",
+      "defect_class": "wrong wrapper",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-77",
+      "name": "dropped parameter default",
+      "defect_class": "wrong default",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-78",
+      "name": "swapped base class order",
+      "defect_class": "wrong inheritance",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-79",
+      "name": "swapped match case order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 73,
+      "not-applicable": 77,
       "gate-broken": 0
      }
     }
