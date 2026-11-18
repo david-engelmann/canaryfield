@@ -300,7 +300,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn the_fifteen_formats_carry_their_own_counts() {
+    fn the_sixteen_formats_carry_their_own_counts() {
         assert_eq!(pack_entry_count("canaryfield-seeds/1"), Some(12));
         assert_eq!(pack_entry_count("canaryfield-seeds/10"), Some(48));
         assert_eq!(pack_entry_count("canaryfield-seeds/11"), Some(52));
@@ -308,12 +308,13 @@ mod tests {
         assert_eq!(pack_entry_count("canaryfield-seeds/13"), Some(60));
         assert_eq!(pack_entry_count("canaryfield-seeds/14"), Some(64));
         assert_eq!(pack_entry_count("canaryfield-seeds/15"), Some(68));
-        assert_eq!(pack_entry_count("canaryfield-seeds/16"), None);
+        assert_eq!(pack_entry_count("canaryfield-seeds/16"), Some(72));
+        assert_eq!(pack_entry_count("canaryfield-seeds/17"), None);
         assert_eq!(pack_entry_count("other/9"), None);
     }
 
     #[test]
-    fn the_current_document_carries_sixty_entries_in_order() {
+    fn the_current_document_carries_seventy_two_entries_in_order() {
         let data = seed_pack_data();
         assert_eq!(
             data.get("format"),
@@ -321,14 +322,14 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 68);
+                assert_eq!(items.len(), 72);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
                 );
                 assert_eq!(
-                    items[59].get("id"),
-                    Some(&JsonValue::Str("seed-59".to_string()))
+                    items[71].get("id"),
+                    Some(&JsonValue::Str("seed-71".to_string()))
                 );
             }
             other => panic!("seeds is not a list: {other:?}"),

@@ -2765,9 +2765,9 @@ fn apply_dropped_match_guard(tree: &mut Tree) -> bool {
     let targets: Vec<usize> = tree
         .sorted_nodes()
         .into_iter()
-        .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::MatchCase) && tree.one(*id, "guard").is_some()
-        })
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Match))
+        .flat_map(|id| tree.many(id, "cases").to_vec())
+        .filter(|case| tree.one(*case, "guard").is_some())
         .collect();
     for id in &targets {
         tree.set_one(*id, "guard", None);

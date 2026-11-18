@@ -833,13 +833,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-67"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped slice bounds",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-68"
+    },
+    {
+      "defect_class": "wrong branch",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped branch bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-69"
+    },
+    {
+      "defect_class": "wrong branch",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped match guard",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-70"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped yield-from delegation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-71"
     }
   ],
   "summary": {
     "tests": {
       "caught": 16,
       "gate-broken": 0,
-      "not-applicable": 48,
+      "not-applicable": 52,
       "waved-through": 4
     }
   },

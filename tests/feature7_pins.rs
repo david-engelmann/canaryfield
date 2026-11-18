@@ -159,8 +159,7 @@ fn test_seed_sixty_eight_not_applicable_without_two_bounds() {
 
 const BRANCH_MODULE: &str =
     "def check(flag):\n    if flag:\n        return 'up'\n    else:\n        return 'down'\n";
-const BRANCH_GATE: &str =
-    "#!/bin/sh\ngrep -A1 \"if flag:\" mod.py | grep -q \"return 'up'\"\n";
+const BRANCH_GATE: &str = "#!/bin/sh\ngrep -A1 \"if flag:\" mod.py | grep -q \"return 'up'\"\n";
 
 #[test]
 fn test_seed_sixty_nine_plants_and_is_caught() {
@@ -211,10 +210,15 @@ fn test_seed_sixty_nine_plants_every_if_in_one_file() {
 
 #[test]
 fn test_seed_sixty_nine_leaves_an_if_without_an_else_standing() {
-    let (planted, rendered) =
-        applied_render("def f(a):\n    if a:\n        return 1\n    return 0\n", "seed-69");
+    let (planted, rendered) = applied_render(
+        "def f(a):\n    if a:\n        return 1\n    return 0\n",
+        "seed-69",
+    );
     assert!(!planted);
-    assert_eq!(rendered, "def f(a):\n    if a:\n        return 1\n    return 0");
+    assert_eq!(
+        rendered,
+        "def f(a):\n    if a:\n        return 1\n    return 0"
+    );
 }
 
 #[test]
@@ -312,7 +316,10 @@ fn test_seed_seventy_one_plants_every_yield_from_in_one_file() {
         "seed-71",
     );
     assert!(planted);
-    assert_eq!(rendered, "def f(gen):\n    yield gen\n\ndef g(gen):\n    yield gen");
+    assert_eq!(
+        rendered,
+        "def f(gen):\n    yield gen\n\ndef g(gen):\n    yield gen"
+    );
 }
 
 #[test]
