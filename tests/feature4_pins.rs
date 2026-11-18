@@ -86,15 +86,15 @@ const CHAIN_GATE: &str = "#!/bin/sh\ngrep -q \"a < b < c\" mod.py\n";
 // The registry pins of F4-1.
 
 #[test]
-fn test_registry_has_seventy_two_unique_seeds() {
-    assert_eq!(SEEDS.len(), 72, "the grown registry holds seventy two");
+fn test_registry_has_seventy_six_unique_seeds() {
+    assert_eq!(SEEDS.len(), 76, "the grown registry holds seventy six");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 72, "every seed id stands once");
+    assert_eq!(ids.len(), 76, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-71"));
+    assert_eq!(standing.last(), Some(&"seed-75"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -145,7 +145,11 @@ fn test_seed_metadata_is_complete() {
             "swapped slice bounds",
             "swapped branch bodies",
             "dropped match guard",
-            "dropped yield-from delegation"
+            "dropped yield-from delegation",
+            "swapped comprehension generator order",
+            "dropped argument unpacking",
+            "swapped formatted string values",
+            "dropped call statement"
         ]
     );
 }
@@ -514,7 +518,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 72);
+    assert_eq!(loaded.len(), 76);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -541,6 +545,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 72);
+    assert_eq!(loaded.len(), 76);
     let _ = fs::remove_dir_all(&dir);
 }

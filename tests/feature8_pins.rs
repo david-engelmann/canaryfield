@@ -144,7 +144,10 @@ fn test_seed_seventy_two_leaves_a_dependent_second_generator_standing() {
         "seed-72",
     );
     assert!(!planted);
-    assert_eq!(rendered, "def f(xs):\n    return [b for a in xs for b in a]");
+    assert_eq!(
+        rendered,
+        "def f(xs):\n    return [b for a in xs for b in a]"
+    );
     let (planted, rendered) = applied_render(
         "def f(pairs):\n    return [v for (k, v) in pairs for v in v]\n",
         "seed-72",
@@ -152,16 +155,13 @@ fn test_seed_seventy_two_leaves_a_dependent_second_generator_standing() {
     assert!(!planted);
     assert_eq!(
         rendered,
-        "def f(pairs):\n    return [v for (k, v) in pairs for v in v]"
+        "def f(pairs):\n    return [v for k, v in pairs for v in v]"
     );
 }
 
 #[test]
 fn test_seed_seventy_two_leaves_a_single_generator_standing() {
-    let (planted, rendered) = applied_render(
-        "def f(xs):\n    return [a for a in xs]\n",
-        "seed-72",
-    );
+    let (planted, rendered) = applied_render("def f(xs):\n    return [a for a in xs]\n", "seed-72");
     assert!(!planted);
     assert_eq!(rendered, "def f(xs):\n    return [a for a in xs]");
 }
@@ -189,10 +189,8 @@ fn test_seed_seventy_three_plants_and_is_caught() {
 
 #[test]
 fn test_seed_seventy_three_drops_an_argument_unpacking() {
-    let (planted, rendered) = applied_render(
-        "def f(total, xs):\n    return total(*xs)\n",
-        "seed-73",
-    );
+    let (planted, rendered) =
+        applied_render("def f(total, xs):\n    return total(*xs)\n", "seed-73");
     assert!(planted);
     assert_eq!(rendered, "def f(total, xs):\n    return total(xs)");
 }
@@ -212,10 +210,7 @@ fn test_seed_seventy_three_plants_every_starred_argument_in_one_file() {
 
 #[test]
 fn test_seed_seventy_three_leaves_a_starred_display_standing() {
-    let (planted, rendered) = applied_render(
-        "def f(xs):\n    return [0, *xs]\n",
-        "seed-73",
-    );
+    let (planted, rendered) = applied_render("def f(xs):\n    return [0, *xs]\n", "seed-73");
     assert!(!planted);
     assert_eq!(rendered, "def f(xs):\n    return [0, *xs]");
 }
@@ -243,20 +238,14 @@ fn test_seed_seventy_four_plants_and_is_caught() {
 
 #[test]
 fn test_seed_seventy_four_exchanges_the_first_two_formatted_values() {
-    let (planted, rendered) = applied_render(
-        "def f(a, b):\n    return f'{a}-{b}'\n",
-        "seed-74",
-    );
+    let (planted, rendered) = applied_render("def f(a, b):\n    return f'{a}-{b}'\n", "seed-74");
     assert!(planted);
     assert_eq!(rendered, "def f(a, b):\n    return f'{b}-{a}'");
 }
 
 #[test]
 fn test_seed_seventy_four_keeps_a_format_spec_with_its_value() {
-    let (planted, rendered) = applied_render(
-        "def f(a, b):\n    return f'{a:>3}{b}'\n",
-        "seed-74",
-    );
+    let (planted, rendered) = applied_render("def f(a, b):\n    return f'{a:>3}{b}'\n", "seed-74");
     assert!(planted);
     assert_eq!(rendered, "def f(a, b):\n    return f'{b}{a:>3}'");
 }
@@ -331,10 +320,7 @@ fn test_seed_seventy_five_never_empties_a_body() {
 
 #[test]
 fn test_seed_seventy_five_leaves_a_bare_expression_standing() {
-    let (planted, rendered) = applied_render(
-        "def f(x):\n    x\n    return x\n",
-        "seed-75",
-    );
+    let (planted, rendered) = applied_render("def f(x):\n    x\n    return x\n", "seed-75");
     assert!(!planted);
     assert_eq!(rendered, "def f(x):\n    x\n    return x");
 }
