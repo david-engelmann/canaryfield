@@ -460,4 +460,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong data",
         description: "Stands a yield from as a plain yield of the same value so the generator yields the iterable itself once instead of yielding its items in turn",
     },
+    SeedMeta {
+        id: "seed-72",
+        name: "swapped comprehension generator order",
+        defect_class: "wrong data",
+        description: "Exchanges the first two generators of a comprehension whose second iterable loads no name the first target binds, so the comprehension produces its values in the other nesting order",
+    },
+    SeedMeta {
+        id: "seed-73",
+        name: "dropped argument unpacking",
+        defect_class: "wrong data",
+        description: "Stands a starred call argument as the value it carries so the call hands the iterable itself as one argument instead of handing its items in turn",
+    },
+    SeedMeta {
+        id: "seed-74",
+        name: "swapped formatted string values",
+        defect_class: "wrong data",
+        description: "Exchanges the first two formatted values of a formatted string so the string spells its text with the two values standing in the other order",
+    },
+    SeedMeta {
+        id: "seed-75",
+        name: "dropped call statement",
+        defect_class: "missing effect",
+        description: "Removes a statement that stands as a call alone so the call and every effect it would have had never happen",
+    },
 ];

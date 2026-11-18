@@ -102,6 +102,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-69" => apply_swapped_branch_bodies(tree),
         "seed-70" => apply_dropped_match_guard(tree),
         "seed-71" => apply_dropped_yield_from_delegation(tree),
+        "seed-72" => apply_swapped_comprehension_generator_order(tree),
+        "seed-73" => apply_dropped_argument_unpacking(tree)?,
+        "seed-74" => apply_swapped_formatted_string_values(tree),
+        "seed-75" => apply_dropped_call_statement(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2787,4 +2791,138 @@ fn apply_dropped_yield_from_delegation(tree: &mut Tree) -> bool {
         tree.node_mut(*id).data = Data::Yield;
     }
     !targets.is_empty()
+}
+
+/// The names standing anywhere under a node, each name
+/// once, the reading the comprehension generator order
+/// seed makes of a target and of an iterable.
+fn subtree_names(tree: &Tree, root: usize) -> Vec<String> {
+    let mut names: Vec<String> = Vec::new();
+    let mut stack = vec![root];
+    while let Some(id) = stack.pop() {
+        if let Data::Name { id: name, .. } = &tree.nodes[id].data {
+            if !names.contains(name) {
+                names.push(name.clone());
+            }
+        }
+        for child in tree.child_ids(id) {
+            stack.push(child);
+        }
+    }
+    names
+}
+
+// seed-72, swapped comprehension generator order.
+
+fn apply_swapped_comprehension_generator_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            ) && tree.many(*id, "generators").len() >= 2
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let generators = tree.many(*id, "generators").to_vec();
+        let target = tree
+            .one(generators[0], "target")
+            .expect("a generator target stands");
+        let iter = tree
+            .one(generators[1], "iter")
+            .expect("a generator iterable stands");
+        let bound = subtree_names(tree, target);
+        let loaded = subtree_names(tree, iter);
+        if loaded.iter().any(|name| bound.contains(name)) {
+            continue;
+        }
+        let mut swapped = generators;
+        swapped.swap(0, 1);
+        tree.set_many(*id, "generators", swapped);
+        planted = true;
+    }
+    planted
+}
+
+// seed-73, dropped argument unpacking.
+
+fn apply_dropped_argument_unpacking(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Starred { .. })
+    })?;
+    let hits: Vec<Hit> = hits
+        .into_iter()
+        .filter(|hit| hit.field == "args" && matches!(&tree.nodes[hit.parent].data, Data::Call))
+        .collect();
+    Ok(replace_hits_with_child(tree, hits, "value"))
+}
+
+// seed-74, swapped formatted string values.
+
+fn apply_swapped_formatted_string_values(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::JoinedStr))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let positions: Vec<usize> = tree
+            .many(*id, "values")
+            .iter()
+            .enumerate()
+            .filter(|(_, value)| matches!(&tree.nodes[**value].data, Data::FormattedValue { .. }))
+            .map(|(index, _)| index)
+            .collect();
+        if positions.len() >= 2 {
+            let mut values = tree.many(*id, "values").to_vec();
+            values.swap(positions[0], positions[1]);
+            tree.set_many(*id, "values", values);
+            planted = true;
+        }
+    }
+    planted
+}
+
+// seed-75, dropped call statement.
+
+fn apply_dropped_call_statement(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::ExprStmt)
+            && match tree.one(id, "value") {
+                Some(value) => matches!(&tree.nodes[value].data, Data::Call),
+                None => false,
+            }
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
 }
