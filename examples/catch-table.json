@@ -1013,13 +1013,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-83"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped with item",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-84"
+    },
+    {
+      "defect_class": "wrong branch",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped try handler order",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-85"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped argument annotation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-86"
+    },
+    {
+      "defect_class": "wrong variable",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped assignment target order",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-87"
     }
   ],
   "summary": {
     "tests": {
       "caught": 16,
       "gate-broken": 0,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "waved-through": 5
     }
   },

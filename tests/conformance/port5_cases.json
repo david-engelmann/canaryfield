@@ -1214,25 +1214,77 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 21
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 21
      }
     }
@@ -2357,13 +2409,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 0
      }
     }
@@ -3331,13 +3431,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "gate-broken": 0
      }
     }
@@ -4313,13 +4457,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "waved-through": 0,
-      "not-applicable": 80,
+      "not-applicable": 84,
       "gate-broken": 0
      }
     }
@@ -5317,13 +5505,57 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 21
      }
     }
@@ -6363,13 +6595,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 63,
+      "not-applicable": 67,
       "gate-broken": 0
      }
     }
@@ -6459,7 +6735,11 @@
     "seed-80",
     "seed-81",
     "seed-82",
-    "seed-83"
+    "seed-83",
+    "seed-84",
+    "seed-85",
+    "seed-86",
+    "seed-87"
    ]
   },
   {
@@ -7424,13 +7704,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-84",
+      "name": "dropped with item",
+      "defect_class": "missing input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-85",
+      "name": "swapped try handler order",
+      "defect_class": "wrong branch",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-86",
+      "name": "dropped argument annotation",
+      "defect_class": "missing data",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-87",
+      "name": "swapped assignment target order",
+      "defect_class": "wrong variable",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "gate-broken": 0
      }
     }
