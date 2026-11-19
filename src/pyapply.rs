@@ -110,6 +110,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-77" => apply_dropped_parameter_default(tree),
         "seed-78" => apply_swapped_base_class_order(tree),
         "seed-79" => apply_swapped_match_case_order(tree),
+        "seed-80" => apply_swapped_with_items(tree),
+        "seed-81" => apply_dropped_asynchronous_modifier(tree),
+        "seed-82" => apply_swapped_keyword_argument_order(tree),
+        "seed-83" => apply_swapped_import_names(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -3003,6 +3007,122 @@ fn apply_swapped_match_case_order(tree: &mut Tree) -> bool {
         let mut swapped = tree.many(*id, "cases").to_vec();
         swapped.swap(0, 1);
         tree.set_many(*id, "cases", swapped);
+    }
+    !targets.is_empty()
+}
+
+// seed-80, swapped with items.
+
+fn apply_swapped_with_items(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::With { .. }) && tree.many(*id, "items").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "items").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "items", swapped);
+    }
+    !targets.is_empty()
+}
+
+// seed-81, dropped asynchronous modifier. The confinement
+// reading of F10-3, a definition plants only where its own
+// body carries no await and no asynchronous compound of its
+// own, the headers of nested definitions standing in the
+// reading and their bodies standing outside it.
+
+fn async_body_stands_plain(tree: &Tree, def: usize) -> bool {
+    let mut stack: Vec<usize> = tree.many(def, "body").to_vec();
+    while let Some(id) = stack.pop() {
+        match &tree.nodes[id].data {
+            Data::Await => return false,
+            Data::For { is_async: true }
+            | Data::With { is_async: true }
+            | Data::Comprehension { is_async: true } => return false,
+            Data::FuncDef { .. } => {
+                let body = tree.many(id, "body").to_vec();
+                for child in tree.child_ids(id) {
+                    if !body.contains(&child) {
+                        stack.push(child);
+                    }
+                }
+                continue;
+            }
+            _ => {}
+        }
+        for child in tree.child_ids(id) {
+            stack.push(child);
+        }
+    }
+    true
+}
+
+fn apply_dropped_asynchronous_modifier(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::FuncDef { is_async: true, .. })
+                && async_body_stands_plain(tree, *id)
+        })
+        .collect();
+    for id in &targets {
+        if let Data::FuncDef { is_async, .. } = &mut tree.node_mut(*id).data {
+            *is_async = false;
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-82, swapped keyword argument order.
+
+fn apply_swapped_keyword_argument_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Call))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let keywords = tree.many(*id, "keywords").to_vec();
+        let named: Vec<usize> = keywords
+            .iter()
+            .enumerate()
+            .filter(|(_, kw)| matches!(&tree.nodes[**kw].data, Data::Keyword { arg: Some(_) }))
+            .map(|(index, _)| index)
+            .collect();
+        if named.len() < 2 {
+            continue;
+        }
+        let mut swapped = keywords;
+        swapped.swap(named[0], named[1]);
+        tree.set_many(*id, "keywords", swapped);
+        planted = true;
+    }
+    planted
+}
+
+// seed-83, swapped import names.
+
+fn apply_swapped_import_names(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::Import | Data::ImportFrom { .. }
+            ) && tree.many(*id, "names").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "names").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "names", swapped);
     }
     !targets.is_empty()
 }

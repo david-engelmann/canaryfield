@@ -87,6 +87,10 @@ seed-76  swapped decorator order                none          not-applicable
 seed-77  dropped parameter default              sample.py     waved-through
 seed-78  swapped base class order               none          not-applicable
 seed-79  swapped match case order               none          not-applicable
+seed-80  swapped with items                     none          not-applicable
+seed-81  dropped asynchronous modifier          none          not-applicable
+seed-82  swapped keyword argument order         none          not-applicable
+seed-83  swapped import names                   none          not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 5  not-applicable 59  gate-broken 0
+  tests  caught 16  waved-through 5  not-applicable 63  gate-broken 0

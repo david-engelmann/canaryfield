@@ -508,4 +508,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong branch",
         description: "Exchanges the first two cases of a match statement so a value the first case would have taken meets the second case first",
     },
+    SeedMeta {
+        id: "seed-80",
+        name: "swapped with items",
+        defect_class: "wrong flow",
+        description: "Exchanges the first two items of a with statement so its contexts enter and leave in the other order than the code wrote",
+    },
+    SeedMeta {
+        id: "seed-81",
+        name: "dropped asynchronous modifier",
+        defect_class: "missing wait",
+        description: "Clears the asynchronous standing of a definition whose own body carries no await so its calls return the computed value where the code promised a coroutine",
+    },
+    SeedMeta {
+        id: "seed-82",
+        name: "swapped keyword argument order",
+        defect_class: "wrong input",
+        description: "Exchanges the first two keyword arguments of a call so its named inputs stand in the other order than the code wrote",
+    },
+    SeedMeta {
+        id: "seed-83",
+        name: "swapped import names",
+        defect_class: "wrong flow",
+        description: "Exchanges the first two names of an import statement so the names bind in the other order than the code wrote",
+    },
 ];
