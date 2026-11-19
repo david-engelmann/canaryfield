@@ -1162,25 +1162,77 @@
        "always-false": "not-applicable",
        "exit-three": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable",
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 0
      },
      "always-false": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 21
      },
      "exit-three": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 21
      }
     }
@@ -2257,13 +2309,61 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "branch": null,
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 0
      }
     }
@@ -3187,13 +3287,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 77,
+      "not-applicable": 81,
       "gate-broken": 0
      }
     }
@@ -4125,13 +4269,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "waved-through": 0,
-      "not-applicable": 76,
+      "not-applicable": 80,
       "gate-broken": 0
      }
     }
@@ -5085,13 +5273,57 @@
       "gates": {
        "slow": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "slow": "not-applicable"
+      }
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "waved-through": 0,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 21
      }
     }
@@ -6087,13 +6319,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 16,
       "waved-through": 5,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "gate-broken": 0
      }
     }
@@ -6179,7 +6455,11 @@
     "seed-76",
     "seed-77",
     "seed-78",
-    "seed-79"
+    "seed-79",
+    "seed-80",
+    "seed-81",
+    "seed-82",
+    "seed-83"
    ]
   },
   {
@@ -7100,13 +7380,57 @@
       "gates": {
        "tests": "not-applicable"
       }
+     },
+     {
+      "seed": "seed-80",
+      "name": "swapped with items",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-81",
+      "name": "dropped asynchronous modifier",
+      "defect_class": "missing wait",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-82",
+      "name": "swapped keyword argument order",
+      "defect_class": "wrong input",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
+     },
+     {
+      "seed": "seed-83",
+      "name": "swapped import names",
+      "defect_class": "wrong flow",
+      "planted_file": null,
+      "planted_files": [],
+      "planted_exits": {},
+      "gates": {
+       "tests": "not-applicable"
+      }
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "waved-through": 0,
-      "not-applicable": 77,
+      "not-applicable": 81,
       "gate-broken": 0
      }
     }

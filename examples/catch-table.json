@@ -969,13 +969,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-79"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped with items",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-80"
+    },
+    {
+      "defect_class": "missing wait",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped asynchronous modifier",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-81"
+    },
+    {
+      "defect_class": "wrong input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped keyword argument order",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-82"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped import names",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-83"
     }
   ],
   "summary": {
     "tests": {
       "caught": 16,
       "gate-broken": 0,
-      "not-applicable": 59,
+      "not-applicable": 63,
       "waved-through": 5
     }
   },
