@@ -92,7 +92,11 @@ seed-80  swapped with items                     none          not-applicable  no
 seed-81  dropped asynchronous modifier          none          not-applicable  not-applicable
 seed-82  swapped keyword argument order         none          not-applicable  not-applicable
 seed-83  swapped import names                   none          not-applicable  not-applicable
+seed-84  dropped with item                      none          not-applicable  not-applicable
+seed-85  swapped try handler order              none          not-applicable  not-applicable
+seed-86  dropped argument annotation            none          not-applicable  not-applicable
+seed-87  swapped assignment target order        none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 5  not-applicable 63  gate-broken 0
-  compile  caught 0  waved-through 21  not-applicable 63  gate-broken 0
+  tests  caught 16  waved-through 5  not-applicable 67  gate-broken 0
+  compile  caught 0  waved-through 21  not-applicable 67  gate-broken 0

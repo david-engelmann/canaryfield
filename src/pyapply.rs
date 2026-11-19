@@ -114,6 +114,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-81" => apply_dropped_asynchronous_modifier(tree),
         "seed-82" => apply_swapped_keyword_argument_order(tree),
         "seed-83" => apply_swapped_import_names(tree),
+        "seed-84" => apply_dropped_with_item(tree),
+        "seed-85" => apply_swapped_try_handler_order(tree),
+        "seed-86" => apply_dropped_argument_annotation(tree),
+        "seed-87" => apply_swapped_assignment_target_order(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -3125,4 +3129,104 @@ fn apply_swapped_import_names(tree: &mut Tree) -> bool {
         tree.set_many(*id, "names", swapped);
     }
     !targets.is_empty()
+}
+
+// seed-84, dropped with item. The first item of a with
+// carrying at least two leaves the statement whole, the
+// removal the registry's first entry removals make, so the
+// statement always keeps an item the language reads.
+
+fn apply_dropped_with_item(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::With { .. }) && tree.many(*id, "items").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let rest = tree.many(*id, "items")[1..].to_vec();
+        tree.set_many(*id, "items", rest);
+    }
+    !targets.is_empty()
+}
+
+// seed-85, swapped try handler order. The confinement of
+// F11-3, a try plants only where both of the first two
+// handlers carry a type, so a bare handler never moves out
+// of the last place it stands in every parseable document.
+
+fn apply_swapped_try_handler_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::Try { .. }) {
+                return false;
+            }
+            let handlers = tree.many(*id, "handlers");
+            handlers.len() >= 2
+                && tree.one(handlers[0], "type").is_some()
+                && tree.one(handlers[1], "type").is_some()
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "handlers").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "handlers", swapped);
+    }
+    !targets.is_empty()
+}
+
+// seed-86, dropped argument annotation. The annotation
+// child of an argument clears the way seed-64 clears a
+// with item's target, the argument and its definition
+// standing exactly as written.
+
+fn apply_dropped_argument_annotation(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Arg { .. })
+                && tree.one(*id, "annotation").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "annotation", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-87, swapped assignment target order. Only a target
+// standing as a sequence plants, its first two elements
+// exchanging whole, the chained name targets the tenth
+// slice's weighing set aside standing untouched.
+
+fn apply_swapped_assignment_target_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        for target in tree.many(*id, "targets").to_vec() {
+            if !matches!(
+                &tree.nodes[target].data,
+                Data::Tuple { .. } | Data::List { .. }
+            ) {
+                continue;
+            }
+            let elts = tree.many(target, "elts");
+            if elts.len() < 2 {
+                continue;
+            }
+            let mut swapped = elts.to_vec();
+            swapped.swap(0, 1);
+            tree.set_many(target, "elts", swapped);
+            planted = true;
+        }
+    }
+    planted
 }

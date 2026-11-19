@@ -532,4 +532,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong flow",
         description: "Exchanges the first two names of an import statement so the names bind in the other order than the code wrote",
     },
+    SeedMeta {
+        id: "seed-84",
+        name: "dropped with item",
+        defect_class: "missing input",
+        description: "Removes the first item of a with statement so its context never enters and the names it produced stand unbound",
+    },
+    SeedMeta {
+        id: "seed-85",
+        name: "swapped try handler order",
+        defect_class: "wrong branch",
+        description: "Exchanges the first two typed handlers of a try statement so an error stands judged by the second handler's reading first",
+    },
+    SeedMeta {
+        id: "seed-86",
+        name: "dropped argument annotation",
+        defect_class: "missing data",
+        description: "Clears the annotation of an argument so the type the code declared for its parameter stands nowhere",
+    },
+    SeedMeta {
+        id: "seed-87",
+        name: "swapped assignment target order",
+        defect_class: "wrong variable",
+        description: "Exchanges the first two elements of a sequence assignment target so each of the two names binds the other's value",
+    },
 ];
