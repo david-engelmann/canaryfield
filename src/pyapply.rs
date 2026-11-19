@@ -106,6 +106,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-73" => apply_dropped_argument_unpacking(tree)?,
         "seed-74" => apply_swapped_formatted_string_values(tree),
         "seed-75" => apply_dropped_call_statement(tree),
+        "seed-76" => apply_swapped_decorator_order(tree),
+        "seed-77" => apply_dropped_parameter_default(tree),
+        "seed-78" => apply_swapped_base_class_order(tree),
+        "seed-79" => apply_swapped_match_case_order(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -2925,4 +2929,80 @@ fn apply_dropped_call_statement(tree: &mut Tree) -> bool {
         planted = true;
     }
     planted
+}
+
+// seed-76, swapped decorator order.
+
+fn apply_swapped_decorator_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::FuncDef { .. } | Data::ClassDef { .. }
+            ) && tree.many(*id, "decorator_list").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "decorator_list").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "decorator_list", swapped);
+    }
+    !targets.is_empty()
+}
+
+// seed-77, dropped parameter default.
+
+fn apply_dropped_parameter_default(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda))
+        .filter_map(|id| tree.one(id, "args").map(|args| (id, args)))
+        .filter(|(_, args)| !tree.many(*args, "defaults").is_empty())
+        .map(|(_, args)| args)
+        .collect();
+    for args in &targets {
+        let rest = tree.many(*args, "defaults")[1..].to_vec();
+        tree.set_many(*args, "defaults", rest);
+    }
+    !targets.is_empty()
+}
+
+// seed-78, swapped base class order.
+
+fn apply_swapped_base_class_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::ClassDef { .. })
+                && tree.many(*id, "bases").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "bases").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "bases", swapped);
+    }
+    !targets.is_empty()
+}
+
+// seed-79, swapped match case order.
+
+fn apply_swapped_match_case_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Match) && tree.many(*id, "cases").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "cases").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "cases", swapped);
+    }
+    !targets.is_empty()
 }

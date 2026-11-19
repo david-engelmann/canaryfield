@@ -484,4 +484,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing effect",
         description: "Removes a statement that stands as a call alone so the call and every effect it would have had never happen",
     },
+    SeedMeta {
+        id: "seed-76",
+        name: "swapped decorator order",
+        defect_class: "wrong wrapper",
+        description: "Exchanges the first two decorators of a definition so the wrappers run in the other order than the code wrote",
+    },
+    SeedMeta {
+        id: "seed-77",
+        name: "dropped parameter default",
+        defect_class: "wrong default",
+        description: "Removes the first argument default of a definition so the parameter it belonged to stands required where the code let it fall back",
+    },
+    SeedMeta {
+        id: "seed-78",
+        name: "swapped base class order",
+        defect_class: "wrong inheritance",
+        description: "Exchanges the first two base classes of a class definition so the class resolves its inherited behaviour in the other order than the code wrote",
+    },
+    SeedMeta {
+        id: "seed-79",
+        name: "swapped match case order",
+        defect_class: "wrong branch",
+        description: "Exchanges the first two cases of a match statement so a value the first case would have taken meets the second case first",
+    },
 ];
