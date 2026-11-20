@@ -556,4 +556,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong variable",
         description: "Exchanges the first two elements of a sequence assignment target so each of the two names binds the other's value",
     },
+    SeedMeta {
+        id: "seed-88",
+        name: "dropped return annotation",
+        defect_class: "missing data",
+        description: "Clears the return annotation of a function definition so the type the code declared for its result stands nowhere",
+    },
+    SeedMeta {
+        id: "seed-89",
+        name: "swapped statement order",
+        defect_class: "wrong flow",
+        description: "Exchanges the first two statements of a body so the work the code ordered first stands second",
+    },
+    SeedMeta {
+        id: "seed-90",
+        name: "swapped comprehension condition order",
+        defect_class: "wrong data",
+        description: "Exchanges the first two conditions of a comprehension generator clause so a value stands judged by the second condition first",
+    },
+    SeedMeta {
+        id: "seed-91",
+        name: "dropped starred argument",
+        defect_class: "missing input",
+        description: "Removes the first starred argument of a call whole so the values it would have spread into the call never arrive",
+    },
 ];

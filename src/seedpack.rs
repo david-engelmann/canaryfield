@@ -17,10 +17,10 @@ use crate::json::{self, JsonValue};
 use crate::registry::{SeedMeta, SEEDS};
 
 /// The format a pack written now carries.
-pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/20";
+pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/21";
 
-/// The twenty pack formats and the entry count each one carries.
-pub const PACK_ENTRY_COUNTS: [(&str, usize); 20] = [
+/// The twenty one pack formats and the entry count each one carries.
+pub const PACK_ENTRY_COUNTS: [(&str, usize); 21] = [
     ("canaryfield-seeds/1", 12),
     ("canaryfield-seeds/2", 16),
     ("canaryfield-seeds/3", 20),
@@ -41,6 +41,7 @@ pub const PACK_ENTRY_COUNTS: [(&str, usize); 20] = [
     ("canaryfield-seeds/18", 80),
     ("canaryfield-seeds/19", 84),
     ("canaryfield-seeds/20", 88),
+    ("canaryfield-seeds/21", 92),
 ];
 
 /// The entry count a format carries, and nothing for a format
