@@ -116,7 +116,7 @@ fn test_seed_88_plants_on_every_annotated_definition() {
     assert!(planted);
     assert_eq!(
         rendered,
-        "def first():\n    return 1\nasync def second():\n    return 'x'"
+        "def first():\n    return 1\n\nasync def second():\n    return 'x'"
     );
 }
 
@@ -164,7 +164,7 @@ fn test_seed_89_plants_in_every_body() {
     assert!(planted);
     assert_eq!(
         rendered,
-        "value = 3\ndef check():\n    second = 2\n    first = 1\n    return first"
+        "value = 3\n\ndef check():\n    second = 2\n    first = 1\n    return first"
     );
 }
 

@@ -3259,9 +3259,18 @@ fn apply_dropped_return_annotation(tree: &mut Tree) -> bool {
 // carries under the name body plants, its first two
 // statements exchanging whole, and a nested body stands
 // judged at its own turn and never travels with a
-// statement of the body around it.
+// statement of the body around it. The module's own body
+// stands read at the root, which the sorted walk passes
+// over because the module carries no position.
 
 fn apply_swapped_statement_order(tree: &mut Tree) -> bool {
+    let mut planted = false;
+    if tree.many(tree.root, "body").len() >= 2 {
+        let mut swapped = tree.many(tree.root, "body").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(tree.root, "body", swapped);
+        planted = true;
+    }
     let targets: Vec<usize> = tree
         .sorted_nodes()
         .into_iter()
@@ -3271,8 +3280,9 @@ fn apply_swapped_statement_order(tree: &mut Tree) -> bool {
         let mut swapped = tree.many(*id, "body").to_vec();
         swapped.swap(0, 1);
         tree.set_many(*id, "body", swapped);
+        planted = true;
     }
-    !targets.is_empty()
+    planted
 }
 
 // seed-90, swapped comprehension condition order. The
