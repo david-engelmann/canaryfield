@@ -48,7 +48,7 @@ fn the_readme_status_is_honest() {
         "local seed is done",
         "403",
         "CONTRACT.md",
-        "30 of 100",
+        "31 of 100",
         "AGENTS.md",
         "canonical template",
         "synthetic",
