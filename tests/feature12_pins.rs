@@ -185,10 +185,8 @@ fn test_seed_89_is_not_applicable_without_a_two_statement_body() {
 
 #[test]
 fn test_seed_89_leaves_a_future_led_body_standing() {
-    let (planted, rendered) = applied_render(
-        "from __future__ import annotations\nx = 1\n",
-        "seed-89",
-    );
+    let (planted, rendered) =
+        applied_render("from __future__ import annotations\nx = 1\n", "seed-89");
     assert!(!planted);
     assert_eq!(rendered, "from __future__ import annotations\nx = 1");
 }
@@ -208,10 +206,8 @@ fn test_seed_89_exchanges_two_future_imports() {
 
 #[test]
 fn test_seed_89_plants_a_future_import_into_the_leading_run() {
-    let (planted, rendered) = applied_render(
-        "x = 1\nfrom __future__ import annotations\n",
-        "seed-89",
-    );
+    let (planted, rendered) =
+        applied_render("x = 1\nfrom __future__ import annotations\n", "seed-89");
     assert!(planted);
     assert_eq!(rendered, "from __future__ import annotations\nx = 1");
 }
