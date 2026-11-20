@@ -118,6 +118,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-85" => apply_swapped_try_handler_order(tree),
         "seed-86" => apply_dropped_argument_annotation(tree),
         "seed-87" => apply_swapped_assignment_target_order(tree),
+        "seed-88" => apply_dropped_return_annotation(tree),
+        "seed-89" => apply_swapped_statement_order(tree),
+        "seed-90" => apply_swapped_comprehension_condition_order(tree),
+        "seed-91" => apply_dropped_starred_argument(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -3225,6 +3229,149 @@ fn apply_swapped_assignment_target_order(tree: &mut Tree) -> bool {
             let mut swapped = elts.to_vec();
             swapped.swap(0, 1);
             tree.set_many(target, "elts", swapped);
+            planted = true;
+        }
+    }
+    planted
+}
+
+// seed-88, dropped return annotation. The returns child of
+// a definition clears the way seed-86 clears an argument's
+// annotation, the definition's name and arguments and body
+// standing exactly as written.
+
+fn apply_dropped_return_annotation(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::FuncDef { .. })
+                && tree.one(*id, "returns").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "returns", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-89, swapped statement order. Every body the tree
+// carries under the name body plants, its first two
+// statements exchanging whole, and a nested body stands
+// judged at its own turn and never travels with a
+// statement of the body around it. The module's own body
+// stands read at the root, which the sorted walk passes
+// over because the module carries no position. At the
+// module body the exchange does not stand where it would
+// carry a future import past the leading run, the boundary
+// the feature slice 12 correction states.
+
+fn is_future_import(tree: &Tree, id: usize) -> bool {
+    matches!(
+        tree.data(id),
+        Data::ImportFrom {
+            module: Some(name),
+            level: 0
+        } if name == "__future__"
+    )
+}
+
+fn is_docstring(tree: &Tree, id: usize) -> bool {
+    if !matches!(tree.data(id), Data::ExprStmt) {
+        return false;
+    }
+    match tree.one(id, "value") {
+        Some(value) => matches!(
+            tree.data(value),
+            Data::Constant {
+                value: ConstVal::Str(..)
+            }
+        ),
+        None => false,
+    }
+}
+
+fn apply_swapped_statement_order(tree: &mut Tree) -> bool {
+    let mut planted = false;
+    if tree.many(tree.root, "body").len() >= 2 {
+        let body = tree.many(tree.root, "body");
+        let blocked = is_future_import(tree, body[0])
+            && !is_future_import(tree, body[1])
+            && !is_docstring(tree, body[1]);
+        if !blocked {
+            let mut swapped = body.to_vec();
+            swapped.swap(0, 1);
+            tree.set_many(tree.root, "body", swapped);
+            planted = true;
+        }
+    }
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| tree.many(*id, "body").len() >= 2)
+        .collect();
+    for id in &targets {
+        let mut swapped = tree.many(*id, "body").to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(*id, "body", swapped);
+        planted = true;
+    }
+    planted
+}
+
+// seed-90, swapped comprehension condition order. The
+// first two conditions standing inside one generator
+// clause exchange, the clause's target and iterable and
+// its remaining conditions standing exactly as written,
+// where seed-58 removes a clause's first condition and
+// seed-72 exchanges two clauses whole.
+
+fn apply_swapped_comprehension_condition_order(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        for clause in tree.many(*id, "generators").to_vec() {
+            if tree.many(clause, "ifs").len() >= 2 {
+                let mut swapped = tree.many(clause, "ifs").to_vec();
+                swapped.swap(0, 1);
+                tree.set_many(clause, "ifs", swapped);
+                planted = true;
+            }
+        }
+    }
+    planted
+}
+
+// seed-91, dropped starred argument. The first starred
+// argument of a call stands removed whole, the call's
+// remaining arguments keeping their places, where seed-73
+// leaves the argument standing as the value it unpacks.
+
+fn apply_dropped_starred_argument(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Call))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let args = tree.many(*id, "args").to_vec();
+        if let Some(at) = args
+            .iter()
+            .position(|arg| matches!(&tree.nodes[*arg].data, Data::Starred { .. }))
+        {
+            let mut kept = args;
+            kept.remove(at);
+            tree.set_many(*id, "args", kept);
             planted = true;
         }
     }

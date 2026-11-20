@@ -1057,13 +1057,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-87"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped return annotation",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-88"
+    },
+    {
+      "defect_class": "wrong flow",
+      "gates": {
+        "tests": "caught"
+      },
+      "name": "swapped statement order",
+      "planted_exits": {
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-89"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped comprehension condition order",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-90"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped starred argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-91"
     }
   ],
   "summary": {
     "tests": {
-      "caught": 16,
+      "caught": 17,
       "gate-broken": 0,
-      "not-applicable": 67,
+      "not-applicable": 70,
       "waved-through": 5
     }
   },
