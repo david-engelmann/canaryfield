@@ -95,6 +95,10 @@ seed-84  dropped with item                      none          not-applicable
 seed-85  swapped try handler order              none          not-applicable
 seed-86  dropped argument annotation            none          not-applicable
 seed-87  swapped assignment target order        none          not-applicable
+seed-88  dropped return annotation              none          not-applicable
+seed-89  swapped statement order                sample.py     caught
+seed-90  swapped comprehension condition order  none          not-applicable
+seed-91  dropped starred argument               none          not-applicable
 
 summary per gate
-  tests  caught 16  waved-through 5  not-applicable 67  gate-broken 0
+  tests  caught 17  waved-through 5  not-applicable 70  gate-broken 0
