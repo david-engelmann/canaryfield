@@ -175,7 +175,11 @@ fn test_seed_metadata_is_complete() {
             "dropped with item",
             "swapped try handler order",
             "dropped argument annotation",
-            "swapped assignment target order"
+            "swapped assignment target order",
+            "dropped return annotation",
+            "swapped statement order",
+            "swapped comprehension condition order",
+            "dropped starred argument"
         ]
     );
 }
