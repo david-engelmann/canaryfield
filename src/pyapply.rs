@@ -3261,15 +3261,49 @@ fn apply_dropped_return_annotation(tree: &mut Tree) -> bool {
 // judged at its own turn and never travels with a
 // statement of the body around it. The module's own body
 // stands read at the root, which the sorted walk passes
-// over because the module carries no position.
+// over because the module carries no position. At the
+// module body the exchange does not stand where it would
+// carry a future import past the leading run, the boundary
+// the feature slice 12 correction states.
+
+fn is_future_import(tree: &Tree, id: usize) -> bool {
+    matches!(
+        tree.data(id),
+        Data::ImportFrom {
+            module: Some(name),
+            level: 0
+        } if name == "__future__"
+    )
+}
+
+fn is_docstring(tree: &Tree, id: usize) -> bool {
+    if !matches!(tree.data(id), Data::ExprStmt) {
+        return false;
+    }
+    match tree.one(id, "value") {
+        Some(value) => matches!(
+            tree.data(value),
+            Data::Constant {
+                value: ConstVal::Str(..)
+            }
+        ),
+        None => false,
+    }
+}
 
 fn apply_swapped_statement_order(tree: &mut Tree) -> bool {
     let mut planted = false;
     if tree.many(tree.root, "body").len() >= 2 {
-        let mut swapped = tree.many(tree.root, "body").to_vec();
-        swapped.swap(0, 1);
-        tree.set_many(tree.root, "body", swapped);
-        planted = true;
+        let body = tree.many(tree.root, "body");
+        let blocked = is_future_import(tree, body[0])
+            && !is_future_import(tree, body[1])
+            && !is_docstring(tree, body[1]);
+        if !blocked {
+            let mut swapped = body.to_vec();
+            swapped.swap(0, 1);
+            tree.set_many(tree.root, "body", swapped);
+            planted = true;
+        }
     }
     let targets: Vec<usize> = tree
         .sorted_nodes()

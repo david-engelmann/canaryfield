@@ -183,6 +183,39 @@ fn test_seed_89_is_not_applicable_without_a_two_statement_body() {
     let _ = fs::remove_dir_all(&target);
 }
 
+#[test]
+fn test_seed_89_leaves_a_future_led_body_standing() {
+    let (planted, rendered) = applied_render(
+        "from __future__ import annotations\nx = 1\n",
+        "seed-89",
+    );
+    assert!(!planted);
+    assert_eq!(rendered, "from __future__ import annotations\nx = 1");
+}
+
+#[test]
+fn test_seed_89_exchanges_two_future_imports() {
+    let (planted, rendered) = applied_render(
+        "from __future__ import annotations\nfrom __future__ import print_function\nx = 1\n",
+        "seed-89",
+    );
+    assert!(planted);
+    assert_eq!(
+        rendered,
+        "from __future__ import print_function\nfrom __future__ import annotations\nx = 1"
+    );
+}
+
+#[test]
+fn test_seed_89_plants_a_future_import_into_the_leading_run() {
+    let (planted, rendered) = applied_render(
+        "x = 1\nfrom __future__ import annotations\n",
+        "seed-89",
+    );
+    assert!(planted);
+    assert_eq!(rendered, "from __future__ import annotations\nx = 1");
+}
+
 // Seed-90, swapped comprehension condition order.
 
 const CONDITION_MODULE: &str = "def check(values):\n    return [v for v in values if v if v > 1]\n";
