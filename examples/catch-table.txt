@@ -99,6 +99,10 @@ seed-88  dropped return annotation              none          not-applicable
 seed-89  swapped statement order                sample.py     caught
 seed-90  swapped comprehension condition order  none          not-applicable
 seed-91  dropped starred argument               none          not-applicable
+seed-92  dropped raise statement                none          not-applicable
+seed-93  dropped starred display element        none          not-applicable
+seed-94  dropped loop control statement         none          not-applicable
+seed-95  swapped try else bodies                none          not-applicable
 
 summary per gate
-  tests  caught 17  waved-through 5  not-applicable 70  gate-broken 0
+  tests  caught 17  waved-through 5  not-applicable 74  gate-broken 0
