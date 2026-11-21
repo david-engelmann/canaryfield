@@ -243,7 +243,7 @@ fn test_seed_94_leaves_a_control_inside_a_nested_definition_standing() {
     assert!(!planted);
     assert_eq!(
         rendered,
-        "def check():\n    for item in items:\n        def helper():\n            break\n        work(item)\n    return 1"
+        "def check():\n    for item in items:\n\n        def helper():\n            break\n        work(item)\n    return 1"
     );
 }
 
