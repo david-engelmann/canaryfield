@@ -1319,25 +1319,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
       "gate-broken": 22,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
       "gate-broken": 22,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 0
      },
      "tests": {
       "caught": 17,
       "gate-broken": 0,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 5
      }
     },
@@ -2562,13 +2614,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "branch": null,
+      "defect_class": "wrong flow",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "branch": null,
+      "defect_class": "wrong branch",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "tests": {
       "caught": 17,
       "gate-broken": 0,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 5
      }
     },
@@ -3624,13 +3724,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 89,
+      "not-applicable": 93,
       "waved-through": 0
      }
     },
@@ -4699,13 +4843,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 87,
+      "not-applicable": 91,
       "waved-through": 1
      }
     },
@@ -5793,13 +5981,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "gate-broken": 22,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 0
      }
     },
@@ -6931,13 +7163,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "tests": {
       "caught": 17,
       "gate-broken": 0,
-      "not-applicable": 70,
+      "not-applicable": 74,
       "waved-through": 5
      }
     },
@@ -7038,7 +7314,11 @@
     "seed-88",
     "seed-89",
     "seed-90",
-    "seed-91"
+    "seed-91",
+    "seed-92",
+    "seed-93",
+    "seed-94",
+    "seed-95"
    ]
   },
   {
@@ -8088,13 +8368,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-91"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raise statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-92"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped starred display element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-93"
+     },
+     {
+      "defect_class": "wrong flow",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped loop control statement",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-94"
+     },
+     {
+      "defect_class": "wrong branch",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped try else bodies",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-95"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 89,
+      "not-applicable": 93,
       "waved-through": 0
      }
     },

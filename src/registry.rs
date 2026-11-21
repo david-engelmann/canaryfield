@@ -580,4 +580,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing input",
         description: "Removes the first starred argument of a call whole so the values it would have spread into the call never arrive",
     },
+    SeedMeta {
+        id: "seed-92",
+        name: "dropped raise statement",
+        defect_class: "missing effect",
+        description: "Removes a statement that stands as a raise alone so the error the code raised never rises and the work after it runs as though the failure it guarded against had passed",
+    },
+    SeedMeta {
+        id: "seed-93",
+        name: "dropped starred display element",
+        defect_class: "missing input",
+        description: "Removes the first starred element of a list or tuple or set display whole so the values it would have spread into the display never arrive",
+    },
+    SeedMeta {
+        id: "seed-94",
+        name: "dropped loop control statement",
+        defect_class: "wrong flow",
+        description: "Removes a break or continue statement standing in the body of a loop so the loop runs past the stop it was written with or works on the item it was written to skip",
+    },
+    SeedMeta {
+        id: "seed-95",
+        name: "swapped try else bodies",
+        defect_class: "wrong branch",
+        description: "Exchanges the body of a try statement with the body of its else clause so the work the code ran under the guard stands on the success path and the success work runs only where nothing raised",
+    },
 ];

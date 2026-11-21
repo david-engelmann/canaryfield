@@ -122,6 +122,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-89" => apply_swapped_statement_order(tree),
         "seed-90" => apply_swapped_comprehension_condition_order(tree),
         "seed-91" => apply_dropped_starred_argument(tree),
+        "seed-92" => apply_dropped_raise_statement(tree),
+        "seed-93" => apply_dropped_starred_display_element(tree),
+        "seed-94" => apply_dropped_loop_control_statement(tree)?,
+        "seed-95" => apply_swapped_try_else_bodies(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -3376,4 +3380,133 @@ fn apply_dropped_starred_argument(tree: &mut Tree) -> bool {
         }
     }
     planted
+}
+
+// seed-92, dropped raise statement. The statement stands
+// removed whole from the body that holds it, a raise
+// standing as the only statement of a body other than the
+// module's own never planted, on the standing of F3-5,
+// where seed-28 exchanges the error a raise carries and
+// seed-51 clears its cause and the statement stands in
+// both.
+
+fn apply_dropped_raise_statement(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Raise { .. })
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    remove_statement_hits(tree, hits)
+}
+
+/// Remove the statement hits a parent carrying collector
+/// gathered, deepest first and latest index first inside
+/// one parent, each hit standing verified against its
+/// parent's list before it leaves, a hit standing as the
+/// only statement of a body other than the module's own
+/// never removed, on the standing of F3-5.
+fn remove_statement_hits(tree: &mut Tree, hits: Vec<Hit>) -> bool {
+    let mut planted = false;
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-93, dropped starred display element. The first
+// starred element of a list or tuple or set display
+// stands removed whole, the display's remaining elements
+// keeping their places, where seed-09 removes the first
+// element of a list or a dictionary reading no starred
+// standing and seed-91 removes a starred element standing
+// in a call's arguments.
+
+fn apply_dropped_starred_display_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::List { .. } | Data::Tuple { .. } | Data::Set
+            )
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let elts = tree.many(*id, "elts").to_vec();
+        if let Some(at) = elts
+            .iter()
+            .position(|elt| matches!(&tree.nodes[*elt].data, Data::Starred { .. }))
+        {
+            let mut kept = elts;
+            kept.remove(at);
+            tree.set_many(*id, "elts", kept);
+            planted = true;
+        }
+    }
+    planted
+}
+
+// seed-94, dropped loop control statement. Every break
+// and every continue standing in the body of a loop
+// stands removed whole under the loop body reading the
+// loop control collectors keep, a control standing as
+// the only statement of a body never planted, on the
+// standing of F3-5, where seed-23 turns a break into a
+// continue and seed-41 turns a continue into a break and
+// neither removes the statement it reads.
+
+fn apply_dropped_loop_control_statement(tree: &mut Tree) -> Result<bool, Refusal> {
+    let mut hits = collect_loop_control(tree, true)?;
+    hits.extend(collect_loop_control(tree, false)?);
+    Ok(remove_statement_hits(tree, hits))
+}
+
+// seed-95, swapped try else bodies. The body of a try
+// statement and the body of its else clause exchange
+// whole where both stand written and nonempty, the
+// handlers and the finally clause standing exactly as
+// written, where seed-69 exchanges the two bodies of an
+// if statement and seed-48 removes a try statement's
+// else clause whole.
+
+fn apply_swapped_try_else_bodies(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Try { .. })
+                && !tree.many(*id, "body").is_empty()
+                && !tree.many(*id, "orelse").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        let body = tree.many(*id, "body").to_vec();
+        let orelse = tree.many(*id, "orelse").to_vec();
+        tree.set_many(*id, "body", orelse);
+        tree.set_many(*id, "orelse", body);
+    }
+    !targets.is_empty()
 }
