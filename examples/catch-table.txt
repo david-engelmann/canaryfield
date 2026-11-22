@@ -103,6 +103,10 @@ seed-92  dropped raise statement                none          not-applicable
 seed-93  dropped starred display element        none          not-applicable
 seed-94  dropped loop control statement         none          not-applicable
 seed-95  swapped try else bodies                none          not-applicable
+seed-96  dropped class keyword argument         none          not-applicable
+seed-97  swapped loop else bodies               none          not-applicable
+seed-98  dropped starred parameter              none          not-applicable
+seed-99  dropped docstring                      none          not-applicable
 
 summary per gate
-  tests  caught 17  waved-through 5  not-applicable 74  gate-broken 0
+  tests  caught 17  waved-through 5  not-applicable 78  gate-broken 0

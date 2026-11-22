@@ -604,4 +604,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong branch",
         description: "Exchanges the body of a try statement with the body of its else clause so the work the code ran under the guard stands on the success path and the success work runs only where nothing raised",
     },
+    SeedMeta {
+        id: "seed-96",
+        name: "dropped class keyword argument",
+        defect_class: "missing input",
+        description: "Removes the first keyword carrying a name from a class definition's header whole so the keyword the class would have been created under never reaches it",
+    },
+    SeedMeta {
+        id: "seed-97",
+        name: "swapped loop else bodies",
+        defect_class: "wrong branch",
+        description: "Exchanges the body of a loop with the body of its else clause so the work the loop did at every pass runs only where the loop finished without a break and the completion work runs at every pass",
+    },
+    SeedMeta {
+        id: "seed-98",
+        name: "dropped starred parameter",
+        defect_class: "missing input",
+        description: "Removes the variable positional parameter or the variable keyword parameter of a definition whole so the extra arguments a caller passes find no parameter waiting for them",
+    },
+    SeedMeta {
+        id: "seed-99",
+        name: "dropped docstring",
+        defect_class: "missing data",
+        description: "Removes the string statement standing first in the body of a module or a definition or a class whole so the documentation the body carried reads as nothing",
+    },
 ];
