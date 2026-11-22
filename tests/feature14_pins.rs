@@ -382,7 +382,7 @@ fn test_seed_99_leaves_a_string_standing_first_in_an_if_body() {
 fn test_seed_99_leaves_a_lone_docstring_in_a_body_standing() {
     let (planted, rendered) = applied_render("def check():\n    'Only notes.'\n", "seed-99");
     assert!(!planted);
-    assert_eq!(rendered, "def check():\n    'Only notes.'");
+    assert_eq!(rendered, "def check():\n    \"\"\"Only notes.\"\"\"");
 }
 
 #[test]
