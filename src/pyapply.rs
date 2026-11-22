@@ -3550,7 +3550,35 @@ fn apply_dropped_class_keyword_argument(tree: &mut Tree) -> bool {
 // and the body of its else clause stand exchanged whole
 // where both stand written, where seed-95 exchanges the
 // two bodies of a try statement and seed-44 removes a
-// loop's else clause whole.
+// loop's else clause whole. A loop stands outside the
+// family where a break or a continue standing in its
+// body binds to the loop itself, because the exchange
+// would carry the control into the else clause where the
+// language refuses it, and where a break or a continue
+// standing in its else clause binds to a loop around it,
+// because the exchange would bind it to this loop
+// instead, the binding read the way the loop control
+// reading of seed-94 reads it.
+
+fn loop_control_binds_here(tree: &Tree, id: usize, depth: usize) -> bool {
+    match &tree.nodes[id].data {
+        Data::Break | Data::Continue => depth == 0,
+        Data::For { .. } | Data::While => {
+            tree.many(id, "body")
+                .iter()
+                .any(|stmt| loop_control_binds_here(tree, *stmt, depth + 1))
+                || tree
+                    .many(id, "orelse")
+                    .iter()
+                    .any(|stmt| loop_control_binds_here(tree, *stmt, depth))
+        }
+        Data::FuncDef { .. } | Data::ClassDef { .. } | Data::Lambda => false,
+        _ => tree
+            .child_ids(id)
+            .iter()
+            .any(|child| loop_control_binds_here(tree, *child, depth)),
+    }
+}
 
 fn apply_swapped_loop_else_bodies(tree: &mut Tree) -> bool {
     let targets: Vec<usize> = tree
@@ -3560,6 +3588,14 @@ fn apply_swapped_loop_else_bodies(tree: &mut Tree) -> bool {
             matches!(&tree.nodes[*id].data, Data::For { .. } | Data::While)
                 && !tree.many(*id, "body").is_empty()
                 && !tree.many(*id, "orelse").is_empty()
+                && !tree
+                    .many(*id, "body")
+                    .iter()
+                    .any(|stmt| loop_control_binds_here(tree, *stmt, 0))
+                && !tree
+                    .many(*id, "orelse")
+                    .iter()
+                    .any(|stmt| loop_control_binds_here(tree, *stmt, 0))
         })
         .collect();
     for id in &targets {

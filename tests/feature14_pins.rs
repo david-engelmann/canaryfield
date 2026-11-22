@@ -217,6 +217,45 @@ fn test_seed_97_is_not_applicable_without_a_loop_else() {
     let _ = fs::remove_dir_all(&target);
 }
 
+#[test]
+fn test_seed_97_leaves_a_loop_whose_body_carries_a_break_standing() {
+    let (planted, rendered) = applied_render(
+        "def check():\n    for item in items:\n        break\n    else:\n        finish()\n    return 1\n",
+        "seed-97",
+    );
+    assert!(!planted);
+    assert_eq!(
+        rendered,
+        "def check():\n    for item in items:\n        break\n    else:\n        finish()\n    return 1"
+    );
+}
+
+#[test]
+fn test_seed_97_leaves_a_loop_whose_else_carries_a_break_for_the_loop_around_it_standing() {
+    let (planted, rendered) = applied_render(
+        "def check():\n    while outer:\n        for item in items:\n            work(item)\n        else:\n            break\n    return 1\n",
+        "seed-97",
+    );
+    assert!(!planted);
+    assert_eq!(
+        rendered,
+        "def check():\n    while outer:\n        for item in items:\n            work(item)\n        else:\n            break\n    return 1"
+    );
+}
+
+#[test]
+fn test_seed_97_exchanges_where_a_break_stands_inside_a_nested_loop() {
+    let (planted, rendered) = applied_render(
+        "def check():\n    for item in items:\n        for part in item:\n            break\n    else:\n        finish()\n    return 1\n",
+        "seed-97",
+    );
+    assert!(planted);
+    assert_eq!(
+        rendered,
+        "def check():\n    for item in items:\n        finish()\n    else:\n        for part in item:\n            break\n    return 1"
+    );
+}
+
 // Seed-98, dropped starred parameter.
 
 const STAR_MODULE: &str = "def check(first, *args, **kwargs):\n    return first\n";
