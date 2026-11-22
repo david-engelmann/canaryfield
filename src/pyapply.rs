@@ -126,6 +126,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-93" => apply_dropped_starred_display_element(tree),
         "seed-94" => apply_dropped_loop_control_statement(tree)?,
         "seed-95" => apply_swapped_try_else_bodies(tree),
+        "seed-96" => apply_dropped_class_keyword_argument(tree),
+        "seed-97" => apply_swapped_loop_else_bodies(tree),
+        "seed-98" => apply_dropped_starred_parameter(tree),
+        "seed-99" => apply_dropped_docstring(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -3509,4 +3513,114 @@ fn apply_swapped_try_else_bodies(tree: &mut Tree) -> bool {
         tree.set_many(*id, "orelse", body);
     }
     !targets.is_empty()
+}
+
+// seed-96, dropped class keyword argument. The first
+// keyword carrying a name in a class definition's header
+// stands removed whole, where seed-45 removes the first
+// named keyword argument of a call and seed-39 removes the
+// first base of the same header, and a keyword carrying no
+// name stands outside the family in both readings.
+
+fn apply_dropped_class_keyword_argument(tree: &mut Tree) -> bool {
+    let mut targets: Vec<(usize, usize)> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::ClassDef { .. }) {
+            continue;
+        }
+        let named = tree
+            .many(id, "keywords")
+            .iter()
+            .copied()
+            .find(|kw| matches!(&tree.nodes[*kw].data, Data::Keyword { arg: Some(_) }));
+        if let Some(keyword) = named {
+            targets.push((id, keyword));
+        }
+    }
+    let planted = !targets.is_empty();
+    for (id, keyword) in targets {
+        let mut keywords = tree.many(id, "keywords").to_vec();
+        keywords.retain(|kw| *kw != keyword);
+        tree.set_many(id, "keywords", keywords);
+    }
+    planted
+}
+
+// seed-97, swapped loop else bodies. The body of a loop
+// and the body of its else clause stand exchanged whole
+// where both stand written, where seed-95 exchanges the
+// two bodies of a try statement and seed-44 removes a
+// loop's else clause whole.
+
+fn apply_swapped_loop_else_bodies(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::For { .. } | Data::While)
+                && !tree.many(*id, "body").is_empty()
+                && !tree.many(*id, "orelse").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        let body = tree.many(*id, "body").to_vec();
+        let orelse = tree.many(*id, "orelse").to_vec();
+        tree.set_many(*id, "body", orelse);
+        tree.set_many(*id, "orelse", body);
+    }
+    !targets.is_empty()
+}
+
+// seed-98, dropped starred parameter. The variable
+// positional parameter of a definition stands removed
+// where it stands and its variable keyword parameter
+// stands removed where it stands, a definition carrying
+// both losing both, where seed-77 drops the first
+// positional default and seed-86 drops an argument's
+// annotation and neither removes a parameter whole.
+
+fn apply_dropped_starred_parameter(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda))
+        .filter_map(|id| tree.one(id, "args"))
+        .filter(|args| tree.one(*args, "vararg").is_some() || tree.one(*args, "kwarg").is_some())
+        .collect();
+    for args in &targets {
+        if tree.one(*args, "vararg").is_some() {
+            tree.set_one(*args, "vararg", None);
+        }
+        if tree.one(*args, "kwarg").is_some() {
+            tree.set_one(*args, "kwarg", None);
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-99, dropped docstring. The string statement
+// standing first in the body of a module or a definition
+// or a class stands removed whole, the reading of that
+// shape standing in the crate already where the swapped
+// statement order keeps a docstring standing first, and a
+// statement standing as the only statement of a body
+// other than the module's own is never removed, on the
+// standing of F3-5.
+
+fn apply_dropped_docstring(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| is_docstring(tree, id)) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let hits: Vec<Hit> = hits
+        .into_iter()
+        .filter(|hit| {
+            hit.index == Some(0)
+                && matches!(
+                    &tree.nodes[hit.parent].data,
+                    Data::Module | Data::FuncDef { .. } | Data::ClassDef { .. }
+                )
+        })
+        .collect();
+    remove_statement_hits(tree, hits)
 }
