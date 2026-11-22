@@ -37377,22 +37377,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Continue()], orelse=[Pass()])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def f(items):\n    for item in items:\n        continue\n    else:\n        pass"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[Continue()])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def f(items):\n    for item in items:\n        pass\n    else:\n        continue"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -41610,22 +41598,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[For(target=Name(id='other', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Continue()], orelse=[Pass()])], orelse=[])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def f(items):\n    for item in items:\n        for other in items:\n            continue\n        else:\n            pass"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[For(target=Name(id='other', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[Continue()])], orelse=[])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def f(items):\n    for item in items:\n        for other in items:\n            pass\n        else:\n            continue"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -342781,22 +342757,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='first_big', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Return(value=Constant(value='none'))], orelse=[If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Gt()], comparators=[Constant(value=10)]), body=[Break()], orelse=[])]), Return(value=Name(id='item', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def first_big(items):\n    for item in items:\n        return 'none'\n    else:\n        if item > 10:\n            break\n    return item"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='first_big', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Gt()], comparators=[Constant(value=10)]), body=[Break()], orelse=[])], orelse=[Return(value=Constant(value='none'))]), Return(value=Name(id='item', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def first_big(items):\n    for item in items:\n        if item > 10:\n            break\n    else:\n        return 'none'\n    return item"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -355594,10 +355558,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[FunctionDef(name='scan', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='queue')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Assign(targets=[Name(id='first', ctx=Store())], value=Constant(value=1))], orelse=[Pass()]), While(test=Name(id='queue', ctx=Load()), body=[Assign(targets=[Name(id='second', ctx=Store())], value=Constant(value=2))], orelse=[Break()]), Return(value=Tuple(elts=[Name(id='first', ctx=Load()), Name(id='second', ctx=Load())], ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[FunctionDef(name='scan', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='queue')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Assign(targets=[Name(id='first', ctx=Store())], value=Constant(value=1))], orelse=[Pass()]), While(test=Name(id='queue', ctx=Load()), body=[Break()], orelse=[Assign(targets=[Name(id='second', ctx=Store())], value=Constant(value=2))]), Return(value=Tuple(elts=[Name(id='first', ctx=Load()), Name(id='second', ctx=Load())], ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "def scan(items, queue):\n    for item in items:\n        first = 1\n    else:\n        pass\n    while queue:\n        second = 2\n    else:\n        break\n    return (first, second)"
+       "t": "def scan(items, queue):\n    for item in items:\n        first = 1\n    else:\n        pass\n    while queue:\n        break\n    else:\n        second = 2\n    return (first, second)"
       }
      },
      "second": {
@@ -365135,22 +365099,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='search', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='log')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Try(body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Expr(value=Call(func=Attribute(value=Name(id='log', ctx=Load()), attr='append', ctx=Load()), args=[Constant(value='exhausted')], keywords=[]))], orelse=[If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), body=[Break()], orelse=[])])], handlers=[], orelse=[], finalbody=[Expr(value=Call(func=Attribute(value=Name(id='log', ctx=Load()), attr='append', ctx=Load()), args=[Constant(value='closed')], keywords=[]))]), Return(value=Name(id='log', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def search(items, log):\n    try:\n        for item in items:\n            log.append('exhausted')\n        else:\n            if item is None:\n                break\n    finally:\n        log.append('closed')\n    return log"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='search', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='log')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Try(body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), body=[Break()], orelse=[])], orelse=[Expr(value=Call(func=Attribute(value=Name(id='log', ctx=Load()), attr='append', ctx=Load()), args=[Constant(value='exhausted')], keywords=[]))])], handlers=[], orelse=[], finalbody=[Expr(value=Call(func=Attribute(value=Name(id='log', ctx=Load()), attr='append', ctx=Load()), args=[Constant(value='closed')], keywords=[]))]), Return(value=Name(id='log', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def search(items, log):\n    try:\n        for item in items:\n            if item is None:\n                break\n        else:\n            log.append('exhausted')\n    finally:\n        log.append('closed')\n    return log"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -387166,22 +387118,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='drain', args=arguments(posonlyargs=[], args=[arg(arg='queue')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='found', ctx=Store())], value=List(elts=[], ctx=Load())), While(test=Name(id='queue', ctx=Load()), body=[Return(value=Tuple(elts=[Name(id='found', ctx=Load()), Constant(value='drained')], ctx=Load()))], orelse=[Assign(targets=[Name(id='item', ctx=Store())], value=Call(func=Attribute(value=Name(id='queue', ctx=Load()), attr='pop', ctx=Load()), args=[], keywords=[])), If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), body=[Break()], orelse=[]), Expr(value=Call(func=Attribute(value=Name(id='found', ctx=Load()), attr='append', ctx=Load()), args=[Name(id='item', ctx=Load())], keywords=[]))]), Return(value=Tuple(elts=[Name(id='found', ctx=Load()), Constant(value='stopped')], ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def drain(queue):\n    found = []\n    while queue:\n        return (found, 'drained')\n    else:\n        item = queue.pop()\n        if item is None:\n            break\n        found.append(item)\n    return (found, 'stopped')"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='drain', args=arguments(posonlyargs=[], args=[arg(arg='queue')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='found', ctx=Store())], value=List(elts=[], ctx=Load())), While(test=Name(id='queue', ctx=Load()), body=[Assign(targets=[Name(id='item', ctx=Store())], value=Call(func=Attribute(value=Name(id='queue', ctx=Load()), attr='pop', ctx=Load()), args=[], keywords=[])), If(test=Compare(left=Name(id='item', ctx=Load()), ops=[Is()], comparators=[Constant(value=None)]), body=[Break()], orelse=[]), Expr(value=Call(func=Attribute(value=Name(id='found', ctx=Load()), attr='append', ctx=Load()), args=[Name(id='item', ctx=Load())], keywords=[]))], orelse=[Return(value=Tuple(elts=[Name(id='found', ctx=Load()), Constant(value='drained')], ctx=Load()))]), Return(value=Tuple(elts=[Name(id='found', ctx=Load()), Constant(value='stopped')], ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def drain(queue):\n    found = []\n    while queue:\n        item = queue.pop()\n        if item is None:\n            break\n        found.append(item)\n    else:\n        return (found, 'drained')\n    return (found, 'stopped')"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -406121,10 +406061,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[FunctionDef(name='scan', args=arguments(posonlyargs=[], args=[arg(arg='rows')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='row', ctx=Store()), iter=Name(id='rows', ctx=Load()), body=[While(test=Name(id='rows', ctx=Load()), body=[Assign(targets=[Name(id='marker', ctx=Store())], value=Constant(value=1))], orelse=[Break()])], orelse=[Pass()]), Return(value=Name(id='rows', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[FunctionDef(name='scan', args=arguments(posonlyargs=[], args=[arg(arg='rows')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='row', ctx=Store()), iter=Name(id='rows', ctx=Load()), body=[While(test=Name(id='rows', ctx=Load()), body=[Break()], orelse=[Assign(targets=[Name(id='marker', ctx=Store())], value=Constant(value=1))])], orelse=[Pass()]), Return(value=Name(id='rows', ctx=Load()))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "def scan(rows):\n    for row in rows:\n        while rows:\n            marker = 1\n        else:\n            break\n    else:\n        pass\n    return rows"
+       "t": "def scan(rows):\n    for row in rows:\n        while rows:\n            break\n        else:\n            marker = 1\n    else:\n        pass\n    return rows"
       }
      },
      "second": {
@@ -571956,22 +571896,10 @@
     },
     "seed-97": {
      "first": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='hunt', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[FunctionDef(name='helper', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Break()], decorator_list=[], type_params=[])], orelse=[]), While(test=Name(id='items', ctx=Load()), body=[Break()], orelse=[Expr(value=Call(func=Attribute(value=Name(id='items', ctx=Load()), attr='pop', ctx=Load()), args=[], keywords=[]))])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def hunt(items):\n    for item in items:\n\n        def helper():\n            break\n    while items:\n        break\n    else:\n        items.pop()"
-      }
+      "bool": false
      },
      "second": {
-      "bool": true,
-      "dump": {
-       "t": "Module(body=[FunctionDef(name='hunt', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='item', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[FunctionDef(name='helper', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Break()], decorator_list=[], type_params=[])], orelse=[]), While(test=Name(id='items', ctx=Load()), body=[Expr(value=Call(func=Attribute(value=Name(id='items', ctx=Load()), attr='pop', ctx=Load()), args=[], keywords=[]))], orelse=[Break()])], decorator_list=[], type_params=[])], type_ignores=[])"
-      },
-      "render": {
-       "t": "def hunt(items):\n    for item in items:\n\n        def helper():\n            break\n    while items:\n        items.pop()\n    else:\n        break"
-      }
+      "bool": false
      }
     },
     "seed-98": {
@@ -701428,10 +701356,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Expr(value=Call(func=Name(id='done', ctx=Load()), args=[], keywords=[]))], orelse=[AugAssign(target=Name(id='total', ctx=Store()), op=Add(), value=Name(id='i', ctx=Load()))]), For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[If(test=Name(id='i', ctx=Load()), body=[Break()], orelse=[]), Continue()], orelse=[]), While(test=Name(id='x', ctx=Load()), body=[Pass()], orelse=[Break()]), AsyncFunctionDef(name='f', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[AsyncFor(target=Name(id='row', ctx=Store()), iter=Name(id='rows', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), For(target=Tuple(elts=[Name(id='a', ctx=Store()), Name(id='b', ctx=Store())], ctx=Store()), iter=Name(id='pairs', ctx=Load()), body=[Pass()], orelse=[]), ClassDef(name='C', bases=[], keywords=[], body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), Assign(targets=[Name(id='total', ctx=Store())], value=Constant(value=0)), For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[]), FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), FunctionDef(name='g', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='other')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Expr(value=Call(func=Name(id='done', ctx=Load()), args=[], keywords=[]))], orelse=[AugAssign(target=Name(id='total', ctx=Store()), op=Add(), value=Name(id='i', ctx=Load()))]), For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[If(test=Name(id='i', ctx=Load()), body=[Break()], orelse=[]), Continue()], orelse=[]), While(test=Name(id='x', ctx=Load()), body=[Break()], orelse=[Pass()]), AsyncFunctionDef(name='f', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[AsyncFor(target=Name(id='row', ctx=Store()), iter=Name(id='rows', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), For(target=Tuple(elts=[Name(id='a', ctx=Store()), Name(id='b', ctx=Store())], ctx=Store()), iter=Name(id='pairs', ctx=Load()), body=[Pass()], orelse=[]), ClassDef(name='C', bases=[], keywords=[], body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), Assign(targets=[Name(id='total', ctx=Store())], value=Constant(value=0)), For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[]), FunctionDef(name='f', args=arguments(posonlyargs=[], args=[arg(arg='items')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[]), FunctionDef(name='g', args=arguments(posonlyargs=[], args=[arg(arg='items'), arg(arg='other')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[For(target=Name(id='i', ctx=Store()), iter=Name(id='items', ctx=Load()), body=[Pass()], orelse=[])], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "for i in items:\n    done()\nelse:\n    total += i\nfor i in items:\n    if i:\n        break\n    continue\nwhile x:\n    pass\nelse:\n    break\n\nasync def f():\n    async for row in rows:\n        pass\nfor a, b in pairs:\n    pass\n\nclass C:\n    for i in items:\n        pass\ntotal = 0\nfor i in items:\n    pass\n\ndef f(items):\n    for i in items:\n        pass\n\ndef g(items, other):\n    for i in items:\n        pass"
+       "t": "for i in items:\n    done()\nelse:\n    total += i\nfor i in items:\n    if i:\n        break\n    continue\nwhile x:\n    break\nelse:\n    pass\n\nasync def f():\n    async for row in rows:\n        pass\nfor a, b in pairs:\n    pass\n\nclass C:\n    for i in items:\n        pass\ntotal = 0\nfor i in items:\n    pass\n\ndef f(items):\n    for i in items:\n        pass\n\ndef g(items, other):\n    for i in items:\n        pass"
       }
      },
      "second": {
