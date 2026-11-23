@@ -1241,13 +1241,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+    },
+    {
+      "defect_class": "wrong variable",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
     }
   ],
   "summary": {
     "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 5
     }
   },
