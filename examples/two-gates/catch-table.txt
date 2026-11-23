@@ -6,109 +6,113 @@ target unchanged true
 clean exit for gate tests is 0
 clean exit for gate compile is 0
 
-seed     name                                   planted file  tests           compile
--------  -------------------------------------  ------------  --------------  --------------
-seed-00  stale version string                   sample.py     caught          waved-through
-seed-01  dropped return value                   sample.py     caught          waved-through
-seed-02  inverted comparison                    sample.py     caught          waved-through
-seed-03  off by one constant                    sample.py     caught          waved-through
-seed-04  swallowed exception                    sample.py     caught          waved-through
-seed-05  inverted boolean literal               sample.py     caught          waved-through
-seed-06  swapped arithmetic operator            sample.py     caught          waved-through
-seed-07  dropped call argument                  sample.py     waved-through   waved-through
-seed-08  negated condition                      sample.py     caught          waved-through
-seed-09  removed collection element             sample.py     waved-through   waved-through
-seed-10  range bound shifted by one             sample.py     caught          waved-through
-seed-11  wrong variable returned                sample.py     caught          waved-through
-seed-12  swapped operand order                  sample.py     caught          waved-through
-seed-13  dropped else branch                    none          not-applicable  not-applicable
-seed-14  swapped boolean operator               none          not-applicable  not-applicable
-seed-15  dropped await                          none          not-applicable  not-applicable
-seed-16  widened exception handler              sample.py     waved-through   waved-through
-seed-17  swapped dictionary entry               none          not-applicable  not-applicable
-seed-18  inverted truth test                    none          not-applicable  not-applicable
-seed-19  reassigned loop variable               none          not-applicable  not-applicable
-seed-20  swapped call argument order            sample.py     caught          waved-through
-seed-21  altered string literal                 sample.py     caught          waved-through
-seed-22  dropped numeric negation               none          not-applicable  not-applicable
-seed-23  swapped loop control                   none          not-applicable  not-applicable
-seed-24  swapped augmented assignment operator  none          not-applicable  not-applicable
-seed-25  identity test replaced by equality     none          not-applicable  not-applicable
-seed-26  subscript index shifted by one         none          not-applicable  not-applicable
-seed-27  swapped keyword argument values        none          not-applicable  not-applicable
-seed-28  swapped raised error                   sample.py     caught          waved-through
-seed-29  slice stop shifted by one              none          not-applicable  not-applicable
-seed-30  shifted numeric default                none          not-applicable  not-applicable
-seed-31  swapped sibling attribute              none          not-applicable  not-applicable
-seed-32  narrowed exception handler             none          not-applicable  not-applicable
-seed-33  swapped parameter defaults             none          not-applicable  not-applicable
-seed-34  dropped finally body                   none          not-applicable  not-applicable
-seed-35  dropped decorator                      none          not-applicable  not-applicable
-seed-36  dropped exception handler              none          not-applicable  not-applicable
-seed-37  dropped yield                          none          not-applicable  not-applicable
-seed-38  dropped condition term                 none          not-applicable  not-applicable
-seed-39  dropped base class                     none          not-applicable  not-applicable
-seed-40  shifted slice start                    none          not-applicable  not-applicable
-seed-41  reversed loop control                  none          not-applicable  not-applicable
-seed-42  dropped scope declaration              none          not-applicable  not-applicable
-seed-43  swapped assignment values              none          not-applicable  not-applicable
-seed-44  dropped loop else clause               none          not-applicable  not-applicable
-seed-45  dropped keyword argument               none          not-applicable  not-applicable
-seed-46  flipped range step sign                none          not-applicable  not-applicable
-seed-47  dropped logical negation               none          not-applicable  not-applicable
-seed-48  dropped try else clause                none          not-applicable  not-applicable
-seed-49  shifted slice step                     none          not-applicable  not-applicable
-seed-50  swapped conditional expression arms    none          not-applicable  not-applicable
-seed-51  dropped exception chain                none          not-applicable  not-applicable
-seed-52  dropped slice bound                    none          not-applicable  not-applicable
-seed-53  dropped augmentation                   none          not-applicable  not-applicable
-seed-54  swapped parameter order                sample.py     caught          waved-through
-seed-55  dropped import                         none          not-applicable  not-applicable
-seed-56  dropped return statement               sample.py     caught          waved-through
-seed-57  swapped boolean operands               none          not-applicable  not-applicable
-seed-58  dropped comprehension condition        none          not-applicable  not-applicable
-seed-59  flipped later comparison operator      none          not-applicable  not-applicable
-seed-60  swapped dictionary entry values        none          not-applicable  not-applicable
-seed-61  swapped sequence literal elements      sample.py     waved-through   waved-through
-seed-62  dropped assert statement               none          not-applicable  not-applicable
-seed-63  added numeric negation                 none          not-applicable  not-applicable
-seed-64  dropped with target                    none          not-applicable  not-applicable
-seed-65  dropped assignment expression          none          not-applicable  not-applicable
-seed-66  dropped delete statement               none          not-applicable  not-applicable
-seed-67  dropped match case                     none          not-applicable  not-applicable
-seed-68  swapped slice bounds                   none          not-applicable  not-applicable
-seed-69  swapped branch bodies                  none          not-applicable  not-applicable
-seed-70  dropped match guard                    none          not-applicable  not-applicable
-seed-71  dropped yield-from delegation          none          not-applicable  not-applicable
-seed-72  swapped comprehension generator order  none          not-applicable  not-applicable
-seed-73  dropped argument unpacking             none          not-applicable  not-applicable
-seed-74  swapped formatted string values        none          not-applicable  not-applicable
-seed-75  dropped call statement                 none          not-applicable  not-applicable
-seed-76  swapped decorator order                none          not-applicable  not-applicable
-seed-77  dropped parameter default              sample.py     waved-through   waved-through
-seed-78  swapped base class order               none          not-applicable  not-applicable
-seed-79  swapped match case order               none          not-applicable  not-applicable
-seed-80  swapped with items                     none          not-applicable  not-applicable
-seed-81  dropped asynchronous modifier          none          not-applicable  not-applicable
-seed-82  swapped keyword argument order         none          not-applicable  not-applicable
-seed-83  swapped import names                   none          not-applicable  not-applicable
-seed-84  dropped with item                      none          not-applicable  not-applicable
-seed-85  swapped try handler order              none          not-applicable  not-applicable
-seed-86  dropped argument annotation            none          not-applicable  not-applicable
-seed-87  swapped assignment target order        none          not-applicable  not-applicable
-seed-88  dropped return annotation              none          not-applicable  not-applicable
-seed-89  swapped statement order                sample.py     caught          waved-through
-seed-90  swapped comprehension condition order  none          not-applicable  not-applicable
-seed-91  dropped starred argument               none          not-applicable  not-applicable
-seed-92  dropped raise statement                none          not-applicable  not-applicable
-seed-93  dropped starred display element        none          not-applicable  not-applicable
-seed-94  dropped loop control statement         none          not-applicable  not-applicable
-seed-95  swapped try else bodies                none          not-applicable  not-applicable
-seed-96  dropped class keyword argument         none          not-applicable  not-applicable
-seed-97  swapped loop else bodies               none          not-applicable  not-applicable
-seed-98  dropped starred parameter              none          not-applicable  not-applicable
-seed-99  dropped docstring                      none          not-applicable  not-applicable
+seed      name                                   planted file  tests           compile
+--------  -------------------------------------  ------------  --------------  --------------
+seed-00   stale version string                   sample.py     caught          waved-through
+seed-01   dropped return value                   sample.py     caught          waved-through
+seed-02   inverted comparison                    sample.py     caught          waved-through
+seed-03   off by one constant                    sample.py     caught          waved-through
+seed-04   swallowed exception                    sample.py     caught          waved-through
+seed-05   inverted boolean literal               sample.py     caught          waved-through
+seed-06   swapped arithmetic operator            sample.py     caught          waved-through
+seed-07   dropped call argument                  sample.py     waved-through   waved-through
+seed-08   negated condition                      sample.py     caught          waved-through
+seed-09   removed collection element             sample.py     waved-through   waved-through
+seed-10   range bound shifted by one             sample.py     caught          waved-through
+seed-11   wrong variable returned                sample.py     caught          waved-through
+seed-12   swapped operand order                  sample.py     caught          waved-through
+seed-13   dropped else branch                    none          not-applicable  not-applicable
+seed-14   swapped boolean operator               none          not-applicable  not-applicable
+seed-15   dropped await                          none          not-applicable  not-applicable
+seed-16   widened exception handler              sample.py     waved-through   waved-through
+seed-17   swapped dictionary entry               none          not-applicable  not-applicable
+seed-18   inverted truth test                    none          not-applicable  not-applicable
+seed-19   reassigned loop variable               none          not-applicable  not-applicable
+seed-20   swapped call argument order            sample.py     caught          waved-through
+seed-21   altered string literal                 sample.py     caught          waved-through
+seed-22   dropped numeric negation               none          not-applicable  not-applicable
+seed-23   swapped loop control                   none          not-applicable  not-applicable
+seed-24   swapped augmented assignment operator  none          not-applicable  not-applicable
+seed-25   identity test replaced by equality     none          not-applicable  not-applicable
+seed-26   subscript index shifted by one         none          not-applicable  not-applicable
+seed-27   swapped keyword argument values        none          not-applicable  not-applicable
+seed-28   swapped raised error                   sample.py     caught          waved-through
+seed-29   slice stop shifted by one              none          not-applicable  not-applicable
+seed-30   shifted numeric default                none          not-applicable  not-applicable
+seed-31   swapped sibling attribute              none          not-applicable  not-applicable
+seed-32   narrowed exception handler             none          not-applicable  not-applicable
+seed-33   swapped parameter defaults             none          not-applicable  not-applicable
+seed-34   dropped finally body                   none          not-applicable  not-applicable
+seed-35   dropped decorator                      none          not-applicable  not-applicable
+seed-36   dropped exception handler              none          not-applicable  not-applicable
+seed-37   dropped yield                          none          not-applicable  not-applicable
+seed-38   dropped condition term                 none          not-applicable  not-applicable
+seed-39   dropped base class                     none          not-applicable  not-applicable
+seed-40   shifted slice start                    none          not-applicable  not-applicable
+seed-41   reversed loop control                  none          not-applicable  not-applicable
+seed-42   dropped scope declaration              none          not-applicable  not-applicable
+seed-43   swapped assignment values              none          not-applicable  not-applicable
+seed-44   dropped loop else clause               none          not-applicable  not-applicable
+seed-45   dropped keyword argument               none          not-applicable  not-applicable
+seed-46   flipped range step sign                none          not-applicable  not-applicable
+seed-47   dropped logical negation               none          not-applicable  not-applicable
+seed-48   dropped try else clause                none          not-applicable  not-applicable
+seed-49   shifted slice step                     none          not-applicable  not-applicable
+seed-50   swapped conditional expression arms    none          not-applicable  not-applicable
+seed-51   dropped exception chain                none          not-applicable  not-applicable
+seed-52   dropped slice bound                    none          not-applicable  not-applicable
+seed-53   dropped augmentation                   none          not-applicable  not-applicable
+seed-54   swapped parameter order                sample.py     caught          waved-through
+seed-55   dropped import                         none          not-applicable  not-applicable
+seed-56   dropped return statement               sample.py     caught          waved-through
+seed-57   swapped boolean operands               none          not-applicable  not-applicable
+seed-58   dropped comprehension condition        none          not-applicable  not-applicable
+seed-59   flipped later comparison operator      none          not-applicable  not-applicable
+seed-60   swapped dictionary entry values        none          not-applicable  not-applicable
+seed-61   swapped sequence literal elements      sample.py     waved-through   waved-through
+seed-62   dropped assert statement               none          not-applicable  not-applicable
+seed-63   added numeric negation                 none          not-applicable  not-applicable
+seed-64   dropped with target                    none          not-applicable  not-applicable
+seed-65   dropped assignment expression          none          not-applicable  not-applicable
+seed-66   dropped delete statement               none          not-applicable  not-applicable
+seed-67   dropped match case                     none          not-applicable  not-applicable
+seed-68   swapped slice bounds                   none          not-applicable  not-applicable
+seed-69   swapped branch bodies                  none          not-applicable  not-applicable
+seed-70   dropped match guard                    none          not-applicable  not-applicable
+seed-71   dropped yield-from delegation          none          not-applicable  not-applicable
+seed-72   swapped comprehension generator order  none          not-applicable  not-applicable
+seed-73   dropped argument unpacking             none          not-applicable  not-applicable
+seed-74   swapped formatted string values        none          not-applicable  not-applicable
+seed-75   dropped call statement                 none          not-applicable  not-applicable
+seed-76   swapped decorator order                none          not-applicable  not-applicable
+seed-77   dropped parameter default              sample.py     waved-through   waved-through
+seed-78   swapped base class order               none          not-applicable  not-applicable
+seed-79   swapped match case order               none          not-applicable  not-applicable
+seed-80   swapped with items                     none          not-applicable  not-applicable
+seed-81   dropped asynchronous modifier          none          not-applicable  not-applicable
+seed-82   swapped keyword argument order         none          not-applicable  not-applicable
+seed-83   swapped import names                   none          not-applicable  not-applicable
+seed-84   dropped with item                      none          not-applicable  not-applicable
+seed-85   swapped try handler order              none          not-applicable  not-applicable
+seed-86   dropped argument annotation            none          not-applicable  not-applicable
+seed-87   swapped assignment target order        none          not-applicable  not-applicable
+seed-88   dropped return annotation              none          not-applicable  not-applicable
+seed-89   swapped statement order                sample.py     caught          waved-through
+seed-90   swapped comprehension condition order  none          not-applicable  not-applicable
+seed-91   dropped starred argument               none          not-applicable  not-applicable
+seed-92   dropped raise statement                none          not-applicable  not-applicable
+seed-93   dropped starred display element        none          not-applicable  not-applicable
+seed-94   dropped loop control statement         none          not-applicable  not-applicable
+seed-95   swapped try else bodies                none          not-applicable  not-applicable
+seed-96   dropped class keyword argument         none          not-applicable  not-applicable
+seed-97   swapped loop else bodies               none          not-applicable  not-applicable
+seed-98   dropped starred parameter              none          not-applicable  not-applicable
+seed-99   dropped docstring                      none          not-applicable  not-applicable
+seed-100  dropped parameter                      sample.py     caught          waved-through
+seed-101  dropped elif branch                    none          not-applicable  not-applicable
+seed-102  dropped import alias                   none          not-applicable  not-applicable
+seed-103  dropped yield value                    none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 17  waved-through 5  not-applicable 78  gate-broken 0
-  compile  caught 0  waved-through 22  not-applicable 78  gate-broken 0
+  tests  caught 18  waved-through 5  not-applicable 81  gate-broken 0
+  compile  caught 0  waved-through 23  not-applicable 81  gate-broken 0
