@@ -1193,13 +1193,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-99"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "caught"
+      },
+      "name": "dropped parameter",
+      "planted_exits": {
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-100"
+    },
+    {
+      "defect_class": "missing fallback",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped elif branch",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-101"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped import alias",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-102"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped yield value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-103"
     }
   ],
   "summary": {
     "tests": {
-      "caught": 17,
+      "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 78,
+      "not-applicable": 81,
       "waved-through": 5
     }
   },

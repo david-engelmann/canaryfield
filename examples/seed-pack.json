@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/23",
+  "format": "canaryfield-seeds/24",
   "seeds": [
     {
       "id": "seed-00",
@@ -600,6 +600,30 @@
       "name": "dropped docstring",
       "defect_class": "missing data",
       "description": "Removes the string statement standing first in the body of a module or a definition or a class whole so the documentation the body carried reads as nothing"
+    },
+    {
+      "id": "seed-100",
+      "name": "dropped parameter",
+      "defect_class": "missing input",
+      "description": "Removes the first parameter of every function definition and lambda whole so the arguments a caller passes shift onto the parameters that stood behind it and the body reads a name nothing binds"
+    },
+    {
+      "id": "seed-101",
+      "name": "dropped elif branch",
+      "defect_class": "missing fallback",
+      "description": "Removes one link of an elif chain whole so the branches between the first test and the final else clause are never judged and the chain falls through to what stood last"
+    },
+    {
+      "id": "seed-102",
+      "name": "dropped import alias",
+      "defect_class": "missing input",
+      "description": "Removes the alias name of the first aliased import in every import statement so the name the code reads the import by is never bound while the module stands imported under its own name"
+    },
+    {
+      "id": "seed-103",
+      "name": "dropped yield value",
+      "defect_class": "wrong data",
+      "description": "Removes the value of every yield expression so the generator produces no value in the place of each item it was written to produce while the production itself still runs"
     }
   ]
 }

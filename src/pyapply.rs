@@ -130,8 +130,133 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-97" => apply_swapped_loop_else_bodies(tree),
         "seed-98" => apply_dropped_starred_parameter(tree),
         "seed-99" => apply_dropped_docstring(tree),
+        "seed-100" => apply_dropped_parameter(tree),
+        "seed-101" => apply_dropped_elif_branch(tree),
+        "seed-102" => apply_dropped_import_alias(tree),
+        "seed-103" => apply_dropped_yield_value(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
+}
+
+// seed-100, dropped parameter.
+
+fn apply_dropped_parameter(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda) {
+                return false;
+            }
+            let Some(args_node) = tree.one(*id, "args") else {
+                return false;
+            };
+            !tree.many(args_node, "posonlyargs").is_empty()
+                || !tree.many(args_node, "args").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        let args_node = tree.one(*id, "args").expect("the arguments stand");
+        let posonly = tree.many(args_node, "posonlyargs").to_vec();
+        let ordinary = tree.many(args_node, "args").to_vec();
+        let mut defaults = tree.many(args_node, "defaults").to_vec();
+        if defaults.len() == posonly.len() + ordinary.len() {
+            defaults.remove(0);
+            tree.set_many(args_node, "defaults", defaults);
+        }
+        if !posonly.is_empty() {
+            tree.set_many(args_node, "posonlyargs", posonly[1..].to_vec());
+        } else {
+            tree.set_many(args_node, "args", ordinary[1..].to_vec());
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-101, dropped elif branch.
+
+fn apply_dropped_elif_branch(tree: &mut Tree) -> bool {
+    let mut planted = false;
+    loop {
+        let targets: Vec<usize> = tree
+            .sorted_nodes()
+            .into_iter()
+            .filter(|id| {
+                if !matches!(&tree.nodes[*id].data, Data::If { .. }) {
+                    return false;
+                }
+                let orelse = tree.many(*id, "orelse");
+                orelse.len() == 1 && matches!(&tree.nodes[orelse[0]].data, Data::If { .. })
+            })
+            .collect();
+        if targets.is_empty() {
+            break;
+        }
+        planted = true;
+        for id in &targets {
+            let inner = tree.many(*id, "orelse")[0];
+            let rest = tree.many(inner, "orelse").to_vec();
+            tree.set_many(*id, "orelse", rest);
+        }
+    }
+    planted
+}
+
+// seed-102, dropped import alias.
+
+fn apply_dropped_import_alias(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::Import | Data::ImportFrom { .. }
+            ) && tree.many(*id, "names").iter().any(|alias| {
+                matches!(
+                    &tree.nodes[*alias].data,
+                    Data::Alias {
+                        asname: Some(_),
+                        ..
+                    }
+                )
+            })
+        })
+        .collect();
+    for id in &targets {
+        let names = tree.many(*id, "names").to_vec();
+        for alias in names {
+            if matches!(
+                &tree.nodes[alias].data,
+                Data::Alias {
+                    asname: Some(_),
+                    ..
+                }
+            ) {
+                if let Data::Alias { asname, .. } = &mut tree.node_mut(alias).data {
+                    *asname = None;
+                }
+                break;
+            }
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-103, dropped yield value.
+
+fn apply_dropped_yield_value(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Yield) && tree.one(*id, "value").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "value", None);
+    }
+    !targets.is_empty()
 }
 
 // The shared readings.
