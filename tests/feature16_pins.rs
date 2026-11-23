@@ -246,9 +246,9 @@ fn test_seed_106_leaves_a_single_name_target_standing() {
 #[test]
 fn test_seed_106_leaves_a_one_element_sequence_standing() {
     let (planted, rendered) =
-        applied_render("for (first,) in pairs:\n    total = first\n", "seed-106");
+        applied_render("for [first] in pairs:\n    total = first\n", "seed-106");
     assert!(!planted);
-    assert_eq!(rendered, "for (first,) in pairs:\n    total = first");
+    assert_eq!(rendered, "for [first] in pairs:\n    total = first");
 }
 
 #[test]
