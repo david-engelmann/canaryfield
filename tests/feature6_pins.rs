@@ -91,16 +91,16 @@ const MATCH_GATE: &str = "#!/bin/sh\ngrep -q \"case 1:\" mod.py\n";
 fn test_registry_has_eighty_eight_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        104,
-        "the grown registry holds one hundred and four"
+        108,
+        "the grown registry holds one hundred and eight"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 104, "every seed id stands once");
+    assert_eq!(ids.len(), 108, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-103"));
+    assert_eq!(standing.last(), Some(&"seed-107"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -175,7 +175,11 @@ fn test_seed_metadata_is_complete() {
             "dropped parameter",
             "dropped elif branch",
             "dropped import alias",
-            "dropped yield value"
+            "dropped yield value",
+            "dropped assert message",
+            "dropped formatted value conversion",
+            "swapped loop target elements",
+            "dropped keyword-only parameter"
         ]
     );
 }
@@ -559,7 +563,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 104);
+    assert_eq!(loaded.len(), 108);
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -577,6 +581,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 104);
+    assert_eq!(loaded.len(), 108);
     let _ = fs::remove_dir_all(&dir);
 }

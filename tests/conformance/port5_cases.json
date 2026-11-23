@@ -1479,25 +1479,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
       "gate-broken": 23,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
       "gate-broken": 23,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 0
      },
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 5
      }
     },
@@ -2870,13 +2922,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "branch": null,
+      "defect_class": "wrong data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "branch": null,
+      "defect_class": "wrong variable",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 5
      }
     },
@@ -4064,13 +4164,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 101,
+      "not-applicable": 105,
       "waved-through": 0
      }
     },
@@ -5276,13 +5420,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "tests": {
       "caught": 5,
       "gate-broken": 0,
-      "not-applicable": 98,
+      "not-applicable": 102,
       "waved-through": 1
      }
     },
@@ -6504,13 +6692,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "gate-broken": 23,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 0
      }
     },
@@ -7778,13 +8010,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 81,
+      "not-applicable": 85,
       "waved-through": 5
      }
     },
@@ -7809,6 +8085,10 @@
     "seed-101",
     "seed-102",
     "seed-103",
+    "seed-104",
+    "seed-105",
+    "seed-106",
+    "seed-107",
     "seed-11",
     "seed-12",
     "seed-13",
@@ -9079,13 +9359,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-103"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assert message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-104"
+     },
+     {
+      "defect_class": "wrong data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value conversion",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-105"
+     },
+     {
+      "defect_class": "wrong variable",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "swapped loop target elements",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-106"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-107"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 101,
+      "not-applicable": 105,
       "waved-through": 0
      }
     },

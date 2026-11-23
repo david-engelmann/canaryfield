@@ -111,6 +111,10 @@ seed-100  dropped parameter                      sample.py     caught
 seed-101  dropped elif branch                    none          not-applicable
 seed-102  dropped import alias                   none          not-applicable
 seed-103  dropped yield value                    none          not-applicable
+seed-104  dropped assert message                 none          not-applicable
+seed-105  dropped formatted value conversion     none          not-applicable
+seed-106  swapped loop target elements           none          not-applicable
+seed-107  dropped keyword-only parameter         none          not-applicable
 
 summary per gate
-  tests  caught 18  waved-through 5  not-applicable 81  gate-broken 0
+  tests  caught 18  waved-through 5  not-applicable 85  gate-broken 0

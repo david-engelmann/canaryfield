@@ -652,4 +652,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong data",
         description: "Removes the value of every yield expression so the generator produces no value in the place of each item it was written to produce while the production itself still runs",
     },
+    SeedMeta {
+        id: "seed-104",
+        name: "dropped assert message",
+        defect_class: "missing data",
+        description: "Removes the message of every assert statement so a failure of the test reports nothing of what the code wrote for it while the test itself stands judged exactly as written",
+    },
+    SeedMeta {
+        id: "seed-105",
+        name: "dropped formatted value conversion",
+        defect_class: "wrong data",
+        description: "Removes the conversion of every formatted value so the value renders in its plain form where the code directed the repr or the string or the ascii rendering of it",
+    },
+    SeedMeta {
+        id: "seed-106",
+        name: "swapped loop target elements",
+        defect_class: "wrong variable",
+        description: "Exchanges the first two elements of every loop sequence target so each of the two names binds the other's item out of the unpacking the loop performs",
+    },
+    SeedMeta {
+        id: "seed-107",
+        name: "dropped keyword-only parameter",
+        defect_class: "missing input",
+        description: "Removes the first keyword-only parameter of every function definition and lambda whole so a caller passing it by name hands it to no parameter and the body reads a name nothing binds",
+    },
 ];

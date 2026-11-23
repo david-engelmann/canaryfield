@@ -134,6 +134,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-101" => apply_dropped_elif_branch(tree),
         "seed-102" => apply_dropped_import_alias(tree),
         "seed-103" => apply_dropped_yield_value(tree),
+        "seed-104" => apply_dropped_assert_message(tree),
+        "seed-105" => apply_dropped_formatted_value_conversion(tree),
+        "seed-106" => apply_swapped_loop_target_elements(tree),
+        "seed-107" => apply_dropped_keyword_only_parameter(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -255,6 +259,115 @@ fn apply_dropped_yield_value(tree: &mut Tree) -> bool {
         .collect();
     for id in &targets {
         tree.set_one(*id, "value", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-104, dropped assert message. The msg child of an
+// assert clears the way seed-103 clears a yield's value,
+// the test standing exactly as written.
+
+fn apply_dropped_assert_message(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Assert) && tree.one(*id, "msg").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "msg", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-105, dropped formatted value conversion. The
+// conversion a formatted value carries is a scalar on the
+// node, and it clears to the plain rendering the way
+// seed-102 clears an alias name.
+
+fn apply_dropped_formatted_value_conversion(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::FormattedValue { conversion } if *conversion != -1
+            )
+        })
+        .collect();
+    for id in &targets {
+        if let Data::FormattedValue { conversion, .. } = &mut tree.node_mut(*id).data {
+            *conversion = -1;
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-106, swapped loop target elements. The exchange
+// seed-87 performs on an assignment target stands performed
+// on a loop statement's own target, the comprehension
+// targets standing outside both readings.
+
+fn apply_swapped_loop_target_elements(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::For { .. }))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let Some(target) = tree.one(*id, "target") else {
+            continue;
+        };
+        if !matches!(
+            &tree.nodes[target].data,
+            Data::Tuple { .. } | Data::List { .. }
+        ) {
+            continue;
+        }
+        let elts = tree.many(target, "elts");
+        if elts.len() < 2 {
+            continue;
+        }
+        let mut swapped = elts.to_vec();
+        swapped.swap(0, 1);
+        tree.set_many(target, "elts", swapped);
+        planted = true;
+    }
+    planted
+}
+
+// seed-107, dropped keyword-only parameter. The removal
+// seed-100 performs on the first positional parameter
+// stands performed on the first keyword-only parameter,
+// its entry among the keyword-only defaults traveling
+// with it the way a positional default travels.
+
+fn apply_dropped_keyword_only_parameter(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda) {
+                return false;
+            }
+            let Some(args_node) = tree.one(*id, "args") else {
+                return false;
+            };
+            !tree.many(args_node, "kwonlyargs").is_empty()
+        })
+        .collect();
+    for id in &targets {
+        let args_node = tree.one(*id, "args").expect("the arguments stand");
+        let kwonly = tree.many(args_node, "kwonlyargs").to_vec();
+        tree.set_many(args_node, "kwonlyargs", kwonly[1..].to_vec());
+        let mut kw_defaults = tree.maybe(args_node, "kw_defaults").to_vec();
+        if !kw_defaults.is_empty() {
+            kw_defaults.remove(0);
+            tree.set_maybe(args_node, "kw_defaults", kw_defaults);
+        }
     }
     !targets.is_empty()
 }
