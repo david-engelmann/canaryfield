@@ -176,23 +176,30 @@ fn apply_dropped_parameter(tree: &mut Tree) -> bool {
 // seed-101, dropped elif branch.
 
 fn apply_dropped_elif_branch(tree: &mut Tree) -> bool {
-    let targets: Vec<usize> = tree
-        .sorted_nodes()
-        .into_iter()
-        .filter(|id| {
-            if !matches!(&tree.nodes[*id].data, Data::If { .. }) {
-                return false;
-            }
-            let orelse = tree.many(*id, "orelse");
-            orelse.len() == 1 && matches!(&tree.nodes[orelse[0]].data, Data::If { .. })
-        })
-        .collect();
-    for id in &targets {
-        let inner = tree.many(*id, "orelse")[0];
-        let rest = tree.many(inner, "orelse").to_vec();
-        tree.set_many(*id, "orelse", rest);
+    let mut planted = false;
+    loop {
+        let targets: Vec<usize> = tree
+            .sorted_nodes()
+            .into_iter()
+            .filter(|id| {
+                if !matches!(&tree.nodes[*id].data, Data::If { .. }) {
+                    return false;
+                }
+                let orelse = tree.many(*id, "orelse");
+                orelse.len() == 1 && matches!(&tree.nodes[orelse[0]].data, Data::If { .. })
+            })
+            .collect();
+        if targets.is_empty() {
+            break;
+        }
+        planted = true;
+        for id in &targets {
+            let inner = tree.many(*id, "orelse")[0];
+            let rest = tree.many(inner, "orelse").to_vec();
+            tree.set_many(*id, "orelse", rest);
+        }
     }
-    !targets.is_empty()
+    planted
 }
 
 // seed-102, dropped import alias.
