@@ -166,6 +166,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-133" => apply_dropped_last_tuple_element(tree),
         "seed-134" => apply_dropped_last_base_class(tree),
         "seed-135" => apply_dropped_decorator_argument(tree),
+        "seed-136" => apply_dropped_unpacking_target_element(tree),
+        "seed-137" => apply_dropped_last_unpacking_target_element(tree),
+        "seed-138" => apply_dropped_keyword_unpacking(tree),
+        "seed-139" => apply_dropped_last_dictionary_entry(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4539,4 +4543,107 @@ fn apply_dropped_decorator_argument(tree: &mut Tree) -> bool {
         }
     }
     planted
+}
+
+// seed-136, dropped unpacking target element. The first
+// element of every tuple standing in Store context
+// carrying at least two elements stands removed, the
+// value the code unpacks first never bound, where
+// seed-124 removes the first element of a tuple display
+// in Load context and seed-133 removes its last.
+
+fn apply_dropped_unpacking_target_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Store, .. })
+                && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-137, dropped last unpacking target element. The
+// last element of every tuple standing in Store context
+// carrying at least two elements stands removed, the
+// tail twin of seed-136 on the same ground, where
+// seed-133 removes the last element of a tuple display
+// in Load context.
+
+fn apply_dropped_last_unpacking_target_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Store, .. })
+                && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-138, dropped keyword unpacking. The keyword
+// carrying no name, the double starred unpacking of a
+// call, stands removed from every call carrying one,
+// where seed-45 removes the first keyword carrying a
+// name and seed-73 replaces a starred argument with the
+// value it carries and removes nothing.
+
+fn apply_dropped_keyword_unpacking(tree: &mut Tree) -> bool {
+    let mut targets: Vec<(usize, usize)> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        let unnamed = tree
+            .many(id, "keywords")
+            .iter()
+            .copied()
+            .find(|kw| matches!(&tree.nodes[*kw].data, Data::Keyword { arg: None }));
+        if let Some(keyword) = unnamed {
+            targets.push((id, keyword));
+        }
+    }
+    let planted = !targets.is_empty();
+    for (id, keyword) in targets {
+        let mut keywords = tree.many(id, "keywords").to_vec();
+        keywords.retain(|kw| *kw != keyword);
+        tree.set_many(id, "keywords", keywords);
+    }
+    planted
+}
+
+// seed-139, dropped last dictionary entry. The last
+// entry of every dictionary display carrying at least
+// two entries stands removed, its key and value
+// together, where seed-09 removes the first entry of
+// every dictionary display and seed-17 exchanges two
+// entries and removes none.
+
+fn apply_dropped_last_dictionary_entry(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Dict) && tree.many(*id, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let keys = tree.maybe(*id, "keys");
+        let kept = keys.len() - 1;
+        tree.set_maybe(*id, "keys", keys[..kept].to_vec());
+        let values = tree.many(*id, "values");
+        tree.set_many(*id, "values", values[..kept].to_vec());
+    }
+    !targets.is_empty()
 }
