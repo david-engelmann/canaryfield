@@ -124,7 +124,11 @@ seed-112  dropped slice step                     none          not-applicable  n
 seed-113  dropped annotation value               none          not-applicable  not-applicable
 seed-114  dropped formatted value                none          not-applicable  not-applicable
 seed-115  dropped raised error message           sample.py     waved-through   waved-through
+seed-116  dropped set element                    none          not-applicable  not-applicable
+seed-117  dropped decorator call                 none          not-applicable  not-applicable
+seed-118  dropped attribute                      none          not-applicable  not-applicable
+seed-119  dropped exception type                 sample.py     waved-through   waved-through
 
 summary per gate
-  tests  caught 18  waved-through 6  not-applicable 92  gate-broken 0
-  compile  caught 0  waved-through 24  not-applicable 92  gate-broken 0
+  tests  caught 18  waved-through 7  not-applicable 95  gate-broken 0
+  compile  caught 0  waved-through 25  not-applicable 95  gate-broken 0

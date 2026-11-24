@@ -1519,20 +1519,73 @@
         "sample.py"
       ],
       "seed": "seed-115"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped set element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-116"
+    },
+    {
+      "defect_class": "missing wrapper",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped decorator call",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-117"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped attribute",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-118"
+    },
+    {
+      "defect_class": "hidden failure",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "dropped exception type",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-119"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 92,
-      "waved-through": 24
+      "not-applicable": 95,
+      "waved-through": 25
     },
     "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 92,
-      "waved-through": 6
+      "not-applicable": 95,
+      "waved-through": 7
     }
   },
   "target": "examples/demo-project",
