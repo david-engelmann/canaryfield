@@ -1153,3 +1153,67 @@ F23-6, the reserve. Two candidates stand in the reserve for the twenty fourth sl
 ## F23 closing entry, the line share (Round 42)
 
 Feature slice 23 stands closed. The registry stands at one hundred and thirty six seeds under canaryfield-seeds/32, the PORT2 battery stands extended by exactly 3548 entries over 887 cases with the strip check byte exact, and both example catch tables stand at 136 rows with every standing row unmoved and the four new seeds not applicable on the demo project under both gates, the two gates still disagreeing on twenty two seeds. PR 84 merged at ff11a6dba6f56089f5a74285df55de19efed08bc with its tree verified equal to the reviewed head 99517807a0923de313fe6949d1ca7ab8c9cc90c7, whose hosted checks all stood green. The tree at the final build head counts 27757 lines over 55 files, 16636 production and 11121 tests, by the calibrated counter that reproduced the Round 41 figure on its tree. Five repairs stand disclosed in the chain, the standing sweep's lost outer quotes in fifteen pins files, the seed pack count row for version 31 restored after the core build replaced it and the count table length corrected to thirty two after it, one seed-134 pin render corrected to the blank line the renderer leaves between top level class definitions, and formatting. CodeRabbit was triggered on PR 84 and answered rate limited, so no findings stand read for this slice. Release v0.29.0 stands published on the closure merge commit. The line stands at 123 of 400, blindgate at 30, canaryfield at 42, ostensible at 33, and greenharvest at 18. The F23-6 reserve stands carried to the Round 43 weighing.
+
+## Feature slice 24 (Round 43)
+
+Registry growth from one hundred and thirty six to one hundred and forty seeds, pack canaryfield-seeds/32 to canaryfield-seeds/33.
+
+The slice takes four removal families the weighing found standing on ground no seed reads. The weighing read the registry's one hundred and thirty six entries and the boundary applies whole before any seat was taken, and counted the candidate shapes over the grown battery population of 869 parseable recorded texts. The twenty third slice's reserve stands disposed first. The dropped positional only parameter falls outright, its ground counting zero in the population and its seat standing already read by seed-100, whose apply takes the first positional only parameter of a function or lambda whenever one stands. The dropped dictionary unpacking entry stands counted at three entries in two texts, two of them standing first in their displays where seed-09, which removes the first entry of every dictionary display whatever its key, already reads them, and it stands carried to this slice's reserve with its narrowed reading stated there. The slice's anchor is the dropped unpacking target element, the tuple displays standing in Store context carrying at least two elements counting 136 in 31 texts, where seed-124 and seed-133 read tuple displays in Load context alone and seed-09 reads dictionary and list displays and never a tuple, and Store context list displays count zero in the population, so the seat stands exactly on the tuple targets. The dropped loop else clause stands beside it at fourteen loops carrying an else clause in eleven texts, seed-13 reading conditional statements alone, seed-48 reading the else clause of a try, and seed-97 exchanging a loop's body and else bodies and removing neither. The dropped call unpacking stands at seven calls carrying a double starred keyword in six texts, seed-45 removing the first keyword carrying a name and passing the unnamed unpacking keyword by. The dropped starred call argument stands at six calls carrying a starred argument in five texts, seed-93 removing a starred element from a list or tuple or set display and never reading a call's arguments. Fallen at the weighing stand the dropped scope name, the dropped comprehension generator, the dropped parameter annotation, and the dropped return annotation, each counting zero in the population, and the dropped imported name's ground of seventy three in thirty eight texts standing read by seed-110, which removes the last name of a from import carrying at least two.
+
+F24-1. The registry grows by four entries, standing in the registry in this form:
+
+    SeedMeta {
+        id: "seed-136",
+        name: "dropped unpacking target element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as an unpacking target carrying at least two so the value the code unpacks first is never bound and the target's elements stand shifted",
+    },
+    SeedMeta {
+        id: "seed-137",
+        name: "dropped loop else clause",
+        defect_class: "missing fallback",
+        description: "Drops the else clause of a loop so the code written to run when the loop finishes without a break never runs",
+    },
+    SeedMeta {
+        id: "seed-138",
+        name: "dropped call unpacking",
+        defect_class: "missing input",
+        description: "Removes the double starred unpacking of a call so the mapping the caller spread into the call never reaches the callee",
+    },
+    SeedMeta {
+        id: "seed-139",
+        name: "dropped starred call argument",
+        defect_class: "missing input",
+        description: "Removes the first starred argument of a call whole so the values it would have spread into the call never arrive",
+    },
+
+The four stand at the registry's end as seed-136 through seed-139, and the registry's count stands at one hundred and forty.
+
+F24-2. The PORT2 battery stands extended by the four new seeds under the standing method, an independent implementation of the four transformations, with every standing entry identical and the confinement proven by stripping the new seeds' keys and reproducing the standing battery whole.
+
+F24-3. Pins stand in tests/feature24_pins.rs under names taken from this section, at least these:
+
+- the registry stands at one hundred and forty seeds under canaryfield-seeds/33
+- seed-136 removes the first element of every unpacking target
+- seed-136 leaves a single element target standing
+- seed-136 leaves a value tuple standing
+- seed-136 removes the first element of a target standing inside a target
+- seed-137 removes the else clause of every loop carrying one
+- seed-137 leaves a loop carrying no else clause standing
+- seed-137 leaves the else branch of a conditional standing
+- seed-138 removes the unpacking of every call carrying one
+- seed-138 leaves a call's named keyword arguments standing
+- seed-139 removes the first starred argument of every call carrying one
+- seed-139 keeps the remaining arguments standing
+- seed-139 leaves a starred display element standing
+- the pack writes under canaryfield-seeds/33 and loads under it
+- the pack still loads under canaryfield-seeds/32 at one hundred and thirty six entries
+- a pack whose count disagrees with canaryfield-seeds/33 stands refused
+
+The pin check on the contract head must fail with the new pins failing except the canaryfield-seeds/32 preservation pin and the count disagreement pin, which pass there by their design.
+
+F24-4. The seed pack document stands regenerated under canaryfield-seeds/33 with one hundred and forty entries, the PORT1 battery's single data case stands carried to the new document in its one field, the standing pins across the earlier slices' pins files stand moved to the grown registry and the thirty third format in every spelling those generations carry, and the standing tests naming an unknown seed id name seed-140.
+
+F24-5. The PORT5 and PORT6 batteries and both example catch tables stand regenerated, the README's slice 24 bullet states the grown registry, its pack bullet states canaryfield-seeds/33, and its regeneration bullet states the verdicts the tables show for seed-136 through seed-139 and the disagreement count the second example's table shows.
+
+F24-6. The reserve for the twenty fifth slice stands named here. The dropped exception handler, a whole handler of a try carrying at least two, stands counted at six in five texts, seed-131 clearing a handler's name and seed-119 clearing a handler's type and neither removing the handler. The dropped dictionary unpacking entry stands counted at three entries in two texts, its reading narrowed by seed-09's first entry removal to the entries standing after the first, its count and that narrowed reading owed together at the next weighing. The dropped match case, a whole case of a match carrying at least two, stands counted at two in two texts.
