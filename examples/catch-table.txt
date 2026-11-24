@@ -135,6 +135,10 @@ seed-124  dropped tuple element                  none          not-applicable
 seed-125  dropped conditional test               none          not-applicable
 seed-126  dropped comparison head                none          not-applicable
 seed-127  dropped assignment                     sample.py     caught
+seed-128  dropped annotated assignment           none          not-applicable
+seed-129  dropped function definition            sample.py     caught
+seed-130  dropped class definition               none          not-applicable
+seed-131  dropped exception handler name         none          not-applicable
 
 summary per gate
-  tests  caught 21  waved-through 7  not-applicable 100  gate-broken 0
+  tests  caught 22  waved-through 7  not-applicable 103  gate-broken 0

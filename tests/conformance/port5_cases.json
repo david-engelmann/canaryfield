@@ -1811,25 +1811,81 @@
        "sample.py"
       ],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
-      "gate-broken": 28,
-      "not-applicable": 100,
+      "gate-broken": 29,
+      "not-applicable": 103,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
-      "gate-broken": 28,
-      "not-applicable": 100,
+      "gate-broken": 29,
+      "not-applicable": 103,
       "waved-through": 0
      },
      "tests": {
-      "caught": 21,
+      "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 100,
+      "not-applicable": 103,
       "waved-through": 7
      }
     },
@@ -3510,13 +3566,65 @@
        "sample.py"
       ],
       "seed": "seed-127"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "branch": "canaryfield/seed-129",
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 21,
+      "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 100,
+      "not-applicable": 103,
       "waved-through": 7
      }
     },
@@ -4968,13 +5076,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "tiny.py",
+      "planted_files": [
+       "tiny.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 3,
+      "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 125,
+      "not-applicable": 128,
       "waved-through": 0
      }
     },
@@ -6449,13 +6605,62 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "alpha.py",
+      "planted_files": [
+       "alpha.py",
+       "beta.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 6,
+      "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 121,
+      "not-applicable": 124,
       "waved-through": 1
      }
     },
@@ -7951,13 +8156,59 @@
        "sample.py"
       ],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
-      "gate-broken": 28,
-      "not-applicable": 100,
+      "gate-broken": 29,
+      "not-applicable": 103,
       "waved-through": 0
      }
     },
@@ -9509,13 +9760,61 @@
        "sample.py"
       ],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 21,
+      "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 100,
+      "not-applicable": 103,
       "waved-through": 7
      }
     },
@@ -9566,7 +9865,11 @@
     "seed-125",
     "seed-126",
     "seed-127",
+    "seed-128",
+    "seed-129",
     "seed-13",
+    "seed-130",
+    "seed-131",
     "seed-14",
     "seed-15",
     "seed-16",
@@ -11098,13 +11401,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-127"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotated assignment",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-128"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped function definition",
+      "planted_exits": {
+       "tests": 2
+      },
+      "planted_file": "tiny.py",
+      "planted_files": [
+       "tiny.py"
+      ],
+      "seed": "seed-129"
+     },
+     {
+      "defect_class": "missing effect",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped class definition",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-130"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped exception handler name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-131"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 3,
+      "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 125,
+      "not-applicable": 128,
       "waved-through": 0
      }
     },
