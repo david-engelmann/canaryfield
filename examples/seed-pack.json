@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/27",
+  "format": "canaryfield-seeds/28",
   "seeds": [
     {
       "id": "seed-00",
@@ -696,6 +696,30 @@
       "name": "dropped raised error message",
       "defect_class": "missing data",
       "description": "Removes every argument of the exception call at every raise so the error stands raised bare under its type with nothing of what the code wrote for it"
+    },
+    {
+      "id": "seed-116",
+      "name": "dropped set element",
+      "defect_class": "missing data",
+      "description": "Removes the first element of every set literal carrying at least two so the set is built without the element it opened with"
+    },
+    {
+      "id": "seed-117",
+      "name": "dropped decorator call",
+      "defect_class": "missing wrapper",
+      "description": "Replaces every decorator standing as a call with the function the call was made on so what the call returned never decorates the definition"
+    },
+    {
+      "id": "seed-118",
+      "name": "dropped attribute",
+      "defect_class": "missing data",
+      "description": "Replaces every attribute access with the object it reads from so the attribute the code named is never read and the expression yields the object itself"
+    },
+    {
+      "id": "seed-119",
+      "name": "dropped exception type",
+      "defect_class": "hidden failure",
+      "description": "Removes the type of every exception handler so the handler stands bare and catches failures its type never named"
     }
   ]
 }
