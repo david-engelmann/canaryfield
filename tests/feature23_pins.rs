@@ -110,10 +110,7 @@ fn test_seed_132_removes_the_first_target() {
 
 #[test]
 fn test_seed_132_removes_the_first_target_of_every_chained_assignment() {
-    let (_, render) = applied_render(
-        "first = second = alpha\nother = last = beta\n",
-        "seed-132",
-    );
+    let (_, render) = applied_render("first = second = alpha\nother = last = beta\n", "seed-132");
     assert_eq!(render, "second = alpha\nlast = beta");
 }
 
@@ -133,7 +130,10 @@ fn test_seed_132_leaves_a_single_target_assignment_standing() {
 #[test]
 fn test_seed_132_leaves_an_annotated_assignment_standing() {
     let (planted, render) = applied_render("value: int = alpha\n", "seed-132");
-    assert!(!planted, "an annotated assignment is not a chained assignment");
+    assert!(
+        !planted,
+        "an annotated assignment is not a chained assignment"
+    );
     assert_eq!(render, "value: int = alpha");
 }
 
@@ -229,7 +229,10 @@ fn test_seed_134_removes_the_last_base_of_every_class() {
         "class A(One, Two):\n    pass\nclass B(Three, Four):\n    pass\n",
         "seed-134",
     );
-    assert_eq!(render, "class A(One):\n    pass\n\nclass B(Three):\n    pass");
+    assert_eq!(
+        render,
+        "class A(One):\n    pass\n\nclass B(Three):\n    pass"
+    );
 }
 
 #[test]
@@ -279,7 +282,10 @@ fn test_seed_135_removes_the_first_argument() {
 
 #[test]
 fn test_seed_135_keeps_the_remaining_arguments_standing() {
-    let (_, render) = applied_render("@wrap(alpha, beta)\ndef f():\n    return value\n", "seed-135");
+    let (_, render) = applied_render(
+        "@wrap(alpha, beta)\ndef f():\n    return value\n",
+        "seed-135",
+    );
     assert_eq!(render, "@wrap(beta)\ndef f():\n    return value");
 }
 
@@ -292,7 +298,10 @@ fn test_seed_135_removes_the_argument_of_a_class_decorator() {
 #[test]
 fn test_seed_135_leaves_a_bare_decorator_standing() {
     let (planted, render) = applied_render("@wrap\ndef f():\n    return value\n", "seed-135");
-    assert!(!planted, "a decorator standing as a bare name does not plant");
+    assert!(
+        !planted,
+        "a decorator standing as a bare name does not plant"
+    );
     assert_eq!(render, "@wrap\ndef f():\n    return value");
 }
 

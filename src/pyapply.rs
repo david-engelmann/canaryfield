@@ -4465,8 +4465,7 @@ fn apply_dropped_assignment_target(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::Assign)
-                && tree.many(*id, "targets").len() >= 2
+            matches!(&tree.nodes[*id].data, Data::Assign) && tree.many(*id, "targets").len() >= 2
         })
         .collect();
     for id in &targets {
