@@ -207,7 +207,11 @@ fn test_seed_metadata_is_complete() {
             "dropped assignment target",
             "dropped last tuple element",
             "dropped last base class",
-            "dropped decorator argument"
+            "dropped decorator argument",
+            "dropped unpacking target element",
+            "dropped last unpacking target element",
+            "dropped keyword unpacking",
+            "dropped last dictionary entry"
         ]
     );
 }
