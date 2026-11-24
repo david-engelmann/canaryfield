@@ -128,7 +128,11 @@ seed-116  dropped set element                    none          not-applicable  n
 seed-117  dropped decorator call                 none          not-applicable  not-applicable
 seed-118  dropped attribute                      none          not-applicable  not-applicable
 seed-119  dropped exception type                 sample.py     waved-through   waved-through
+seed-120  dropped subscript                      none          not-applicable  not-applicable
+seed-121  dropped arithmetic operand             sample.py     caught          waved-through
+seed-122  dropped first call argument            sample.py     caught          waved-through
+seed-123  dropped first condition term           none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 18  waved-through 7  not-applicable 95  gate-broken 0
-  compile  caught 0  waved-through 25  not-applicable 95  gate-broken 0
+  tests  caught 20  waved-through 7  not-applicable 97  gate-broken 0
+  compile  caught 0  waved-through 27  not-applicable 97  gate-broken 0

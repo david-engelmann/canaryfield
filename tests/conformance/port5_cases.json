@@ -1695,25 +1695,85 @@
        "sample.py"
       ],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "caught"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "caught"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
-      "gate-broken": 25,
-      "not-applicable": 95,
+      "gate-broken": 27,
+      "not-applicable": 97,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
-      "gate-broken": 25,
-      "not-applicable": 95,
+      "gate-broken": 27,
+      "not-applicable": 97,
       "waved-through": 0
      },
      "tests": {
-      "caught": 18,
+      "caught": 20,
       "gate-broken": 0,
-      "not-applicable": 95,
+      "not-applicable": 97,
       "waved-through": 7
      }
     },
@@ -3286,13 +3346,69 @@
        "sample.py"
       ],
       "seed": "seed-119"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "branch": "canaryfield/seed-121",
+      "defect_class": "wrong computation",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-121"
+     },
+     {
+      "branch": "canaryfield/seed-122",
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-122"
+     },
+     {
+      "branch": null,
+      "defect_class": "wrong predicate",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 18,
+      "caught": 20,
       "gate-broken": 0,
-      "not-applicable": 95,
+      "not-applicable": 97,
       "waved-through": 7
      }
     },
@@ -4656,13 +4772,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 117,
+      "not-applicable": 121,
       "waved-through": 0
      }
     },
@@ -6044,13 +6204,62 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "alpha.py",
+      "planted_files": [
+       "alpha.py",
+       "beta.py"
+      ],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 5,
+      "caught": 6,
       "gate-broken": 0,
-      "not-applicable": 114,
+      "not-applicable": 117,
       "waved-through": 1
      }
     },
@@ -7452,13 +7661,61 @@
        "sample.py"
       ],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
-      "gate-broken": 25,
-      "not-applicable": 95,
+      "gate-broken": 27,
+      "not-applicable": 97,
       "waved-through": 0
      }
     },
@@ -8910,13 +9167,65 @@
        "sample.py"
       ],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 18,
+      "caught": 20,
       "gate-broken": 0,
-      "not-applicable": 95,
+      "not-applicable": 97,
       "waved-through": 7
      }
     },
@@ -8959,6 +9268,10 @@
     "seed-118",
     "seed-119",
     "seed-12",
+    "seed-120",
+    "seed-121",
+    "seed-122",
+    "seed-123",
     "seed-13",
     "seed-14",
     "seed-15",
@@ -10403,13 +10716,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-119"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-120"
+     },
+     {
+      "defect_class": "wrong computation",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped arithmetic operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-121"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-122"
+     },
+     {
+      "defect_class": "wrong predicate",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first condition term",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-123"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 117,
+      "not-applicable": 121,
       "waved-through": 0
      }
     },
