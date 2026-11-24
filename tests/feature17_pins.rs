@@ -228,6 +228,16 @@ fn test_seed_110_plants_on_every_multi_name_from_import() {
 }
 
 #[test]
+fn test_seed_110_removes_an_aliased_name_whole() {
+    let (planted, rendered) = applied_render(
+        "from package import first as kept, second as removed\n",
+        "seed-110",
+    );
+    assert!(planted);
+    assert_eq!(rendered, "from package import first as kept");
+}
+
+#[test]
 fn test_seed_110_leaves_a_single_name_from_import_standing() {
     let (planted, rendered) = applied_render("from math import sqrt\n", "seed-110");
     assert!(!planted);
@@ -287,6 +297,19 @@ fn test_seed_111_keeps_the_later_keyword_only_defaults_aligned() {
     assert_eq!(
         rendered,
         "def build(*, size, color='red'):\n    return size"
+    );
+}
+
+#[test]
+fn test_seed_111_removes_the_first_present_default() {
+    let (planted, rendered) = applied_render(
+        "def build(*, required, size=10, color='red'):\n    return size\n",
+        "seed-111",
+    );
+    assert!(planted);
+    assert_eq!(
+        rendered,
+        "def build(*, required, size, color='red'):\n    return size"
     );
 }
 
