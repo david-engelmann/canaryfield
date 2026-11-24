@@ -1583,26 +1583,82 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "waved-through"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
-      "gate-broken": 23,
-      "not-applicable": 89,
+      "gate-broken": 24,
+      "not-applicable": 92,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
-      "gate-broken": 23,
-      "not-applicable": 89,
+      "gate-broken": 24,
+      "not-applicable": 92,
       "waved-through": 0
      },
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 89,
-      "waved-through": 5
+      "not-applicable": 92,
+      "waved-through": 6
      }
     },
     "target": "<ROOT>/proj",
@@ -3070,14 +3126,66 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "branch": null,
+      "defect_class": "boundary error",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "branch": "canaryfield/seed-115",
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 89,
-      "waved-through": 5
+      "not-applicable": 92,
+      "waved-through": 6
      }
     },
     "target": "<ROOT>/proj",
@@ -4352,13 +4460,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 109,
+      "not-applicable": 113,
       "waved-through": 0
      }
     },
@@ -5652,13 +5804,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "tests": {
       "caught": 5,
       "gate-broken": 0,
-      "not-applicable": 106,
+      "not-applicable": 110,
       "waved-through": 1
      }
     },
@@ -6968,13 +7164,59 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
-      "gate-broken": 23,
-      "not-applicable": 89,
+      "gate-broken": 24,
+      "not-applicable": 92,
       "waved-through": 0
      }
     },
@@ -8330,14 +8572,62 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 89,
-      "waved-through": 5
+      "not-applicable": 92,
+      "waved-through": 6
      }
     },
     "target": "<ROOT>/proj",
@@ -8370,6 +8660,10 @@
     "seed-11",
     "seed-110",
     "seed-111",
+    "seed-112",
+    "seed-113",
+    "seed-114",
+    "seed-115",
     "seed-12",
     "seed-13",
     "seed-14",
@@ -9727,13 +10021,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-111"
+     },
+     {
+      "defect_class": "boundary error",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped slice step",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-112"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped annotation value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-113"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped formatted value",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-114"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped raised error message",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-115"
      }
     ],
     "summary": {
      "tests": {
       "caught": 3,
       "gate-broken": 0,
-      "not-applicable": 109,
+      "not-applicable": 113,
       "waved-through": 0
      }
     },
