@@ -142,6 +142,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-109" => apply_dropped_comparison_tail(tree),
         "seed-110" => apply_dropped_imported_name(tree),
         "seed-111" => apply_dropped_keyword_only_default(tree),
+        "seed-112" => apply_dropped_slice_step(tree),
+        "seed-113" => apply_dropped_annotation_value(tree),
+        "seed-114" => apply_dropped_formatted_value(tree),
+        "seed-115" => apply_dropped_raised_error_message(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4003,4 +4007,87 @@ fn apply_dropped_docstring(tree: &mut Tree) -> bool {
         })
         .collect();
     remove_statement_hits(tree, hits)
+}
+// seed-112, dropped slice step.
+
+fn apply_dropped_slice_step(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Slice) && tree.one(*id, "step").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "step", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-113, dropped annotation value.
+
+fn apply_dropped_annotation_value(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::AnnAssign { .. })
+                && tree.one(*id, "value").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "value", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-114, dropped formatted value.
+
+fn apply_dropped_formatted_value(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::JoinedStr))
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let positions: Vec<usize> = tree
+            .many(*id, "values")
+            .iter()
+            .enumerate()
+            .filter(|(_, value)| matches!(&tree.nodes[**value].data, Data::FormattedValue { .. }))
+            .map(|(index, _)| index)
+            .collect();
+        if positions.len() >= 2 {
+            let mut values = tree.many(*id, "values").to_vec();
+            values.remove(*positions.last().expect("a position stands"));
+            tree.set_many(*id, "values", values);
+            planted = true;
+        }
+    }
+    planted
+}
+
+// seed-115, dropped raised error message.
+
+fn apply_dropped_raised_error_message(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| {
+            if !matches!(&tree.nodes[id].data, Data::Raise) {
+                return None;
+            }
+            let exc = tree.one(id, "exc")?;
+            if matches!(&tree.nodes[exc].data, Data::Call) && !tree.many(exc, "args").is_empty() {
+                Some(exc)
+            } else {
+                None
+            }
+        })
+        .collect();
+    for exc in &targets {
+        tree.set_many(*exc, "args", Vec::new());
+    }
+    !targets.is_empty()
 }

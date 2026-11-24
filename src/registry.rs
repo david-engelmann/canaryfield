@@ -700,4 +700,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong default",
         description: "Removes the first keyword-only default of a definition so the keyword-only parameter it belonged to stands required where the code let it fall back",
     },
+    SeedMeta {
+        id: "seed-112",
+        name: "dropped slice step",
+        defect_class: "boundary error",
+        description: "Removes the step of every slice so the reading takes the range at its natural stride where the code directed it to skip or run backwards",
+    },
+    SeedMeta {
+        id: "seed-113",
+        name: "dropped annotation value",
+        defect_class: "missing data",
+        description: "Removes the value of every annotated assignment so the name stands annotated and never bound where the code supplied its value",
+    },
+    SeedMeta {
+        id: "seed-114",
+        name: "dropped formatted value",
+        defect_class: "missing data",
+        description: "Removes the last formatted value of every joined string carrying at least two so the built text runs together where the removed value rendered",
+    },
+    SeedMeta {
+        id: "seed-115",
+        name: "dropped raised error message",
+        defect_class: "missing data",
+        description: "Removes every argument of the exception call at every raise so the error stands raised bare under its type with nothing of what the code wrote for it",
+    },
 ];
