@@ -158,6 +158,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-125" => apply_dropped_conditional_test(tree)?,
         "seed-126" => apply_dropped_comparison_head(tree),
         "seed-127" => apply_dropped_assignment(tree),
+        "seed-128" => apply_dropped_annotated_assignment(tree),
+        "seed-129" => apply_dropped_function_definition(tree),
+        "seed-130" => apply_dropped_class_definition(tree),
+        "seed-131" => apply_dropped_exception_handler_name(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4317,4 +4321,135 @@ fn apply_dropped_assignment(tree: &mut Tree) -> bool {
         planted = true;
     }
     planted
+}
+
+// seed-128, dropped annotated assignment.
+
+fn apply_dropped_annotated_assignment(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::AnnAssign { .. })
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-129, dropped function definition.
+
+fn apply_dropped_function_definition(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::FuncDef { .. })
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-130, dropped class definition.
+
+fn apply_dropped_class_definition(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::ClassDef { .. })
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
+}
+
+// seed-131, dropped exception handler name.
+
+fn apply_dropped_exception_handler_name(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::ExceptHandler { name: Some(_) }))
+        .collect();
+    for id in &targets {
+        tree.nodes[*id].data = Data::ExceptHandler { name: None };
+    }
+    !targets.is_empty()
 }

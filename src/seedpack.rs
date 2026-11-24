@@ -17,10 +17,10 @@ use crate::json::{self, JsonValue};
 use crate::registry::{SeedMeta, SEEDS};
 
 /// The format a pack written now carries.
-pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/30";
+pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/31";
 
-/// The thirty pack formats and the entry count each one carries.
-pub const PACK_ENTRY_COUNTS: [(&str, usize); 30] = [
+/// The thirty one pack formats and the entry count each one carries.
+pub const PACK_ENTRY_COUNTS: [(&str, usize); 31] = [
     ("canaryfield-seeds/1", 12),
     ("canaryfield-seeds/2", 16),
     ("canaryfield-seeds/3", 20),
@@ -51,6 +51,7 @@ pub const PACK_ENTRY_COUNTS: [(&str, usize); 30] = [
     ("canaryfield-seeds/28", 120),
     ("canaryfield-seeds/29", 124),
     ("canaryfield-seeds/30", 128),
+    ("canaryfield-seeds/31", 132),
 ];
 
 /// The entry count a format carries, and nothing for a format
@@ -337,7 +338,7 @@ mod tests {
     }
 
     #[test]
-    fn the_current_document_carries_one_hundred_and_twenty_eight_entries_in_order() {
+    fn the_current_document_carries_one_hundred_and_thirty_two_entries_in_order() {
         let data = seed_pack_data();
         assert_eq!(
             data.get("format"),
@@ -345,7 +346,7 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 128);
+                assert_eq!(items.len(), 132);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
@@ -381,6 +382,10 @@ mod tests {
                 assert_eq!(
                     items[111].get("id"),
                     Some(&JsonValue::Str("seed-111".to_string()))
+                );
+                assert_eq!(
+                    items[131].get("id"),
+                    Some(&JsonValue::Str("seed-131".to_string()))
                 );
             }
             other => panic!("seeds is not a list: {other:?}"),
