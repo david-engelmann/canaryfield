@@ -116,7 +116,11 @@ seed-104  dropped assert message                 none          not-applicable  n
 seed-105  dropped formatted value conversion     none          not-applicable  not-applicable
 seed-106  swapped loop target elements           none          not-applicable  not-applicable
 seed-107  dropped keyword-only parameter         none          not-applicable  not-applicable
+seed-108  dropped format spec                    none          not-applicable  not-applicable
+seed-109  dropped comparison tail                none          not-applicable  not-applicable
+seed-110  dropped imported name                  none          not-applicable  not-applicable
+seed-111  dropped keyword-only default           none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 18  waved-through 5  not-applicable 85  gate-broken 0
-  compile  caught 0  waved-through 23  not-applicable 85  gate-broken 0
+  tests  caught 18  waved-through 5  not-applicable 89  gate-broken 0
+  compile  caught 0  waved-through 23  not-applicable 89  gate-broken 0
