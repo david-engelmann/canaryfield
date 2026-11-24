@@ -1477,13 +1477,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-123"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-124"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped conditional test",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-125"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped comparison head",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-126"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "caught"
+      },
+      "name": "dropped assignment",
+      "planted_exits": {
+        "tests": 2
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-127"
     }
   ],
   "summary": {
     "tests": {
-      "caught": 20,
+      "caught": 21,
       "gate-broken": 0,
-      "not-applicable": 97,
+      "not-applicable": 100,
       "waved-through": 7
     }
   },

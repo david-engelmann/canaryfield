@@ -132,7 +132,11 @@ seed-120  dropped subscript                      none          not-applicable  n
 seed-121  dropped arithmetic operand             sample.py     caught          waved-through
 seed-122  dropped first call argument            sample.py     caught          waved-through
 seed-123  dropped first condition term           none          not-applicable  not-applicable
+seed-124  dropped tuple element                  none          not-applicable  not-applicable
+seed-125  dropped conditional test               none          not-applicable  not-applicable
+seed-126  dropped comparison head                none          not-applicable  not-applicable
+seed-127  dropped assignment                     sample.py     caught          waved-through
 
 summary per gate
-  tests  caught 20  waved-through 7  not-applicable 97  gate-broken 0
-  compile  caught 0  waved-through 27  not-applicable 97  gate-broken 0
+  tests  caught 21  waved-through 7  not-applicable 100  gate-broken 0
+  compile  caught 0  waved-through 28  not-applicable 100  gate-broken 0
