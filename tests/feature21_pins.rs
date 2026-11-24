@@ -224,7 +224,10 @@ fn test_seed_126_removes_the_head_of_every_chained_comparison() {
 #[test]
 fn test_seed_126_leaves_a_single_comparison_standing() {
     let (planted, render) = applied_render("value = alpha < beta\n", "seed-126");
-    assert!(!planted, "a comparison carrying one operator does not plant");
+    assert!(
+        !planted,
+        "a comparison carrying one operator does not plant"
+    );
     assert_eq!(render, "value = alpha < beta");
 }
 
