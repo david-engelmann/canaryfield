@@ -170,16 +170,19 @@ fn test_seed_117_removes_every_decorator_call_in_a_list() {
         "@first(1)\n@second\n@third(3)\ndef handler():\n    return 1\n",
         "seed-117",
     );
-    assert_eq!(render, "@first\n@second\n@third\ndef handler():\n    return 1");
+    assert_eq!(
+        render,
+        "@first\n@second\n@third\ndef handler():\n    return 1"
+    );
 }
 
 #[test]
 fn test_seed_117_leaves_a_plain_decorator_standing() {
-    let (planted, render) = applied_render(
-        "@register\ndef handler():\n    return 1\n",
-        "seed-117",
+    let (planted, render) = applied_render("@register\ndef handler():\n    return 1\n", "seed-117");
+    assert!(
+        !planted,
+        "a decorator standing as a plain name does not plant"
     );
-    assert!(!planted, "a decorator standing as a plain name does not plant");
     assert_eq!(render, "@register\ndef handler():\n    return 1");
 }
 
@@ -281,10 +284,7 @@ fn test_seed_119_removes_every_handler_type_in_a_try() {
 
 #[test]
 fn test_seed_119_leaves_a_bare_handler_standing() {
-    let (planted, render) = applied_render(
-        "try:\n    run()\nexcept:\n    recover()\n",
-        "seed-119",
-    );
+    let (planted, render) = applied_render("try:\n    run()\nexcept:\n    recover()\n", "seed-119");
     assert!(!planted, "a bare handler does not plant");
     assert_eq!(render, "try:\n    run()\nexcept:\n    recover()");
 }
