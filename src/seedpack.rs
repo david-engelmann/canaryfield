@@ -338,7 +338,7 @@ mod tests {
     }
 
     #[test]
-    fn the_current_document_carries_one_hundred_and_twenty_eight_entries_in_order() {
+    fn the_current_document_carries_one_hundred_and_thirty_two_entries_in_order() {
         let data = seed_pack_data();
         assert_eq!(
             data.get("format"),
@@ -346,7 +346,7 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 128);
+                assert_eq!(items.len(), 132);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
@@ -382,6 +382,10 @@ mod tests {
                 assert_eq!(
                     items[111].get("id"),
                     Some(&JsonValue::Str("seed-111".to_string()))
+                );
+                assert_eq!(
+                    items[131].get("id"),
+                    Some(&JsonValue::Str("seed-131".to_string()))
                 );
             }
             other => panic!("seeds is not a list: {other:?}"),
