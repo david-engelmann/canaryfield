@@ -51,6 +51,7 @@ pub const PACK_ENTRY_COUNTS: [(&str, usize); 31] = [
     ("canaryfield-seeds/28", 120),
     ("canaryfield-seeds/29", 124),
     ("canaryfield-seeds/30", 128),
+    ("canaryfield-seeds/31", 132),
     ("canaryfield-seeds/32", 136),
 ];
 

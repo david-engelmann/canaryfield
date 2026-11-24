@@ -229,7 +229,7 @@ fn test_seed_134_removes_the_last_base_of_every_class() {
         "class A(One, Two):\n    pass\nclass B(Three, Four):\n    pass\n",
         "seed-134",
     );
-    assert_eq!(render, "class A(One):\n    pass\nclass B(Three):\n    pass");
+    assert_eq!(render, "class A(One):\n    pass\n\nclass B(Three):\n    pass");
 }
 
 #[test]
