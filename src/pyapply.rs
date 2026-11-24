@@ -154,6 +154,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-121" => apply_dropped_arithmetic_operand(tree)?,
         "seed-122" => apply_dropped_first_call_argument(tree),
         "seed-123" => apply_dropped_first_condition_term(tree),
+        "seed-124" => apply_dropped_tuple_element(tree),
+        "seed-125" => apply_dropped_conditional_test(tree)?,
+        "seed-126" => apply_dropped_comparison_head(tree),
+        "seed-127" => apply_dropped_assignment(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4225,4 +4229,92 @@ fn apply_dropped_first_condition_term(tree: &mut Tree) -> bool {
         tree.set_many(*id, "values", values);
     }
     !targets.is_empty()
+}
+
+// seed-124, dropped tuple element.
+
+fn apply_dropped_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Tuple { .. })
+                && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-125, dropped conditional test.
+
+fn apply_dropped_conditional_test(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::IfExp)
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "body"))
+}
+
+// seed-126, dropped comparison head.
+
+fn apply_dropped_comparison_head(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| match &tree.nodes[*id].data {
+            Data::Compare { ops } => ops.len() >= 2,
+            _ => false,
+        })
+        .collect();
+    for id in &targets {
+        let comparators = tree.many(*id, "comparators").to_vec();
+        if let Data::Compare { ops } = &mut tree.node_mut(*id).data {
+            ops.remove(0);
+        }
+        tree.set_one(*id, "left", Some(comparators[0]));
+        tree.set_many(*id, "comparators", comparators[1..].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-127, dropped assignment.
+
+fn apply_dropped_assignment(tree: &mut Tree) -> bool {
+    let hits = match collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Assign)
+    }) {
+        Ok(hits) => hits,
+        Err(_) => return false,
+    };
+    let mut planted = false;
+    // The removals run deepest first so a removal never moves
+    // the standing of a hit still to come in the same body, and
+    // hits in one list run from its end for the same reason.
+    let mut hits = hits;
+    hits.sort_by(|a, b| {
+        b.depth
+            .cmp(&a.depth)
+            .then(b.parent.cmp(&a.parent))
+            .then(b.index.cmp(&a.index))
+    });
+    for hit in hits {
+        let Some(index) = hit.index else {
+            continue;
+        };
+        let siblings = tree.many(hit.parent, hit.field).to_vec();
+        if siblings.len() <= 1 && !matches!(&tree.nodes[hit.parent].data, Data::Module) {
+            continue;
+        }
+        if siblings.get(index) != Some(&hit.node) {
+            continue;
+        }
+        let mut rest = siblings;
+        rest.remove(index);
+        tree.set_many(hit.parent, hit.field, rest);
+        planted = true;
+    }
+    planted
 }

@@ -772,4 +772,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "wrong predicate",
         description: "Removes the first value of every boolean operation carrying at least two values so the condition stands decided without the term it opened with",
     },
+    SeedMeta {
+        id: "seed-124",
+        name: "dropped tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple display carrying at least two so the value the code placed first is never stored and the tuple's elements stand shifted",
+    },
+    SeedMeta {
+        id: "seed-125",
+        name: "dropped conditional test",
+        defect_class: "wrong predicate",
+        description: "Replaces every conditional expression with the value it carries when its test holds so the choice the code wrote never gets made",
+    },
+    SeedMeta {
+        id: "seed-126",
+        name: "dropped comparison head",
+        defect_class: "wrong predicate",
+        description: "Removes the left operand and the first operator of every chained comparison so the chain's opening test never runs and the comparison opens at its second term",
+    },
+    SeedMeta {
+        id: "seed-127",
+        name: "dropped assignment",
+        defect_class: "missing data",
+        description: "Removes every plain assignment statement so the store the code wrote never runs and the name it would have bound keeps what it held before",
+    },
 ];
