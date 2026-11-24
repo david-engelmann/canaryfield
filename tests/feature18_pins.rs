@@ -223,7 +223,10 @@ fn test_seed_114_removes_the_last_value_of_every_string() {
 #[test]
 fn test_seed_114_leaves_a_single_value_string_standing() {
     let (planted, render) = applied_render("label = f'only {name}'\n", "seed-114");
-    assert!(!planted, "a string carrying one formatted value does not plant");
+    assert!(
+        !planted,
+        "a string carrying one formatted value does not plant"
+    );
     assert_eq!(render, "label = f'only {name}'");
 }
 
@@ -243,7 +246,10 @@ const RAISED_MESSAGE_GATE: &str = "#!/bin/sh\ngrep -q 'the count is short' mod.p
 #[test]
 fn test_seed_115_plants_on_a_raise_carrying_an_argument() {
     let (planted, _) = applied_render(RAISED_MESSAGE_MODULE, "seed-115");
-    assert!(planted, "a raise whose exception call carries an argument plants");
+    assert!(
+        planted,
+        "a raise whose exception call carries an argument plants"
+    );
 }
 
 #[test]
