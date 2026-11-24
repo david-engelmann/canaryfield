@@ -862827,10 +862827,16 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": true,
+      "dump": {
+       "t": "Module(body=[Assign(targets=[Name(id='x', ctx=Store())], value=Name(id='a', ctx=Load()))], type_ignores=[])"
+      },
+      "render": {
+       "t": "x = a"
+      }
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
@@ -866730,10 +866736,10 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": false
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
@@ -874535,10 +874541,10 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": false
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
@@ -875514,10 +875520,10 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": false
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
@@ -883270,10 +883276,10 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": false
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
@@ -884249,10 +884255,10 @@
     },
     "seed-118": {
      "first": {
-      "apply": "raised"
+      "bool": false
      },
      "second": {
-      "apply": "raised"
+      "bool": false
      }
     },
     "seed-119": {
