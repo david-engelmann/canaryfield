@@ -340,7 +340,7 @@ mod tests {
     }
 
     #[test]
-    fn the_current_document_carries_one_hundred_and_thirty_six_entries_in_order() {
+    fn the_current_document_carries_one_hundred_and_forty_entries_in_order() {
         let data = seed_pack_data();
         assert_eq!(
             data.get("format"),
@@ -391,6 +391,10 @@ mod tests {
                 );
                 assert_eq!(
                     items[135].get("id"),
+                    Some(&JsonValue::Str("seed-135".to_string()))
+                );
+                assert_eq!(
+                    items[139].get("id"),
                     Some(&JsonValue::Str("seed-139".to_string()))
                 );
             }
