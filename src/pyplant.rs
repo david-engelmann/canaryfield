@@ -193,15 +193,38 @@ fn collect_candidates(dir: &Path, _root: &Path, out: &mut Vec<PathBuf>) {
 /// the compile readings whole, the binding rule for
 /// nonlocal declarations wherever they stand and the
 /// symbol table family one scope at a time, the statement
-/// grounds and the declaration order among them. A
-/// rendering any reading refuses is refused here.
+/// grounds and the declaration order among them, and the
+/// handler order of a try, a bare handler standing last
+/// among its handlers or not at all. A rendering any
+/// reading refuses is refused here.
 pub fn compile_accepts(rendered: &str) -> bool {
     match parse_tree(rendered) {
-        Ok(tree) => {
-            crate::pyarena::run_big_stack(move || nonlocal_accepts(&tree) && symbol_accepts(&tree))
-        }
+        Ok(tree) => crate::pyarena::run_big_stack(move || {
+            nonlocal_accepts(&tree) && symbol_accepts(&tree) && handler_order_accepts(&tree)
+        }),
         Err(_) => false,
     }
+}
+
+/// The handler order reading of the whole tree. A handler
+/// carrying no type catches everything its try raises, so
+/// the interpreter's compiler admits it only standing last
+/// among the try's handlers, where no handler stands after
+/// it to be shadowed. A bare handler with a handler after
+/// it is refused, in a plain try and a starred try alike.
+fn handler_order_accepts(tree: &Tree) -> bool {
+    for id in tree.walk() {
+        if !matches!(&tree.nodes[id].data, crate::pyarena::Data::Try { .. }) {
+            continue;
+        }
+        let handlers = tree.many(id, "handlers");
+        for (position, handler) in handlers.iter().enumerate() {
+            if position + 1 < handlers.len() && tree.one(*handler, "type").is_none() {
+                return false;
+            }
+        }
+    }
+    true
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]

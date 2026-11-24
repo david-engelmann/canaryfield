@@ -146,6 +146,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-113" => apply_dropped_annotation_value(tree),
         "seed-114" => apply_dropped_formatted_value(tree),
         "seed-115" => apply_dropped_raised_error_message(tree),
+        "seed-116" => apply_dropped_set_element(tree),
+        "seed-117" => apply_dropped_decorator_call(tree),
+        "seed-118" => apply_dropped_attribute(tree)?,
+        "seed-119" => apply_dropped_exception_type(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4088,6 +4092,81 @@ fn apply_dropped_raised_error_message(tree: &mut Tree) -> bool {
         .collect();
     for exc in &targets {
         tree.set_many(*exc, "args", Vec::new());
+    }
+    !targets.is_empty()
+}
+// seed-116, dropped set element.
+
+fn apply_dropped_set_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Set) && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-117, dropped decorator call.
+
+fn apply_dropped_decorator_call(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::FuncDef { .. } | Data::ClassDef { .. }
+            )
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        let decorators = tree.many(*id, "decorator_list").to_vec();
+        let mut kept = Vec::new();
+        for decorator in decorators {
+            if matches!(&tree.nodes[decorator].data, Data::Call) {
+                let func = tree
+                    .one(decorator, "func")
+                    .expect("the called function stands");
+                kept.push(func);
+                planted = true;
+            } else {
+                kept.push(decorator);
+            }
+        }
+        tree.set_many(*id, "decorator_list", kept);
+    }
+    planted
+}
+
+// seed-118, dropped attribute.
+
+fn apply_dropped_attribute(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Attribute { .. })
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "value"))
+}
+
+// seed-119, dropped exception type.
+
+fn apply_dropped_exception_type(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::ExceptHandler { .. })
+                && tree.one(*id, "type").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "type", None);
     }
     !targets.is_empty()
 }

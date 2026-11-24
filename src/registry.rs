@@ -724,4 +724,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing data",
         description: "Removes every argument of the exception call at every raise so the error stands raised bare under its type with nothing of what the code wrote for it",
     },
+    SeedMeta {
+        id: "seed-116",
+        name: "dropped set element",
+        defect_class: "missing data",
+        description: "Removes the first element of every set literal carrying at least two so the set is built without the element it opened with",
+    },
+    SeedMeta {
+        id: "seed-117",
+        name: "dropped decorator call",
+        defect_class: "missing wrapper",
+        description: "Replaces every decorator standing as a call with the function the call was made on so what the call returned never decorates the definition",
+    },
+    SeedMeta {
+        id: "seed-118",
+        name: "dropped attribute",
+        defect_class: "missing data",
+        description: "Replaces every attribute access with the object it reads from so the attribute the code named is never read and the expression yields the object itself",
+    },
+    SeedMeta {
+        id: "seed-119",
+        name: "dropped exception type",
+        defect_class: "hidden failure",
+        description: "Removes the type of every exception handler so the handler stands bare and catches failures its type never named",
+    },
 ];
