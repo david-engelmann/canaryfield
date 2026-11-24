@@ -1418,19 +1418,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-107"
+    },
+    {
+      "defect_class": "wrong data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped format spec",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-108"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped comparison tail",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-109"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-110"
+    },
+    {
+      "defect_class": "wrong default",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped keyword-only default",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-111"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 85,
+      "not-applicable": 89,
       "waved-through": 23
     },
     "tests": {
       "caught": 18,
       "gate-broken": 0,
-      "not-applicable": 85,
+      "not-applicable": 89,
       "waved-through": 5
     }
   },

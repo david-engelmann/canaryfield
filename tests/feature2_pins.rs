@@ -92,19 +92,19 @@ const RAISE_MODULE: &str = "def check():\n    try:\n        raise ValueError(\"i
 // The registry pins of F2-1.
 
 #[test]
-fn test_registry_has_eighty_eight_unique_seeds() {
+fn test_registry_has_one_hundred_and_twelve_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        108,
-        "the grown registry holds one hundred and eight"
+        112,
+        "the grown registry holds one hundred and twelve"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 108, "every seed id stands once");
+    assert_eq!(ids.len(), 112, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-107"));
+    assert_eq!(standing.last(), Some(&"seed-111"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -199,7 +199,11 @@ fn test_seed_metadata_is_complete() {
             "dropped assert message",
             "dropped formatted value conversion",
             "swapped loop target elements",
-            "dropped keyword-only parameter"
+            "dropped keyword-only parameter",
+            "dropped format spec",
+            "dropped comparison tail",
+            "dropped imported name",
+            "dropped keyword-only default"
         ]
     );
 }
@@ -618,7 +622,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 108);
+    assert_eq!(loaded.len(), 112);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -644,7 +648,7 @@ fn test_seed_pack_via_cli() {
     let written = fs::read_to_string(&path).expect("the written pack reads");
     assert_eq!(written, seed_pack_text());
     assert!(
-        written.contains("\"canaryfield-seeds/25\""),
+        written.contains("\"canaryfield-seeds/26\""),
         "the written pack carries the twenty second format"
     );
     let _ = fs::remove_dir_all(&dir);
