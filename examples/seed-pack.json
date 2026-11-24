@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/32",
+  "format": "canaryfield-seeds/33",
   "seeds": [
     {
       "id": "seed-00",
@@ -816,6 +816,30 @@
       "name": "dropped decorator argument",
       "defect_class": "missing input",
       "description": "Removes the first argument of every decorator standing as a call so the decorator is configured with one fewer input than the code gives it"
+    },
+    {
+      "id": "seed-136",
+      "name": "dropped unpacking target element",
+      "defect_class": "missing data",
+      "description": "Removes the first element of every tuple standing as an unpacking target carrying at least two so the value the code unpacks first is never bound and the target's elements stand shifted"
+    },
+    {
+      "id": "seed-137",
+      "name": "dropped last unpacking target element",
+      "defect_class": "missing data",
+      "description": "Removes the last element of every tuple standing as an unpacking target carrying at least two so the value the code unpacks last is never bound and the target stands shortened"
+    },
+    {
+      "id": "seed-138",
+      "name": "dropped keyword unpacking",
+      "defect_class": "missing input",
+      "description": "Removes the keyword carrying no name, the double starred unpacking of a call, whole so the mapping the caller spread into the call never reaches the callee"
+    },
+    {
+      "id": "seed-139",
+      "name": "dropped last dictionary entry",
+      "defect_class": "missing data",
+      "description": "Removes the last entry of every dictionary display carrying at least two so the value the code placed last is never stored and the display stands shortened"
     }
   ]
 }
