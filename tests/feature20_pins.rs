@@ -217,10 +217,7 @@ fn test_seed_122_removes_the_first_argument_of_every_call() {
 #[test]
 fn test_seed_122_leaves_a_single_argument_call_standing() {
     let (planted, render) = applied_render("value = combine(only)\n", "seed-122");
-    assert!(
-        !planted,
-        "a call carrying a single argument does not plant"
-    );
+    assert!(!planted, "a call carrying a single argument does not plant");
     assert_eq!(render, "value = combine(only)");
 }
 
@@ -260,7 +257,10 @@ fn test_seed_123_keeps_the_remaining_values_standing() {
 
 #[test]
 fn test_seed_123_removes_the_first_value_of_every_boolean_operation() {
-    let (_, render) = applied_render("value = (alpha and beta) or (gamma and delta)\n", "seed-123");
+    let (_, render) = applied_render(
+        "value = (alpha and beta) or (gamma and delta)\n",
+        "seed-123",
+    );
     assert_eq!(render, "value = delta");
 }
 
