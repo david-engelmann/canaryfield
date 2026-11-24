@@ -1217,3 +1217,46 @@ F24-4. The seed pack document stands regenerated under canaryfield-seeds/33 with
 F24-5. The PORT5 and PORT6 batteries and both example catch tables stand regenerated, the README's slice 24 bullet states the grown registry, its pack bullet states canaryfield-seeds/33, and its regeneration bullet states the verdicts the tables show for seed-136 through seed-139 and the disagreement count the second example's table shows.
 
 F24-6. The reserve for the twenty fifth slice stands named here. The dropped exception handler, a whole handler of a try carrying at least two, stands counted at six in five texts, seed-131 clearing a handler's name and seed-119 clearing a handler's type and neither removing the handler. The dropped dictionary unpacking entry stands counted at three entries in two texts, its reading narrowed by seed-09's first entry removal to the entries standing after the first, its count and that narrowed reading owed together at the next weighing. The dropped match case, a whole case of a match carrying at least two, stands counted at two in two texts.
+
+Build amendment, feature slice 24. The weighing that seated this slice read the boundary applies whole but never swept the registry's one hundred and thirty six names for the seats it chose, and the build's first step caught what the weighing missed. The dropped loop else clause seated as seed-137 stands already registered as seed-44 with the same name and the same planting. The dropped starred call argument seated as seed-139 stands already registered as seed-91, dropped starred argument, with the same planting. Two members of the reserve stood registered as well, the dropped exception handler as seed-36 and the dropped match case as seed-67, and the dropped assignment expression and the dropped yield-from delegation stand at seed-65 and seed-71. The seatings of seed-137 and seed-139 and the reserve of F24-6 stand corrected here, the earlier text standing as written above.
+
+Seed-137 stands reseated as the dropped last unpacking target element, the tail twin of seed-136 on the same counted ground of 136 tuple targets in 31 texts, standing in the registry in this form:
+
+    SeedMeta {
+        id: "seed-137",
+        name: "dropped last unpacking target element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as an unpacking target carrying at least two so the value the code unpacks last is never bound and the target stands shortened",
+    },
+
+Seed-138 keeps its seat and stands renamed the dropped keyword unpacking, its planting unchanged, the keyword of a call carrying no name standing removed whole, where seed-73, dropped argument unpacking, replaces a starred argument with the value it carries and removes nothing, and seed-45 removes the first keyword carrying a name. Its registry entry stands in this form in place of the form F24-1 printed:
+
+    SeedMeta {
+        id: "seed-138",
+        name: "dropped keyword unpacking",
+        defect_class: "missing input",
+        description: "Removes the keyword carrying no name, the double starred unpacking of a call, whole so the mapping the caller spread into the call never reaches the callee",
+    },
+
+Seed-139 stands reseated as the dropped last dictionary entry, standing on a ground of 130 dictionary displays carrying at least two entries in 23 texts, where seed-09 removes the first entry of every dictionary display and seed-17 exchanges two entries and removes none, standing in the registry in this form:
+
+    SeedMeta {
+        id: "seed-139",
+        name: "dropped last dictionary entry",
+        defect_class: "missing data",
+        description: "Removes the last entry of every dictionary display carrying at least two so the value the code placed last is never stored and the display stands shortened",
+    },
+
+The pins of F24-3 stand corrected for the two reseats. In place of the seed-137 names printed there stand these:
+
+- seed-137 removes the last element of every unpacking target
+- seed-137 leaves a single element target standing
+- seed-137 leaves a value tuple standing
+
+In place of the seed-139 names printed there stand these:
+
+- seed-139 removes the last entry of every dictionary display
+- seed-139 leaves a single entry display standing
+- seed-139 keeps the earlier entries standing
+
+The reserve of F24-6 stands replaced. The dropped last keyword argument, the last keyword carrying a name of a call carrying at least two, stands counted at ninety calls in thirty seven texts, seed-45 removing the first. The dropped dictionary unpacking entry stands as F24-6 printed it, narrowed by seed-09's first entry removal to the entries standing after the first, counted at three entries in two texts. The dropped last list element, the last element of a list display carrying at least two, stands counted at seventy six in thirty four texts, seed-09 removing the first element of every list display.
