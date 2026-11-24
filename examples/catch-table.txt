@@ -119,6 +119,10 @@ seed-108  dropped format spec                    none          not-applicable
 seed-109  dropped comparison tail                none          not-applicable
 seed-110  dropped imported name                  none          not-applicable
 seed-111  dropped keyword-only default           none          not-applicable
+seed-112  dropped slice step                     none          not-applicable
+seed-113  dropped annotation value               none          not-applicable
+seed-114  dropped formatted value                none          not-applicable
+seed-115  dropped raised error message           sample.py     waved-through
 
 summary per gate
-  tests  caught 18  waved-through 5  not-applicable 89  gate-broken 0
+  tests  caught 18  waved-through 6  not-applicable 92  gate-broken 0
