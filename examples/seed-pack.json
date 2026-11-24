@@ -697,6 +697,5 @@
       "defect_class": "missing data",
       "description": "Removes every argument of the exception call at every raise so the error stands raised bare under its type with nothing of what the code wrote for it"
     }
-  ],
-  "seed_count": 116
+  ]
 }
