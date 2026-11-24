@@ -1867,25 +1867,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
       "gate-broken": 29,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
       "gate-broken": 29,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 0
      },
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 7
      }
     },
@@ -3618,13 +3670,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing inheritance",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 7
      }
     },
@@ -5124,13 +5224,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 128,
+      "not-applicable": 132,
       "waved-through": 0
      }
     },
@@ -6654,13 +6798,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "tests": {
       "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 1
      }
     },
@@ -8202,13 +8390,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "gate-broken": 29,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 0
      }
     },
@@ -9808,13 +10040,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 7
      }
     },
@@ -9870,6 +10146,10 @@
     "seed-13",
     "seed-130",
     "seed-131",
+    "seed-132",
+    "seed-133",
+    "seed-134",
+    "seed-135",
     "seed-14",
     "seed-15",
     "seed-16",
@@ -11449,13 +11729,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+     },
+     {
+      "defect_class": "missing inheritance",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 128,
+      "not-applicable": 132,
       "waved-through": 0
      }
     },
