@@ -748,4 +748,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "hidden failure",
         description: "Removes the type of every exception handler so the handler stands bare and catches failures its type never named",
     },
+    SeedMeta {
+        id: "seed-120",
+        name: "dropped subscript",
+        defect_class: "missing data",
+        description: "Replaces every subscript with the object it subscripts so the element the code picked out is never read and the expression yields the collection itself",
+    },
+    SeedMeta {
+        id: "seed-121",
+        name: "dropped arithmetic operand",
+        defect_class: "wrong computation",
+        description: "Replaces every binary operation with its left operand so the computation the code wrote never runs and the expression carries the left operand's value",
+    },
+    SeedMeta {
+        id: "seed-122",
+        name: "dropped first call argument",
+        defect_class: "missing input",
+        description: "Removes the first positional argument of every call carrying at least two so the call runs without the input it was handed first",
+    },
+    SeedMeta {
+        id: "seed-123",
+        name: "dropped first condition term",
+        defect_class: "wrong predicate",
+        description: "Removes the first value of every boolean operation carrying at least two values so the condition stands decided without the term it opened with",
+    },
 ];
