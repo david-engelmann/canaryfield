@@ -150,6 +150,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-117" => apply_dropped_decorator_call(tree),
         "seed-118" => apply_dropped_attribute(tree)?,
         "seed-119" => apply_dropped_exception_type(tree),
+        "seed-120" => apply_dropped_subscript(tree)?,
+        "seed-121" => apply_dropped_arithmetic_operand(tree)?,
+        "seed-122" => apply_dropped_first_call_argument(tree),
+        "seed-123" => apply_dropped_first_condition_term(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4167,6 +4171,58 @@ fn apply_dropped_exception_type(tree: &mut Tree) -> bool {
         .collect();
     for id in &targets {
         tree.set_one(*id, "type", None);
+    }
+    !targets.is_empty()
+}
+// seed-120, dropped subscript.
+
+fn apply_dropped_subscript(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::Subscript { .. })
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "value"))
+}
+
+// seed-121, dropped arithmetic operand.
+
+fn apply_dropped_arithmetic_operand(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(&tree.nodes[id].data, Data::BinOp { .. })
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "left"))
+}
+
+// seed-122, dropped first call argument.
+
+fn apply_dropped_first_call_argument(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Call) && tree.many(*id, "args").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let args = tree.many(*id, "args")[1..].to_vec();
+        tree.set_many(*id, "args", args);
+    }
+    !targets.is_empty()
+}
+
+// seed-123, dropped first condition term.
+
+fn apply_dropped_first_condition_term(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::BoolOp { .. })
+                && tree.many(*id, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let values = tree.many(*id, "values")[1..].to_vec();
+        tree.set_many(*id, "values", values);
     }
     !targets.is_empty()
 }
