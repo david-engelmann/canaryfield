@@ -162,6 +162,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-129" => apply_dropped_function_definition(tree),
         "seed-130" => apply_dropped_class_definition(tree),
         "seed-131" => apply_dropped_exception_handler_name(tree),
+        "seed-132" => apply_dropped_assignment_target(tree),
+        "seed-133" => apply_dropped_last_tuple_element(tree),
+        "seed-134" => apply_dropped_last_base_class(tree),
+        "seed-135" => apply_dropped_decorator_argument(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4452,4 +4456,88 @@ fn apply_dropped_exception_handler_name(tree: &mut Tree) -> bool {
         tree.nodes[*id].data = Data::ExceptHandler { name: None };
     }
     !targets.is_empty()
+}
+
+// seed-132, dropped assignment target.
+
+fn apply_dropped_assignment_target(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Assign)
+                && tree.many(*id, "targets").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let rest = tree.many(*id, "targets")[1..].to_vec();
+        tree.set_many(*id, "targets", rest);
+    }
+    !targets.is_empty()
+}
+
+// seed-133, dropped last tuple element.
+
+fn apply_dropped_last_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Load, .. })
+                && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-134, dropped last base class.
+
+fn apply_dropped_last_base_class(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::ClassDef { .. })
+                && tree.many(*id, "bases").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut bases = tree.many(*id, "bases").to_vec();
+        bases.pop();
+        tree.set_many(*id, "bases", bases);
+    }
+    !targets.is_empty()
+}
+
+// seed-135, dropped decorator argument.
+
+fn apply_dropped_decorator_argument(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::FuncDef { .. } | Data::ClassDef { .. }
+            )
+        })
+        .collect();
+    let mut planted = false;
+    for id in &targets {
+        for decorator in tree.many(*id, "decorator_list").to_vec() {
+            if matches!(&tree.nodes[decorator].data, Data::Call)
+                && !tree.many(decorator, "args").is_empty()
+            {
+                let args = tree.many(decorator, "args")[1..].to_vec();
+                tree.set_many(decorator, "args", args);
+                planted = true;
+            }
+        }
+    }
+    planted
 }
