@@ -20,7 +20,7 @@ use crate::registry::{SeedMeta, SEEDS};
 pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/32";
 
 /// The thirty one pack formats and the entry count each one carries.
-pub const PACK_ENTRY_COUNTS: [(&str, usize); 31] = [
+pub const PACK_ENTRY_COUNTS: [(&str, usize); 32] = [
     ("canaryfield-seeds/1", 12),
     ("canaryfield-seeds/2", 16),
     ("canaryfield-seeds/3", 20),
