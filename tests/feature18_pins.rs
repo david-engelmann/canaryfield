@@ -105,7 +105,7 @@ fn test_seed_112_plants_on_a_slice_carrying_a_step() {
 #[test]
 fn test_seed_112_removes_the_step() {
     let (_, render) = applied_render(SLICE_STEP_MODULE, "seed-112");
-    assert_eq!(render, "value = letters[0:8]\n");
+    assert_eq!(render, "value = letters[0:8]");
 }
 
 #[test]
@@ -123,14 +123,14 @@ fn test_seed_112_removes_every_step_in_an_expression() {
         "value = letters[0:8:2]\nother = letters[9:3:-1]\n",
         "seed-112",
     );
-    assert_eq!(render, "value = letters[0:8]\nother = letters[9:3]\n");
+    assert_eq!(render, "value = letters[0:8]\nother = letters[9:3]");
 }
 
 #[test]
 fn test_seed_112_leaves_a_slice_without_a_step_standing() {
     let (planted, render) = applied_render("value = letters[1:4]\n", "seed-112");
     assert!(!planted, "a slice without a step does not plant");
-    assert_eq!(render, "value = letters[1:4]\n");
+    assert_eq!(render, "value = letters[1:4]");
 }
 
 #[test]
@@ -155,7 +155,7 @@ fn test_seed_113_plants_on_an_annotated_assignment_carrying_a_value() {
 #[test]
 fn test_seed_113_removes_the_value() {
     let (_, render) = applied_render(ANNOTATION_VALUE_MODULE, "seed-113");
-    assert_eq!(render, "total: int\n");
+    assert_eq!(render, "total: int");
 }
 
 #[test]
@@ -170,14 +170,14 @@ fn test_seed_113_keeps_the_annotation_standing() {
 #[test]
 fn test_seed_113_removes_every_annotation_value_in_a_body() {
     let (_, render) = applied_render("first: int = 1\nsecond: str = 'x'\n", "seed-113");
-    assert_eq!(render, "first: int\nsecond: str\n");
+    assert_eq!(render, "first: int\nsecond: str");
 }
 
 #[test]
 fn test_seed_113_leaves_a_bare_annotation_standing() {
     let (planted, render) = applied_render("total: int\n", "seed-113");
     assert!(!planted, "a bare annotation does not plant");
-    assert_eq!(render, "total: int\n");
+    assert_eq!(render, "total: int");
 }
 
 #[test]
@@ -202,7 +202,7 @@ fn test_seed_114_plants_on_a_string_carrying_two_formatted_values() {
 #[test]
 fn test_seed_114_removes_the_last_formatted_value() {
     let (_, render) = applied_render(FORMATTED_VALUE_MODULE, "seed-114");
-    assert_eq!(render, "label = f'{name} is  years old'\n");
+    assert_eq!(render, "label = f'{name} is  years old'");
 }
 
 #[test]
@@ -217,14 +217,14 @@ fn test_seed_114_keeps_the_remaining_values_standing() {
 #[test]
 fn test_seed_114_removes_the_last_value_of_every_string() {
     let (_, render) = applied_render("a = f'{x} and {y}'\nb = f'{p} or {q}'\n", "seed-114");
-    assert_eq!(render, "a = f'{x} and '\nb = f'{p} or '\n");
+    assert_eq!(render, "a = f'{x} and '\nb = f'{p} or '");
 }
 
 #[test]
 fn test_seed_114_leaves_a_single_value_string_standing() {
     let (planted, render) = applied_render("label = f'only {name}'\n", "seed-114");
     assert!(!planted, "a string carrying one formatted value does not plant");
-    assert_eq!(render, "label = f'only {name}'\n");
+    assert_eq!(render, "label = f'only {name}'");
 }
 
 #[test]
@@ -249,13 +249,13 @@ fn test_seed_115_plants_on_a_raise_carrying_an_argument() {
 #[test]
 fn test_seed_115_removes_the_error_message() {
     let (_, render) = applied_render(RAISED_MESSAGE_MODULE, "seed-115");
-    assert_eq!(render, "raise ValueError()\n");
+    assert_eq!(render, "raise ValueError()");
 }
 
 #[test]
 fn test_seed_115_removes_every_argument_of_the_call() {
     let (_, render) = applied_render("raise ValueError('short', code)\n", "seed-115");
-    assert_eq!(render, "raise ValueError()\n");
+    assert_eq!(render, "raise ValueError()");
 }
 
 #[test]
@@ -271,14 +271,14 @@ fn test_seed_115_keeps_the_exception_type_standing() {
 fn test_seed_115_leaves_a_bare_raise_standing() {
     let (planted, render) = applied_render("raise ValueError\n", "seed-115");
     assert!(!planted, "a raise of a bare exception type does not plant");
-    assert_eq!(render, "raise ValueError\n");
+    assert_eq!(render, "raise ValueError");
 }
 
 #[test]
 fn test_seed_115_leaves_a_raise_of_a_plain_name_standing() {
     let (planted, render) = applied_render("raise problem\n", "seed-115");
     assert!(!planted, "a raise of a plain name does not plant");
-    assert_eq!(render, "raise problem\n");
+    assert_eq!(render, "raise problem");
 }
 
 #[test]
