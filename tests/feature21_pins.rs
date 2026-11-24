@@ -128,6 +128,13 @@ fn test_seed_124_leaves_a_one_element_tuple_standing() {
 }
 
 #[test]
+fn test_seed_124_leaves_an_unpacking_target_standing() {
+    let (planted, render) = applied_render("alpha, beta = pair\n", "seed-124");
+    assert!(!planted, "an unpacking target is no tuple display");
+    assert_eq!(render, "alpha, beta = pair");
+}
+
+#[test]
 fn test_seed_124_verdict_is_caught() {
     let target = target_with(TUPLE_MODULE, TUPLE_GATE, "caught124");
     let result = run_target(&target);
@@ -268,6 +275,13 @@ fn test_seed_127_removes_every_assignment_in_a_body() {
         "seed-127",
     );
     assert_eq!(render, "def f():\n    return other");
+}
+
+#[test]
+fn test_seed_127_never_empties_a_body() {
+    let (planted, render) = applied_render("def f():\n    value = alpha\n", "seed-127");
+    assert!(!planted, "the only statement of a body is never planted");
+    assert_eq!(render, "def f():\n    value = alpha");
 }
 
 #[test]

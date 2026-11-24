@@ -4238,7 +4238,7 @@ fn apply_dropped_tuple_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::Tuple { .. })
+            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Load, .. })
                 && tree.many(*id, "elts").len() >= 2
         })
         .collect();
