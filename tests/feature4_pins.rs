@@ -98,7 +98,7 @@ fn test_registry_has_one_hundred_and_twenty_unique_seeds() {
     ids.dedup();
     assert_eq!(ids.len(), 120, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-115"));
+    assert_eq!(standing.last(), Some(&"seed-119"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -193,7 +193,11 @@ fn test_seed_metadata_is_complete() {
             "dropped slice step",
             "dropped annotation value",
             "dropped formatted value",
-            "dropped raised error message"
+            "dropped raised error message",
+            "dropped set element",
+            "dropped decorator call",
+            "dropped attribute",
+            "dropped exception type"
         ]
     );
 }
