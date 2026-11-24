@@ -843,7 +843,7 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped decorator argument",
         defect_class: "missing input",
         description: "Removes the first argument of every decorator standing as a call so the decorator is configured with one fewer input than the code gives it",
-    },,
+    },
     SeedMeta {
         id: "seed-136",
         name: "dropped unpacking target element",
