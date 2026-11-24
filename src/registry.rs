@@ -676,4 +676,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing input",
         description: "Removes the first keyword-only parameter of every function definition and lambda whole so a caller passing it by name hands it to no parameter and the body reads a name nothing binds",
     },
+    SeedMeta {
+        id: "seed-108",
+        name: "dropped format spec",
+        defect_class: "wrong data",
+        description: "Removes the format spec of every formatted value so the value renders under its default format where the code directed the width or the precision or the fill of it",
+    },
+    SeedMeta {
+        id: "seed-109",
+        name: "dropped comparison tail",
+        defect_class: "wrong predicate",
+        description: "Removes the last term of every chained comparison so the chain closes early where the code wrote it to run on and the condition the dropped term checked stands unchecked",
+    },
+    SeedMeta {
+        id: "seed-110",
+        name: "dropped imported name",
+        defect_class: "missing input",
+        description: "Removes the last name of every from-import carrying at least two names so that name is never bound while the statement and its remaining names stand",
+    },
+    SeedMeta {
+        id: "seed-111",
+        name: "dropped keyword-only default",
+        defect_class: "wrong default",
+        description: "Removes the first keyword-only default of a definition so the keyword-only parameter it belonged to stands required where the code let it fall back",
+    },
 ];

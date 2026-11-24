@@ -138,6 +138,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-105" => apply_dropped_formatted_value_conversion(tree),
         "seed-106" => apply_swapped_loop_target_elements(tree),
         "seed-107" => apply_dropped_keyword_only_parameter(tree),
+        "seed-108" => apply_dropped_format_spec(tree),
+        "seed-109" => apply_dropped_comparison_tail(tree),
+        "seed-110" => apply_dropped_imported_name(tree),
+        "seed-111" => apply_dropped_keyword_only_default(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -368,6 +372,108 @@ fn apply_dropped_keyword_only_parameter(tree: &mut Tree) -> bool {
             kw_defaults.remove(0);
             tree.set_maybe(args_node, "kw_defaults", kw_defaults);
         }
+    }
+    !targets.is_empty()
+}
+
+// seed-108, dropped format spec. The spec a formatted
+// value carries is a child standing beside the value, and
+// it clears the way seed-105 leaves it standing, the two
+// plantings sharing the seat and each touching only its
+// own part of the node.
+
+fn apply_dropped_format_spec(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::FormattedValue { .. })
+                && tree.one(*id, "format_spec").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "format_spec", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-109, dropped comparison tail. The last comparator
+// and the operator standing before it leave together,
+// once, the chain keeping its left operand and its first
+// terms the way seed-59 leaves every standing operator
+// as written while it exchanges the later ones.
+
+fn apply_dropped_comparison_tail(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| match &tree.nodes[*id].data {
+            Data::Compare { ops } => ops.len() >= 2,
+            _ => false,
+        })
+        .collect();
+    for id in &targets {
+        if let Data::Compare { ops } = &mut tree.node_mut(*id).data {
+            ops.pop();
+        }
+        let comparators = tree.many(*id, "comparators").to_vec();
+        let kept = comparators.len() - 1;
+        tree.set_many(*id, "comparators", comparators[..kept].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-110, dropped imported name. The last name of a
+// from-import carrying at least two names leaves whole,
+// its alias traveling with it, where seed-55 removes the
+// statement whole and seed-102 clears only an alias.
+
+fn apply_dropped_imported_name(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::ImportFrom { .. })
+                && tree.many(*id, "names").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let names = tree.many(*id, "names").to_vec();
+        let kept = names.len() - 1;
+        tree.set_many(*id, "names", names[..kept].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-111, dropped keyword-only default. The first
+// keyword-only default standing present clears to no
+// default, the parameter standing in its place, where
+// seed-77 removes the first positional default and
+// seed-107 removes the keyword-only parameter whole.
+
+fn apply_dropped_keyword_only_default(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda) {
+                return false;
+            }
+            let Some(args_node) = tree.one(*id, "args") else {
+                return false;
+            };
+            tree.maybe(args_node, "kw_defaults")
+                .iter()
+                .any(|entry| entry.is_some())
+        })
+        .collect();
+    for id in &targets {
+        let args_node = tree.one(*id, "args").expect("the arguments stand");
+        let mut kw_defaults = tree.maybe(args_node, "kw_defaults").to_vec();
+        if let Some(first) = kw_defaults.iter_mut().find(|entry| entry.is_some()) {
+            *first = None;
+        }
+        tree.set_maybe(args_node, "kw_defaults", kw_defaults);
     }
     !targets.is_empty()
 }
