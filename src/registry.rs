@@ -820,4 +820,28 @@ pub const SEEDS: &[SeedMeta] = &[
         defect_class: "missing input",
         description: "Removes the name an exception handler catches the error under so the handler's body cannot read the error it caught",
     },
+    SeedMeta {
+        id: "seed-132",
+        name: "dropped assignment target",
+        defect_class: "missing data",
+        description: "Removes the first target of every assignment carrying at least two targets so the name that target names never receives the value the assignment computes",
+    },
+    SeedMeta {
+        id: "seed-133",
+        name: "dropped last tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple display carrying at least two elements so the tuple the code builds stands one element shorter than the code describes",
+    },
+    SeedMeta {
+        id: "seed-134",
+        name: "dropped last base class",
+        defect_class: "missing inheritance",
+        description: "Removes the last base of every class definition carrying at least two bases so the class inherits from one fewer parent than the code declares",
+    },
+    SeedMeta {
+        id: "seed-135",
+        name: "dropped decorator argument",
+        defect_class: "missing input",
+        description: "Removes the first argument of every decorator standing as a call so the decorator is configured with one fewer input than the code gives it",
+    },
 ];

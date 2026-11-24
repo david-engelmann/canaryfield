@@ -1573,13 +1573,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-131"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-132"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-133"
+    },
+    {
+      "defect_class": "missing inheritance",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last base class",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-134"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped decorator argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-135"
     }
   ],
   "summary": {
     "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 103,
+      "not-applicable": 107,
       "waved-through": 7
     }
   },
