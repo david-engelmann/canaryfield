@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/30",
+  "format": "canaryfield-seeds/31",
   "seeds": [
     {
       "id": "seed-00",
@@ -768,6 +768,30 @@
       "name": "dropped assignment",
       "defect_class": "missing data",
       "description": "Removes every plain assignment statement so the store the code wrote never runs and the name it would have bound keeps what it held before"
+    },
+    {
+      "id": "seed-128",
+      "name": "dropped annotated assignment",
+      "defect_class": "missing data",
+      "description": "Removes every annotated assignment statement so the annotated store never runs and the name it would have bound keeps what it held before"
+    },
+    {
+      "id": "seed-129",
+      "name": "dropped function definition",
+      "defect_class": "missing effect",
+      "description": "Removes every function definition statement so the function it defined is never bound and the calls that name it find nothing there"
+    },
+    {
+      "id": "seed-130",
+      "name": "dropped class definition",
+      "defect_class": "missing effect",
+      "description": "Removes every class definition statement so the type it defined is never bound and the code that names it finds nothing there"
+    },
+    {
+      "id": "seed-131",
+      "name": "dropped exception handler name",
+      "defect_class": "missing input",
+      "description": "Removes the name an exception handler catches the error under so the handler's body cannot read the error it caught"
     }
   ]
 }
