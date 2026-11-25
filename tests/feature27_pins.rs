@@ -119,7 +119,10 @@ fn test_seed_148_keeps_the_earlier_elements_standing() {
 #[test]
 fn test_seed_148_leaves_a_single_element_fstring_standing() {
     let (planted, render) = applied_render("plain = f'{gamma}'\n", "seed-148");
-    assert!(!planted, "an f-string carrying a single element does not plant");
+    assert!(
+        !planted,
+        "an f-string carrying a single element does not plant"
+    );
     assert_eq!(render, "plain = f'{gamma}'");
 }
 
@@ -152,7 +155,10 @@ fn test_seed_149_removes_the_last_return_element() {
 fn test_seed_149_removes_the_last_element_of_every_tuple_return() {
     let source = "def pair():\n    return (alpha, beta)\n\ndef duo():\n    return (one, two)\n";
     let (_, render) = applied_render(source, "seed-149");
-    assert_eq!(render, "def pair():\n    return (alpha,)\n\ndef duo():\n    return (one,)");
+    assert_eq!(
+        render,
+        "def pair():\n    return (alpha,)\n\ndef duo():\n    return (one,)"
+    );
 }
 
 #[test]
@@ -210,7 +216,10 @@ fn test_seed_150_removes_the_first_element_of_every_tuple_index() {
 #[test]
 fn test_seed_150_keeps_the_later_index_elements_standing() {
     let (_, render) = applied_render("item = table[one, two, three]\n", "seed-150");
-    assert!(render.contains("table[two, three]"), "the later elements stand: {render}");
+    assert!(
+        render.contains("table[two, three]"),
+        "the later elements stand: {render}"
+    );
 }
 
 #[test]
@@ -268,7 +277,10 @@ fn test_seed_151_keeps_the_earlier_set_elements_standing() {
 #[test]
 fn test_seed_151_leaves_a_single_element_set_standing() {
     let (planted, render) = applied_render("seen = {alpha}\n", "seed-151");
-    assert!(!planted, "a set display carrying a single element does not plant");
+    assert!(
+        !planted,
+        "a set display carrying a single element does not plant"
+    );
     assert_eq!(render, "seen = {alpha}");
 }
 
