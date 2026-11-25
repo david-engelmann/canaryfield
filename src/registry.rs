@@ -939,5 +939,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped last set element",
         defect_class: "missing data",
         description: "Removes the last element of every set display carrying at least two elements so the value the display ends with never enters the set",
+    },
+    SeedMeta {
+        id: "seed-152",
+        name: "dropped first f-string element",
+        defect_class: "missing data",
+        description: "Removes the first element of every f-string carrying at least two elements so the text or value the string opens with never reaches its reader",
+    },
+    SeedMeta {
+        id: "seed-153",
+        name: "dropped first return element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple a return hands back whenever the tuple carries at least two elements so the caller never receives the opening value",
+    },
+    SeedMeta {
+        id: "seed-154",
+        name: "dropped last match case",
+        defect_class: "wrong branch",
+        description: "Removes the last case of every match statement carrying at least two cases so a value the last case would have taken falls past the match altogether",
+    },
+    SeedMeta {
+        id: "seed-155",
+        name: "dropped last decorator",
+        defect_class: "missing wrapper",
+        description: "Removes the last decorator of every function and class definition carrying at least two decorators so the final wrapping the source names never applies",
     }
 ];

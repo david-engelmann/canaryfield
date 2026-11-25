@@ -182,6 +182,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-149" => apply_dropped_last_return_element(tree),
         "seed-150" => apply_dropped_first_subscript_index_element(tree),
         "seed-151" => apply_dropped_last_set_element(tree),
+        "seed-152" => apply_dropped_first_fstring_element(tree),
+        "seed-153" => apply_dropped_first_return_element(tree),
+        "seed-154" => apply_dropped_last_match_case(tree),
+        "seed-155" => apply_dropped_last_decorator(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4942,6 +4946,85 @@ fn apply_dropped_last_set_element(tree: &mut Tree) -> bool {
         let mut elts = tree.many(*id, "elts").to_vec();
         elts.pop();
         tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-152, dropped first f-string element.
+
+fn apply_dropped_first_fstring_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::JoinedStr) && tree.many(*id, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut values = tree.many(*id, "values").to_vec();
+        values.remove(0);
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-153, dropped first return element.
+
+fn apply_dropped_first_return_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Return => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.remove(0);
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-154, dropped last match case.
+
+fn apply_dropped_last_match_case(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Match) && tree.many(*id, "cases").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut cases = tree.many(*id, "cases").to_vec();
+        cases.pop();
+        tree.set_many(*id, "cases", cases);
+    }
+    !targets.is_empty()
+}
+
+// seed-155, dropped last decorator.
+
+fn apply_dropped_last_decorator(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::FuncDef { .. } | Data::ClassDef { .. }
+            ) && tree.many(*id, "decorator_list").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut decorators = tree.many(*id, "decorator_list").to_vec();
+        decorators.pop();
+        tree.set_many(*id, "decorator_list", decorators);
     }
     !targets.is_empty()
 }

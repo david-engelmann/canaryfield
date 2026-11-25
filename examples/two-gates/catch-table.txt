@@ -160,7 +160,11 @@ seed-148  dropped last f-string element          none          not-applicable  n
 seed-149  dropped last return element            none          not-applicable  not-applicable
 seed-150  dropped first subscript index element  none          not-applicable  not-applicable
 seed-151  dropped last set element               none          not-applicable  not-applicable
+seed-152  dropped first f-string element         none          not-applicable  not-applicable
+seed-153  dropped first return element           none          not-applicable  not-applicable
+seed-154  dropped last match case                none          not-applicable  not-applicable
+seed-155  dropped last decorator                 none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 120  gate-broken 0
-  compile  caught 0  waved-through 32  not-applicable 120  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 124  gate-broken 0
+  compile  caught 0  waved-through 32  not-applicable 124  gate-broken 0
