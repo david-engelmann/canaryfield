@@ -1971,26 +1971,82 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "waved-through"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
-      "gate-broken": 29,
-      "not-applicable": 111,
+      "gate-broken": 30,
+      "not-applicable": 114,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
-      "gate-broken": 29,
-      "not-applicable": 111,
+      "gate-broken": 30,
+      "not-applicable": 114,
       "waved-through": 0
      },
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 111,
-      "waved-through": 7
+      "not-applicable": 114,
+      "waved-through": 8
      }
     },
     "target": "<ROOT>/proj",
@@ -3818,14 +3874,66 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "branch": "canaryfield/seed-141",
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-141"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 111,
-      "waved-through": 7
+      "not-applicable": 114,
+      "waved-through": 8
      }
     },
     "target": "<ROOT>/proj",
@@ -5412,13 +5520,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 136,
+      "not-applicable": 140,
       "waved-through": 0
      }
     },
@@ -7030,13 +7182,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "tests": {
       "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 132,
+      "not-applicable": 136,
       "waved-through": 1
      }
     },
@@ -8666,13 +8862,59 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
-      "gate-broken": 29,
-      "not-applicable": 111,
+      "gate-broken": 30,
+      "not-applicable": 114,
       "waved-through": 0
      }
     },
@@ -10360,14 +10602,62 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 111,
-      "waved-through": 7
+      "not-applicable": 114,
+      "waved-through": 8
      }
     },
     "target": "<ROOT>/proj",
@@ -10431,6 +10721,10 @@
     "seed-138",
     "seed-139",
     "seed-14",
+    "seed-140",
+    "seed-141",
+    "seed-142",
+    "seed-143",
     "seed-15",
     "seed-16",
     "seed-17",
@@ -12097,13 +12391,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+     },
+     {
+      "defect_class": "missing input",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-141"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 136,
+      "not-applicable": 140,
       "waved-through": 0
      }
     },
