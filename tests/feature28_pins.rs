@@ -189,56 +189,73 @@ fn test_seed_153_verdict_is_caught() {
     let _ = fs::remove_dir_all(&target);
 }
 
-// Seed-154, dropped first set element.
+// Seed-154, dropped last match case.
 
-const FIRST_SET_MODULE: &str = "seen = {alpha, beta}\nkeep = gamma\n";
-const FIRST_SET_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
+const LAST_MATCH_MODULE: &str = "def check(code):\n    match code:\n        case 1:\n            return 'one'\n        case _:\n            return 'other'\n";
+const LAST_MATCH_GATE: &str = "#!/bin/sh\ngrep -q \"case _:\" mod.py\n";
 
 #[test]
-fn test_seed_154_plants_on_a_set_display_with_two_elements() {
-    let (planted, _) = applied_render(FIRST_SET_MODULE, "seed-154");
-    assert!(planted, "a set display carrying two elements plants");
+fn test_seed_154_plants_on_a_match_with_two_cases() {
+    let (planted, _) = applied_render(LAST_MATCH_MODULE, "seed-154");
+    assert!(planted, "a match statement carrying two cases plants");
 }
 
 #[test]
-fn test_seed_154_removes_the_first_set_element() {
-    let (_, render) = applied_render(FIRST_SET_MODULE, "seed-154");
-    assert_eq!(render, "seen = {beta}\nkeep = gamma");
+fn test_seed_154_removes_the_last_match_case() {
+    let (_, render) = applied_render(LAST_MATCH_MODULE, "seed-154");
+    assert_eq!(
+        render,
+        "def check(code):\n    match code:\n        case 1:\n            return 'one'"
+    );
 }
 
 #[test]
-fn test_seed_154_removes_the_first_element_of_every_set_display() {
-    let source = "first = {alpha, beta}\nsecond = {one, two}\n";
+fn test_seed_154_keeps_the_earlier_match_cases_standing() {
+    let source = "def check(code):\n    match code:\n        case 1:\n            return 'one'\n        case 2:\n            return 'two'\n        case _:\n            return 'other'\n";
     let (_, render) = applied_render(source, "seed-154");
-    assert_eq!(render, "first = {beta}\nsecond = {two}");
+    assert_eq!(
+        render,
+        "def check(code):\n    match code:\n        case 1:\n            return 'one'\n        case 2:\n            return 'two'"
+    );
 }
 
 #[test]
-fn test_seed_154_keeps_the_later_set_elements_standing() {
-    let (_, render) = applied_render("seen = {alpha, beta, gamma}\n", "seed-154");
-    assert_eq!(render, "seen = {beta, gamma}");
+fn test_seed_154_removes_the_last_case_of_every_match() {
+    let source = "def first(code):\n    match code:\n        case 1:\n            return 'one'\n        case _:\n            return 'other'\n\ndef second(code):\n    match code:\n        case 2:\n            return 'two'\n        case _:\n            return 'other'\n";
+    let (_, render) = applied_render(source, "seed-154");
+    assert_eq!(
+        render,
+        "def first(code):\n    match code:\n        case 1:\n            return 'one'\n\ndef second(code):\n    match code:\n        case 2:\n            return 'two'"
+    );
 }
 
 #[test]
-fn test_seed_154_leaves_a_single_element_set_standing() {
-    let (planted, render) = applied_render("seen = {alpha}\n", "seed-154");
+fn test_seed_154_removes_a_guarded_last_case_whole() {
+    let source = "def check(code):\n    match code:\n        case 1:\n            return 'one'\n        case point if point > 0:\n            return 'positive'\n";
+    let (_, render) = applied_render(source, "seed-154");
+    assert_eq!(
+        render,
+        "def check(code):\n    match code:\n        case 1:\n            return 'one'"
+    );
+}
+
+#[test]
+fn test_seed_154_leaves_a_single_case_match_standing() {
+    let source = "def check(code):\n    match code:\n        case _:\n            return 'other'\n";
+    let (planted, render) = applied_render(source, "seed-154");
     assert!(
         !planted,
-        "a set display carrying a single element does not plant"
+        "a match statement carrying a single case does not plant"
     );
-    assert_eq!(render, "seen = {alpha}");
-}
-
-#[test]
-fn test_seed_154_leaves_a_list_display_standing() {
-    let (planted, render) = applied_render("items = [alpha, beta]\n", "seed-154");
-    assert!(!planted, "a list display does not plant under the set seed");
-    assert_eq!(render, "items = [alpha, beta]");
+    assert_eq!(
+        render,
+        "def check(code):\n    match code:\n        case _:\n            return 'other'"
+    );
 }
 
 #[test]
 fn test_seed_154_verdict_is_caught() {
-    let target = target_with(FIRST_SET_MODULE, FIRST_SET_GATE, "caught154");
+    let target = target_with(LAST_MATCH_MODULE, LAST_MATCH_GATE, "caught154");
     let result = run_target(&target);
     assert_eq!(cell_of(&result, "seed-154"), "caught");
     let _ = fs::remove_dir_all(&target);

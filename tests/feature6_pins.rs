@@ -226,7 +226,7 @@ fn test_seed_metadata_is_complete() {
             "dropped last set element",
             "dropped first f-string element",
             "dropped first return element",
-            "dropped first set element",
+            "dropped last match case",
             "dropped last decorator"
         ]
     );
