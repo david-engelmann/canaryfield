@@ -121,7 +121,10 @@ fn test_seed_136_keeps_the_remaining_elements_standing() {
 #[test]
 fn test_seed_136_leaves_a_single_element_target_standing() {
     let (planted, render) = applied_render("first, = pair\n", "seed-136");
-    assert!(!planted, "a target carrying a single element does not plant");
+    assert!(
+        !planted,
+        "a target carrying a single element does not plant"
+    );
     assert_eq!(render, "first = pair");
 }
 
@@ -178,7 +181,10 @@ fn test_seed_137_keeps_the_earlier_elements_standing() {
 #[test]
 fn test_seed_137_leaves_a_single_element_target_standing() {
     let (planted, render) = applied_render("first, = pair\n", "seed-137");
-    assert!(!planted, "a target carrying a single element does not plant");
+    assert!(
+        !planted,
+        "a target carrying a single element does not plant"
+    );
     assert_eq!(render, "first = pair");
 }
 
@@ -229,7 +235,10 @@ fn test_seed_138_keeps_the_named_keyword_arguments_standing() {
 #[test]
 fn test_seed_138_leaves_a_named_keyword_call_standing() {
     let (planted, render) = applied_render("result = call(name=alpha)\n", "seed-138");
-    assert!(!planted, "a call carrying only named keywords does not plant");
+    assert!(
+        !planted,
+        "a call carrying only named keywords does not plant"
+    );
     assert_eq!(render, "result = call(name=alpha)");
 }
 

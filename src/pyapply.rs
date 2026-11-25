@@ -4557,8 +4557,13 @@ fn apply_dropped_unpacking_target_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Store, .. })
-                && tree.many(*id, "elts").len() >= 2
+            matches!(
+                &tree.nodes[*id].data,
+                Data::Tuple {
+                    ctx: Ctx::Store,
+                    ..
+                }
+            ) && tree.many(*id, "elts").len() >= 2
         })
         .collect();
     for id in &targets {
@@ -4580,8 +4585,13 @@ fn apply_dropped_last_unpacking_target_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::Tuple { ctx: Ctx::Store, .. })
-                && tree.many(*id, "elts").len() >= 2
+            matches!(
+                &tree.nodes[*id].data,
+                Data::Tuple {
+                    ctx: Ctx::Store,
+                    ..
+                }
+            ) && tree.many(*id, "elts").len() >= 2
         })
         .collect();
     for id in &targets {
