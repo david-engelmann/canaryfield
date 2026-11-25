@@ -263,7 +263,8 @@ fn test_seed_155_removes_the_last_decorator() {
 
 #[test]
 fn test_seed_155_removes_the_last_decorator_of_every_definition() {
-    let source = "@alpha\n@beta\ndef first():\n    return 1\n\n@one\n@two\ndef second():\n    return 2\n";
+    let source =
+        "@alpha\n@beta\ndef first():\n    return 1\n\n@one\n@two\ndef second():\n    return 2\n";
     let (_, render) = applied_render(source, "seed-155");
     assert_eq!(
         render,
@@ -287,7 +288,10 @@ fn test_seed_155_keeps_the_earlier_decorators_standing() {
 #[test]
 fn test_seed_155_leaves_a_single_decorator_standing() {
     let (planted, render) = applied_render("@alpha\ndef wrapped():\n    return 1\n", "seed-155");
-    assert!(!planted, "a definition carrying one decorator does not plant");
+    assert!(
+        !planted,
+        "a definition carrying one decorator does not plant"
+    );
     assert_eq!(render, "@alpha\ndef wrapped():\n    return 1");
 }
 
