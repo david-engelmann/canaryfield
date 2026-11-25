@@ -915,5 +915,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped last exception handler",
         defect_class: "missing data",
         description: "Removes the last handler of every try carrying at least two handlers so the exception the try catches last is never caught",
+    },
+    SeedMeta {
+        id: "seed-148",
+        name: "dropped last f-string element",
+        defect_class: "missing data",
+        description: "Removes the last element of every f-string carrying at least two elements so the text or value the string ends with never reaches its reader",
+    },
+    SeedMeta {
+        id: "seed-149",
+        name: "dropped last return element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple a return hands back whenever the tuple carries at least two elements so the caller never receives the final value",
+    },
+    SeedMeta {
+        id: "seed-150",
+        name: "dropped first subscript index element",
+        defect_class: "missing data",
+        description: "Removes the first element of every subscript index written as a tuple carrying at least two elements so the lookup addresses a different element than the source names",
+    },
+    SeedMeta {
+        id: "seed-151",
+        name: "dropped last set element",
+        defect_class: "missing data",
+        description: "Removes the last element of every set display carrying at least two elements so the value the display ends with never enters the set",
     }
 ];
