@@ -1829,11 +1829,11 @@
       "seed": "seed-153"
     },
     {
-      "defect_class": "missing data",
+      "defect_class": "wrong branch",
       "gates": {
         "tests": "not-applicable"
       },
-      "name": "dropped first set element",
+      "name": "dropped last match case",
       "planted_exits": {},
       "planted_file": null,
       "planted_files": [],

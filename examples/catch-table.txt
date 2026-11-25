@@ -161,7 +161,7 @@ seed-150  dropped first subscript index element  none          not-applicable
 seed-151  dropped last set element               none          not-applicable
 seed-152  dropped first f-string element         none          not-applicable
 seed-153  dropped first return element           none          not-applicable
-seed-154  dropped first set element              none          not-applicable
+seed-154  dropped last match case                none          not-applicable
 seed-155  dropped last decorator                 none          not-applicable
 
 summary per gate
