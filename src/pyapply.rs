@@ -4705,10 +4705,8 @@ fn apply_dropped_last_list_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(
-                &tree.nodes[*id].data,
-                Data::List { ctx: Ctx::Load, .. }
-            ) && tree.many(*id, "elts").len() >= 2
+            matches!(&tree.nodes[*id].data, Data::List { ctx: Ctx::Load, .. })
+                && tree.many(*id, "elts").len() >= 2
         })
         .collect();
     for id in &targets {
