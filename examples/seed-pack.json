@@ -927,9 +927,9 @@
     },
     {
       "id": "seed-154",
-      "name": "dropped first set element",
-      "defect_class": "missing data",
-      "description": "Removes the first element of every set display carrying at least two elements so the value the display opens with never enters the set"
+      "name": "dropped last match case",
+      "defect_class": "wrong branch",
+      "description": "Removes the last case of every match statement carrying at least two cases so a value the last case would have taken falls past the match altogether"
     },
     {
       "id": "seed-155",
