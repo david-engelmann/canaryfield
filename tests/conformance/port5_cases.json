@@ -2027,26 +2027,86 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "waved-through"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "gate-broken",
+       "exit-three": "gate-broken",
+       "tests": "caught"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
-      "gate-broken": 30,
-      "not-applicable": 114,
+      "gate-broken": 32,
+      "not-applicable": 116,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
-      "gate-broken": 30,
-      "not-applicable": 114,
+      "gate-broken": 32,
+      "not-applicable": 116,
       "waved-through": 0
      },
      "tests": {
-      "caught": 22,
+      "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 114,
-      "waved-through": 8
+      "not-applicable": 116,
+      "waved-through": 9
      }
     },
     "target": "<ROOT>/proj",
@@ -3926,14 +3986,70 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "branch": "canaryfield/seed-144",
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-144"
+     },
+     {
+      "branch": "canaryfield/seed-145",
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-145"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 22,
+      "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 114,
-      "waved-through": 8
+      "not-applicable": 116,
+      "waved-through": 9
      }
     },
     "target": "<ROOT>/proj",
@@ -5564,13 +5680,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 140,
+      "not-applicable": 144,
       "waved-through": 0
      }
     },
@@ -7226,13 +7386,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "tests": {
       "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 136,
+      "not-applicable": 140,
       "waved-through": 1
      }
     },
@@ -8908,13 +9112,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "gate-broken"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {},
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
-      "gate-broken": 30,
-      "not-applicable": 114,
+      "gate-broken": 32,
+      "not-applicable": 116,
       "waved-through": 0
      }
     },
@@ -10650,14 +10902,66 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "waved-through"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {
+       "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "caught"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {
+       "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+       "sample.py"
+      ],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "tests": {
-      "caught": 22,
+      "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 114,
-      "waved-through": 8
+      "not-applicable": 116,
+      "waved-through": 9
      }
     },
     "target": "<ROOT>/proj",
@@ -10725,6 +11029,10 @@
     "seed-141",
     "seed-142",
     "seed-143",
+    "seed-144",
+    "seed-145",
+    "seed-146",
+    "seed-147",
     "seed-15",
     "seed-16",
     "seed-17",
@@ -12435,13 +12743,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-143"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last call argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-144"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last parameter",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-145"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-146"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-147"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 140,
+      "not-applicable": 144,
       "waved-through": 0
      }
     },

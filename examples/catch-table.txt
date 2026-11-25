@@ -151,6 +151,10 @@ seed-140  dropped last keyword argument          none          not-applicable
 seed-141  dropped last list element              sample.py     waved-through
 seed-142  dropped first imported name            none          not-applicable
 seed-143  dropped first boolean operand          none          not-applicable
+seed-144  dropped last call argument             sample.py     waved-through
+seed-145  dropped last parameter                 sample.py     caught
+seed-146  dropped subscript index element        none          not-applicable
+seed-147  dropped last exception handler         none          not-applicable
 
 summary per gate
-  tests  caught 22  waved-through 8  not-applicable 114  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 116  gate-broken 0
