@@ -303,6 +303,16 @@ fn test_seed_147_leaves_a_single_handler_try_standing() {
 }
 
 #[test]
+fn test_seed_147_plants_on_a_try_star_with_two_handler_groups() {
+    let (planted, render) = applied_render(
+        "try:\n    work()\nexcept* Alpha:\n    pass\nexcept* Beta:\n    pass\n",
+        "seed-147",
+    );
+    assert!(planted, "a try star carrying two handler groups plants");
+    assert_eq!(render, "try:\n    work()\nexcept* Alpha:\n    pass");
+}
+
+#[test]
 fn test_seed_147_verdict_is_caught() {
     let target = target_with(HANDLER_MODULE, HANDLER_GATE, "caught147");
     let result = run_target(&target);
