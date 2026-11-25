@@ -77,16 +77,16 @@ fn cell_of(result: &JsonValue, seed: &str) -> String {
 }
 
 #[test]
-fn test_registry_has_one_hundred_and_forty_unique_seeds() {
+fn test_registry_has_one_hundred_and_forty_four_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        140,
-        "the grown registry holds one hundred and forty"
+        144,
+        "the grown registry holds one hundred and forty four"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     ids.sort_unstable();
     ids.dedup();
-    assert_eq!(ids.len(), 140, "the ids stand unique");
+    assert_eq!(ids.len(), 144, "the ids stand unique");
     assert_eq!(SEEDS[128].id, "seed-128");
     assert_eq!(SEEDS[131].id, "seed-131");
 }
@@ -411,7 +411,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 140);
+    assert_eq!(loaded.len(), 144);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
