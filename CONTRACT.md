@@ -1272,3 +1272,70 @@ The PORT2 battery's placement carries the longest record of the round. The grown
 One incident stands disclosed without softening. The battery push's first local attempt ran a git plumbing script whose object write the fault refused, leaving its commit variable empty, and the unguarded push that followed deleted the remote build branch and closed pull request 86. The ref was recreated at the same head through the API within the same working pass and the pull request was reopened and verified open and mergeable at b82e1e46. No commit was lost, and every later push script in this round asserted a full forty character source before pushing.
 
 The pin check at the amended contract head failed as designed, thirty three of the thirty five new pins failing and the two preservation pins passing, with every other binary green. The regenerated recordings grew both catch tables from one hundred and thirty six rows to one hundred and forty with the standing prefix identical, all four new seeds stand not-applicable on the demo project under both gates, and the disagreement count stands unchanged at twenty two. The PORT2 battery grew by three thousand five hundred and forty eight entries over eight hundred and eighty seven cases. The local full suite was not run to completion on this box, the write fault and the memory ceiling standing as recorded at the round before, and the landing verdict rests on hosted green on the exact head, runs 45555353170 and 45555360938, plus the three reviews, under the Actions-first rule. The tree at the merge counts 28,215 lines over 56 files, 16,750 of production and 11,465 of tests. Closed rounds stand at 43 of 100.
+
+## Feature slice 25 (Round 44)
+
+Registry growth from one hundred and forty to one hundred and forty four seeds, pack canaryfield-seeds/33 to canaryfield-seeds/34.
+
+The slice takes four removal families the weighing found standing on ground no seed reads. The weighing swept the registry's one hundred and forty names and the applies' names for every seat and reserve name it meant to take and asserted each absent programmatically before any seat was taken, the assertion standing as the first step of a seating after the twenty fourth slice's weighing named two seats the registry already owned. The grounds stand counted over the grown battery population of 870 parseable recorded texts. The twenty fourth slice's amended reserve stands disposed first. Its head, the dropped last keyword argument, stands seated here at ninety calls carrying at least two named keywords in thirty seven texts, seed-45 removing the first keyword carrying a name from every call and seed-138 removing the first unnamed unpacking keyword whole. Its second member, the dropped last list element, stands seated here at seventy six list displays standing where a value is read and carrying at least two elements in thirty four texts, seed-09 removing the first element of every list and dictionary display and seed-133 reading tuple displays alone. Its third member, the dropped dictionary unpacking entry, stands counted again under the narrowed reading the earlier reserve owed, the unpacking entries standing after a display's first entry counting one in one text, the two remaining counted entries standing first in their displays where seed-09 already reads them, and it stands carried to this slice's reserve at that count rather than seated on ground that thin. The slice's fourth seat comes from the wider census beside the reserve. The dropped first imported name stands at seventy three from imports carrying at least two names in thirty eight texts, seed-110 removing the last name of the same shape. The dropped first boolean operand stands at twenty boolean operations carrying at least three values in five texts, seed-38 removing the last value of a boolean operation at any count of two or more, so the seat's reading stands at three values or more where the first and last values are never the same one.
+
+F25-1. The registry grows by four entries, standing in the registry in this form:
+
+    SeedMeta {
+        id: "seed-140",
+        name: "dropped last keyword argument",
+        defect_class: "missing input",
+        description: "Removes the last keyword argument carrying a name from every call carrying at least two so the value the caller passed last by name never reaches the callee",
+    },
+    SeedMeta {
+        id: "seed-141",
+        name: "dropped last list element",
+        defect_class: "missing data",
+        description: "Removes the last element of every list display carrying at least two elements and standing where a value is read so the final value the display builds is silently absent",
+    },
+    SeedMeta {
+        id: "seed-142",
+        name: "dropped first imported name",
+        defect_class: "missing data",
+        description: "Removes the first name of every from import carrying at least two names so the name the module binds first is never imported",
+    },
+    SeedMeta {
+        id: "seed-143",
+        name: "dropped first boolean operand",
+        defect_class: "missing data",
+        description: "Removes the first operand of every boolean operation carrying at least three values so the condition the expression tests first is never evaluated",
+    },
+
+The four stand at the registry's end as seed-140 through seed-143, and the registry's count stands at one hundred and forty four.
+
+F25-2. The PORT2 battery stands extended by the four new seeds under the standing method, an independent implementation of the four transformations, with every standing entry identical and the confinement proven by stripping the new seeds' keys and reproducing the standing battery whole.
+
+F25-3. Pins stand in tests/feature25_pins.rs under names taken from this section, at least these:
+
+- the registry stands at one hundred and forty four seeds under canaryfield-seeds/34
+- seed-140 removes the last keyword argument of every call carrying two named keywords
+- seed-140 keeps the earlier keyword arguments standing
+- seed-140 leaves a call carrying a single named keyword standing
+- seed-140 leaves a call's dictionary unpacking standing
+- seed-141 removes the last element of every list display
+- seed-141 keeps the earlier elements standing
+- seed-141 leaves a single element list standing
+- seed-141 leaves a target list standing
+- seed-142 removes the first name of every from import
+- seed-142 keeps the remaining names standing
+- seed-142 leaves a single name import standing
+- seed-142 leaves a plain import standing
+- seed-143 removes the first operand of every boolean operation carrying three
+- seed-143 keeps the remaining operands standing
+- seed-143 leaves a two operand boolean operation standing
+- the pack writes under canaryfield-seeds/34 and loads under it
+- the pack still loads under canaryfield-seeds/33 at one hundred and forty entries
+- a pack whose count disagrees with canaryfield-seeds/34 stands refused
+
+The pin check on the contract head must fail with the new pins failing except the canaryfield-seeds/33 preservation pin and the count disagreement pin, which pass there by their design.
+
+F25-4. The seed pack document stands regenerated under canaryfield-seeds/34 with one hundred and forty four entries, the PORT1 battery's single data case stands carried to the new document in its one field, the standing pins across the earlier slices' pins files stand moved to the grown registry and the thirty fourth format in every spelling those generations carry, and the standing tests naming an unknown seed id name seed-144.
+
+F25-5. The PORT5 and PORT6 batteries and both example catch tables stand regenerated, the README's slice 25 bullet states the grown registry, its pack bullet states canaryfield-seeds/34, and its regeneration bullet states the verdicts the tables show for seed-140 through seed-143 and the disagreement count the second example's table shows.
+
+F25-6. The reserve for the twenty sixth slice stands named here. The dropped dictionary unpacking entry stands counted at one entry in one text under its narrowed reading, the unpacking entries standing after a display's first entry, seed-09 removing the first entry of every dictionary display whatever its key and seed-139 removing a display's last entry, and it stands carried again at that count until the population gives it more ground. The dropped subscript index element, one element of a subscript's tuple index carrying at least two, stands counted at six in six texts. The dropped last match case, the last case of a match carrying at least three, stands counted at one in one text, its reading against seed-67's removal owed at the next weighing.
