@@ -1832,20 +1832,73 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-139"
+    },
+    {
+      "defect_class": "missing input",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last keyword argument",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-140"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "dropped last list element",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-141"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first imported name",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-142"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first boolean operand",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-143"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 111,
-      "waved-through": 29
+      "not-applicable": 114,
+      "waved-through": 30
     },
     "tests": {
       "caught": 22,
       "gate-broken": 0,
-      "not-applicable": 111,
-      "waved-through": 7
+      "not-applicable": 114,
+      "waved-through": 8
     }
   },
   "target": "examples/demo-project",

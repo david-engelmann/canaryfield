@@ -170,6 +170,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-137" => apply_dropped_last_unpacking_target_element(tree),
         "seed-138" => apply_dropped_keyword_unpacking(tree),
         "seed-139" => apply_dropped_last_dictionary_entry(tree),
+        "seed-140" => apply_dropped_last_keyword_argument(tree),
+        "seed-141" => apply_dropped_last_list_element(tree),
+        "seed-142" => apply_dropped_first_imported_name(tree),
+        "seed-143" => apply_dropped_first_boolean_operand(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4654,6 +4658,104 @@ fn apply_dropped_last_dictionary_entry(tree: &mut Tree) -> bool {
         tree.set_maybe(*id, "keys", keys[..kept].to_vec());
         let values = tree.many(*id, "values");
         tree.set_many(*id, "values", values[..kept].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-140, dropped last keyword argument. The last
+// keyword carrying a name stands removed from every
+// call carrying at least two of them, where seed-45
+// removes the first keyword carrying a name and
+// seed-138 removes the keyword carrying no name whole.
+
+fn apply_dropped_last_keyword_argument(tree: &mut Tree) -> bool {
+    let mut targets: Vec<(usize, usize)> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        let named: Vec<usize> = tree
+            .many(id, "keywords")
+            .iter()
+            .copied()
+            .filter(|kw| matches!(&tree.nodes[*kw].data, Data::Keyword { arg: Some(_) }))
+            .collect();
+        if named.len() >= 2 {
+            targets.push((id, *named.last().expect("two or more stand")));
+        }
+    }
+    let planted = !targets.is_empty();
+    for (id, keyword) in targets {
+        let mut keywords = tree.many(id, "keywords").to_vec();
+        keywords.retain(|kw| *kw != keyword);
+        tree.set_many(id, "keywords", keywords);
+    }
+    planted
+}
+
+// seed-141, dropped last list element. The last
+// element of every list display standing where a
+// value is read and carrying at least two stands
+// removed, where seed-09 removes the first element
+// of every list display and seed-133 removes the
+// last element of a tuple display.
+
+fn apply_dropped_last_list_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::List { ctx: Ctx::Load, .. })
+                && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts").to_vec();
+        let kept = elts.len() - 1;
+        tree.set_many(*id, "elts", elts[..kept].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-142, dropped first imported name. The first
+// name of every from import carrying at least two
+// stands removed, the head twin of seed-110, which
+// removes the last name of the same shape.
+
+fn apply_dropped_first_imported_name(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::ImportFrom { .. })
+                && tree.many(*id, "names").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let names = tree.many(*id, "names")[1..].to_vec();
+        tree.set_many(*id, "names", names);
+    }
+    !targets.is_empty()
+}
+
+// seed-143, dropped first boolean operand. The
+// first value of every boolean operation carrying
+// at least three stands removed, where seed-38
+// removes the last value of a boolean operation at
+// any count of two or more.
+
+fn apply_dropped_first_boolean_operand(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::BoolOp { .. })
+                && tree.many(*id, "values").len() >= 3
+        })
+        .collect();
+    for id in &targets {
+        let values = tree.many(*id, "values")[1..].to_vec();
+        tree.set_many(*id, "values", values);
     }
     !targets.is_empty()
 }
