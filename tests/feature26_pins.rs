@@ -219,7 +219,7 @@ fn test_seed_146_plants_on_a_tuple_index_subscript() {
 #[test]
 fn test_seed_146_removes_the_last_index_element() {
     let (_, render) = applied_render(INDEX_MODULE, "seed-146");
-    assert_eq!(render, "item = grid[alpha]\nkeep = gamma");
+    assert_eq!(render, "item = grid[alpha,]\nkeep = gamma");
 }
 
 #[test]
@@ -228,7 +228,7 @@ fn test_seed_146_removes_the_last_element_of_every_tuple_index() {
         "first = grid[alpha, beta]\nsecond = table[one, two, three]\n",
         "seed-146",
     );
-    assert_eq!(render, "first = grid[alpha]\nsecond = table[one, two]");
+    assert_eq!(render, "first = grid[alpha,]\nsecond = table[one, two]");
 }
 
 #[test]
