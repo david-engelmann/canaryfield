@@ -891,5 +891,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first boolean operand",
         defect_class: "missing data",
         description: "Removes the first operand of every boolean operation carrying at least three values so the condition the expression tests first is never evaluated",
+    },
+    SeedMeta {
+        id: "seed-144",
+        name: "dropped last call argument",
+        defect_class: "missing data",
+        description: "Removes the last positional argument of every call carrying at least two so the value the call passes last is never passed",
+    },
+    SeedMeta {
+        id: "seed-145",
+        name: "dropped last parameter",
+        defect_class: "missing data",
+        description: "Removes the last positional parameter of every function definition and lambda carrying at least two, with the default that stands against it, so the parameter the signature declares last is never bound",
+    },
+    SeedMeta {
+        id: "seed-146",
+        name: "dropped subscript index element",
+        defect_class: "missing data",
+        description: "Removes the last element of every subscript index that stands as a tuple carrying at least two elements so the index the lookup resolves last is never resolved",
+    },
+    SeedMeta {
+        id: "seed-147",
+        name: "dropped last exception handler",
+        defect_class: "missing data",
+        description: "Removes the last handler of every try carrying at least two handlers so the exception the try catches last is never caught",
     }
 ];

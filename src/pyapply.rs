@@ -174,6 +174,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-141" => apply_dropped_last_list_element(tree),
         "seed-142" => apply_dropped_first_imported_name(tree),
         "seed-143" => apply_dropped_first_boolean_operand(tree),
+        "seed-144" => apply_dropped_last_call_argument(tree),
+        "seed-145" => apply_dropped_last_parameter(tree),
+        "seed-146" => apply_dropped_subscript_index_element(tree),
+        "seed-147" => apply_dropped_last_exception_handler(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4756,6 +4760,106 @@ fn apply_dropped_first_boolean_operand(tree: &mut Tree) -> bool {
     for id in &targets {
         let values = tree.many(*id, "values")[1..].to_vec();
         tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-144, dropped last call argument.
+
+fn apply_dropped_last_call_argument(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Call)
+                && tree.many(*id, "args").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut args = tree.many(*id, "args").to_vec();
+        args.pop();
+        tree.set_many(*id, "args", args);
+    }
+    !targets.is_empty()
+}
+
+// seed-145, dropped last parameter.
+
+fn apply_dropped_last_parameter(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            if !matches!(&tree.nodes[*id].data, Data::FuncDef { .. } | Data::Lambda) {
+                return false;
+            }
+            let Some(args_node) = tree.one(*id, "args") else {
+                return false;
+            };
+            tree.many(args_node, "posonlyargs").len() + tree.many(args_node, "args").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let args_node = tree.one(*id, "args").expect("the arguments stand");
+        let mut posonly = tree.many(args_node, "posonlyargs").to_vec();
+        let mut ordinary = tree.many(args_node, "args").to_vec();
+        let mut defaults = tree.many(args_node, "defaults").to_vec();
+        if !defaults.is_empty() {
+            defaults.pop();
+            tree.set_many(args_node, "defaults", defaults);
+        }
+        if !ordinary.is_empty() {
+            ordinary.pop();
+            tree.set_many(args_node, "args", ordinary);
+        } else {
+            posonly.pop();
+            tree.set_many(args_node, "posonlyargs", posonly);
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-146, dropped subscript index element.
+
+fn apply_dropped_subscript_index_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| {
+            if matches!(&tree.nodes[id].data, Data::Subscript { .. }) {
+                let slice = tree.one(id, "slice")?;
+                if matches!(&tree.nodes[slice].data, Data::Tuple { .. })
+                    && tree.many(slice, "elts").len() >= 2
+                {
+                    return Some(slice);
+                }
+            }
+            None
+        })
+        .collect();
+    for target in &targets {
+        let mut elts = tree.many(*target, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*target, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-147, dropped last exception handler.
+
+fn apply_dropped_last_exception_handler(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Try { .. })
+                && tree.many(*id, "handlers").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut handlers = tree.many(*id, "handlers").to_vec();
+        handlers.pop();
+        tree.set_many(*id, "handlers", handlers);
     }
     !targets.is_empty()
 }
