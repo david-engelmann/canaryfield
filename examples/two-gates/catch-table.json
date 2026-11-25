@@ -1943,19 +1943,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-147"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last f-string element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-148"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last return element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-149"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first subscript index element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-150"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last set element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-151"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 116,
+      "not-applicable": 120,
       "waved-through": 32
     },
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 116,
+      "not-applicable": 120,
       "waved-through": 9
     }
   },

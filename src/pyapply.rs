@@ -178,6 +178,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-145" => apply_dropped_last_parameter(tree),
         "seed-146" => apply_dropped_subscript_index_element(tree),
         "seed-147" => apply_dropped_last_exception_handler(tree),
+        "seed-148" => apply_dropped_last_fstring_element(tree),
+        "seed-149" => apply_dropped_last_return_element(tree),
+        "seed-150" => apply_dropped_first_subscript_index_element(tree),
+        "seed-151" => apply_dropped_last_set_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -4859,6 +4863,85 @@ fn apply_dropped_last_exception_handler(tree: &mut Tree) -> bool {
         let mut handlers = tree.many(*id, "handlers").to_vec();
         handlers.pop();
         tree.set_many(*id, "handlers", handlers);
+    }
+    !targets.is_empty()
+}
+// seed-148, dropped last f-string element.
+
+fn apply_dropped_last_fstring_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::JoinedStr) && tree.many(*id, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut values = tree.many(*id, "values").to_vec();
+        values.pop();
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-149, dropped last return element.
+
+fn apply_dropped_last_return_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Return => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-150, dropped first subscript index element.
+
+fn apply_dropped_first_subscript_index_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Subscript { .. } => tree.one(id, "slice").filter(|slice| {
+                matches!(&tree.nodes[*slice].data, Data::Tuple { .. })
+                    && tree.many(*slice, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for slice in &targets {
+        let mut elts = tree.many(*slice, "elts").to_vec();
+        elts.remove(0);
+        tree.set_many(*slice, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-151, dropped last set element.
+
+fn apply_dropped_last_set_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Set) && tree.many(*id, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
     }
     !targets.is_empty()
 }
