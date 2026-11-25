@@ -86,19 +86,19 @@ const CONST_GATE: &str = "#!/bin/sh\ngrep -q \"return 5\" mod.py\n";
 // The registry pins of F5-1.
 
 #[test]
-fn test_registry_has_one_hundred_and_thirty_six_unique_seeds() {
+fn test_registry_has_one_hundred_and_forty_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        136,
-        "the grown registry holds one hundred and thirty six"
+        140,
+        "the grown registry holds one hundred and forty"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 136, "every seed id stands once");
+    assert_eq!(ids.len(), 140, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-135"));
+    assert_eq!(standing.last(), Some(&"seed-139"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -209,7 +209,11 @@ fn test_seed_metadata_is_complete() {
             "dropped assignment target",
             "dropped last tuple element",
             "dropped last base class",
-            "dropped decorator argument"
+            "dropped decorator argument",
+            "dropped unpacking target element",
+            "dropped last unpacking target element",
+            "dropped keyword unpacking",
+            "dropped last dictionary entry"
         ]
     );
 }
@@ -525,7 +529,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 136);
+    assert_eq!(loaded.len(), 140);
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -543,6 +547,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 136);
+    assert_eq!(loaded.len(), 140);
     let _ = fs::remove_dir_all(&dir);
 }

@@ -144,7 +144,11 @@ seed-132  dropped assignment target              none          not-applicable  n
 seed-133  dropped last tuple element             none          not-applicable  not-applicable
 seed-134  dropped last base class                none          not-applicable  not-applicable
 seed-135  dropped decorator argument             none          not-applicable  not-applicable
+seed-136  dropped unpacking target element       none          not-applicable  not-applicable
+seed-137  dropped last unpacking target element  none          not-applicable  not-applicable
+seed-138  dropped keyword unpacking              none          not-applicable  not-applicable
+seed-139  dropped last dictionary entry          none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 22  waved-through 7  not-applicable 107  gate-broken 0
-  compile  caught 0  waved-through 29  not-applicable 107  gate-broken 0
+  tests  caught 22  waved-through 7  not-applicable 111  gate-broken 0
+  compile  caught 0  waved-through 29  not-applicable 111  gate-broken 0
