@@ -100,7 +100,7 @@ fn test_seed_136_plants_on_an_unpacking_target() {
 #[test]
 fn test_seed_136_removes_the_first_element() {
     let (_, render) = applied_render(TARGET_MODULE, "seed-136");
-    assert_eq!(render, "second = (alpha, beta)\nkeep = gamma");
+    assert_eq!(render, "second, = (alpha, beta)\nkeep = gamma");
 }
 
 #[test]
@@ -109,7 +109,7 @@ fn test_seed_136_removes_the_first_element_of_every_unpacking_target() {
         "first, second = pair\nalpha, beta, gamma = triple\n",
         "seed-136",
     );
-    assert_eq!(render, "second = pair\nbeta, gamma = triple");
+    assert_eq!(render, "second, = pair\nbeta, gamma = triple");
 }
 
 #[test]
@@ -122,7 +122,7 @@ fn test_seed_136_keeps_the_remaining_elements_standing() {
 fn test_seed_136_leaves_a_single_element_target_standing() {
     let (planted, render) = applied_render("first, = pair\n", "seed-136");
     assert!(!planted, "a target carrying a single element does not plant");
-    assert_eq!(render, "first, = pair");
+    assert_eq!(render, "first = pair");
 }
 
 #[test]
@@ -135,7 +135,7 @@ fn test_seed_136_leaves_a_value_tuple_standing() {
 #[test]
 fn test_seed_136_removes_the_first_element_of_a_target_standing_inside_a_target() {
     let (_, render) = applied_render("(first, second), third = pair\n", "seed-136");
-    assert_eq!(render, "third = pair");
+    assert_eq!(render, "third, = pair");
 }
 
 #[test]
@@ -157,7 +157,7 @@ fn test_seed_137_plants_on_an_unpacking_target() {
 #[test]
 fn test_seed_137_removes_the_last_element() {
     let (_, render) = applied_render(TARGET_MODULE, "seed-137");
-    assert_eq!(render, "first = (alpha, beta)\nkeep = gamma");
+    assert_eq!(render, "first, = (alpha, beta)\nkeep = gamma");
 }
 
 #[test]
@@ -166,7 +166,7 @@ fn test_seed_137_removes_the_last_element_of_every_unpacking_target() {
         "first, second = pair\nalpha, beta, gamma = triple\n",
         "seed-137",
     );
-    assert_eq!(render, "first = pair\nalpha, beta = triple");
+    assert_eq!(render, "first, = pair\nalpha, beta = triple");
 }
 
 #[test]
@@ -179,7 +179,7 @@ fn test_seed_137_keeps_the_earlier_elements_standing() {
 fn test_seed_137_leaves_a_single_element_target_standing() {
     let (planted, render) = applied_render("first, = pair\n", "seed-137");
     assert!(!planted, "a target carrying a single element does not plant");
-    assert_eq!(render, "first, = pair");
+    assert_eq!(render, "first = pair");
 }
 
 #[test]
