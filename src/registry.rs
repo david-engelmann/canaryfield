@@ -867,5 +867,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped last dictionary entry",
         defect_class: "missing data",
         description: "Removes the last entry of every dictionary display carrying at least two so the value the code placed last is never stored and the display stands shortened",
+    },
+    SeedMeta {
+        id: "seed-140",
+        name: "dropped last keyword argument",
+        defect_class: "missing input",
+        description: "Removes the last keyword argument carrying a name from every call carrying at least two so the value the caller passed last by name never reaches the callee",
+    },
+    SeedMeta {
+        id: "seed-141",
+        name: "dropped last list element",
+        defect_class: "missing data",
+        description: "Removes the last element of every list display carrying at least two elements and standing where a value is read so the final value the display builds is silently absent",
+    },
+    SeedMeta {
+        id: "seed-142",
+        name: "dropped first imported name",
+        defect_class: "missing data",
+        description: "Removes the first name of every from import carrying at least two names so the name the module binds first is never imported",
+    },
+    SeedMeta {
+        id: "seed-143",
+        name: "dropped first boolean operand",
+        defect_class: "missing data",
+        description: "Removes the first operand of every boolean operation carrying at least three values so the condition the expression tests first is never evaluated",
     }
 ];
