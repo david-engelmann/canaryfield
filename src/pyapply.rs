@@ -4877,7 +4877,9 @@ fn apply_dropped_last_fstring_element(tree: &mut Tree) -> bool {
         })
         .collect();
     for id in &targets {
-        tree.many_mut(*id, "values").pop();
+        let mut values = tree.many(*id, "values").to_vec();
+        values.pop();
+        tree.set_many(*id, "values", values);
     }
     !targets.is_empty()
 }
@@ -4889,15 +4891,17 @@ fn apply_dropped_last_return_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter_map(|id| match &tree.nodes[id].data {
-            Data::Return => tree.single(id, "value").filter(|value| {
-                matches!(&tree.nodes[*value].data, Data::Tuple)
+            Data::Return => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
                     && tree.many(*value, "elts").len() >= 2
             }),
             _ => None,
         })
         .collect();
     for value in &targets {
-        tree.many_mut(*value, "elts").pop();
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*value, "elts", elts);
     }
     !targets.is_empty()
 }
@@ -4909,15 +4913,17 @@ fn apply_dropped_first_subscript_index_element(tree: &mut Tree) -> bool {
         .sorted_nodes()
         .into_iter()
         .filter_map(|id| match &tree.nodes[id].data {
-            Data::Subscript => tree.single(id, "slice").filter(|slice| {
-                matches!(&tree.nodes[*slice].data, Data::Tuple)
+            Data::Subscript { .. } => tree.one(id, "slice").filter(|slice| {
+                matches!(&tree.nodes[*slice].data, Data::Tuple { .. })
                     && tree.many(*slice, "elts").len() >= 2
             }),
             _ => None,
         })
         .collect();
     for slice in &targets {
-        tree.many_mut(*slice, "elts").remove(0);
+        let mut elts = tree.many(*slice, "elts").to_vec();
+        elts.remove(0);
+        tree.set_many(*slice, "elts", elts);
     }
     !targets.is_empty()
 }
@@ -4933,7 +4939,9 @@ fn apply_dropped_last_set_element(tree: &mut Tree) -> bool {
         })
         .collect();
     for id in &targets {
-        tree.many_mut(*id, "elts").pop();
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
     }
     !targets.is_empty()
 }
