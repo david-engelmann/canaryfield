@@ -184,7 +184,7 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-151" => apply_dropped_last_set_element(tree),
         "seed-152" => apply_dropped_first_fstring_element(tree),
         "seed-153" => apply_dropped_first_return_element(tree),
-        "seed-154" => apply_dropped_first_set_element(tree),
+        "seed-154" => apply_dropped_last_match_case(tree),
         "seed-155" => apply_dropped_last_decorator(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
@@ -4990,20 +4990,20 @@ fn apply_dropped_first_return_element(tree: &mut Tree) -> bool {
     !targets.is_empty()
 }
 
-// seed-154, dropped first set element.
+// seed-154, dropped last match case.
 
-fn apply_dropped_first_set_element(tree: &mut Tree) -> bool {
+fn apply_dropped_last_match_case(tree: &mut Tree) -> bool {
     let targets: Vec<usize> = tree
         .sorted_nodes()
         .into_iter()
         .filter(|id| {
-            matches!(&tree.nodes[*id].data, Data::Set) && tree.many(*id, "elts").len() >= 2
+            matches!(&tree.nodes[*id].data, Data::Match) && tree.many(*id, "cases").len() >= 2
         })
         .collect();
     for id in &targets {
-        let mut elts = tree.many(*id, "elts").to_vec();
-        elts.remove(0);
-        tree.set_many(*id, "elts", elts);
+        let mut cases = tree.many(*id, "cases").to_vec();
+        cases.pop();
+        tree.set_many(*id, "cases", cases);
     }
     !targets.is_empty()
 }
