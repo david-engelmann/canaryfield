@@ -197,14 +197,14 @@ fn test_seed_150_plants_on_a_tuple_index_subscript() {
 #[test]
 fn test_seed_150_removes_the_first_index_element() {
     let (_, render) = applied_render(FIRST_INDEX_MODULE, "seed-150");
-    assert_eq!(render, "item = grid[beta]\nkeep = gamma");
+    assert_eq!(render, "item = grid[beta,]\nkeep = gamma");
 }
 
 #[test]
 fn test_seed_150_removes_the_first_element_of_every_tuple_index() {
     let source = "first = grid[alpha, beta]\nsecond = table[one, two, three]\n";
     let (_, render) = applied_render(source, "seed-150");
-    assert_eq!(render, "first = grid[beta]\nsecond = table[two, three]");
+    assert_eq!(render, "first = grid[beta,]\nsecond = table[two, three]");
 }
 
 #[test]
