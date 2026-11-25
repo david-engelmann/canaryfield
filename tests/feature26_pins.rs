@@ -264,8 +264,7 @@ fn test_seed_146_verdict_is_caught() {
 
 // Seed-147, dropped last exception handler.
 
-const HANDLER_MODULE: &str =
-    "try:\n    work()\nexcept Alpha:\n    pass\nexcept Beta:\n    pass\n";
+const HANDLER_MODULE: &str = "try:\n    work()\nexcept Alpha:\n    pass\nexcept Beta:\n    pass\n";
 const HANDLER_GATE: &str = "#!/bin/sh\ngrep -q 'Beta' mod.py\n";
 
 #[test]
@@ -294,10 +293,8 @@ fn test_seed_147_keeps_the_earlier_handlers_standing() {
 
 #[test]
 fn test_seed_147_leaves_a_single_handler_try_standing() {
-    let (planted, render) = applied_render(
-        "try:\n    work()\nexcept Alpha:\n    pass\n",
-        "seed-147",
-    );
+    let (planted, render) =
+        applied_render("try:\n    work()\nexcept Alpha:\n    pass\n", "seed-147");
     assert!(!planted, "a try carrying a single handler does not plant");
     assert_eq!(render, "try:\n    work()\nexcept Alpha:\n    pass");
 }
