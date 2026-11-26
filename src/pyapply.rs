@@ -206,6 +206,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-173" => apply_dropped_first_parameter_default_tuple_element(tree),
         "seed-174" => apply_dropped_last_conditional_expression_tuple_element(tree),
         "seed-175" => apply_dropped_first_conditional_expression_tuple_element(tree),
+        "seed-176" => apply_dropped_last_exception_handler_type_tuple_element(tree),
+        "seed-177" => apply_dropped_first_exception_handler_type_tuple_element(tree),
+        "seed-178" => apply_dropped_last_keyword_value_tuple_element(tree),
+        "seed-179" => apply_dropped_first_keyword_value_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5551,6 +5555,108 @@ fn apply_dropped_first_conditional_expression_tuple_element(tree: &mut Tree) -> 
                     && tree.many(arm, "elts").len() >= 2
                 {
                     targets.push(arm);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-176, dropped last exception handler type tuple element.
+
+fn apply_dropped_last_exception_handler_type_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::ExceptHandler { .. }) {
+            continue;
+        }
+        if let Some(ty) = tree.one(id, "type") {
+            if matches!(&tree.nodes[ty].data, Data::Tuple { .. })
+                && tree.many(ty, "elts").len() >= 2
+            {
+                targets.push(ty);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-177, dropped first exception handler type tuple element.
+
+fn apply_dropped_first_exception_handler_type_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::ExceptHandler { .. }) {
+            continue;
+        }
+        if let Some(ty) = tree.one(id, "type") {
+            if matches!(&tree.nodes[ty].data, Data::Tuple { .. })
+                && tree.many(ty, "elts").len() >= 2
+            {
+                targets.push(ty);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-178, dropped last keyword value tuple element.
+
+fn apply_dropped_last_keyword_value_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for kw in tree.many(id, "keywords").to_vec() {
+            if let Some(value) = tree.one(kw, "value") {
+                if matches!(&tree.nodes[value].data, Data::Tuple { .. })
+                    && tree.many(value, "elts").len() >= 2
+                {
+                    targets.push(value);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-179, dropped first keyword value tuple element.
+
+fn apply_dropped_first_keyword_value_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for kw in tree.many(id, "keywords").to_vec() {
+            if let Some(value) = tree.one(kw, "value") {
+                if matches!(&tree.nodes[value].data, Data::Tuple { .. })
+                    && tree.many(value, "elts").len() >= 2
+                {
+                    targets.push(value);
                 }
             }
         }
