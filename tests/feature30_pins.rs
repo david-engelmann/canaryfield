@@ -232,7 +232,7 @@ fn test_seed_162_removes_the_last_element_of_every_for_iterable() {
     let (_, render) = applied_render(source, "seed-162");
     assert_eq!(
         render,
-        "for item in (alpha,):\n    keep = item\n\nfor part in (one,):\n    keep = part"
+        "for item in (alpha,):\n    keep = item\nfor part in (one,):\n    keep = part"
     );
 }
 
