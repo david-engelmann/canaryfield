@@ -1059,5 +1059,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first comparison operand tuple element",
         defect_class: "missing data",
         description: "Removes the first element of every tuple standing as a comparison's operand whenever the tuple carries at least two elements so the comparison weighs one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-172",
+        name: "dropped last parameter default tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple standing as a parameter default whenever the tuple carries at least two elements so the function or lambda takes one fewer default value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-173",
+        name: "dropped first parameter default tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple standing as a parameter default whenever the tuple carries at least two elements so the function or lambda takes one fewer default value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-174",
+        name: "dropped last conditional expression tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as a conditional expression's arm whenever the tuple carries at least two elements so the expression yields one fewer value on that arm than the source writes",
+    },
+    SeedMeta {
+        id: "seed-175",
+        name: "dropped first conditional expression tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as a conditional expression's arm whenever the tuple carries at least two elements so the expression yields one fewer value on that arm than the source writes",
     }
 ];
