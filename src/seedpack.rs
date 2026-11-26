@@ -358,7 +358,7 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 176);
+                assert_eq!(items.len(), 180);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
