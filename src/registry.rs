@@ -1011,5 +1011,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first for loop tuple element",
         defect_class: "missing data",
         description: "Removes the first element of the tuple standing as a for statement's iterable whenever the tuple carries at least two elements so the loop walks one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-164",
+        name: "dropped last annotated assignment value element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple standing as an annotated assignment's value whenever the tuple carries at least two elements so the statement hands over one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-165",
+        name: "dropped first annotated assignment value element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple standing as an annotated assignment's value whenever the tuple carries at least two elements so the statement hands over one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-166",
+        name: "dropped last comprehension tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple standing as a comprehension's element expression whenever the tuple carries at least two elements so the comprehension yields one fewer value in each tuple than the source writes",
+    },
+    SeedMeta {
+        id: "seed-167",
+        name: "dropped first comprehension tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple standing as a comprehension's element expression whenever the tuple carries at least two elements so the comprehension yields one fewer value in each tuple than the source writes",
     }
 ];

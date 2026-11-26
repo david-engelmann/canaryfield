@@ -194,6 +194,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-161" => apply_dropped_first_tuple_argument_element(tree),
         "seed-162" => apply_dropped_last_for_loop_tuple_element(tree),
         "seed-163" => apply_dropped_first_for_loop_tuple_element(tree),
+        "seed-164" => apply_dropped_last_annotated_assignment_value_element(tree),
+        "seed-165" => apply_dropped_first_annotated_assignment_value_element(tree),
+        "seed-166" => apply_dropped_last_comprehension_tuple_element(tree),
+        "seed-167" => apply_dropped_first_comprehension_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5218,6 +5222,110 @@ fn apply_dropped_first_for_loop_tuple_element(tree: &mut Tree) -> bool {
                 && tree.many(iter, "elts").len() >= 2
             {
                 targets.push(iter);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-164, dropped last annotated assignment value element.
+
+fn apply_dropped_last_annotated_assignment_value_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::AnnAssign { .. }) {
+            continue;
+        }
+        if let Some(value) = tree.one(id, "value") {
+            if matches!(&tree.nodes[value].data, Data::Tuple { .. })
+                && tree.many(value, "elts").len() >= 2
+            {
+                targets.push(value);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-165, dropped first annotated assignment value element.
+
+fn apply_dropped_first_annotated_assignment_value_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::AnnAssign { .. }) {
+            continue;
+        }
+        if let Some(value) = tree.one(id, "value") {
+            if matches!(&tree.nodes[value].data, Data::Tuple { .. })
+                && tree.many(value, "elts").len() >= 2
+            {
+                targets.push(value);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-166, dropped last comprehension tuple element.
+
+fn apply_dropped_last_comprehension_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(
+            &tree.nodes[id].data,
+            Data::ListComp | Data::SetComp | Data::GeneratorExp
+        ) {
+            continue;
+        }
+        if let Some(elt) = tree.one(id, "elt") {
+            if matches!(&tree.nodes[elt].data, Data::Tuple { .. })
+                && tree.many(elt, "elts").len() >= 2
+            {
+                targets.push(elt);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-167, dropped first comprehension tuple element.
+
+fn apply_dropped_first_comprehension_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(
+            &tree.nodes[id].data,
+            Data::ListComp | Data::SetComp | Data::GeneratorExp
+        ) {
+            continue;
+        }
+        if let Some(elt) = tree.one(id, "elt") {
+            if matches!(&tree.nodes[elt].data, Data::Tuple { .. })
+                && tree.many(elt, "elts").len() >= 2
+            {
+                targets.push(elt);
             }
         }
     }

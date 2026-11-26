@@ -2135,19 +2135,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-163"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last annotated assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-164"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first annotated assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-165"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last comprehension tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-166"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first comprehension tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-167"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 132,
+      "not-applicable": 136,
       "waved-through": 32
     },
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 132,
+      "not-applicable": 136,
       "waved-through": 9
     }
   },
