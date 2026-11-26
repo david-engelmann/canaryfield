@@ -202,6 +202,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-169" => apply_dropped_first_lambda_body_tuple_element(tree),
         "seed-170" => apply_dropped_last_comparison_operand_tuple_element(tree),
         "seed-171" => apply_dropped_first_comparison_operand_tuple_element(tree),
+        "seed-172" => apply_dropped_last_parameter_default_tuple_element(tree),
+        "seed-173" => apply_dropped_first_parameter_default_tuple_element(tree),
+        "seed-174" => apply_dropped_last_conditional_expression_tuple_element(tree),
+        "seed-175" => apply_dropped_first_conditional_expression_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5442,6 +5446,112 @@ fn apply_dropped_first_comparison_operand_tuple_element(tree: &mut Tree) -> bool
                 && tree.many(comparator, "elts").len() >= 2
             {
                 targets.push(comparator);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-172, dropped last parameter default tuple element.
+
+fn apply_dropped_last_parameter_default_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::FuncDef { .. } | Data::Lambda) {
+            continue;
+        }
+        if let Some(args) = tree.one(id, "args") {
+            for default in tree.many(args, "defaults").to_vec() {
+                if matches!(&tree.nodes[default].data, Data::Tuple { .. })
+                    && tree.many(default, "elts").len() >= 2
+                {
+                    targets.push(default);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-173, dropped first parameter default tuple element.
+
+fn apply_dropped_first_parameter_default_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::FuncDef { .. } | Data::Lambda) {
+            continue;
+        }
+        if let Some(args) = tree.one(id, "args") {
+            for default in tree.many(args, "defaults").to_vec() {
+                if matches!(&tree.nodes[default].data, Data::Tuple { .. })
+                    && tree.many(default, "elts").len() >= 2
+                {
+                    targets.push(default);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-174, dropped last conditional expression tuple element.
+
+fn apply_dropped_last_conditional_expression_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::IfExp) {
+            continue;
+        }
+        for field in ["body", "orelse"] {
+            if let Some(arm) = tree.one(id, field) {
+                if matches!(&tree.nodes[arm].data, Data::Tuple { .. })
+                    && tree.many(arm, "elts").len() >= 2
+                {
+                    targets.push(arm);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-175, dropped first conditional expression tuple element.
+
+fn apply_dropped_first_conditional_expression_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::IfExp) {
+            continue;
+        }
+        for field in ["body", "orelse"] {
+            if let Some(arm) = tree.one(id, field) {
+                if matches!(&tree.nodes[arm].data, Data::Tuple { .. })
+                    && tree.many(arm, "elts").len() >= 2
+                {
+                    targets.push(arm);
+                }
             }
         }
     }
