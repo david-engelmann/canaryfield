@@ -94,10 +94,7 @@ const LAST_BODY_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 #[test]
 fn test_seed_168_plants_on_a_lambda_whose_body_is_a_two_element_tuple() {
     let (planted, _) = applied_render(LAST_BODY_MODULE, "seed-168");
-    assert!(
-        planted,
-        "a lambda whose body is a two element tuple plants"
-    );
+    assert!(planted, "a lambda whose body is a two element tuple plants");
 }
 
 #[test]
@@ -133,10 +130,7 @@ fn test_seed_168_leaves_a_single_element_lambda_body_standing() {
 fn test_seed_168_leaves_a_function_return_tuple_standing() {
     let source = "def pick():\n    return (alpha, beta)\n";
     let (planted, render) = applied_render(source, "seed-168");
-    assert!(
-        !planted,
-        "a tuple a function returns is not a lambda body"
-    );
+    assert!(!planted, "a tuple a function returns is not a lambda body");
     assert_eq!(render, "def pick():\n    return (alpha, beta)");
 }
 
@@ -156,10 +150,7 @@ const FIRST_BODY_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 #[test]
 fn test_seed_169_plants_on_a_lambda_whose_body_is_a_two_element_tuple() {
     let (planted, _) = applied_render(FIRST_BODY_MODULE, "seed-169");
-    assert!(
-        planted,
-        "a lambda whose body is a two element tuple plants"
-    );
+    assert!(planted, "a lambda whose body is a two element tuple plants");
 }
 
 #[test]
@@ -195,10 +186,7 @@ fn test_seed_169_leaves_a_single_element_lambda_body_standing() {
 fn test_seed_169_leaves_a_function_return_tuple_standing() {
     let source = "def pick():\n    return (alpha, beta)\n";
     let (planted, render) = applied_render(source, "seed-169");
-    assert!(
-        !planted,
-        "a tuple a function returns is not a lambda body"
-    );
+    assert!(!planted, "a tuple a function returns is not a lambda body");
     assert_eq!(render, "def pick():\n    return (alpha, beta)");
 }
 
