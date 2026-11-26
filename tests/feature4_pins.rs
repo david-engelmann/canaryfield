@@ -86,19 +86,19 @@ const CHAIN_GATE: &str = "#!/bin/sh\ngrep -q \"a < b < c\" mod.py\n";
 // The registry pins of F4-1.
 
 #[test]
-fn test_registry_has_one_hundred_and_sixty_unique_seeds() {
+fn test_registry_has_one_hundred_and_sixty_four_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        160,
-        "the grown registry holds one hundred and sixty"
+        164,
+        "the grown registry holds one hundred and sixty four"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 160, "every seed id stands once");
+    assert_eq!(ids.len(), 164, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-159"));
+    assert_eq!(standing.last(), Some(&"seed-163"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -237,7 +237,11 @@ fn test_seed_metadata_is_complete() {
             "dropped last assignment target",
             "dropped dictionary unpacking entry",
             "dropped first assignment value element",
-            "dropped last assignment value element"
+            "dropped last assignment value element",
+        "dropped last tuple argument element",
+        "dropped first tuple argument element",
+        "dropped last for loop tuple element",
+        "dropped first for loop tuple element"
         ]
     );
 }
@@ -606,7 +610,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 160);
+    assert_eq!(loaded.len(), 164);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -633,6 +637,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 160);
+    assert_eq!(loaded.len(), 164);
     let _ = fs::remove_dir_all(&dir);
 }

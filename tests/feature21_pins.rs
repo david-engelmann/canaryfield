@@ -77,16 +77,16 @@ fn cell_of(result: &JsonValue, seed: &str) -> String {
 }
 
 #[test]
-fn test_registry_has_one_hundred_and_sixty_unique_seeds() {
+fn test_registry_has_one_hundred_and_sixty_four_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        160,
-        "the grown registry holds one hundred and sixty"
+        164,
+        "the grown registry holds one hundred and sixty four"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     ids.sort_unstable();
     ids.dedup();
-    assert_eq!(ids.len(), 160, "the ids stand unique");
+    assert_eq!(ids.len(), 164, "the ids stand unique");
     assert_eq!(SEEDS[124].id, "seed-124");
     assert_eq!(SEEDS[127].id, "seed-127");
 }
@@ -396,7 +396,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 160);
+    assert_eq!(loaded.len(), 164);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -422,7 +422,7 @@ fn test_seed_pack_via_cli() {
     let written = fs::read_to_string(&path).expect("the written pack reads");
     assert_eq!(written, seed_pack_text());
     assert!(
-        written.contains("\"canaryfield-seeds/38\""),
+        written.contains("\"canaryfield-seeds/39\""),
         "the written pack carries the thirtieth format"
     );
     let _ = fs::remove_dir_all(&dir);
