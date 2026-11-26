@@ -1035,5 +1035,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first comprehension tuple element",
         defect_class: "missing data",
         description: "Removes the first element of the tuple standing as a comprehension's element expression whenever the tuple carries at least two elements so the comprehension yields one fewer value in each tuple than the source writes",
+    },
+    SeedMeta {
+        id: "seed-168",
+        name: "dropped last lambda body tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple standing as a lambda's body whenever the tuple carries at least two elements so the lambda returns one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-169",
+        name: "dropped first lambda body tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple standing as a lambda's body whenever the tuple carries at least two elements so the lambda returns one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-170",
+        name: "dropped last comparison operand tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as a comparison's operand whenever the tuple carries at least two elements so the comparison weighs one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-171",
+        name: "dropped first comparison operand tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as a comparison's operand whenever the tuple carries at least two elements so the comparison weighs one fewer value than the source writes",
     }
 ];

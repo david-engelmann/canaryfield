@@ -198,6 +198,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-165" => apply_dropped_first_annotated_assignment_value_element(tree),
         "seed-166" => apply_dropped_last_comprehension_tuple_element(tree),
         "seed-167" => apply_dropped_first_comprehension_tuple_element(tree),
+        "seed-168" => apply_dropped_last_lambda_body_tuple_element(tree),
+        "seed-169" => apply_dropped_first_lambda_body_tuple_element(tree),
+        "seed-170" => apply_dropped_last_comparison_operand_tuple_element(tree),
+        "seed-171" => apply_dropped_first_comparison_operand_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5326,6 +5330,118 @@ fn apply_dropped_first_comprehension_tuple_element(tree: &mut Tree) -> bool {
                 && tree.many(elt, "elts").len() >= 2
             {
                 targets.push(elt);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-168, dropped last lambda body tuple element.
+
+fn apply_dropped_last_lambda_body_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Lambda) {
+            continue;
+        }
+        if let Some(body) = tree.one(id, "body") {
+            if matches!(&tree.nodes[body].data, Data::Tuple { .. })
+                && tree.many(body, "elts").len() >= 2
+            {
+                targets.push(body);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-169, dropped first lambda body tuple element.
+
+fn apply_dropped_first_lambda_body_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Lambda) {
+            continue;
+        }
+        if let Some(body) = tree.one(id, "body") {
+            if matches!(&tree.nodes[body].data, Data::Tuple { .. })
+                && tree.many(body, "elts").len() >= 2
+            {
+                targets.push(body);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-170, dropped last comparison operand tuple element.
+
+fn apply_dropped_last_comparison_operand_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Compare { .. }) {
+            continue;
+        }
+        if let Some(left) = tree.one(id, "left") {
+            if matches!(&tree.nodes[left].data, Data::Tuple { .. })
+                && tree.many(left, "elts").len() >= 2
+            {
+                targets.push(left);
+            }
+        }
+        for comparator in tree.many(id, "comparators").to_vec() {
+            if matches!(&tree.nodes[comparator].data, Data::Tuple { .. })
+                && tree.many(comparator, "elts").len() >= 2
+            {
+                targets.push(comparator);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-171, dropped first comparison operand tuple element.
+
+fn apply_dropped_first_comparison_operand_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Compare { .. }) {
+            continue;
+        }
+        if let Some(left) = tree.one(id, "left") {
+            if matches!(&tree.nodes[left].data, Data::Tuple { .. })
+                && tree.many(left, "elts").len() >= 2
+            {
+                targets.push(left);
+            }
+        }
+        for comparator in tree.many(id, "comparators").to_vec() {
+            if matches!(&tree.nodes[comparator].data, Data::Tuple { .. })
+                && tree.many(comparator, "elts").len() >= 2
+            {
+                targets.push(comparator);
             }
         }
     }
