@@ -1083,5 +1083,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first conditional expression tuple element",
         defect_class: "missing data",
         description: "Removes the first element of every tuple standing as a conditional expression's arm whenever the tuple carries at least two elements so the expression yields one fewer value on that arm than the source writes",
+    },
+    SeedMeta {
+        id: "seed-176",
+        name: "dropped last exception handler type tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as an exception handler's type whenever the tuple carries at least two elements so the handler catches one fewer exception type than the source writes",
+    },
+    SeedMeta {
+        id: "seed-177",
+        name: "dropped first exception handler type tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as an exception handler's type whenever the tuple carries at least two elements so the handler catches one fewer exception type than the source writes",
+    },
+    SeedMeta {
+        id: "seed-178",
+        name: "dropped last keyword value tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as a keyword argument's value whenever the tuple carries at least two elements so the call passes one fewer value in that argument than the source writes",
+    },
+    SeedMeta {
+        id: "seed-179",
+        name: "dropped first keyword value tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as a keyword argument's value whenever the tuple carries at least two elements so the call passes one fewer value in that argument than the source writes",
     }
 ];
