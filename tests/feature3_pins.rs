@@ -242,10 +242,10 @@ fn test_seed_metadata_is_complete() {
             "dropped dictionary unpacking entry",
             "dropped first assignment value element",
             "dropped last assignment value element",
-        "dropped last tuple argument element",
-        "dropped first tuple argument element",
-        "dropped last for loop tuple element",
-        "dropped first for loop tuple element"
+            "dropped last tuple argument element",
+            "dropped first tuple argument element",
+            "dropped last for loop tuple element",
+            "dropped first for loop tuple element"
         ]
     );
 }

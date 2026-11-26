@@ -94,7 +94,10 @@ const LAST_ARGUMENT_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 #[test]
 fn test_seed_160_plants_on_a_call_carrying_a_two_element_tuple_argument() {
     let (planted, _) = applied_render(LAST_ARGUMENT_MODULE, "seed-160");
-    assert!(planted, "a call carrying a two element tuple argument plants");
+    assert!(
+        planted,
+        "a call carrying a two element tuple argument plants"
+    );
 }
 
 #[test]
@@ -152,7 +155,10 @@ const FIRST_ARGUMENT_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 #[test]
 fn test_seed_161_plants_on_a_call_carrying_a_two_element_tuple_argument() {
     let (planted, _) = applied_render(FIRST_ARGUMENT_MODULE, "seed-161");
-    assert!(planted, "a call carrying a two element tuple argument plants");
+    assert!(
+        planted,
+        "a call carrying a two element tuple argument plants"
+    );
 }
 
 #[test]
@@ -228,7 +234,8 @@ fn test_seed_162_keeps_the_earlier_iterable_elements_standing() {
 
 #[test]
 fn test_seed_162_removes_the_last_element_of_every_for_iterable() {
-    let source = "for item in (alpha, beta):\n    keep = item\nfor part in (one, two):\n    keep = part\n";
+    let source =
+        "for item in (alpha, beta):\n    keep = item\nfor part in (one, two):\n    keep = part\n";
     let (_, render) = applied_render(source, "seed-162");
     assert_eq!(
         render,
@@ -240,10 +247,7 @@ fn test_seed_162_removes_the_last_element_of_every_for_iterable() {
 fn test_seed_162_leaves_a_single_element_tuple_iterable_standing() {
     let source = "for item in (alpha,):\n    keep = item\n";
     let (planted, render) = applied_render(source, "seed-162");
-    assert!(
-        !planted,
-        "a for over a one element tuple does not plant"
-    );
+    assert!(!planted, "a for over a one element tuple does not plant");
     assert_eq!(render, "for item in (alpha,):\n    keep = item");
 }
 
@@ -293,10 +297,7 @@ fn test_seed_163_keeps_the_later_iterable_elements_standing() {
 fn test_seed_163_leaves_a_single_element_tuple_iterable_standing() {
     let source = "for item in (alpha,):\n    keep = item\n";
     let (planted, render) = applied_render(source, "seed-163");
-    assert!(
-        !planted,
-        "a for over a one element tuple does not plant"
-    );
+    assert!(!planted, "a for over a one element tuple does not plant");
     assert_eq!(render, "for item in (alpha,):\n    keep = item");
 }
 
