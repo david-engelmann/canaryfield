@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/37",
+  "format": "canaryfield-seeds/38",
   "seeds": [
     {
       "id": "seed-00",
@@ -936,6 +936,30 @@
       "name": "dropped last decorator",
       "defect_class": "missing wrapper",
       "description": "Removes the last decorator of every function and class definition carrying at least two decorators so the final wrapping the source names never applies"
+    },
+    {
+      "id": "seed-156",
+      "name": "dropped last assignment target",
+      "defect_class": "missing data",
+      "description": "Removes the last target of every assignment carrying at least two targets so the value the assignment computes is never bound to the name it ends with"
+    },
+    {
+      "id": "seed-157",
+      "name": "dropped dictionary unpacking entry",
+      "defect_class": "missing data",
+      "description": "Removes the last unpacking entry standing after the first entry of every dictionary display carrying one so the entries that mapping would have spread into the display are never stored"
+    },
+    {
+      "id": "seed-158",
+      "name": "dropped first assignment value element",
+      "defect_class": "missing data",
+      "description": "Removes the first element of the tuple an assignment hands over whenever the tuple carries at least two elements so the target never receives the opening value"
+    },
+    {
+      "id": "seed-159",
+      "name": "dropped last assignment value element",
+      "defect_class": "missing data",
+      "description": "Removes the last element of the tuple an assignment hands over whenever the tuple carries at least two elements so the target never receives the closing value"
     }
   ]
 }

@@ -186,6 +186,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-153" => apply_dropped_first_return_element(tree),
         "seed-154" => apply_dropped_last_match_case(tree),
         "seed-155" => apply_dropped_last_decorator(tree),
+        "seed-156" => apply_dropped_last_assignment_target(tree),
+        "seed-157" => apply_dropped_dictionary_unpacking_entry(tree),
+        "seed-158" => apply_dropped_first_assignment_value_element(tree),
+        "seed-159" => apply_dropped_last_assignment_value_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5025,6 +5029,100 @@ fn apply_dropped_last_decorator(tree: &mut Tree) -> bool {
         let mut decorators = tree.many(*id, "decorator_list").to_vec();
         decorators.pop();
         tree.set_many(*id, "decorator_list", decorators);
+    }
+    !targets.is_empty()
+}
+
+// seed-156, dropped last assignment target.
+
+fn apply_dropped_last_assignment_target(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Assign) && tree.many(*id, "targets").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut kept = tree.many(*id, "targets").to_vec();
+        kept.pop();
+        tree.set_many(*id, "targets", kept);
+    }
+    !targets.is_empty()
+}
+
+// seed-157, dropped dictionary unpacking entry. The
+// last unpacking entry standing after the first entry
+// of every dictionary display stands removed, its
+// value with it, where seed-139 removes the last entry
+// of every dictionary display of any kind and seed-09
+// removes the first entry of every dictionary display
+// and reads no unpacking entry apart.
+
+fn apply_dropped_dictionary_unpacking_entry(tree: &mut Tree) -> bool {
+    let mut targets: Vec<(usize, usize)> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Dict) {
+            continue;
+        }
+        let keys = tree.maybe(id, "keys");
+        if let Some(pos) = keys.iter().rposition(|key| key.is_none()) {
+            if pos >= 1 {
+                targets.push((id, pos));
+            }
+        }
+    }
+    for (id, pos) in &targets {
+        let mut keys = tree.maybe(*id, "keys").to_vec();
+        keys.remove(*pos);
+        tree.set_maybe(*id, "keys", keys);
+        let mut values = tree.many(*id, "values").to_vec();
+        values.remove(*pos);
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-158, dropped first assignment value element.
+
+fn apply_dropped_first_assignment_value_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Assign => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.remove(0);
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-159, dropped last assignment value element.
+
+fn apply_dropped_last_assignment_value_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Assign => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*value, "elts", elts);
     }
     !targets.is_empty()
 }

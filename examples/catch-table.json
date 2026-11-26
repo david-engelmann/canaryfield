@@ -1849,13 +1849,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
     }
   ],
   "summary": {
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 9
     }
   },
