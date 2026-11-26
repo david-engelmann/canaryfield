@@ -2191,25 +2191,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 0
      },
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 9
      }
     },
@@ -4242,13 +4294,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 9
      }
     },
@@ -6012,13 +6112,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 152,
+      "not-applicable": 156,
       "waved-through": 0
      }
     },
@@ -7806,13 +7950,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "tests": {
       "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 148,
+      "not-applicable": 152,
       "waved-through": 1
      }
     },
@@ -9624,13 +9812,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 0
      }
     },
@@ -11506,13 +11738,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 124,
+      "not-applicable": 128,
       "waved-through": 9
      }
     },
@@ -11594,6 +11870,10 @@
     "seed-153",
     "seed-154",
     "seed-155",
+    "seed-156",
+    "seed-157",
+    "seed-158",
+    "seed-159",
     "seed-16",
     "seed-17",
     "seed-18",
@@ -13435,13 +13715,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-155"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment target",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-156"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped dictionary unpacking entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-157"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-158"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-159"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 152,
+      "not-applicable": 156,
       "waved-through": 0
      }
     },
