@@ -167,6 +167,10 @@ seed-156  dropped last assignment target          none          not-applicable
 seed-157  dropped dictionary unpacking entry      none          not-applicable
 seed-158  dropped first assignment value element  none          not-applicable
 seed-159  dropped last assignment value element   none          not-applicable
+seed-160  dropped last tuple argument element     none          not-applicable
+seed-161  dropped first tuple argument element    none          not-applicable
+seed-162  dropped last for loop tuple element     none          not-applicable
+seed-163  dropped first for loop tuple element    none          not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 128  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 132  gate-broken 0

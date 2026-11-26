@@ -190,6 +190,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-157" => apply_dropped_dictionary_unpacking_entry(tree),
         "seed-158" => apply_dropped_first_assignment_value_element(tree),
         "seed-159" => apply_dropped_last_assignment_value_element(tree),
+        "seed-160" => apply_dropped_last_tuple_argument_element(tree),
+        "seed-161" => apply_dropped_first_tuple_argument_element(tree),
+        "seed-162" => apply_dropped_last_for_loop_tuple_element(tree),
+        "seed-163" => apply_dropped_first_for_loop_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5125,4 +5129,102 @@ fn apply_dropped_last_assignment_value_element(tree: &mut Tree) -> bool {
         tree.set_many(*value, "elts", elts);
     }
     !targets.is_empty()
+}
+
+// seed-160, dropped last tuple argument element.
+
+fn apply_dropped_last_tuple_argument_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for arg in tree.many(id, "args").to_vec() {
+            if matches!(&tree.nodes[arg].data, Data::Tuple { .. })
+                && tree.many(arg, "elts").len() >= 2
+            {
+                targets.push(arg);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-161, dropped first tuple argument element.
+
+fn apply_dropped_first_tuple_argument_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for arg in tree.many(id, "args").to_vec() {
+            if matches!(&tree.nodes[arg].data, Data::Tuple { .. })
+                && tree.many(arg, "elts").len() >= 2
+            {
+                targets.push(arg);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-162, dropped last for loop tuple element.
+
+fn apply_dropped_last_for_loop_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::For { .. }) {
+            continue;
+        }
+        if let Some(iter) = tree.one(id, "iter") {
+            if matches!(&tree.nodes[iter].data, Data::Tuple { .. })
+                && tree.many(iter, "elts").len() >= 2
+            {
+                targets.push(iter);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-163, dropped first for loop tuple element.
+
+fn apply_dropped_first_for_loop_tuple_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::For { .. }) {
+            continue;
+        }
+        if let Some(iter) = tree.one(id, "iter") {
+            if matches!(&tree.nodes[iter].data, Data::Tuple { .. })
+                && tree.many(iter, "elts").len() >= 2
+            {
+                targets.push(iter);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
 }
