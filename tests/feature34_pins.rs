@@ -132,13 +132,19 @@ fn test_seed_176_leaves_a_single_element_type_tuple_standing() {
     let source = "try:\n    run()\nexcept (AlphaError,):\n    recover()\n";
     let (planted, render) = applied_render(source, "seed-176");
     assert!(!planted, "a one element type tuple does not plant");
-    assert_eq!(render, "try:\n    run()\nexcept (AlphaError,):\n    recover()");
+    assert_eq!(
+        render,
+        "try:\n    run()\nexcept (AlphaError,):\n    recover()"
+    );
 }
 
 #[test]
 fn test_seed_176_leaves_a_tuple_standing_outside_a_handler_type() {
     let (planted, render) = applied_render("pair = (alpha, beta)\n", "seed-176");
-    assert!(!planted, "a tuple standing as a plain value is not a handler type");
+    assert!(
+        !planted,
+        "a tuple standing as a plain value is not a handler type"
+    );
     assert_eq!(render, "pair = (alpha, beta)");
 }
 
@@ -196,13 +202,19 @@ fn test_seed_177_leaves_a_single_element_type_tuple_standing() {
     let source = "try:\n    run()\nexcept (AlphaError,):\n    recover()\n";
     let (planted, render) = applied_render(source, "seed-177");
     assert!(!planted, "a one element type tuple does not plant");
-    assert_eq!(render, "try:\n    run()\nexcept (AlphaError,):\n    recover()");
+    assert_eq!(
+        render,
+        "try:\n    run()\nexcept (AlphaError,):\n    recover()"
+    );
 }
 
 #[test]
 fn test_seed_177_leaves_a_tuple_standing_outside_a_handler_type() {
     let (planted, render) = applied_render("pair = (alpha, beta)\n", "seed-177");
-    assert!(!planted, "a tuple standing as a plain value is not a handler type");
+    assert!(
+        !planted,
+        "a tuple standing as a plain value is not a handler type"
+    );
     assert_eq!(render, "pair = (alpha, beta)");
 }
 
@@ -222,7 +234,10 @@ const LAST_VALUE_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 #[test]
 fn test_seed_178_plants_on_a_keyword_value_that_is_a_two_element_tuple() {
     let (planted, _) = applied_render(LAST_VALUE_MODULE, "seed-178");
-    assert!(planted, "a keyword value that is a two element tuple plants");
+    assert!(
+        planted,
+        "a keyword value that is a two element tuple plants"
+    );
 }
 
 #[test]
@@ -256,7 +271,10 @@ fn test_seed_178_leaves_a_single_element_keyword_value_tuple_standing() {
 #[test]
 fn test_seed_178_leaves_a_tuple_standing_as_a_positional_argument() {
     let (planted, render) = applied_render("use((alpha, beta))\n", "seed-178");
-    assert!(!planted, "a tuple standing as a positional argument is not a keyword value");
+    assert!(
+        !planted,
+        "a tuple standing as a positional argument is not a keyword value"
+    );
     assert_eq!(render, "use((alpha, beta))");
 }
 
@@ -276,7 +294,10 @@ const FIRST_VALUE_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 #[test]
 fn test_seed_179_plants_on_a_keyword_value_that_is_a_two_element_tuple() {
     let (planted, _) = applied_render(FIRST_VALUE_MODULE, "seed-179");
-    assert!(planted, "a keyword value that is a two element tuple plants");
+    assert!(
+        planted,
+        "a keyword value that is a two element tuple plants"
+    );
 }
 
 #[test]
@@ -303,7 +324,10 @@ fn test_seed_179_leaves_a_single_element_keyword_value_tuple_standing() {
 #[test]
 fn test_seed_179_leaves_a_tuple_standing_as_a_positional_argument() {
     let (planted, render) = applied_render("use((alpha, beta))\n", "seed-179");
-    assert!(!planted, "a tuple standing as a positional argument is not a keyword value");
+    assert!(
+        !planted,
+        "a tuple standing as a positional argument is not a keyword value"
+    );
     assert_eq!(render, "use((alpha, beta))");
 }
 
