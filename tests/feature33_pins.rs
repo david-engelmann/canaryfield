@@ -88,7 +88,8 @@ fn test_registry_has_one_hundred_and_seventy_six_unique_seeds() {
 
 // Seed-172, dropped last parameter default tuple element.
 
-const LAST_DEFAULT_MODULE: &str = "def pick(scale=(alpha, beta)):\n    return scale\nkeep = gamma\n";
+const LAST_DEFAULT_MODULE: &str =
+    "def pick(scale=(alpha, beta)):\n    return scale\nkeep = gamma\n";
 const LAST_DEFAULT_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 
 #[test]
@@ -134,7 +135,10 @@ fn test_seed_172_leaves_a_single_element_tuple_default_standing() {
 #[test]
 fn test_seed_172_leaves_a_tuple_standing_outside_a_default() {
     let (planted, render) = applied_render("pair = (alpha, beta)\n", "seed-172");
-    assert!(!planted, "a tuple standing as a plain value is not a default");
+    assert!(
+        !planted,
+        "a tuple standing as a plain value is not a default"
+    );
     assert_eq!(render, "pair = (alpha, beta)");
 }
 
@@ -148,7 +152,8 @@ fn test_seed_172_verdict_is_caught() {
 
 // Seed-173, dropped first parameter default tuple element.
 
-const FIRST_DEFAULT_MODULE: &str = "def pick(scale=(alpha, beta)):\n    return scale\nkeep = gamma\n";
+const FIRST_DEFAULT_MODULE: &str =
+    "def pick(scale=(alpha, beta)):\n    return scale\nkeep = gamma\n";
 const FIRST_DEFAULT_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 
 #[test]
@@ -194,7 +199,10 @@ fn test_seed_173_leaves_a_single_element_tuple_default_standing() {
 #[test]
 fn test_seed_173_leaves_a_tuple_standing_outside_a_default() {
     let (planted, render) = applied_render("pair = (alpha, beta)\n", "seed-173");
-    assert!(!planted, "a tuple standing as a plain value is not a default");
+    assert!(
+        !planted,
+        "a tuple standing as a plain value is not a default"
+    );
     assert_eq!(render, "pair = (alpha, beta)");
 }
 
@@ -223,7 +231,10 @@ fn test_seed_174_plants_on_a_conditional_expression_carrying_a_tuple_arm() {
 #[test]
 fn test_seed_174_removes_the_last_conditional_expression_tuple_element() {
     let (_, render) = applied_render(LAST_ARM_MODULE, "seed-174");
-    assert_eq!(render, "pick = (alpha,) if flag else fallback\nkeep = gamma");
+    assert_eq!(
+        render,
+        "pick = (alpha,) if flag else fallback\nkeep = gamma"
+    );
 }
 
 #[test]
