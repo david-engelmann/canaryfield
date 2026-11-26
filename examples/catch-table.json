@@ -1893,13 +1893,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-159"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last tuple argument element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-160"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first tuple argument element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-161"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last for loop tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-162"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first for loop tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-163"
     }
   ],
   "summary": {
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 128,
+      "not-applicable": 132,
       "waved-through": 9
     }
   },
