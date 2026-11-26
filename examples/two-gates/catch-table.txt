@@ -184,7 +184,11 @@ seed-172  dropped last parameter default tuple element        none          not-
 seed-173  dropped first parameter default tuple element       none          not-applicable  not-applicable
 seed-174  dropped last conditional expression tuple element   none          not-applicable  not-applicable
 seed-175  dropped first conditional expression tuple element  none          not-applicable  not-applicable
+seed-176  dropped last exception handler type tuple element   none          not-applicable  not-applicable
+seed-177  dropped first exception handler type tuple element  none          not-applicable  not-applicable
+seed-178  dropped last keyword value tuple element            none          not-applicable  not-applicable
+seed-179  dropped first keyword value tuple element           none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 144  gate-broken 0
-  compile  caught 0  waved-through 32  not-applicable 144  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 148  gate-broken 0
+  compile  caught 0  waved-through 32  not-applicable 148  gate-broken 0

@@ -2451,25 +2451,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "always-false": "not-applicable",
+       "exit-three": "not-applicable",
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "always-false": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 0
      },
      "exit-three": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 0
      },
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 9
      }
     },
@@ -4742,13 +4794,61 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "branch": null,
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 9
      }
     },
@@ -6732,13 +6832,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 172,
+      "not-applicable": 176,
       "waved-through": 0
      }
     },
@@ -8746,13 +8890,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "tests": {
       "caught": 7,
       "gate-broken": 0,
-      "not-applicable": 168,
+      "not-applicable": 172,
       "waved-through": 1
      }
     },
@@ -10784,13 +10972,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "slow": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "slow": {
       "caught": 0,
       "gate-broken": 32,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 0
      }
     },
@@ -12886,13 +13118,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 144,
+      "not-applicable": 148,
       "waved-through": 9
      }
     },
@@ -12996,6 +13272,10 @@
     "seed-173",
     "seed-174",
     "seed-175",
+    "seed-176",
+    "seed-177",
+    "seed-178",
+    "seed-179",
     "seed-18",
     "seed-19",
     "seed-20",
@@ -15055,13 +15335,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-175"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-176"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first exception handler type tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-177"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped last keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-178"
+     },
+     {
+      "defect_class": "missing data",
+      "gates": {
+       "tests": "not-applicable"
+      },
+      "name": "dropped first keyword value tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-179"
      }
     ],
     "summary": {
      "tests": {
       "caught": 4,
       "gate-broken": 0,
-      "not-applicable": 172,
+      "not-applicable": 176,
       "waved-through": 0
      }
     },
