@@ -179,10 +179,7 @@ fn test_seed_157_keeps_the_named_entries_standing() {
 #[test]
 fn test_seed_157_leaves_an_unpacking_entry_standing_first_standing() {
     let (planted, render) = applied_render("merged = {**extra, 'a': alpha}\n", "seed-157");
-    assert!(
-        !planted,
-        "an unpacking entry standing first does not plant"
-    );
+    assert!(!planted, "an unpacking entry standing first does not plant");
     assert_eq!(render, "merged = {**extra, 'a': alpha}");
 }
 
