@@ -176,7 +176,11 @@ seed-164  dropped last annotated assignment value element   none          not-ap
 seed-165  dropped first annotated assignment value element  none          not-applicable  not-applicable
 seed-166  dropped last comprehension tuple element          none          not-applicable  not-applicable
 seed-167  dropped first comprehension tuple element         none          not-applicable  not-applicable
+seed-168  dropped last lambda body tuple element            none          not-applicable  not-applicable
+seed-169  dropped first lambda body tuple element           none          not-applicable  not-applicable
+seed-170  dropped last comparison operand tuple element     none          not-applicable  not-applicable
+seed-171  dropped first comparison operand tuple element    none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 136  gate-broken 0
-  compile  caught 0  waved-through 32  not-applicable 136  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 140  gate-broken 0
+  compile  caught 0  waved-through 32  not-applicable 140  gate-broken 0
