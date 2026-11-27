@@ -5679,20 +5679,21 @@ fn apply_dropped_last_comprehension_iterable_tuple_element(tree: &mut Tree) -> b
     let targets: Vec<usize> = tree
         .sorted_nodes()
         .into_iter()
-        .filter_map(|id| {
-            if matches!(&tree.nodes[id].data, Data::Comprehension { .. }) {
-                match tree.one(id, "iter") {
-                    Some(t)
-                        if matches!(&tree.nodes[t].data, Data::Tuple { .. })
-                            && tree.many(t, "elts").len() >= 2 =>
-                    {
-                        Some(t)
-                    }
-                    _ => None,
-                }
-            } else {
-                None
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .flat_map(|id| tree.many(id, "generators").to_vec())
+        .filter_map(|clause| match tree.one(clause, "iter") {
+            Some(t)
+                if matches!(&tree.nodes[t].data, Data::Tuple { .. })
+                    && tree.many(t, "elts").len() >= 2 =>
+            {
+                Some(t)
             }
+            _ => None,
         })
         .collect();
     for id in &targets {
@@ -5709,20 +5710,21 @@ fn apply_dropped_first_comprehension_iterable_tuple_element(tree: &mut Tree) -> 
     let targets: Vec<usize> = tree
         .sorted_nodes()
         .into_iter()
-        .filter_map(|id| {
-            if matches!(&tree.nodes[id].data, Data::Comprehension { .. }) {
-                match tree.one(id, "iter") {
-                    Some(t)
-                        if matches!(&tree.nodes[t].data, Data::Tuple { .. })
-                            && tree.many(t, "elts").len() >= 2 =>
-                    {
-                        Some(t)
-                    }
-                    _ => None,
-                }
-            } else {
-                None
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .flat_map(|id| tree.many(id, "generators").to_vec())
+        .filter_map(|clause| match tree.one(clause, "iter") {
+            Some(t)
+                if matches!(&tree.nodes[t].data, Data::Tuple { .. })
+                    && tree.many(t, "elts").len() >= 2 =>
+            {
+                Some(t)
             }
+            _ => None,
         })
         .collect();
     for id in &targets {
