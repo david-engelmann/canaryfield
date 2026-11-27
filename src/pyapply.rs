@@ -218,6 +218,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-185" => apply_dropped_first_list_argument_element(tree),
         "seed-186" => apply_dropped_last_comparison_operand_list_element(tree),
         "seed-187" => apply_dropped_first_comparison_operand_list_element(tree),
+        "seed-188" => apply_dropped_last_assignment_value_list_element(tree),
+        "seed-189" => apply_dropped_first_assignment_value_list_element(tree),
+        "seed-190" => apply_dropped_last_return_value_list_element(tree),
+        "seed-191" => apply_dropped_first_return_value_list_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5888,4 +5892,90 @@ fn apply_dropped_first_comparison_operand_list_element(tree: &mut Tree) -> bool 
         tree.set_many(id, "elts", elts);
     }
     planted
+}
+
+// seed-188, dropped last assignment value list element.
+
+fn apply_dropped_last_assignment_value_list_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Assign => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::List { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-189, dropped first assignment value list element.
+
+fn apply_dropped_first_assignment_value_list_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Assign => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::List { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let elts = tree.many(*value, "elts")[1..].to_vec();
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-190, dropped last return value list element.
+
+fn apply_dropped_last_return_value_list_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Return => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::List { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let mut elts = tree.many(*value, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-191, dropped first return value list element.
+
+fn apply_dropped_first_return_value_list_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::Return => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::List { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for value in &targets {
+        let elts = tree.many(*value, "elts")[1..].to_vec();
+        tree.set_many(*value, "elts", elts);
+    }
+    !targets.is_empty()
 }
