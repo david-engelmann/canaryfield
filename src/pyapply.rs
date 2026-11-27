@@ -210,6 +210,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-177" => apply_dropped_first_exception_handler_type_tuple_element(tree),
         "seed-178" => apply_dropped_last_keyword_value_tuple_element(tree),
         "seed-179" => apply_dropped_first_keyword_value_tuple_element(tree),
+        "seed-180" => apply_dropped_last_comprehension_iterable_tuple_element(tree),
+        "seed-181" => apply_dropped_first_comprehension_iterable_tuple_element(tree),
+        "seed-182" => apply_dropped_last_nested_tuple_element(tree),
+        "seed-183" => apply_dropped_first_nested_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -5667,4 +5671,106 @@ fn apply_dropped_first_keyword_value_tuple_element(tree: &mut Tree) -> bool {
         tree.set_many(id, "elts", elts);
     }
     planted
+}
+
+// seed-180, dropped last comprehension iterable tuple element.
+
+fn apply_dropped_last_comprehension_iterable_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .flat_map(|id| tree.many(id, "generators").to_vec())
+        .filter_map(|clause| match tree.one(clause, "iter") {
+            Some(t)
+                if matches!(&tree.nodes[t].data, Data::Tuple { .. })
+                    && tree.many(t, "elts").len() >= 2 =>
+            {
+                Some(t)
+            }
+            _ => None,
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-181, dropped first comprehension iterable tuple element.
+
+fn apply_dropped_first_comprehension_iterable_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(
+                &tree.nodes[*id].data,
+                Data::ListComp | Data::SetComp | Data::GeneratorExp | Data::DictComp
+            )
+        })
+        .flat_map(|id| tree.many(id, "generators").to_vec())
+        .filter_map(|clause| match tree.one(clause, "iter") {
+            Some(t)
+                if matches!(&tree.nodes[t].data, Data::Tuple { .. })
+                    && tree.many(t, "elts").len() >= 2 =>
+            {
+                Some(t)
+            }
+            _ => None,
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-182, dropped last nested tuple element.
+
+fn apply_dropped_last_nested_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Tuple { .. }))
+        .flat_map(|id| tree.many(id, "elts").to_vec())
+        .filter(|elt| {
+            matches!(&tree.nodes[*elt].data, Data::Tuple { .. })
+                && tree.many(*elt, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-183, dropped first nested tuple element.
+
+fn apply_dropped_first_nested_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Tuple { .. }))
+        .flat_map(|id| tree.many(id, "elts").to_vec())
+        .filter(|elt| {
+            matches!(&tree.nodes[*elt].data, Data::Tuple { .. })
+                && tree.many(*elt, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
 }

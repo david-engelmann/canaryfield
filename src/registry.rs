@@ -1107,5 +1107,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first keyword value tuple element",
         defect_class: "missing data",
         description: "Removes the first element of every tuple standing as a keyword argument's value whenever the tuple carries at least two elements so the call passes one fewer value in that argument than the source writes",
+    },
+    SeedMeta {
+        id: "seed-180",
+        name: "dropped last comprehension iterable tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as a comprehension generator's iterable whenever the tuple carries at least two elements so the comprehension iterates over one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-181",
+        name: "dropped first comprehension iterable tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as a comprehension generator's iterable whenever the tuple carries at least two elements so the comprehension iterates over one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-182",
+        name: "dropped last nested tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of every tuple standing as an element of another tuple whenever the inner tuple carries at least two elements so the outer tuple holds one fewer value in that element than the source writes",
+    },
+    SeedMeta {
+        id: "seed-183",
+        name: "dropped first nested tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of every tuple standing as an element of another tuple whenever the inner tuple carries at least two elements so the outer tuple holds one fewer value in that element than the source writes",
     }
 ];
