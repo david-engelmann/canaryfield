@@ -1,9 +1,30 @@
 [package]
 name = "canaryfield"
-version = "0.1.0"
+version = "0.46.0"
 edition = "2021"
+rust-version = "1.80"
 description = "It plants real seeded defects into a codebase on a schedule and keeps score of which gates catch each one and which wave it through."
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/david-engelmann/canaryfield"
+homepage = "https://david-engelmann.github.io/canaryfield/"
+documentation = "https://docs.rs/canaryfield"
+keywords = ["testing", "ci", "fault-injection", "mutation-testing", "verification"]
+categories = ["command-line-utilities", "development-tools::testing"]
+exclude = [
+    "tests/**",
+    "tools/**",
+    "book/**",
+    "docs/media/**",
+    "CONTRACT.md",
+    "AGENTS.md",
+    "CITATION.cff",
+    ".editorconfig",
+    ".gitattributes",
+    ".github/**",
+    "deny.toml",
+    "install.sh",
+]
 
 [lib]
 name = "canaryfield"
@@ -12,3 +33,11 @@ path = "src/lib.rs"
 [[bin]]
 name = "canaryfield"
 path = "src/main.rs"
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-v{ version }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-fmt = "zip"
