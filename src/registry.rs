@@ -1155,5 +1155,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first comparison operand list element",
         defect_class: "missing data",
         description: "Removes the first element of every list standing as a comparison's operand whenever the list carries at least two elements so the comparison weighs one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-188",
+        name: "dropped last assignment value list element",
+        defect_class: "missing data",
+        description: "Removes the last element of the list an assignment hands over whenever the list carries at least two elements so the target never receives the closing value",
+    },
+    SeedMeta {
+        id: "seed-189",
+        name: "dropped first assignment value list element",
+        defect_class: "missing data",
+        description: "Removes the first element of the list an assignment hands over whenever the list carries at least two elements so the target never receives the opening value",
+    },
+    SeedMeta {
+        id: "seed-190",
+        name: "dropped last return value list element",
+        defect_class: "missing data",
+        description: "Removes the last element of the list a return hands back whenever the list carries at least two elements so the caller never receives the final value",
+    },
+    SeedMeta {
+        id: "seed-191",
+        name: "dropped first return value list element",
+        defect_class: "missing data",
+        description: "Removes the first element of the list a return hands back whenever the list carries at least two elements so the caller never receives the opening value",
     }
 ];
