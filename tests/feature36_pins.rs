@@ -94,10 +94,7 @@ const LAST_ARG_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 #[test]
 fn test_seed_184_plants_on_a_call_argument_that_is_a_two_element_list() {
     let (planted, _) = applied_render(LAST_ARG_MODULE, "seed-184");
-    assert!(
-        planted,
-        "a call argument that is a two element list plants"
-    );
+    assert!(planted, "a call argument that is a two element list plants");
 }
 
 #[test]
@@ -154,10 +151,7 @@ const FIRST_ARG_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 #[test]
 fn test_seed_185_plants_on_a_call_argument_that_is_a_two_element_list() {
     let (planted, _) = applied_render(FIRST_ARG_MODULE, "seed-185");
-    assert!(
-        planted,
-        "a call argument that is a two element list plants"
-    );
+    assert!(planted, "a call argument that is a two element list plants");
 }
 
 #[test]
