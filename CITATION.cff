@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use canaryfield in research or engineering benchmarks, please cite this repository."
+title: "canaryfield"
+abstract: "It plants real seeded defects into a codebase on a schedule and keeps score of which gates catch each one and which wave it through."
+authors:
+  - family-names: "Engelmann"
+    given-names: "David"
+version: "0.46.0"
+date-released: "2026-11-27"
+license: "MIT"
+repository-code: "https://github.com/david-engelmann/canaryfield"
+url: "https://david-engelmann.github.io/canaryfield/"

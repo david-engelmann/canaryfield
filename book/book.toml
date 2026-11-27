@@ -1,0 +1,16 @@
+[book]
+title = "canaryfield Documentation"
+authors = ["David Engelmann"]
+description = "It plants real seeded defects into a codebase on a schedule and keeps score of which gates catch each one and which wave it through."
+language = "en"
+src = "src"
+
+[build]
+build-dir = "build"
+create-missing = false
+
+[output.html]
+default-theme = "coal"
+preferred-dark-theme = "ayu"
+site-url = "/canaryfield/"
+git-repository-url = "https://github.com/david-engelmann/canaryfield"

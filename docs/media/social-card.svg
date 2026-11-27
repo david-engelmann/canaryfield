@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-label="canaryfield social card">
+  <title>canaryfield - Plant real seeded defects into scratch copies and score which gates catch each one.</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#141311"/>
+      <stop offset="100%" stop-color="#1f1d19"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect x="36" y="36" width="1208" height="568" rx="28" fill="none" stroke="#33302a" stroke-width="2"/>
+  <g transform="translate(84, 86) scale(1.45)">
+    <rect x="5" y="6" width="46" height="46" rx="10" fill="none" stroke="#f5f2eb" stroke-width="3"/><circle cx="14" cy="15" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/><circle cx="28" cy="15" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/><circle cx="42" cy="15" r="4.6" fill="#fbbf24"/><circle cx="14" cy="29" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/><circle cx="28" cy="29" r="4.6" fill="#fbbf24"/><circle cx="42" cy="29" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/><circle cx="14" cy="43" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/><circle cx="28" cy="43" r="4.6" fill="#fbbf24"/><circle cx="42" cy="43" r="4.2" fill="none" stroke="#f5f2eb" stroke-width="2.6"/>
+  </g>
+  <rect x="186" y="102" width="154" height="36" rx="18" fill="#262420" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="263" y="125" text-anchor="middle" fill="#fbbf24" font-family="'SFMono-Regular', ui-monospace, Menlo, monospace" font-size="14" font-weight="750" letter-spacing="1.2">GATE TRUTH</text>
+  <text x="88" y="258" fill="#f5f2eb" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="84" font-weight="800" letter-spacing="-2">canaryfield</text>
+  <text x="88" y="328" fill="#fbbf24" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="32" font-weight="650">Does the harness catch planted defects?</text>
+  <text x="88" y="388" fill="#bfb9ae" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25">Plant real seeded defects into scratch copies and score which gates catch each one.</text>
+  <rect x="88" y="472" width="1104" height="76" rx="16" fill="#201e1b" stroke="#35322d" stroke-width="1.5"/>
+  <text x="118" y="518" fill="#e7e2d8" font-family="'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace" font-size="20">Pure Rust  |  Zero runtime cloud dependencies  |  github.com/david-engelmann/canaryfield</text>
+</svg>
