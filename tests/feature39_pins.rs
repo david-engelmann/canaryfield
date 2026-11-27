@@ -121,7 +121,10 @@ fn test_seed_196_removes_the_last_element_of_every_assignment_value_set() {
 fn test_seed_196_leaves_a_single_element_assignment_value_set_standing() {
     let source = "values = {alpha}\n";
     let (planted, render) = applied_render(source, "seed-196");
-    assert!(!planted, "a one element assignment value set does not plant");
+    assert!(
+        !planted,
+        "a one element assignment value set does not plant"
+    );
     assert_eq!(render, "values = {alpha}");
 }
 
@@ -178,7 +181,10 @@ fn test_seed_197_removes_the_first_element_of_every_assignment_value_set() {
 fn test_seed_197_leaves_a_single_element_assignment_value_set_standing() {
     let source = "values = {alpha}\n";
     let (planted, render) = applied_render(source, "seed-197");
-    assert!(!planted, "a one element assignment value set does not plant");
+    assert!(
+        !planted,
+        "a one element assignment value set does not plant"
+    );
     assert_eq!(render, "values = {alpha}");
 }
 
@@ -235,7 +241,10 @@ fn test_seed_198_removes_the_last_element_of_every_comparison_operand_set() {
 fn test_seed_198_leaves_a_single_element_comparison_operand_set_standing() {
     let source = "check = {alpha} == probe\n";
     let (planted, render) = applied_render(source, "seed-198");
-    assert!(!planted, "a one element comparison operand set does not plant");
+    assert!(
+        !planted,
+        "a one element comparison operand set does not plant"
+    );
     assert_eq!(render, "check = {alpha} == probe");
 }
 
@@ -285,7 +294,10 @@ fn test_seed_199_keeps_the_later_operand_elements_standing() {
 fn test_seed_199_leaves_a_single_element_comparison_operand_set_standing() {
     let source = "check = {alpha} == probe\n";
     let (planted, render) = applied_render(source, "seed-199");
-    assert!(!planted, "a one element comparison operand set does not plant");
+    assert!(
+        !planted,
+        "a one element comparison operand set does not plant"
+    );
     assert_eq!(render, "check = {alpha} == probe");
 }
 
@@ -301,7 +313,11 @@ fn test_seed_199_leaves_a_set_standing_outside_a_comparison() {
 
 #[test]
 fn test_seed_199_verdict_is_caught() {
-    let target = target_with(FIRST_COMPARE_SET_MODULE, FIRST_COMPARE_SET_GATE, "caught199");
+    let target = target_with(
+        FIRST_COMPARE_SET_MODULE,
+        FIRST_COMPARE_SET_GATE,
+        "caught199",
+    );
     let result = run_target(&target);
     assert_eq!(cell_of(&result, "seed-199"), "caught");
     let _ = fs::remove_dir_all(&target);

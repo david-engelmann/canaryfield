@@ -6097,8 +6097,7 @@ fn apply_dropped_last_assignment_value_set_element(tree: &mut Tree) -> bool {
         .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
         .filter_map(|id| tree.one(id, "value"))
         .filter(|value| {
-            matches!(&tree.nodes[*value].data, Data::Set)
-                && tree.many(*value, "elts").len() >= 2
+            matches!(&tree.nodes[*value].data, Data::Set) && tree.many(*value, "elts").len() >= 2
         })
         .collect();
     for id in &targets {
@@ -6118,8 +6117,7 @@ fn apply_dropped_first_assignment_value_set_element(tree: &mut Tree) -> bool {
         .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
         .filter_map(|id| tree.one(id, "value"))
         .filter(|value| {
-            matches!(&tree.nodes[*value].data, Data::Set)
-                && tree.many(*value, "elts").len() >= 2
+            matches!(&tree.nodes[*value].data, Data::Set) && tree.many(*value, "elts").len() >= 2
         })
         .collect();
     for id in &targets {
@@ -6138,9 +6136,7 @@ fn apply_dropped_last_comparison_operand_set_element(tree: &mut Tree) -> bool {
             continue;
         }
         if let Some(left) = tree.one(id, "left") {
-            if matches!(&tree.nodes[left].data, Data::Set)
-                && tree.many(left, "elts").len() >= 2
-            {
+            if matches!(&tree.nodes[left].data, Data::Set) && tree.many(left, "elts").len() >= 2 {
                 targets.push(left);
             }
         }
@@ -6170,9 +6166,7 @@ fn apply_dropped_first_comparison_operand_set_element(tree: &mut Tree) -> bool {
             continue;
         }
         if let Some(left) = tree.one(id, "left") {
-            if matches!(&tree.nodes[left].data, Data::Set)
-                && tree.many(left, "elts").len() >= 2
-            {
+            if matches!(&tree.nodes[left].data, Data::Set) && tree.many(left, "elts").len() >= 2 {
                 targets.push(left);
             }
         }

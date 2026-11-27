@@ -93,11 +93,7 @@ const RAISE_MODULE: &str = "def check():\n    try:\n        raise ValueError(\"i
 
 #[test]
 fn test_registry_has_two_hundred_unique_seeds() {
-    assert_eq!(
-        SEEDS.len(),
-        200,
-        "the grown registry holds two hundred"
-    );
+    assert_eq!(SEEDS.len(), 200, "the grown registry holds two hundred");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
