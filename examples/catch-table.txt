@@ -203,6 +203,10 @@ seed-192  dropped last nested list element                    none          not-
 seed-193  dropped first nested list element                   none          not-applicable
 seed-194  dropped last for loop list element                  none          not-applicable
 seed-195  dropped first for loop list element                 none          not-applicable
+seed-196  dropped last assignment value set element           none          not-applicable
+seed-197  dropped first assignment value set element          none          not-applicable
+seed-198  dropped last comparison operand set element         none          not-applicable
+seed-199  dropped first comparison operand set element        none          not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 11  not-applicable 162  gate-broken 0
+  tests  caught 23  waved-through 11  not-applicable 166  gate-broken 0

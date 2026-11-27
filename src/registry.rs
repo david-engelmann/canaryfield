@@ -1203,5 +1203,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first for loop list element",
         defect_class: "missing data",
         description: "Removes the first element of the list a for loop walks whenever the list carries at least two elements so the loop never walks the opening value",
+    },
+    SeedMeta {
+        id: "seed-196",
+        name: "dropped last assignment value set element",
+        defect_class: "missing data",
+        description: "Removes the last element of the set an assignment hands its target whenever the set carries at least two elements so the target never receives the closing value",
+    },
+    SeedMeta {
+        id: "seed-197",
+        name: "dropped first assignment value set element",
+        defect_class: "missing data",
+        description: "Removes the first element of the set an assignment hands its target whenever the set carries at least two elements so the target never receives the opening value",
+    },
+    SeedMeta {
+        id: "seed-198",
+        name: "dropped last comparison operand set element",
+        defect_class: "missing data",
+        description: "Removes the last element of every set standing as a comparison's left operand or as one of its comparators whenever the set carries at least two elements so the comparison is made without the closing value",
+    },
+    SeedMeta {
+        id: "seed-199",
+        name: "dropped first comparison operand set element",
+        defect_class: "missing data",
+        description: "Removes the first element of every set standing as a comparison's left operand or as one of its comparators whenever the set carries at least two elements so the comparison is made without the opening value",
     }
 ];

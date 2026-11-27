@@ -226,6 +226,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-193" => apply_dropped_first_nested_list_element(tree),
         "seed-194" => apply_dropped_last_for_loop_list_element(tree),
         "seed-195" => apply_dropped_first_for_loop_list_element(tree),
+        "seed-196" => apply_dropped_last_assignment_value_set_element(tree),
+        "seed-197" => apply_dropped_first_assignment_value_set_element(tree),
+        "seed-198" => apply_dropped_last_comparison_operand_set_element(tree),
+        "seed-199" => apply_dropped_first_comparison_operand_set_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -6073,6 +6077,104 @@ fn apply_dropped_first_for_loop_list_element(tree: &mut Tree) -> bool {
                 && tree.many(iter, "elts").len() >= 2
             {
                 targets.push(iter);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-196, dropped last assignment value set element.
+
+fn apply_dropped_last_assignment_value_set_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
+        .filter_map(|id| tree.one(id, "value"))
+        .filter(|value| {
+            matches!(&tree.nodes[*value].data, Data::Set) && tree.many(*value, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-197, dropped first assignment value set element.
+
+fn apply_dropped_first_assignment_value_set_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
+        .filter_map(|id| tree.one(id, "value"))
+        .filter(|value| {
+            matches!(&tree.nodes[*value].data, Data::Set) && tree.many(*value, "elts").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-198, dropped last comparison operand set element.
+
+fn apply_dropped_last_comparison_operand_set_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Compare { .. }) {
+            continue;
+        }
+        if let Some(left) = tree.one(id, "left") {
+            if matches!(&tree.nodes[left].data, Data::Set) && tree.many(left, "elts").len() >= 2 {
+                targets.push(left);
+            }
+        }
+        for comparator in tree.many(id, "comparators").to_vec() {
+            if matches!(&tree.nodes[comparator].data, Data::Set)
+                && tree.many(comparator, "elts").len() >= 2
+            {
+                targets.push(comparator);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-199, dropped first comparison operand set element.
+
+fn apply_dropped_first_comparison_operand_set_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Compare { .. }) {
+            continue;
+        }
+        if let Some(left) = tree.one(id, "left") {
+            if matches!(&tree.nodes[left].data, Data::Set) && tree.many(left, "elts").len() >= 2 {
+                targets.push(left);
+            }
+        }
+        for comparator in tree.many(id, "comparators").to_vec() {
+            if matches!(&tree.nodes[comparator].data, Data::Set)
+                && tree.many(comparator, "elts").len() >= 2
+            {
+                targets.push(comparator);
             }
         }
     }
