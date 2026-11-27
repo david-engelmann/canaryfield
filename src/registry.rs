@@ -1227,5 +1227,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first comparison operand set element",
         defect_class: "missing data",
         description: "Removes the first element of every set standing as a comparison's left operand or as one of its comparators whenever the set carries at least two elements so the comparison is made without the opening value",
+    },
+    SeedMeta {
+        id: "seed-200",
+        name: "dropped last assignment value dict entry",
+        defect_class: "missing data",
+        description: "Removes the last entry of the dictionary an assignment hands its target whenever the dictionary carries at least two entries so the target never receives the closing entry",
+    },
+    SeedMeta {
+        id: "seed-201",
+        name: "dropped first assignment value dict entry",
+        defect_class: "missing data",
+        description: "Removes the first entry of the dictionary an assignment hands its target whenever the dictionary carries at least two entries so the target never receives the opening entry",
+    },
+    SeedMeta {
+        id: "seed-202",
+        name: "dropped last call argument dict entry",
+        defect_class: "missing data",
+        description: "Removes the last entry of a dictionary standing among a call's arguments whenever the dictionary carries at least two entries so the call receives a shorter dictionary than the source passes to it",
+    },
+    SeedMeta {
+        id: "seed-203",
+        name: "dropped first call argument dict entry",
+        defect_class: "missing data",
+        description: "Removes the first entry of a dictionary standing among a call's arguments whenever the dictionary carries at least two entries so the call receives a shorter dictionary than the source passes to it",
     }
 ];
