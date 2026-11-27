@@ -2423,20 +2423,78 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-187"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last assignment value list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-188"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first assignment value list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-189"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "dropped last return value list element",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-190"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "waved-through"
+      },
+      "name": "dropped first return value list element",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 0
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-191"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 156,
-      "waved-through": 32
+      "not-applicable": 158,
+      "waved-through": 34
     },
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 156,
-      "waved-through": 9
+      "not-applicable": 158,
+      "waved-through": 11
     }
   },
   "target": "examples/demo-project",

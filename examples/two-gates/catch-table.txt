@@ -196,7 +196,11 @@ seed-184  dropped last list argument element                  none          not-
 seed-185  dropped first list argument element                 none          not-applicable  not-applicable
 seed-186  dropped last comparison operand list element        none          not-applicable  not-applicable
 seed-187  dropped first comparison operand list element       none          not-applicable  not-applicable
+seed-188  dropped last assignment value list element          none          not-applicable  not-applicable
+seed-189  dropped first assignment value list element         none          not-applicable  not-applicable
+seed-190  dropped last return value list element              sample.py     waved-through   waved-through
+seed-191  dropped first return value list element             sample.py     waved-through   waved-through
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 156  gate-broken 0
-  compile  caught 0  waved-through 32  not-applicable 156  gate-broken 0
+  tests  caught 23  waved-through 11  not-applicable 158  gate-broken 0
+  compile  caught 0  waved-through 34  not-applicable 158  gate-broken 0
