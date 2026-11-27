@@ -1131,5 +1131,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first nested tuple element",
         defect_class: "missing data",
         description: "Removes the first element of every tuple standing as an element of another tuple whenever the inner tuple carries at least two elements so the outer tuple holds one fewer value in that element than the source writes",
+    },
+    SeedMeta {
+        id: "seed-184",
+        name: "dropped last list argument element",
+        defect_class: "missing data",
+        description: "Removes the last element of a list standing among a call's arguments whenever the list carries at least two elements so the call receives a shorter list than the source passes to it",
+    },
+    SeedMeta {
+        id: "seed-185",
+        name: "dropped first list argument element",
+        defect_class: "missing data",
+        description: "Removes the first element of a list standing among a call's arguments whenever the list carries at least two elements so the call receives a shorter list than the source passes to it",
+    },
+    SeedMeta {
+        id: "seed-186",
+        name: "dropped last comparison operand list element",
+        defect_class: "missing data",
+        description: "Removes the last element of every list standing as a comparison's operand whenever the list carries at least two elements so the comparison weighs one fewer value than the source writes",
+    },
+    SeedMeta {
+        id: "seed-187",
+        name: "dropped first comparison operand list element",
+        defect_class: "missing data",
+        description: "Removes the first element of every list standing as a comparison's operand whenever the list carries at least two elements so the comparison weighs one fewer value than the source writes",
     }
 ];
