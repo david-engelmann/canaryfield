@@ -291,6 +291,13 @@ fn test_seed_199_keeps_the_later_operand_elements_standing() {
 }
 
 #[test]
+fn test_seed_199_removes_the_first_element_of_every_comparison_operand_set() {
+    let source = "check = {alpha, beta} == {one, two}\n";
+    let (_, render) = applied_render(source, "seed-199");
+    assert_eq!(render, "check = {beta} == {two}");
+}
+
+#[test]
 fn test_seed_199_leaves_a_single_element_comparison_operand_set_standing() {
     let source = "check = {alpha} == probe\n";
     let (planted, render) = applied_render(source, "seed-199");
