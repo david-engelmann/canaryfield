@@ -157,7 +157,7 @@ A gate's catch rate is usually an assumption, because nothing continuously plant
 - Regenerating the committed examples under the one hundred and forty eight seed registry changed no verdict on the original one hundred and forty four seeds, and seed-146 and seed-147 do not apply to the demo project while seed-144 plants into the demo project and is waved through by both of its gates and seed-145 stands caught by its test gate there, so the two gates in the second example now honestly disagree on twenty three seeds
 - Regenerating the committed examples under the one hundred and fifty two seed registry changed no verdict on the original one hundred and forty eight seeds, and seed-148 and seed-149 and seed-150 and seed-151 do not apply to the demo project, so the two gates in the second example still honestly disagree on twenty three seeds
 - Regenerating the committed examples under the one hundred and fifty six seed registry changed no verdict on the original one hundred and fifty two seeds, and seed-152 and seed-153 and seed-154 and seed-155 do not apply to the demo project, so the two gates in the second example still honestly disagree on twenty three seeds
-- Closed rounds stand at 53 of 100
+- Closed rounds stand at 54 of 100
 - AGENTS.md stands in this repo, the canonical template of the program with this repo's annex below its marked line
 - No formats are pinned by this repo yet
 
