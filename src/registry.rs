@@ -1179,5 +1179,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first return value list element",
         defect_class: "missing data",
         description: "Removes the first element of the list a return hands back whenever the list carries at least two elements so the caller never receives the opening value",
+    },
+    SeedMeta {
+        id: "seed-192",
+        name: "dropped last nested list element",
+        defect_class: "missing data",
+        description: "Removes the last element of every list standing as an element of another display whenever the inner list carries at least two elements so the outer display holds one fewer value in that element than the source writes",
+    },
+    SeedMeta {
+        id: "seed-193",
+        name: "dropped first nested list element",
+        defect_class: "missing data",
+        description: "Removes the first element of every list standing as an element of another display whenever the inner list carries at least two elements so the outer display holds one fewer value in that element than the source writes",
+    },
+    SeedMeta {
+        id: "seed-194",
+        name: "dropped last for loop list element",
+        defect_class: "missing data",
+        description: "Removes the last element of the list a for loop walks whenever the list carries at least two elements so the loop never walks the closing value",
+    },
+    SeedMeta {
+        id: "seed-195",
+        name: "dropped first for loop list element",
+        defect_class: "missing data",
+        description: "Removes the first element of the list a for loop walks whenever the list carries at least two elements so the loop never walks the opening value",
     }
 ];

@@ -75,19 +75,19 @@ fn cell_of(result: &JsonValue, seed: &str) -> String {
 }
 
 #[test]
-fn test_registry_has_one_hundred_and_ninety_two_unique_seeds() {
+fn test_registry_has_one_hundred_and_ninety_six_unique_seeds() {
     assert_eq!(
         SEEDS.len(),
-        192,
-        "the grown registry holds one hundred and ninety two"
+        196,
+        "the grown registry holds one hundred and ninety six"
     );
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort_unstable();
     ids.dedup();
-    assert_eq!(ids.len(), 192, "every seed id stands once");
+    assert_eq!(ids.len(), 196, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-191"));
+    assert_eq!(standing.last(), Some(&"seed-195"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,

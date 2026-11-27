@@ -2253,13 +2253,57 @@
         "sample.py"
       ],
       "seed": "seed-191"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last nested list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-192"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first nested list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-193"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last for loop list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-194"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first for loop list element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-195"
     }
   ],
   "summary": {
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 158,
+      "not-applicable": 162,
       "waved-through": 11
     }
   },
