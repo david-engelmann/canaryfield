@@ -88,8 +88,7 @@ fn test_registry_has_one_hundred_and_eighty_four_unique_seeds() {
 
 // Seed-180, dropped last comprehension iterable tuple element.
 
-const LAST_ITER_MODULE: &str =
-    "values = [run(item) for item in (alpha, beta)]\nkeep = gamma\n";
+const LAST_ITER_MODULE: &str = "values = [run(item) for item in (alpha, beta)]\nkeep = gamma\n";
 const LAST_ITER_GATE: &str = "#!/bin/sh\ngrep -q 'beta' mod.py\n";
 
 #[test]
@@ -114,10 +113,7 @@ fn test_seed_180_removes_the_last_comprehension_iterable_tuple_element() {
 fn test_seed_180_keeps_the_earlier_iterable_elements_standing() {
     let source = "values = [run(item) for item in (alpha, beta, gamma)]\n";
     let (_, render) = applied_render(source, "seed-180");
-    assert_eq!(
-        render,
-        "values = [run(item) for item in (alpha, beta)]"
-    );
+    assert_eq!(render, "values = [run(item) for item in (alpha, beta)]");
 }
 
 #[test]
@@ -159,8 +155,7 @@ fn test_seed_180_verdict_is_caught() {
 
 // Seed-181, dropped first comprehension iterable tuple element.
 
-const FIRST_ITER_MODULE: &str =
-    "values = [run(item) for item in (alpha, beta)]\nkeep = gamma\n";
+const FIRST_ITER_MODULE: &str = "values = [run(item) for item in (alpha, beta)]\nkeep = gamma\n";
 const FIRST_ITER_GATE: &str = "#!/bin/sh\ngrep -q 'alpha' mod.py\n";
 
 #[test]
@@ -185,10 +180,7 @@ fn test_seed_181_removes_the_first_comprehension_iterable_tuple_element() {
 fn test_seed_181_keeps_the_later_iterable_elements_standing() {
     let source = "values = [run(item) for item in (alpha, beta, gamma)]\n";
     let (_, render) = applied_render(source, "seed-181");
-    assert_eq!(
-        render,
-        "values = [run(item) for item in (beta, gamma)]"
-    );
+    assert_eq!(render, "values = [run(item) for item in (beta, gamma)]");
 }
 
 #[test]
