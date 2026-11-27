@@ -6199,8 +6199,7 @@ fn apply_dropped_last_assignment_value_dict_entry(tree: &mut Tree) -> bool {
         .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
         .filter_map(|id| tree.one(id, "value"))
         .filter(|value| {
-            matches!(&tree.nodes[*value].data, Data::Dict)
-                && tree.many(*value, "values").len() >= 2
+            matches!(&tree.nodes[*value].data, Data::Dict) && tree.many(*value, "values").len() >= 2
         })
         .collect();
     for id in &targets {
@@ -6222,8 +6221,7 @@ fn apply_dropped_first_assignment_value_dict_entry(tree: &mut Tree) -> bool {
         .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
         .filter_map(|id| tree.one(id, "value"))
         .filter(|value| {
-            matches!(&tree.nodes[*value].data, Data::Dict)
-                && tree.many(*value, "values").len() >= 2
+            matches!(&tree.nodes[*value].data, Data::Dict) && tree.many(*value, "values").len() >= 2
         })
         .collect();
     for id in &targets {
@@ -6244,9 +6242,7 @@ fn apply_dropped_last_call_argument_dict_entry(tree: &mut Tree) -> bool {
             continue;
         }
         for arg in tree.many(id, "args").to_vec() {
-            if matches!(&tree.nodes[arg].data, Data::Dict)
-                && tree.many(arg, "values").len() >= 2
-            {
+            if matches!(&tree.nodes[arg].data, Data::Dict) && tree.many(arg, "values").len() >= 2 {
                 targets.push(arg);
             }
         }
@@ -6271,9 +6267,7 @@ fn apply_dropped_first_call_argument_dict_entry(tree: &mut Tree) -> bool {
             continue;
         }
         for arg in tree.many(id, "args").to_vec() {
-            if matches!(&tree.nodes[arg].data, Data::Dict)
-                && tree.many(arg, "values").len() >= 2
-            {
+            if matches!(&tree.nodes[arg].data, Data::Dict) && tree.many(arg, "values").len() >= 2 {
                 targets.push(arg);
             }
         }

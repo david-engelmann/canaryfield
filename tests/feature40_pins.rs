@@ -200,7 +200,11 @@ fn test_seed_201_leaves_a_dictionary_standing_outside_an_assignment_value() {
 
 #[test]
 fn test_seed_201_verdict_is_caught() {
-    let target = target_with(FIRST_ASSIGN_DICT_MODULE, FIRST_ASSIGN_DICT_GATE, "caught201");
+    let target = target_with(
+        FIRST_ASSIGN_DICT_MODULE,
+        FIRST_ASSIGN_DICT_GATE,
+        "caught201",
+    );
     let result = run_target(&target);
     assert_eq!(cell_of(&result, "seed-201"), "caught");
     let _ = fs::remove_dir_all(&target);
