@@ -230,6 +230,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-197" => apply_dropped_first_assignment_value_set_element(tree),
         "seed-198" => apply_dropped_last_comparison_operand_set_element(tree),
         "seed-199" => apply_dropped_first_comparison_operand_set_element(tree),
+        "seed-200" => apply_dropped_last_assignment_value_dict_entry(tree),
+        "seed-201" => apply_dropped_first_assignment_value_dict_entry(tree),
+        "seed-202" => apply_dropped_last_call_argument_dict_entry(tree),
+        "seed-203" => apply_dropped_first_call_argument_dict_entry(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -6182,6 +6186,98 @@ fn apply_dropped_first_comparison_operand_set_element(tree: &mut Tree) -> bool {
     for id in targets {
         let elts = tree.many(id, "elts")[1..].to_vec();
         tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-200, dropped last assignment value dict entry.
+
+fn apply_dropped_last_assignment_value_dict_entry(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
+        .filter_map(|id| tree.one(id, "value"))
+        .filter(|value| {
+            matches!(&tree.nodes[*value].data, Data::Dict) && tree.many(*value, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let keys = tree.maybe(*id, "keys");
+        let kept = keys.len() - 1;
+        tree.set_maybe(*id, "keys", keys[..kept].to_vec());
+        let values = tree.many(*id, "values");
+        tree.set_many(*id, "values", values[..kept].to_vec());
+    }
+    !targets.is_empty()
+}
+
+// seed-201, dropped first assignment value dict entry.
+
+fn apply_dropped_first_assignment_value_dict_entry(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| matches!(&tree.nodes[*id].data, Data::Assign))
+        .filter_map(|id| tree.one(id, "value"))
+        .filter(|value| {
+            matches!(&tree.nodes[*value].data, Data::Dict) && tree.many(*value, "values").len() >= 2
+        })
+        .collect();
+    for id in &targets {
+        let keys = tree.maybe(*id, "keys")[1..].to_vec();
+        tree.set_maybe(*id, "keys", keys);
+        let values = tree.many(*id, "values")[1..].to_vec();
+        tree.set_many(*id, "values", values);
+    }
+    !targets.is_empty()
+}
+
+// seed-202, dropped last call argument dict entry.
+
+fn apply_dropped_last_call_argument_dict_entry(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for arg in tree.many(id, "args").to_vec() {
+            if matches!(&tree.nodes[arg].data, Data::Dict) && tree.many(arg, "values").len() >= 2 {
+                targets.push(arg);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let keys = tree.maybe(id, "keys");
+        let kept = keys.len() - 1;
+        tree.set_maybe(id, "keys", keys[..kept].to_vec());
+        let values = tree.many(id, "values");
+        tree.set_many(id, "values", values[..kept].to_vec());
+    }
+    planted
+}
+
+// seed-203, dropped first call argument dict entry.
+
+fn apply_dropped_first_call_argument_dict_entry(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::Call) {
+            continue;
+        }
+        for arg in tree.many(id, "args").to_vec() {
+            if matches!(&tree.nodes[arg].data, Data::Dict) && tree.many(arg, "values").len() >= 2 {
+                targets.push(arg);
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let keys = tree.maybe(id, "keys")[1..].to_vec();
+        tree.set_maybe(id, "keys", keys);
+        let values = tree.many(id, "values")[1..].to_vec();
+        tree.set_many(id, "values", values);
     }
     planted
 }
