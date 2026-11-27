@@ -187,6 +187,10 @@ seed-176  dropped last exception handler type tuple element   none          not-
 seed-177  dropped first exception handler type tuple element  none          not-applicable
 seed-178  dropped last keyword value tuple element            none          not-applicable
 seed-179  dropped first keyword value tuple element           none          not-applicable
+seed-180  dropped last comprehension iterable tuple element   none          not-applicable
+seed-181  dropped first comprehension iterable tuple element  none          not-applicable
+seed-182  dropped last nested tuple element                   none          not-applicable
+seed-183  dropped first nested tuple element                  none          not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 9  not-applicable 148  gate-broken 0
+  tests  caught 23  waved-through 9  not-applicable 152  gate-broken 0

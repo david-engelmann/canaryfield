@@ -2327,19 +2327,67 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-179"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last comprehension iterable tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-180"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first comprehension iterable tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-181"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped last nested tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-182"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "dropped first nested tuple element",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-183"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 148,
+      "not-applicable": 152,
       "waved-through": 32
     },
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 148,
+      "not-applicable": 152,
       "waved-through": 9
     }
   },
