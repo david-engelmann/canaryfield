@@ -1299,5 +1299,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first augmented assignment value tuple element",
         defect_class: "missing data",
         description: "Removes the first element of the tuple an augmented assignment hands over whenever the tuple carries at least two elements so the target never receives the opening value",
+    },
+    SeedMeta {
+        id: "seed-212",
+        name: "flipped first comparison operator",
+        defect_class: "wrong predicate",
+        description: "Exchanges the first operator of the first comparison in a text for its paired opposite so the comparison opens the wrong way while every later comparison runs as written",
+    },
+    SeedMeta {
+        id: "seed-213",
+        name: "flipped first boolean operator",
+        defect_class: "wrong predicate",
+        description: "Swaps the operator of the first boolean operation in a text, an and for an or or an or for an and, and leaves every later boolean operation standing",
+    },
+    SeedMeta {
+        id: "seed-214",
+        name: "flipped first arithmetic operator",
+        defect_class: "wrong computation",
+        description: "Swaps the operator of the first arithmetic operation in a text for a different one and leaves every later operation standing",
+    },
+    SeedMeta {
+        id: "seed-215",
+        name: "flipped first augmented assignment operator",
+        defect_class: "wrong computation",
+        description: "Swaps the operator of the first augmented assignment in a text so the value it accumulates moves the wrong way and leaves every later augmented assignment standing",
     }
 ];
