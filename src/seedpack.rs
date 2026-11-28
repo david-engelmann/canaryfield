@@ -17,10 +17,10 @@ use crate::json::{self, JsonValue};
 use crate::registry::{SeedMeta, SEEDS};
 
 /// The format a pack written now carries.
-pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/52";
+pub const SEED_PACK_FORMAT: &str = "canaryfield-seeds/53";
 
 /// The thirty one pack formats and the entry count each one carries.
-pub const PACK_ENTRY_COUNTS: [(&str, usize); 52] = [
+pub const PACK_ENTRY_COUNTS: [(&str, usize); 53] = [
     ("canaryfield-seeds/1", 12),
     ("canaryfield-seeds/2", 16),
     ("canaryfield-seeds/3", 20),
@@ -73,6 +73,7 @@ pub const PACK_ENTRY_COUNTS: [(&str, usize); 52] = [
     ("canaryfield-seeds/50", 208),
     ("canaryfield-seeds/51", 212),
     ("canaryfield-seeds/52", 216),
+    ("canaryfield-seeds/53", 220),
 ];
 
 /// The entry count a format carries, and nothing for a format
@@ -367,7 +368,7 @@ mod tests {
         );
         match data.get("seeds") {
             Some(JsonValue::Array(items)) => {
-                assert_eq!(items.len(), 216);
+                assert_eq!(items.len(), 220);
                 assert_eq!(
                     items[0].get("id"),
                     Some(&JsonValue::Str("seed-00".to_string()))
