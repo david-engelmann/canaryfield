@@ -238,6 +238,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-205" => apply_dropped_first_return_value_dict_entry(tree),
         "seed-206" => apply_dropped_last_comprehension_element_dict_entry(tree),
         "seed-207" => apply_dropped_first_comprehension_element_dict_entry(tree),
+        "seed-208" => apply_dropped_last_binop_operand_list_element(tree),
+        "seed-209" => apply_dropped_first_binop_operand_list_element(tree),
+        "seed-210" => apply_dropped_last_augmented_assignment_value_tuple_element(tree),
+        "seed-211" => apply_dropped_first_augmented_assignment_value_tuple_element(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -6386,4 +6390,100 @@ fn apply_dropped_first_comprehension_element_dict_entry(tree: &mut Tree) -> bool
         tree.set_many(id, "values", values);
     }
     planted
+}
+
+// seed-208, dropped last binop operand list element.
+
+fn apply_dropped_last_binop_operand_list_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::BinOp { .. }) {
+            continue;
+        }
+        for side in ["left", "right"] {
+            if let Some(child) = tree.one(id, side) {
+                if matches!(&tree.nodes[child].data, Data::List { .. })
+                    && tree.many(child, "elts").len() >= 2
+                {
+                    targets.push(child);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let mut elts = tree.many(id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-209, dropped first binop operand list element.
+
+fn apply_dropped_first_binop_operand_list_element(tree: &mut Tree) -> bool {
+    let mut targets: Vec<usize> = Vec::new();
+    for id in tree.sorted_nodes() {
+        if !matches!(&tree.nodes[id].data, Data::BinOp { .. }) {
+            continue;
+        }
+        for side in ["left", "right"] {
+            if let Some(child) = tree.one(id, side) {
+                if matches!(&tree.nodes[child].data, Data::List { .. })
+                    && tree.many(child, "elts").len() >= 2
+                {
+                    targets.push(child);
+                }
+            }
+        }
+    }
+    let planted = !targets.is_empty();
+    for id in targets {
+        let elts = tree.many(id, "elts")[1..].to_vec();
+        tree.set_many(id, "elts", elts);
+    }
+    planted
+}
+
+// seed-210, dropped last augmented assignment value tuple element.
+
+fn apply_dropped_last_augmented_assignment_value_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::AugAssign { .. } => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for id in &targets {
+        let mut elts = tree.many(*id, "elts").to_vec();
+        elts.pop();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
+}
+
+// seed-211, dropped first augmented assignment value tuple element.
+
+fn apply_dropped_first_augmented_assignment_value_tuple_element(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter_map(|id| match &tree.nodes[id].data {
+            Data::AugAssign { .. } => tree.one(id, "value").filter(|value| {
+                matches!(&tree.nodes[*value].data, Data::Tuple { .. })
+                    && tree.many(*value, "elts").len() >= 2
+            }),
+            _ => None,
+        })
+        .collect();
+    for id in &targets {
+        let elts = tree.many(*id, "elts")[1..].to_vec();
+        tree.set_many(*id, "elts", elts);
+    }
+    !targets.is_empty()
 }

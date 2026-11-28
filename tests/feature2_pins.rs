@@ -92,15 +92,15 @@ const RAISE_MODULE: &str = "def check():\n    try:\n        raise ValueError(\"i
 // The registry pins of F2-1.
 
 #[test]
-fn test_registry_has_two_hundred_and_eight_unique_seeds() {
-    assert_eq!(SEEDS.len(), 208, "the grown registry holds two hundred");
+fn test_registry_has_two_hundred_and_twelve_unique_seeds() {
+    assert_eq!(SEEDS.len(), 212, "the grown registry holds two hundred");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 208, "every seed id stands once");
+    assert_eq!(ids.len(), 212, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-207"));
+    assert_eq!(standing.last(), Some(&"seed-211"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -295,7 +295,11 @@ fn test_seed_metadata_is_complete() {
             "dropped last return value dict entry",
             "dropped first return value dict entry",
             "dropped last comprehension element dict entry",
-            "dropped first comprehension element dict entry"
+            "dropped first comprehension element dict entry",
+            "dropped last binop operand list element",
+            "dropped first binop operand list element",
+            "dropped last augmented assignment value tuple element",
+            "dropped first augmented assignment value tuple element"
         ]
     );
 }
@@ -714,7 +718,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 208);
+    assert_eq!(loaded.len(), 212);
     let ids: Vec<String> = loaded
         .iter()
         .map(|entry| match entry.get("id") {
@@ -740,7 +744,7 @@ fn test_seed_pack_via_cli() {
     let written = fs::read_to_string(&path).expect("the written pack reads");
     assert_eq!(written, seed_pack_text());
     assert!(
-        written.contains("\"canaryfield-seeds/50\""),
+        written.contains("\"canaryfield-seeds/51\""),
         "the written pack carries the twenty second format"
     );
     let _ = fs::remove_dir_all(&dir);

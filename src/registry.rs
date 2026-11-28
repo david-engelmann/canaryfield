@@ -1275,5 +1275,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first comprehension element dict entry",
         defect_class: "missing data",
         description: "Removes the first entry of the dictionary standing as a comprehension's element expression whenever the dictionary carries at least two entries so the comprehension yields one fewer entry in each dictionary than the source writes",
+    },
+    SeedMeta {
+        id: "seed-208",
+        name: "dropped last binop operand list element",
+        defect_class: "missing data",
+        description: "Removes the last element of the list standing as a binary operation's operand whenever the list carries at least two elements so the operation receives a shorter list than the source hands to it",
+    },
+    SeedMeta {
+        id: "seed-209",
+        name: "dropped first binop operand list element",
+        defect_class: "missing data",
+        description: "Removes the first element of the list standing as a binary operation's operand whenever the list carries at least two elements so the operation never receives the opening element",
+    },
+    SeedMeta {
+        id: "seed-210",
+        name: "dropped last augmented assignment value tuple element",
+        defect_class: "missing data",
+        description: "Removes the last element of the tuple an augmented assignment hands over whenever the tuple carries at least two elements so the target never receives the closing value",
+    },
+    SeedMeta {
+        id: "seed-211",
+        name: "dropped first augmented assignment value tuple element",
+        defect_class: "missing data",
+        description: "Removes the first element of the tuple an augmented assignment hands over whenever the tuple carries at least two elements so the target never receives the opening value",
     }
 ];
