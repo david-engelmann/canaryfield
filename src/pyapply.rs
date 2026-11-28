@@ -6352,11 +6352,11 @@ fn apply_dropped_last_comprehension_element_dict_entry(tree: &mut Tree) -> bool 
     }
     let planted = !targets.is_empty();
     for id in targets {
-        let keys = tree.maybe(*id, "keys");
+        let keys = tree.maybe(id, "keys");
         let kept = keys.len() - 1;
-        tree.set_maybe(*id, "keys", keys[..kept].to_vec());
-        let values = tree.many(*id, "values");
-        tree.set_many(*id, "values", values[..kept].to_vec());
+        tree.set_maybe(id, "keys", keys[..kept].to_vec());
+        let values = tree.many(id, "values");
+        tree.set_many(id, "values", values[..kept].to_vec());
     }
     planted
 }
@@ -6380,10 +6380,10 @@ fn apply_dropped_first_comprehension_element_dict_entry(tree: &mut Tree) -> bool
     }
     let planted = !targets.is_empty();
     for id in targets {
-        let keys = tree.maybe(*id, "keys")[1..].to_vec();
-        tree.set_maybe(*id, "keys", keys);
-        let values = tree.many(*id, "values")[1..].to_vec();
-        tree.set_many(*id, "values", values);
+        let keys = tree.maybe(id, "keys")[1..].to_vec();
+        tree.set_maybe(id, "keys", keys);
+        let values = tree.many(id, "values")[1..].to_vec();
+        tree.set_many(id, "values", values);
     }
     planted
 }
