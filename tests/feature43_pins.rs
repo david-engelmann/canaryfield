@@ -180,7 +180,10 @@ fn test_seed_213_flips_the_first_of_two_operators_on_one_line() {
 #[test]
 fn test_seed_213_leaves_a_text_without_a_boolean_operation_standing() {
     let (planted, render) = applied_render("total = alpha + beta\n", "seed-213");
-    assert!(!planted, "a text without a boolean operation does not plant");
+    assert!(
+        !planted,
+        "a text without a boolean operation does not plant"
+    );
     assert_eq!(render, "total = alpha + beta");
 }
 
