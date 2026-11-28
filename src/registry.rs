@@ -1304,7 +1304,7 @@ pub const SEEDS: &[SeedMeta] = &[
         id: "seed-212",
         name: "flipped first comparison operator",
         defect_class: "wrong predicate",
-        description: "Exchanges the first operator in a comparison for its paired opposite so the comparison opens the wrong way while the rest of the chain runs as written",
+        description: "Exchanges the first operator of the first comparison in a text for its paired opposite so the comparison opens the wrong way while every later comparison runs as written",
     },
     SeedMeta {
         id: "seed-213",

@@ -111,10 +111,10 @@ fn test_seed_212_leaves_the_later_operators_of_a_chain_standing() {
 }
 
 #[test]
-fn test_seed_212_flips_the_first_operator_of_every_comparison() {
+fn test_seed_212_leaves_the_later_comparisons_standing() {
     let source = "ready = alpha < beta\nsteady = one == two\n";
     let (_, render) = applied_render(source, "seed-212");
-    assert_eq!(render, "ready = alpha > beta\nsteady = one != two");
+    assert_eq!(render, "ready = alpha > beta\nsteady = one == two");
 }
 
 #[test]

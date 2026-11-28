@@ -6495,24 +6495,23 @@ fn apply_dropped_first_augmented_assignment_value_tuple_element(tree: &mut Tree)
 // seed-212, flipped first comparison operator.
 
 fn apply_flipped_first_comparison_operator(tree: &mut Tree) -> bool {
-    let targets: Vec<usize> = tree
+    let target = tree
         .sorted_nodes()
         .into_iter()
-        .filter(|id| match &tree.nodes[*id].data {
+        .find(|id| match &tree.nodes[*id].data {
             Data::Compare { ops } => !ops.is_empty(),
             _ => false,
-        })
-        .collect();
-    for id in &targets {
-        if let Data::Compare { ops } = &mut tree.node_mut(*id).data {
+        });
+    if let Some(id) = target {
+        if let Data::Compare { ops } = &mut tree.node_mut(id).data {
             if let Some(op) = ops.first_mut() {
                 *op = comparison_flip(*op);
             }
         }
+        return true;
     }
-    !targets.is_empty()
+    false
 }
-
 // seed-213, flipped first boolean operator.
 
 fn apply_flipped_first_boolean_operator(tree: &mut Tree) -> bool {
