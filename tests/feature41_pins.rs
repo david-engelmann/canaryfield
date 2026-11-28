@@ -218,7 +218,8 @@ fn test_seed_205_verdict_is_caught() {
 
 // Seed-206, dropped last comprehension element dict entry.
 
-const LAST_ELEMENT_DICT_MODULE: &str = "rows = [{'a': alpha, 'b': beta} for item in items]\nkeep = gamma\n";
+const LAST_ELEMENT_DICT_MODULE: &str =
+    "rows = [{'a': alpha, 'b': beta} for item in items]\nkeep = gamma\n";
 const LAST_ELEMENT_DICT_GATE: &str = "#!/bin/sh\ngrep -q \"'b': beta\" mod.py\n";
 
 #[test]
@@ -230,7 +231,10 @@ fn test_seed_206_plants_on_a_comprehension_element_that_is_a_two_entry_dictionar
 #[test]
 fn test_seed_206_removes_the_last_comprehension_element_dict_entry() {
     let (_, render) = applied_render(LAST_ELEMENT_DICT_MODULE, "seed-206");
-    assert_eq!(render, "rows = [{'a': alpha} for item in items]\nkeep = gamma");
+    assert_eq!(
+        render,
+        "rows = [{'a': alpha} for item in items]\nkeep = gamma"
+    );
 }
 
 #[test]
@@ -273,7 +277,11 @@ fn test_seed_206_leaves_a_dictionary_standing_outside_a_comprehension_element() 
 
 #[test]
 fn test_seed_206_verdict_is_caught() {
-    let target = target_with(LAST_ELEMENT_DICT_MODULE, LAST_ELEMENT_DICT_GATE, "caught206");
+    let target = target_with(
+        LAST_ELEMENT_DICT_MODULE,
+        LAST_ELEMENT_DICT_GATE,
+        "caught206",
+    );
     let result = run_target(&target);
     assert_eq!(cell_of(&result, "seed-206"), "caught");
     let _ = fs::remove_dir_all(&target);
@@ -281,7 +289,8 @@ fn test_seed_206_verdict_is_caught() {
 
 // Seed-207, dropped first comprehension element dict entry.
 
-const FIRST_ELEMENT_DICT_MODULE: &str = "rows = [{'a': alpha, 'b': beta} for item in items]\nkeep = gamma\n";
+const FIRST_ELEMENT_DICT_MODULE: &str =
+    "rows = [{'a': alpha, 'b': beta} for item in items]\nkeep = gamma\n";
 const FIRST_ELEMENT_DICT_GATE: &str = "#!/bin/sh\ngrep -q \"'a': alpha\" mod.py\n";
 
 #[test]
@@ -293,7 +302,10 @@ fn test_seed_207_plants_on_a_comprehension_element_that_is_a_two_entry_dictionar
 #[test]
 fn test_seed_207_removes_the_first_comprehension_element_dict_entry() {
     let (_, render) = applied_render(FIRST_ELEMENT_DICT_MODULE, "seed-207");
-    assert_eq!(render, "rows = [{'b': beta} for item in items]\nkeep = gamma");
+    assert_eq!(
+        render,
+        "rows = [{'b': beta} for item in items]\nkeep = gamma"
+    );
 }
 
 #[test]
