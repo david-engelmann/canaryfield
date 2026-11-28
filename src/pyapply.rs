@@ -242,6 +242,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-209" => apply_dropped_first_binop_operand_list_element(tree),
         "seed-210" => apply_dropped_last_augmented_assignment_value_tuple_element(tree),
         "seed-211" => apply_dropped_first_augmented_assignment_value_tuple_element(tree),
+        "seed-212" => apply_flipped_first_comparison_operator(tree),
+        "seed-213" => apply_flipped_first_boolean_operator(tree),
+        "seed-214" => apply_flipped_first_arithmetic_operator(tree),
+        "seed-215" => apply_flipped_first_augmented_assignment_operator(tree),
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -6486,4 +6490,87 @@ fn apply_dropped_first_augmented_assignment_value_tuple_element(tree: &mut Tree)
         tree.set_many(*id, "elts", elts);
     }
     !targets.is_empty()
+}
+
+// seed-212, flipped first comparison operator.
+
+fn apply_flipped_first_comparison_operator(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| match &tree.nodes[*id].data {
+            Data::Compare { ops } => !ops.is_empty(),
+            _ => false,
+        })
+        .collect();
+    for id in &targets {
+        if let Data::Compare { ops } = &mut tree.node_mut(*id).data {
+            if let Some(op) = ops.first_mut() {
+                *op = comparison_flip(*op);
+            }
+        }
+    }
+    !targets.is_empty()
+}
+
+// seed-213, flipped first boolean operator.
+
+fn apply_flipped_first_boolean_operator(tree: &mut Tree) -> bool {
+    let target = tree
+        .sorted_nodes()
+        .into_iter()
+        .find(|id| matches!(&tree.nodes[*id].data, Data::BoolOp { .. }));
+    if let Some(id) = target {
+        if let Data::BoolOp { op } = &mut tree.node_mut(id).data {
+            *op = if *op == BoolKind::And {
+                BoolKind::Or
+            } else {
+                BoolKind::And
+            };
+        }
+        return true;
+    }
+    false
+}
+
+// seed-214, flipped first arithmetic operator.
+
+fn apply_flipped_first_arithmetic_operator(tree: &mut Tree) -> bool {
+    let mut found = None;
+    for id in tree.sorted_nodes() {
+        if let Data::BinOp { op } = &tree.nodes[id].data {
+            if let Some(replacement) = arithmetic_swap(*op) {
+                found = Some((id, replacement));
+                break;
+            }
+        }
+    }
+    if let Some((id, replacement)) = found {
+        if let Data::BinOp { op } = &mut tree.node_mut(id).data {
+            *op = replacement;
+        }
+        return true;
+    }
+    false
+}
+
+// seed-215, flipped first augmented assignment operator.
+
+fn apply_flipped_first_augmented_assignment_operator(tree: &mut Tree) -> bool {
+    let mut found = None;
+    for id in tree.sorted_nodes() {
+        if let Data::AugAssign { op } = &tree.nodes[id].data {
+            if let Some(replacement) = arithmetic_swap(*op) {
+                found = Some((id, replacement));
+                break;
+            }
+        }
+    }
+    if let Some((id, replacement)) = found {
+        if let Data::AugAssign { op } = &mut tree.node_mut(id).data {
+            *op = replacement;
+        }
+        return true;
+    }
+    false
 }
