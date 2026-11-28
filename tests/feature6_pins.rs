@@ -88,15 +88,15 @@ const MATCH_GATE: &str = "#!/bin/sh\ngrep -q \"case 1:\" mod.py\n";
 // The registry pins of F6-1.
 
 #[test]
-fn test_registry_has_two_hundred_and_twenty_unique_seeds() {
-    assert_eq!(SEEDS.len(), 220, "the grown registry holds two hundred");
+fn test_registry_has_two_hundred_and_twenty_four_unique_seeds() {
+    assert_eq!(SEEDS.len(), 224, "the grown registry holds two hundred");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 220, "every seed id stands once");
+    assert_eq!(ids.len(), 224, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-219"));
+    assert_eq!(standing.last(), Some(&"seed-223"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -287,7 +287,7 @@ fn test_seed_metadata_is_complete() {
             "flipped last comparison operator",
             "flipped last boolean operator",
             "flipped last arithmetic operator",
-            "flipped last augmented assignment operator"
+            "flipped last augmented assignment operator", "dropped later slice bound", "dropped earlier slice bound", "dropped slice bound pair", "dropped store subscript"
         ]
     );
 }
@@ -671,7 +671,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 220);
+    assert_eq!(loaded.len(), 224);
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -689,6 +689,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 220);
+    assert_eq!(loaded.len(), 224);
     let _ = fs::remove_dir_all(&dir);
 }

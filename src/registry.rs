@@ -1347,5 +1347,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "flipped last augmented assignment operator",
         defect_class: "wrong computation",
         description: "Swaps the operator of the last augmented assignment in a text so the value it accumulates moves the wrong way and leaves every earlier augmented assignment standing",
+    },
+    SeedMeta {
+        id: "seed-220",
+        name: "dropped later slice bound",
+        defect_class: "boundary error",
+        description: "Removes the upper bound of every slice that carries both bounds, leaving the lower bound standing, so the slice runs to the end of the sequence instead of stopping where it was written to stop",
+    },
+    SeedMeta {
+        id: "seed-221",
+        name: "dropped earlier slice bound",
+        defect_class: "boundary error",
+        description: "Removes the lower bound of every slice that carries both bounds, leaving the upper bound standing, so the slice starts at the beginning of the sequence instead of where it was written to start",
+    },
+    SeedMeta {
+        id: "seed-222",
+        name: "dropped slice bound pair",
+        defect_class: "boundary error",
+        description: "Removes both bounds of every slice that carries both bounds, so the slice takes the whole sequence instead of the span it was written to take",
+    },
+    SeedMeta {
+        id: "seed-223",
+        name: "dropped store subscript",
+        defect_class: "missing data",
+        description: "Replaces every subscript standing as an assignment target with the object it subscripts so the element the code meant to write is never named and the assignment lands on the collection itself",
     }
 ];

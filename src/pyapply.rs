@@ -250,6 +250,10 @@ fn apply_known(tree: &mut Tree, seed_id: &str) -> Result<bool, Refusal> {
         "seed-217" => apply_flipped_last_boolean_operator(tree),
         "seed-218" => apply_flipped_last_arithmetic_operator(tree),
         "seed-219" => apply_flipped_last_augmented_assignment_operator(tree),
+        "seed-220" => apply_dropped_later_slice_bound(tree),
+        "seed-221" => apply_dropped_earlier_slice_bound(tree),
+        "seed-222" => apply_dropped_slice_bound_pair(tree),
+        "seed-223" => apply_dropped_store_subscript(tree)?,
         _ => return Err(refusal("the seed id stands outside the registry")),
     })
 }
@@ -6675,4 +6679,74 @@ fn apply_flipped_last_augmented_assignment_operator(tree: &mut Tree) -> bool {
         return true;
     }
     false
+}
+
+// seed-220, dropped later slice bound.
+
+fn apply_dropped_later_slice_bound(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Slice)
+                && tree.one(*id, "lower").is_some()
+                && tree.one(*id, "upper").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "upper", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-221, dropped earlier slice bound.
+
+fn apply_dropped_earlier_slice_bound(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Slice)
+                && tree.one(*id, "lower").is_some()
+                && tree.one(*id, "upper").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "lower", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-222, dropped slice bound pair.
+
+fn apply_dropped_slice_bound_pair(tree: &mut Tree) -> bool {
+    let targets: Vec<usize> = tree
+        .sorted_nodes()
+        .into_iter()
+        .filter(|id| {
+            matches!(&tree.nodes[*id].data, Data::Slice)
+                && tree.one(*id, "lower").is_some()
+                && tree.one(*id, "upper").is_some()
+        })
+        .collect();
+    for id in &targets {
+        tree.set_one(*id, "lower", None);
+        tree.set_one(*id, "upper", None);
+    }
+    !targets.is_empty()
+}
+
+// seed-223, dropped store subscript.
+
+fn apply_dropped_store_subscript(tree: &mut Tree) -> Result<bool, Refusal> {
+    let hits = collect_with_parents(tree, &|tree, id| {
+        matches!(
+            &tree.nodes[id].data,
+            Data::Subscript {
+                ctx: Ctx::Store,
+                ..
+            }
+        )
+    })?;
+    Ok(replace_hits_with_child(tree, hits, "value"))
 }
