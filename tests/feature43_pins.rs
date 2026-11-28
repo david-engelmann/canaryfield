@@ -89,7 +89,7 @@ fn test_registry_has_two_hundred_and_sixteen_unique_seeds() {
 // Seed-212, flipped first comparison operator.
 
 const FIRST_COMPARISON_MODULE: &str = "ready = alpha < beta\nkeep = gamma\n";
-const FIRST_COMPARISON_GATE: &str = "#!/bin/sh\ngrep -q \"alpha > beta\" mod.py\n";
+const FIRST_COMPARISON_GATE: &str = "#!/bin/sh\ngrep -q \"alpha < beta\" mod.py\n";
 
 #[test]
 fn test_seed_212_plants_on_a_text_carrying_a_comparison() {
@@ -142,7 +142,7 @@ fn test_seed_212_verdict_is_caught() {
 // Seed-213, flipped first boolean operator.
 
 const FIRST_BOOLEAN_MODULE: &str = "ready = alpha and beta\nkeep = gamma\n";
-const FIRST_BOOLEAN_GATE: &str = "#!/bin/sh\ngrep -q \"alpha or beta\" mod.py\n";
+const FIRST_BOOLEAN_GATE: &str = "#!/bin/sh\ngrep -q \"alpha and beta\" mod.py\n";
 
 #[test]
 fn test_seed_213_plants_on_a_text_carrying_a_boolean_operation() {
@@ -195,7 +195,7 @@ fn test_seed_213_verdict_is_caught() {
 // Seed-214, flipped first arithmetic operator.
 
 const FIRST_ARITHMETIC_MODULE: &str = "total = alpha + beta\nkeep = gamma\n";
-const FIRST_ARITHMETIC_GATE: &str = "#!/bin/sh\ngrep -q \"alpha - beta\" mod.py\n";
+const FIRST_ARITHMETIC_GATE: &str = "#!/bin/sh\ngrep -q \"alpha + beta\" mod.py\n";
 
 #[test]
 fn test_seed_214_plants_on_a_text_carrying_an_arithmetic_operation() {
@@ -251,7 +251,7 @@ fn test_seed_214_verdict_is_caught() {
 // Seed-215, flipped first augmented assignment operator.
 
 const FIRST_AUGASSIGN_MODULE: &str = "total += alpha\nkeep = gamma\n";
-const FIRST_AUGASSIGN_GATE: &str = "#!/bin/sh\ngrep -q \"total -= alpha\" mod.py\n";
+const FIRST_AUGASSIGN_GATE: &str = "#!/bin/sh\ngrep -q \"total += alpha\" mod.py\n";
 
 #[test]
 fn test_seed_215_plants_on_a_text_carrying_an_augmented_assignment() {
