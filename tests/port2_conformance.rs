@@ -1,8 +1,10 @@
 //! Conformance tests for Rust port slice 2, the seed applies
 //! and plant_seed of PORT2.
 //!
-//! The cases in tests/conformance/port2_cases.json were
-//! recorded from the landed Python package by the generator
+//! The cases in tests/conformance/port2_cases.json and
+//! tests/conformance/port2_cases_part2.json, one battery in
+//! two documents since feature slice 41, were recorded from
+//! the landed Python package by the generator
 //! at tools/gen_port2_recordings.py, run against the base
 //! tree before the Python seed module retired. Each apply
 //! case carries a source, the dump and the rendering the
@@ -32,16 +34,17 @@ use canaryfield::pydump::dump_tree;
 use canaryfield::pyplant::{plant_seed, PlantError};
 
 fn recordings() -> Vec<JsonValue> {
-    let path = concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/tests/conformance/port2_cases.json"
-    );
-    let text = fs::read_to_string(path).expect("recordings file reads");
-    let parsed = json::parse(&text).expect("recordings parse");
-    match parsed.get("cases") {
-        Some(JsonValue::Array(cases)) => cases.clone(),
-        other => panic!("recordings carry no case list: {other:?}"),
+    let mut cases: Vec<JsonValue> = Vec::new();
+    for name in ["port2_cases.json", "port2_cases_part2.json"] {
+        let path = format!("{}/tests/conformance/{name}", env!("CARGO_MANIFEST_DIR"));
+        let text = fs::read_to_string(&path).expect("recordings file reads");
+        let parsed = json::parse(&text).expect("recordings parse");
+        match parsed.get("cases") {
+            Some(JsonValue::Array(part)) => cases.extend(part.iter().cloned()),
+            other => panic!("recordings carry no case list: {other:?}"),
+        }
     }
+    cases
 }
 
 fn text_of(value: &JsonValue) -> &str {
