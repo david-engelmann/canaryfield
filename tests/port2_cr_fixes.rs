@@ -474,7 +474,7 @@ fn the_binary_door_refuses_an_unknown_seed() {
     let output = std::process::Command::new(env!("CARGO_BIN_EXE_canaryfield"))
         .arg("--plant-seed")
         .arg(&root)
-        .arg("seed-216")
+        .arg("seed-220")
         .output()
         .expect("the binary runs");
     assert!(!output.status.success(), "the door refuses the seed");

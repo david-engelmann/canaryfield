@@ -1323,5 +1323,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "flipped first augmented assignment operator",
         defect_class: "wrong computation",
         description: "Swaps the operator of the first augmented assignment in a text so the value it accumulates moves the wrong way and leaves every later augmented assignment standing",
+    },
+    SeedMeta {
+        id: "seed-216",
+        name: "flipped last comparison operator",
+        defect_class: "wrong predicate",
+        description: "Exchanges the last operator of every comparison for its paired opposite so each comparison ends the wrong way while the rest of the chain runs as written",
+    },
+    SeedMeta {
+        id: "seed-217",
+        name: "flipped last boolean operator",
+        defect_class: "wrong predicate",
+        description: "Swaps the operator of the last boolean operation in a text, an and for an or or an or for an and, and leaves every earlier boolean operation standing",
+    },
+    SeedMeta {
+        id: "seed-218",
+        name: "flipped last arithmetic operator",
+        defect_class: "wrong computation",
+        description: "Swaps the operator of the last arithmetic operation in a text for a different one and leaves every earlier operation standing",
+    },
+    SeedMeta {
+        id: "seed-219",
+        name: "flipped last augmented assignment operator",
+        defect_class: "wrong computation",
+        description: "Swaps the operator of the last augmented assignment in a text so the value it accumulates moves the wrong way and leaves every earlier augmented assignment standing",
     }
 ];

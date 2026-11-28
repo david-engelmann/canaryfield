@@ -223,6 +223,10 @@ seed-212  flipped first comparison operator                       sample.py     
 seed-213  flipped first boolean operator                          none          not-applicable
 seed-214  flipped first arithmetic operator                       sample.py     caught
 seed-215  flipped first augmented assignment operator             none          not-applicable
+seed-216  flipped last comparison operator                        sample.py     caught
+seed-217  flipped last boolean operator                           none          not-applicable
+seed-218  flipped last arithmetic operator                        sample.py     caught
+seed-219  flipped last augmented assignment operator              none          not-applicable
 
 summary per gate
-  tests  caught 25  waved-through 11  not-applicable 180  gate-broken 0
+  tests  caught 27  waved-through 11  not-applicable 182  gate-broken 0
