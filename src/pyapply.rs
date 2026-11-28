@@ -6603,11 +6603,17 @@ fn apply_flipped_last_comparison_operator(tree: &mut Tree) -> bool {
 // seed-217, flipped last boolean operator.
 
 fn apply_flipped_last_boolean_operator(tree: &mut Tree) -> bool {
-    let target = tree
-        .sorted_nodes()
-        .into_iter()
-        .rev()
-        .find(|id| matches!(&tree.nodes[*id].data, Data::BoolOp { .. }));
+    let mut target: Option<usize> = None;
+    let mut best: Option<crate::pyast::Pos> = None;
+    for id in tree.sorted_nodes() {
+        if matches!(&tree.nodes[id].data, Data::BoolOp { .. }) {
+            let pos = tree.nodes[id].pos;
+            if best.is_none() || pos > best {
+                target = Some(id);
+                best = pos;
+            }
+        }
+    }
     if let Some(id) = target {
         if let Data::BoolOp { op } = &mut tree.node_mut(id).data {
             *op = if *op == BoolKind::And {
@@ -6625,10 +6631,15 @@ fn apply_flipped_last_boolean_operator(tree: &mut Tree) -> bool {
 
 fn apply_flipped_last_arithmetic_operator(tree: &mut Tree) -> bool {
     let mut found = None;
+    let mut best: Option<crate::pyast::Pos> = None;
     for id in tree.sorted_nodes() {
         if let Data::BinOp { op } = &tree.nodes[id].data {
             if let Some(replacement) = arithmetic_swap(*op) {
-                found = Some((id, replacement));
+                let pos = tree.nodes[id].pos;
+                if best.is_none() || pos > best {
+                    found = Some((id, replacement));
+                    best = pos;
+                }
             }
         }
     }
@@ -6645,10 +6656,15 @@ fn apply_flipped_last_arithmetic_operator(tree: &mut Tree) -> bool {
 
 fn apply_flipped_last_augmented_assignment_operator(tree: &mut Tree) -> bool {
     let mut found = None;
+    let mut best: Option<crate::pyast::Pos> = None;
     for id in tree.sorted_nodes() {
         if let Data::AugAssign { op } = &tree.nodes[id].data {
             if let Some(replacement) = arithmetic_swap(*op) {
-                found = Some((id, replacement));
+                let pos = tree.nodes[id].pos;
+                if best.is_none() || pos > best {
+                    found = Some((id, replacement));
+                    best = pos;
+                }
             }
         }
     }
