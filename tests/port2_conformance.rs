@@ -368,9 +368,9 @@ fn plant_cases_match_the_recorded_python_answers() {
 #[test]
 fn unknown_seed_ids_are_refused() {
     let mut tree = parse_tree("x = 1\n").expect("source parses");
-    assert!(apply_seed(&mut tree, "seed-212").is_err());
+    assert!(apply_seed(&mut tree, "seed-216").is_err());
     let dir = fresh_dir("unknown-seed");
-    assert!(plant_seed(&dir, "seed-212", None).is_err());
+    assert!(plant_seed(&dir, "seed-216", None).is_err());
 }
 
 #[test]
