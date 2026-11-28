@@ -1,5 +1,5 @@
 {
-  "format": "canaryfield-seeds/49",
+  "format": "canaryfield-seeds/50",
   "seeds": [
     {
       "id": "seed-00",
@@ -1224,6 +1224,30 @@
       "name": "dropped first call argument dict entry",
       "defect_class": "missing data",
       "description": "Removes the first entry of a dictionary standing among a call's arguments whenever the dictionary carries at least two entries so the call receives a shorter dictionary than the source passes to it"
+    },
+    {
+      "id": "seed-204",
+      "name": "dropped last return value dict entry",
+      "defect_class": "missing data",
+      "description": "Removes the last entry of the dictionary a return hands back whenever the dictionary carries at least two entries so the caller never receives the closing entry"
+    },
+    {
+      "id": "seed-205",
+      "name": "dropped first return value dict entry",
+      "defect_class": "missing data",
+      "description": "Removes the first entry of the dictionary a return hands back whenever the dictionary carries at least two entries so the caller never receives the opening entry"
+    },
+    {
+      "id": "seed-206",
+      "name": "dropped last comprehension element dict entry",
+      "defect_class": "missing data",
+      "description": "Removes the last entry of the dictionary standing as a comprehension's element expression whenever the dictionary carries at least two entries so the comprehension yields one fewer entry in each dictionary than the source writes"
+    },
+    {
+      "id": "seed-207",
+      "name": "dropped first comprehension element dict entry",
+      "defect_class": "missing data",
+      "description": "Removes the first entry of the dictionary standing as a comprehension's element expression whenever the dictionary carries at least two entries so the comprehension yields one fewer entry in each dictionary than the source writes"
     }
   ]
 }

@@ -212,7 +212,11 @@ seed-200  dropped last assignment value dict entry            none          not-
 seed-201  dropped first assignment value dict entry           none          not-applicable  not-applicable
 seed-202  dropped last call argument dict entry               none          not-applicable  not-applicable
 seed-203  dropped first call argument dict entry              none          not-applicable  not-applicable
+seed-204  dropped last return value dict entry                none          not-applicable  not-applicable
+seed-205  dropped first return value dict entry               none          not-applicable  not-applicable
+seed-206  dropped last comprehension element dict entry       none          not-applicable  not-applicable
+seed-207  dropped first comprehension element dict entry      none          not-applicable  not-applicable
 
 summary per gate
-  tests  caught 23  waved-through 11  not-applicable 170  gate-broken 0
-  compile  caught 0  waved-through 34  not-applicable 170  gate-broken 0
+  tests  caught 23  waved-through 11  not-applicable 174  gate-broken 0
+  compile  caught 0  waved-through 34  not-applicable 174  gate-broken 0

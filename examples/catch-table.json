@@ -2385,13 +2385,57 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-203"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last return value dict entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-204"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first return value dict entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-205"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped last comprehension element dict entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-206"
+    },
+    {
+      "defect_class": "missing data",
+      "gates": {
+        "tests": "not-applicable"
+      },
+      "name": "dropped first comprehension element dict entry",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-207"
     }
   ],
   "summary": {
     "tests": {
       "caught": 23,
       "gate-broken": 0,
-      "not-applicable": 170,
+      "not-applicable": 174,
       "waved-through": 11
     }
   },

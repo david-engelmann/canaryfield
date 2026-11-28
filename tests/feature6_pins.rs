@@ -88,15 +88,15 @@ const MATCH_GATE: &str = "#!/bin/sh\ngrep -q \"case 1:\" mod.py\n";
 // The registry pins of F6-1.
 
 #[test]
-fn test_registry_has_two_hundred_and_four_unique_seeds() {
-    assert_eq!(SEEDS.len(), 204, "the grown registry holds two hundred");
+fn test_registry_has_two_hundred_and_eight_unique_seeds() {
+    assert_eq!(SEEDS.len(), 208, "the grown registry holds two hundred");
     let mut ids: Vec<&str> = SEEDS.iter().map(|seed| seed.id).collect();
     let standing = ids.clone();
     ids.sort();
     ids.dedup();
-    assert_eq!(ids.len(), 204, "every seed id stands once");
+    assert_eq!(ids.len(), 208, "every seed id stands once");
     assert_eq!(standing.first(), Some(&"seed-00"));
-    assert_eq!(standing.last(), Some(&"seed-203"));
+    assert_eq!(standing.last(), Some(&"seed-207"));
     for (index, seed) in SEEDS.iter().enumerate() {
         assert_eq!(
             seed.id,
@@ -271,7 +271,11 @@ fn test_seed_metadata_is_complete() {
             "dropped last assignment value dict entry",
             "dropped first assignment value dict entry",
             "dropped last call argument dict entry",
-            "dropped first call argument dict entry"
+            "dropped first call argument dict entry",
+            "dropped last return value dict entry",
+            "dropped first return value dict entry",
+            "dropped last comprehension element dict entry",
+            "dropped first comprehension element dict entry"
         ]
     );
 }
@@ -655,7 +659,7 @@ fn test_seed_pack_round_trip() {
     let path = dir.join("pack.json");
     fs::write(&path, seed_pack_text()).expect("the pack writes");
     let loaded = load_seed_pack(&path).expect("the written pack loads");
-    assert_eq!(loaded.len(), 204);
+    assert_eq!(loaded.len(), 208);
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -673,6 +677,6 @@ fn test_seed_pack_via_cli() {
         "the write seed pack command stands"
     );
     let loaded = load_seed_pack(&path).expect("the cli pack loads");
-    assert_eq!(loaded.len(), 204);
+    assert_eq!(loaded.len(), 208);
     let _ = fs::remove_dir_all(&dir);
 }

@@ -1251,5 +1251,29 @@ pub const SEEDS: &[SeedMeta] = &[
         name: "dropped first call argument dict entry",
         defect_class: "missing data",
         description: "Removes the first entry of a dictionary standing among a call's arguments whenever the dictionary carries at least two entries so the call receives a shorter dictionary than the source passes to it",
+    },
+    SeedMeta {
+        id: "seed-204",
+        name: "dropped last return value dict entry",
+        defect_class: "missing data",
+        description: "Removes the last entry of the dictionary a return hands back whenever the dictionary carries at least two entries so the caller never receives the closing entry",
+    },
+    SeedMeta {
+        id: "seed-205",
+        name: "dropped first return value dict entry",
+        defect_class: "missing data",
+        description: "Removes the first entry of the dictionary a return hands back whenever the dictionary carries at least two entries so the caller never receives the opening entry",
+    },
+    SeedMeta {
+        id: "seed-206",
+        name: "dropped last comprehension element dict entry",
+        defect_class: "missing data",
+        description: "Removes the last entry of the dictionary standing as a comprehension's element expression whenever the dictionary carries at least two entries so the comprehension yields one fewer entry in each dictionary than the source writes",
+    },
+    SeedMeta {
+        id: "seed-207",
+        name: "dropped first comprehension element dict entry",
+        defect_class: "missing data",
+        description: "Removes the first entry of the dictionary standing as a comprehension's element expression whenever the dictionary carries at least two entries so the comprehension yields one fewer entry in each dictionary than the source writes",
     }
 ];
