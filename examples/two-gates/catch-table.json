@@ -2779,19 +2779,77 @@
       "planted_file": null,
       "planted_files": [],
       "seed": "seed-215"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "flipped last comparison operator",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-216"
+    },
+    {
+      "defect_class": "wrong predicate",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "flipped last boolean operator",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-217"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "compile": "waved-through",
+        "tests": "caught"
+      },
+      "name": "flipped last arithmetic operator",
+      "planted_exits": {
+        "compile": 0,
+        "tests": 1
+      },
+      "planted_file": "sample.py",
+      "planted_files": [
+        "sample.py"
+      ],
+      "seed": "seed-218"
+    },
+    {
+      "defect_class": "wrong computation",
+      "gates": {
+        "compile": "not-applicable",
+        "tests": "not-applicable"
+      },
+      "name": "flipped last augmented assignment operator",
+      "planted_exits": {},
+      "planted_file": null,
+      "planted_files": [],
+      "seed": "seed-219"
     }
   ],
   "summary": {
     "compile": {
       "caught": 0,
       "gate-broken": 0,
-      "not-applicable": 180,
-      "waved-through": 36
+      "not-applicable": 182,
+      "waved-through": 38
     },
     "tests": {
-      "caught": 25,
+      "caught": 27,
       "gate-broken": 0,
-      "not-applicable": 180,
+      "not-applicable": 182,
       "waved-through": 11
     }
   },
