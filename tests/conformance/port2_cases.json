@@ -7370,10 +7370,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='alpha', names=[alias(name='alpha_scale'), alias(name='alpha_value')], level=0), ImportFrom(module='beta', names=[alias(name='beta_scale'), alias(name='beta_value')], level=0), FunctionDef(name='test_alpha', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='alpha_value', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=10)])), Assert(test=Compare(left=Call(func=Name(id='alpha_scale', ctx=Load()), args=[Constant(value=3)], keywords=[]), ops=[NotEq()], comparators=[Constant(value=6)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_beta', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='beta_value', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=20)])), Assert(test=Compare(left=Call(func=Name(id='beta_scale', ctx=Load()), args=[Constant(value=4)], keywords=[]), ops=[NotEq()], comparators=[Constant(value=12)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='alpha', names=[alias(name='alpha_scale'), alias(name='alpha_value')], level=0), ImportFrom(module='beta', names=[alias(name='beta_scale'), alias(name='beta_value')], level=0), FunctionDef(name='test_alpha', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='alpha_value', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=10)])), Assert(test=Compare(left=Call(func=Name(id='alpha_scale', ctx=Load()), args=[Constant(value=3)], keywords=[]), ops=[Eq()], comparators=[Constant(value=6)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_beta', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='beta_value', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value=20)])), Assert(test=Compare(left=Call(func=Name(id='beta_scale', ctx=Load()), args=[Constant(value=4)], keywords=[]), ops=[Eq()], comparators=[Constant(value=12)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from alpha import alpha_scale, alpha_value\nfrom beta import beta_scale, beta_value\n\ndef test_alpha():\n    assert alpha_value() != 10\n    assert alpha_scale(3) != 6\n\ndef test_beta():\n    assert beta_value() != 20\n    assert beta_scale(4) != 12"
+       "t": "from alpha import alpha_scale, alpha_value\nfrom beta import beta_scale, beta_value\n\ndef test_alpha():\n    assert alpha_value() != 10\n    assert alpha_scale(3) == 6\n\ndef test_beta():\n    assert beta_value() == 20\n    assert beta_scale(4) == 12"
       }
      },
      "second": {
@@ -11094,10 +11094,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[Import(names=[alias(name='pytest')]), ImportFrom(module='sample', names=[alias(name='VERSION'), alias(name='add'), alias(name='banner'), alias(name='countdown'), alias(name='describe'), alias(name='is_positive'), alias(name='pick'), alias(name='ready'), alias(name='safe_div')], level=0), FunctionDef(name='test_version', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Name(id='VERSION', ctx=Load()), ops=[NotEq()], comparators=[Constant(value='1.4.2')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_add', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='add', ctx=Load()), args=[Constant(value=2), Constant(value=3)], keywords=[]), ops=[NotEq()], comparators=[Constant(value=5)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_pick', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='pick', ctx=Load()), args=[Constant(value='x'), Constant(value='y')], keywords=[]), ops=[NotEq()], comparators=[Constant(value='x')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_is_positive', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='is_positive', ctx=Load()), args=[Constant(value=1)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='is_positive', ctx=Load()), args=[Constant(value=0)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_ready', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='ready', ctx=Load()), args=[], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_countdown', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='countdown', ctx=Load()), args=[Constant(value=3)], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value=0), Constant(value=1), Constant(value=2)], ctx=Load())]))], decorator_list=[], type_params=[]), FunctionDef(name='test_describe', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='describe', ctx=Load()), args=[Constant(value=True)], keywords=[]), ops=[NotEq()], comparators=[Constant(value='on')])), Assert(test=Compare(left=Call(func=Name(id='describe', ctx=Load()), args=[Constant(value=False)], keywords=[]), ops=[NotEq()], comparators=[Constant(value='off')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_safe_div', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='safe_div', ctx=Load()), args=[Constant(value=6), Constant(value=3)], keywords=[]), ops=[NotEq()], comparators=[Constant(value=2)])), With(items=[withitem(context_expr=Call(func=Attribute(value=Name(id='pytest', ctx=Load()), attr='raises', ctx=Load()), args=[Name(id='ValueError', ctx=Load())], keywords=[]))], body=[Expr(value=Call(func=Name(id='safe_div', ctx=Load()), args=[Constant(value=1), Constant(value=0)], keywords=[]))])], decorator_list=[], type_params=[]), FunctionDef(name='test_banner', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='banner', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='hi!')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[Import(names=[alias(name='pytest')]), ImportFrom(module='sample', names=[alias(name='VERSION'), alias(name='add'), alias(name='banner'), alias(name='countdown'), alias(name='describe'), alias(name='is_positive'), alias(name='pick'), alias(name='ready'), alias(name='safe_div')], level=0), FunctionDef(name='test_version', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Name(id='VERSION', ctx=Load()), ops=[NotEq()], comparators=[Constant(value='1.4.2')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_add', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='add', ctx=Load()), args=[Constant(value=2), Constant(value=3)], keywords=[]), ops=[Eq()], comparators=[Constant(value=5)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_pick', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='pick', ctx=Load()), args=[Constant(value='x'), Constant(value='y')], keywords=[]), ops=[Eq()], comparators=[Constant(value='x')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_is_positive', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='is_positive', ctx=Load()), args=[Constant(value=1)], keywords=[]), ops=[Is()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='is_positive', ctx=Load()), args=[Constant(value=0)], keywords=[]), ops=[Is()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_ready', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='ready', ctx=Load()), args=[], keywords=[]), ops=[Is()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[]), FunctionDef(name='test_countdown', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='countdown', ctx=Load()), args=[Constant(value=3)], keywords=[]), ops=[Eq()], comparators=[List(elts=[Constant(value=0), Constant(value=1), Constant(value=2)], ctx=Load())]))], decorator_list=[], type_params=[]), FunctionDef(name='test_describe', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='describe', ctx=Load()), args=[Constant(value=True)], keywords=[]), ops=[Eq()], comparators=[Constant(value='on')])), Assert(test=Compare(left=Call(func=Name(id='describe', ctx=Load()), args=[Constant(value=False)], keywords=[]), ops=[Eq()], comparators=[Constant(value='off')]))], decorator_list=[], type_params=[]), FunctionDef(name='test_safe_div', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='safe_div', ctx=Load()), args=[Constant(value=6), Constant(value=3)], keywords=[]), ops=[Eq()], comparators=[Constant(value=2)])), With(items=[withitem(context_expr=Call(func=Attribute(value=Name(id='pytest', ctx=Load()), attr='raises', ctx=Load()), args=[Name(id='ValueError', ctx=Load())], keywords=[]))], body=[Expr(value=Call(func=Name(id='safe_div', ctx=Load()), args=[Constant(value=1), Constant(value=0)], keywords=[]))])], decorator_list=[], type_params=[]), FunctionDef(name='test_banner', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='banner', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='hi!')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "import pytest\nfrom sample import VERSION, add, banner, countdown, describe, is_positive, pick, ready, safe_div\n\ndef test_version():\n    assert VERSION != '1.4.2'\n\ndef test_add():\n    assert add(2, 3) != 5\n\ndef test_pick():\n    assert pick('x', 'y') != 'x'\n\ndef test_is_positive():\n    assert is_positive(1) is not True\n    assert is_positive(0) is not False\n\ndef test_ready():\n    assert ready() is not True\n\ndef test_countdown():\n    assert countdown(3) != [0, 1, 2]\n\ndef test_describe():\n    assert describe(True) != 'on'\n    assert describe(False) != 'off'\n\ndef test_safe_div():\n    assert safe_div(6, 3) != 2\n    with pytest.raises(ValueError):\n        safe_div(1, 0)\n\ndef test_banner():\n    assert banner() != 'hi!'"
+       "t": "import pytest\nfrom sample import VERSION, add, banner, countdown, describe, is_positive, pick, ready, safe_div\n\ndef test_version():\n    assert VERSION != '1.4.2'\n\ndef test_add():\n    assert add(2, 3) == 5\n\ndef test_pick():\n    assert pick('x', 'y') == 'x'\n\ndef test_is_positive():\n    assert is_positive(1) is True\n    assert is_positive(0) is False\n\ndef test_ready():\n    assert ready() is True\n\ndef test_countdown():\n    assert countdown(3) == [0, 1, 2]\n\ndef test_describe():\n    assert describe(True) == 'on'\n    assert describe(False) == 'off'\n\ndef test_safe_div():\n    assert safe_div(6, 3) == 2\n    with pytest.raises(ValueError):\n        safe_div(1, 0)\n\ndef test_banner():\n    assert banner() == 'hi!'"
       }
      },
      "second": {
@@ -50228,10 +50228,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='fetching', names=[alias(name='Handle'), alias(name='fetch')], level=0), FunctionDef(name='test_fetch_closes_the_handle', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='handle', ctx=Store())], value=Call(func=Name(id='Handle', ctx=Load()), args=[], keywords=[])), Assert(test=Compare(left=Call(func=Name(id='fetch', ctx=Load()), args=[Name(id='handle', ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[Constant(value='data')])), Assert(test=Compare(left=Attribute(value=Name(id='handle', ctx=Load()), attr='closed', ctx=Load()), ops=[IsNot()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='fetching', names=[alias(name='Handle'), alias(name='fetch')], level=0), FunctionDef(name='test_fetch_closes_the_handle', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='handle', ctx=Store())], value=Call(func=Name(id='Handle', ctx=Load()), args=[], keywords=[])), Assert(test=Compare(left=Call(func=Name(id='fetch', ctx=Load()), args=[Name(id='handle', ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[Constant(value='data')])), Assert(test=Compare(left=Attribute(value=Name(id='handle', ctx=Load()), attr='closed', ctx=Load()), ops=[Is()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from fetching import Handle, fetch\n\ndef test_fetch_closes_the_handle():\n    handle = Handle()\n    assert fetch(handle) != 'data'\n    assert handle.closed is not True"
+       "t": "from fetching import Handle, fetch\n\ndef test_fetch_closes_the_handle():\n    handle = Handle()\n    assert fetch(handle) != 'data'\n    assert handle.closed is True"
       }
      },
      "second": {
@@ -148374,10 +148374,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='mod', names=[alias(name='ready')], level=0), FunctionDef(name='test_ready', args=arguments(posonlyargs=[], args=[arg(arg='flag')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='ready', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='yes')])), Assert(test=Compare(left=Name(id='flag', ctx=Load()), ops=[IsNot()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='mod', names=[alias(name='ready')], level=0), FunctionDef(name='test_ready', args=arguments(posonlyargs=[], args=[arg(arg='flag')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='ready', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='yes')])), Assert(test=Compare(left=Name(id='flag', ctx=Load()), ops=[Is()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from mod import ready\n\ndef test_ready(flag):\n    assert ready() != 'yes'\n    assert flag is not True"
+       "t": "from mod import ready\n\ndef test_ready(flag):\n    assert ready() != 'yes'\n    assert flag is True"
       }
      },
      "second": {
@@ -332894,10 +332894,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() != '42'"
+       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() == '42'"
       }
      },
      "second": {
@@ -372094,10 +372094,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='paging', names=[alias(name='page')], level=0), FunctionDef(name='test_page', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='page', ctx=Load()), args=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3), Constant(value=4)], ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value=1), Constant(value=2)], ctx=Load())])), Assert(test=Compare(left=Call(func=Name(id='page', ctx=Load()), args=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3), Constant(value=4)], ctx=Load()), Constant(value=3)], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3)], ctx=Load())]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='paging', names=[alias(name='page')], level=0), FunctionDef(name='test_page', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='page', ctx=Load()), args=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3), Constant(value=4)], ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value=1), Constant(value=2)], ctx=Load())])), Assert(test=Compare(left=Call(func=Name(id='page', ctx=Load()), args=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3), Constant(value=4)], ctx=Load()), Constant(value=3)], keywords=[]), ops=[Eq()], comparators=[List(elts=[Constant(value=1), Constant(value=2), Constant(value=3)], ctx=Load())]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from paging import page\n\ndef test_page():\n    assert page([1, 2, 3, 4]) != [1, 2]\n    assert page([1, 2, 3, 4], 3) != [1, 2, 3]"
+       "t": "from paging import page\n\ndef test_page():\n    assert page([1, 2, 3, 4]) != [1, 2]\n    assert page([1, 2, 3, 4], 3) == [1, 2, 3]"
       }
      },
      "second": {
@@ -413612,10 +413612,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='slicing', names=[alias(name='head')], level=0), FunctionDef(name='test_head', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='head', ctx=Load()), args=[List(elts=[Constant(value='a'), Constant(value='b'), Constant(value='c')], ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value='a'), Constant(value='b')], ctx=Load())])), Assert(test=Compare(left=Call(func=Name(id='head', ctx=Load()), args=[List(elts=[Constant(value=1)], ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value=1)], ctx=Load())]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='slicing', names=[alias(name='head')], level=0), FunctionDef(name='test_head', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='head', ctx=Load()), args=[List(elts=[Constant(value='a'), Constant(value='b'), Constant(value='c')], ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[List(elts=[Constant(value='a'), Constant(value='b')], ctx=Load())])), Assert(test=Compare(left=Call(func=Name(id='head', ctx=Load()), args=[List(elts=[Constant(value=1)], ctx=Load())], keywords=[]), ops=[Eq()], comparators=[List(elts=[Constant(value=1)], ctx=Load())]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from slicing import head\n\ndef test_head():\n    assert head(['a', 'b', 'c']) != ['a', 'b']\n    assert head([1]) != [1]"
+       "t": "from slicing import head\n\ndef test_head():\n    assert head(['a', 'b', 'c']) != ['a', 'b']\n    assert head([1]) == [1]"
       }
      },
      "second": {
@@ -435068,10 +435068,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='labelling', names=[alias(name='label')], level=0), FunctionDef(name='test_label', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='anon!')])), Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[Constant(value='hi')], keywords=[]), ops=[NotEq()], comparators=[Constant(value='hi!')])), Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[Constant(value='hi'), Constant(value='?')], keywords=[]), ops=[NotEq()], comparators=[Constant(value='hi?')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='labelling', names=[alias(name='label')], level=0), FunctionDef(name='test_label', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='anon!')])), Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[Constant(value='hi')], keywords=[]), ops=[Eq()], comparators=[Constant(value='hi!')])), Assert(test=Compare(left=Call(func=Name(id='label', ctx=Load()), args=[Constant(value='hi'), Constant(value='?')], keywords=[]), ops=[Eq()], comparators=[Constant(value='hi?')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from labelling import label\n\ndef test_label():\n    assert label() != 'anon!'\n    assert label('hi') != 'hi!'\n    assert label('hi', '?') != 'hi?'"
+       "t": "from labelling import label\n\ndef test_label():\n    assert label() != 'anon!'\n    assert label('hi') == 'hi!'\n    assert label('hi', '?') == 'hi?'"
       }
      },
      "second": {
@@ -442396,10 +442396,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() != '42'"
+       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() == '42'"
       }
      },
      "second": {
@@ -478172,10 +478172,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='converting', names=[alias(name='convert')], level=0), FunctionDef(name='test_convert', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='5')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=5.0)])), Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='oops')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=0.0)])), Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='200')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=0.0)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='converting', names=[alias(name='convert')], level=0), FunctionDef(name='test_convert', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='5')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=5.0)])), Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='oops')], keywords=[]), ops=[Eq()], comparators=[Constant(value=0.0)])), Assert(test=Compare(left=Call(func=Name(id='convert', ctx=Load()), args=[Constant(value='200')], keywords=[]), ops=[Eq()], comparators=[Constant(value=0.0)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from converting import convert\n\ndef test_convert():\n    assert convert('5') != 5.0\n    assert convert('oops') != 0.0\n    assert convert('200') != 0.0"
+       "t": "from converting import convert\n\ndef test_convert():\n    assert convert('5') != 5.0\n    assert convert('oops') == 0.0\n    assert convert('200') == 0.0"
       }
      },
      "second": {
@@ -512398,10 +512398,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='fetching', names=[alias(name='Handle'), alias(name='fetch')], level=0), FunctionDef(name='test_fetch', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='handle', ctx=Store())], value=Call(func=Name(id='Handle', ctx=Load()), args=[], keywords=[])), Assert(test=Compare(left=Call(func=Name(id='fetch', ctx=Load()), args=[Name(id='handle', ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[Constant(value='data')])), Assert(test=Compare(left=Attribute(value=Name(id='handle', ctx=Load()), attr='closed', ctx=Load()), ops=[IsNot()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='fetching', names=[alias(name='Handle'), alias(name='fetch')], level=0), FunctionDef(name='test_fetch', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assign(targets=[Name(id='handle', ctx=Store())], value=Call(func=Name(id='Handle', ctx=Load()), args=[], keywords=[])), Assert(test=Compare(left=Call(func=Name(id='fetch', ctx=Load()), args=[Name(id='handle', ctx=Load())], keywords=[]), ops=[NotEq()], comparators=[Constant(value='data')])), Assert(test=Compare(left=Attribute(value=Name(id='handle', ctx=Load()), attr='closed', ctx=Load()), ops=[Is()], comparators=[Constant(value=True)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from fetching import Handle, fetch\n\ndef test_fetch():\n    handle = Handle()\n    assert fetch(handle) != 'data'\n    assert handle.closed is not True"
+       "t": "from fetching import Handle, fetch\n\ndef test_fetch():\n    handle = Handle()\n    assert fetch(handle) != 'data'\n    assert handle.closed is True"
       }
      },
      "second": {
@@ -514260,10 +514260,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='admission', names=[alias(name='admitted')], level=0), FunctionDef(name='test_admitted', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=20), Constant(value=True)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=20), Constant(value=False)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=False)])), Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=10), Constant(value=True)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='admission', names=[alias(name='admitted')], level=0), FunctionDef(name='test_admitted', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=20), Constant(value=True)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=20), Constant(value=False)], keywords=[]), ops=[Is()], comparators=[Constant(value=False)])), Assert(test=Compare(left=Call(func=Name(id='admitted', ctx=Load()), args=[Constant(value=10), Constant(value=True)], keywords=[]), ops=[Is()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from admission import admitted\n\ndef test_admitted():\n    assert admitted(20, True) is not True\n    assert admitted(20, False) is not False\n    assert admitted(10, True) is not False"
+       "t": "from admission import admitted\n\ndef test_admitted():\n    assert admitted(20, True) is not True\n    assert admitted(20, False) is False\n    assert admitted(10, True) is False"
       }
      },
      "second": {
@@ -542804,10 +542804,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() != '42'"
+       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() == '42'"
       }
      },
      "second": {
@@ -576754,10 +576754,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='parsing', names=[alias(name='parse')], level=0), FunctionDef(name='test_parse', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value='42')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value='oops')], keywords=[]), ops=[NotEq()], comparators=[UnaryOp(op=USub(), operand=Constant(value=1))])), Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value=None)], keywords=[]), ops=[NotEq()], comparators=[UnaryOp(op=USub(), operand=Constant(value=2))]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='parsing', names=[alias(name='parse')], level=0), FunctionDef(name='test_parse', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value='42')], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value='oops')], keywords=[]), ops=[Eq()], comparators=[UnaryOp(op=USub(), operand=Constant(value=1))])), Assert(test=Compare(left=Call(func=Name(id='parse', ctx=Load()), args=[Constant(value=None)], keywords=[]), ops=[Eq()], comparators=[UnaryOp(op=USub(), operand=Constant(value=2))]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from parsing import parse\n\ndef test_parse():\n    assert parse('42') != 42\n    assert parse('oops') != -1\n    assert parse(None) != -2"
+       "t": "from parsing import parse\n\ndef test_parse():\n    assert parse('42') != 42\n    assert parse('oops') == -1\n    assert parse(None) == -2"
       }
      },
      "second": {
@@ -643016,10 +643016,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() != '42'"
+       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() == '42'"
       }
      },
      "second": {
@@ -767136,10 +767136,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='single', names=[alias(name='answer'), alias(name='show')], level=0), FunctionDef(name='test_show', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='answer', ctx=Load()), args=[], keywords=[]), ops=[NotEq()], comparators=[Constant(value=42)])), Assert(test=Compare(left=Call(func=Name(id='show', ctx=Load()), args=[], keywords=[]), ops=[Eq()], comparators=[Constant(value='42')]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() != '42'"
+       "t": "from single import answer, show\n\ndef test_show():\n    assert answer() != 42\n    assert show() == '42'"
       }
      },
      "second": {
@@ -772542,10 +772542,10 @@
      "first": {
       "bool": true,
       "dump": {
-       "t": "Module(body=[ImportFrom(module='blocking', names=[alias(name='blocked')], level=0), FunctionDef(name='test_blocked', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='blocked', ctx=Load()), args=[Constant(value=False)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='blocked', ctx=Load()), args=[Constant(value=True)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[])], type_ignores=[])"
+       "t": "Module(body=[ImportFrom(module='blocking', names=[alias(name='blocked')], level=0), FunctionDef(name='test_blocked', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Assert(test=Compare(left=Call(func=Name(id='blocked', ctx=Load()), args=[Constant(value=False)], keywords=[]), ops=[IsNot()], comparators=[Constant(value=True)])), Assert(test=Compare(left=Call(func=Name(id='blocked', ctx=Load()), args=[Constant(value=True)], keywords=[]), ops=[Is()], comparators=[Constant(value=False)]))], decorator_list=[], type_params=[])], type_ignores=[])"
       },
       "render": {
-       "t": "from blocking import blocked\n\ndef test_blocked():\n    assert blocked(False) is not True\n    assert blocked(True) is not False"
+       "t": "from blocking import blocked\n\ndef test_blocked():\n    assert blocked(False) is not True\n    assert blocked(True) is False"
       }
      },
      "second": {
